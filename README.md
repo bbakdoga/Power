@@ -14,7 +14,7 @@ A free iPhone workout tracker. Every feature is free: unlimited routines, charts
 
 ## Run it on your iPhone
 
-1. Install **Xcode 16 or newer** from the Mac App Store.
+1. Install **Xcode 15.4 or newer** from the Mac App Store.
 2. Clone this repository and open `Power.xcodeproj`.
 3. In Xcode, click the **Power** project, open **Signing & Capabilities**, and pick your Apple ID under **Team**. A free Apple ID works for testing on your own phone.
 4. If Xcode says the bundle identifier is taken, change `com.bbakdoga.Power` to something unique.
@@ -31,6 +31,8 @@ Power/
   Support/                Units, rest timer, plate math, seed exercise library
   Views/                  One file per screen
 ```
+
+The Xcode project uses explicit file references so it opens in Xcode 15. If you add a Swift file outside Xcode, run `python3 scripts/generate_xcodeproj.py` to add it to the project. Files added from inside Xcode need nothing extra.
 
 Weights are always stored in kilograms and converted for display, so switching units never changes your history. All model properties have defaults and relationships are optional, so iCloud sync can be turned on later without a data migration.
 

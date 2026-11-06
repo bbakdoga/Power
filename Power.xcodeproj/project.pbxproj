@@ -3,23 +3,51 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 56;
 	objects = {
+/* Begin PBXBuildFile section */
+		013C6A3A6D7487191321617B /* WorkoutStarter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7DE72E645D197285A186E9 /* WorkoutStarter.swift */; };
+		2C209B7D36B4A562C83032B4 /* ExercisePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE8DF83929F30AFEA3C1C7E /* ExercisePickerView.swift */; };
+		3DB3ACB35CDE03107CF77DF7 /* RestTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B77115270B1E47A951FA50 /* RestTimer.swift */; };
+		40CFFCD12AEE7BB82CF1767D /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957C7749A68FE03A2D89C8F6 /* Enums.swift */; };
+		57B597B3DB88370329D7DDEE /* PowerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F305EEE468943F935308DDB /* PowerApp.swift */; };
+		6F3AA6A6EBCB1F0B9B4ED6AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D289B5052C9EA385B4F1802 /* Assets.xcassets */; };
+		775D3D526170F3B992D4DC28 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D288B7FCAB35764C4B41EE /* RootTabView.swift */; };
+		7C84CD5B3C570FAA67960F38 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF9980EBBE9ABCC86A1BC61 /* Models.swift */; };
+		863C18179F238CB387DBE6FB /* SeedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C566C462EA47B4542C7D82 /* SeedData.swift */; };
+		8A5538913C5A374816D997CC /* PlateCalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23458629AC91E0E2C0B3C73 /* PlateCalculatorView.swift */; };
+		A6591BFEC8E1FB82625ACEB8 /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = A102DDE45404638CDBCEE1E6 /* Units.swift */; };
+		AA8D9491A537B916E9774D3E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD4EEE543726C2496DE1FCD /* SettingsView.swift */; };
+		C27DF1FEA73849D78DA4C703 /* ActiveWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C4DC02A2D946F110D3F89D1 /* ActiveWorkoutView.swift */; };
+		DD3B671E312797809998A7F2 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36060B17EDD7110914AED282 /* HistoryView.swift */; };
+		DFE38E3E1C9712ED59922AA0 /* ExercisesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E60E6DF68E9B973CBC8055A /* ExercisesView.swift */; };
+		E3DF776CC7B7DAD59287417D /* WorkoutTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9472558F2F9CD14D4290CC6D /* WorkoutTabView.swift */; };
+		F583958722BE681A50DBCA44 /* RoutinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687D3DA563F336E6B7BEFB77 /* RoutinesView.swift */; };
+/* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AA0000000000000000000001 /* Power.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Power.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		577FDFD8A70393A70C796D9B /* Power.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Power.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C4DC02A2D946F110D3F89D1 /* ActiveWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveWorkoutView.swift; sourceTree = "<group>"; };
+		36060B17EDD7110914AED282 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		3A7DE72E645D197285A186E9 /* WorkoutStarter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStarter.swift; sourceTree = "<group>"; };
+		3E60E6DF68E9B973CBC8055A /* ExercisesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesView.swift; sourceTree = "<group>"; };
+		63C566C462EA47B4542C7D82 /* SeedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedData.swift; sourceTree = "<group>"; };
+		687D3DA563F336E6B7BEFB77 /* RoutinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutinesView.swift; sourceTree = "<group>"; };
+		79D288B7FCAB35764C4B41EE /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
+		8D289B5052C9EA385B4F1802 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9472558F2F9CD14D4290CC6D /* WorkoutTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTabView.swift; sourceTree = "<group>"; };
+		957C7749A68FE03A2D89C8F6 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		9F305EEE468943F935308DDB /* PowerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerApp.swift; sourceTree = "<group>"; };
+		A102DDE45404638CDBCEE1E6 /* Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
+		A23458629AC91E0E2C0B3C73 /* PlateCalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateCalculatorView.swift; sourceTree = "<group>"; };
+		A7B77115270B1E47A951FA50 /* RestTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestTimer.swift; sourceTree = "<group>"; };
+		CBF9980EBBE9ABCC86A1BC61 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		CCE8DF83929F30AFEA3C1C7E /* ExercisePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisePickerView.swift; sourceTree = "<group>"; };
+		FDD4EEE543726C2496DE1FCD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		AA0000000000000000000002 /* Power */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Power;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
-		AA0000000000000000000003 /* Frameworks */ = {
+		C18F88D444D8FE65E18D39E9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -29,18 +57,66 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AA0000000000000000000004 = {
+		02A014B50C8B86ADE530B0DB /* Power */ = {
 			isa = PBXGroup;
 			children = (
-				AA0000000000000000000002 /* Power */,
-				AA0000000000000000000005 /* Products */,
+				74EDD8B484A3CED8E5ED0DB9 /* Models */,
+				89FB6F9A40132035D22DF6D0 /* Support */,
+				97D8F752E855F33372595A54 /* Views */,
+				8D289B5052C9EA385B4F1802 /* Assets.xcassets */,
+				9F305EEE468943F935308DDB /* PowerApp.swift */,
+			);
+			path = Power;
+			sourceTree = "<group>";
+		};
+		74EDD8B484A3CED8E5ED0DB9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				957C7749A68FE03A2D89C8F6 /* Enums.swift */,
+				CBF9980EBBE9ABCC86A1BC61 /* Models.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		89FB6F9A40132035D22DF6D0 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				A7B77115270B1E47A951FA50 /* RestTimer.swift */,
+				63C566C462EA47B4542C7D82 /* SeedData.swift */,
+				A102DDE45404638CDBCEE1E6 /* Units.swift */,
+				3A7DE72E645D197285A186E9 /* WorkoutStarter.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		8C4FDD7B635240BD562EBB49 = {
+			isa = PBXGroup;
+			children = (
+				02A014B50C8B86ADE530B0DB /* Power */,
+				B23D89B2D2DF3745A003AEB1 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		AA0000000000000000000005 /* Products */ = {
+		97D8F752E855F33372595A54 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				AA0000000000000000000001 /* Power.app */,
+				1C4DC02A2D946F110D3F89D1 /* ActiveWorkoutView.swift */,
+				CCE8DF83929F30AFEA3C1C7E /* ExercisePickerView.swift */,
+				3E60E6DF68E9B973CBC8055A /* ExercisesView.swift */,
+				36060B17EDD7110914AED282 /* HistoryView.swift */,
+				A23458629AC91E0E2C0B3C73 /* PlateCalculatorView.swift */,
+				79D288B7FCAB35764C4B41EE /* RootTabView.swift */,
+				687D3DA563F336E6B7BEFB77 /* RoutinesView.swift */,
+				FDD4EEE543726C2496DE1FCD /* SettingsView.swift */,
+				9472558F2F9CD14D4290CC6D /* WorkoutTabView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B23D89B2D2DF3745A003AEB1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				577FDFD8A70393A70C796D9B /* Power.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,77 +124,88 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AA0000000000000000000006 /* Power */ = {
+		43BE79868ACB3D443202EDE7 /* Power */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AA000000000000000000000B /* Build configuration list for PBXNativeTarget "Power" */;
 			buildPhases = (
-				AA0000000000000000000007 /* Sources */,
-				AA0000000000000000000003 /* Frameworks */,
-				AA0000000000000000000008 /* Resources */,
+				C4D5163706E5908DC9E032F3 /* Sources */,
+				C18F88D444D8FE65E18D39E9 /* Frameworks */,
+				4FDAD6DB49035FA75C21467D /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				AA0000000000000000000002 /* Power */,
-			);
 			name = Power;
-			packageProductDependencies = (
-			);
 			productName = Power;
-			productReference = AA0000000000000000000001 /* Power.app */;
+			productReference = 577FDFD8A70393A70C796D9B /* Power.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		AA0000000000000000000009 /* Project object */ = {
+		91E326A0966057C0F887EA7E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1600;
-				LastUpgradeCheck = 1600;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
-					AA0000000000000000000006 = {
-						CreatedOnToolsVersion = 16.0;
+					43BE79868ACB3D443202EDE7 = {
+						CreatedOnToolsVersion = 15.0;
 					};
 				};
 			};
 			buildConfigurationList = AA000000000000000000000A /* Build configuration list for PBXProject "Power" */;
+			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = AA0000000000000000000004;
-			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
-			productRefGroup = AA0000000000000000000005 /* Products */;
+			mainGroup = 8C4FDD7B635240BD562EBB49;
+			productRefGroup = B23D89B2D2DF3745A003AEB1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AA0000000000000000000006 /* Power */,
+				43BE79868ACB3D443202EDE7 /* Power */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		AA0000000000000000000008 /* Resources */ = {
+		4FDAD6DB49035FA75C21467D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F3AA6A6EBCB1F0B9B4ED6AF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		AA0000000000000000000007 /* Sources */ = {
+		C4D5163706E5908DC9E032F3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C27DF1FEA73849D78DA4C703 /* ActiveWorkoutView.swift in Sources */,
+				40CFFCD12AEE7BB82CF1767D /* Enums.swift in Sources */,
+				2C209B7D36B4A562C83032B4 /* ExercisePickerView.swift in Sources */,
+				DFE38E3E1C9712ED59922AA0 /* ExercisesView.swift in Sources */,
+				DD3B671E312797809998A7F2 /* HistoryView.swift in Sources */,
+				7C84CD5B3C570FAA67960F38 /* Models.swift in Sources */,
+				8A5538913C5A374816D997CC /* PlateCalculatorView.swift in Sources */,
+				57B597B3DB88370329D7DDEE /* PowerApp.swift in Sources */,
+				3DB3ACB35CDE03107CF77DF7 /* RestTimer.swift in Sources */,
+				775D3D526170F3B992D4DC28 /* RootTabView.swift in Sources */,
+				F583958722BE681A50DBCA44 /* RoutinesView.swift in Sources */,
+				863C18179F238CB387DBE6FB /* SeedData.swift in Sources */,
+				AA8D9491A537B916E9774D3E /* SettingsView.swift in Sources */,
+				A6591BFEC8E1FB82625ACEB8 /* Units.swift in Sources */,
+				013C6A3A6D7487191321617B /* WorkoutStarter.swift in Sources */,
+				E3DF776CC7B7DAD59287417D /* WorkoutTabView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,5 +344,5 @@
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = AA0000000000000000000009 /* Project object */;
+	rootObject = 91E326A0966057C0F887EA7E /* Project object */;
 }
