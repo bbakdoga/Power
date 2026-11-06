@@ -12,8 +12,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - runner: macos-14
-            xcode: "15.4"
+          # GitHub's runners no longer include Xcode 15, and Xcode 16.0 has no
+          # matching simulator runtime there, so CI builds on 16.4 only. The
+          # iOS 17.0 deployment target still makes the compiler reject any
+          # iOS 18-only API, which is what would break Xcode 15.4 users.
           - runner: macos-15
             xcode: "16.4"
     runs-on: ${{ matrix.runner }}
