@@ -12,17 +12,18 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # GitHub's runners no longer include Xcode 15. Xcode 16.0 is the oldest
+          # available; with the iOS 17.0 deployment target it still rejects
+          # any iOS 18-only API, which is what would break Xcode 15.4 users.
           - runner: macos-15
-            xcode: "15.4"
+            xcode: "16.0"
           - runner: macos-15
             xcode: "16.4"
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v4
       - name: Select Xcode ${{ matrix.xcode }}
-        run: |
-          ls -d /Applications/Xcode*.app
-          sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app
+        run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app
       - name: Show Xcode version
         run: xcodebuild -version
       - name: Build for the iOS Simulator
