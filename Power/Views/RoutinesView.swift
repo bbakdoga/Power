@@ -1,55 +1,7 @@
 import SwiftUI
 import SwiftData
 
-struct RoutinesView: View {
-    @Environment(\.modelContext) private var context
-    @Query(sort: \Routine.name) private var routines: [Routine]
-    @State private var path: [Routine] = []
-
-    var body: some View {
-        NavigationStack(path: $path) {
-            Group {
-                if routines.isEmpty {
-                    ContentUnavailableView("No routines yet",
-                                           systemImage: "list.bullet.rectangle",
-                                           description: Text("Tap + to plan a workout you do often."))
-                } else {
-                    List {
-                        ForEach(routines) { routine in
-                            NavigationLink(value: routine) {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(routine.name).font(.headline)
-                                    Text(routine.summary)
-                                        .font(.subheadline)
-                                        .foregroundStyle(.secondary)
-                                        .lineLimit(2)
-                                }
-                            }
-                        }
-                        .onDelete { offsets in
-                            for index in offsets {
-                                context.delete(routines[index])
-                            }
-                        }
-                    }
-                }
-            }
-            .navigationTitle("Routines")
-            .navigationDestination(for: Routine.self) { routine in
-                RoutineEditorView(routine: routine)
-            }
-            .toolbar {
-                Button {
-                    let routine = Routine(name: "New Routine")
-                    context.insert(routine)
-                    path.append(routine)
-                } label: {
-                    Image(systemName: "plus")
-                }
-            }
-        }
-    }
-}
+// Routines are listed and started from the Workout tab (WorkoutTabView).
 
 struct RoutineEditorView: View {
     @Bindable var routine: Routine

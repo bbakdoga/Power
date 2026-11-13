@@ -12,6 +12,27 @@ enum SeedData {
         try? context.save()
     }
 
+    /// With iCloud sync, a second device (or a reinstall) seeds the library before the
+    /// synced copy arrives, leaving two of each built-in exercise. Merge them into one,
+    /// moving workout and routine history onto the copy that's used most.
+    static func mergeDuplicates(_ context: ModelContext) {
+        let descriptor = FetchDescriptor<Exercise>(predicate: #Predicate { !$0.isCustom })
+        guard let builtIns = try? context.fetch(descriptor) else { return }
+
+        var changed = false
+        for (_, copies) in Dictionary(grouping: builtIns, by: \.name) where copies.count > 1 {
+            let usage: (Exercise) -> Int = { ($0.workoutEntries?.count ?? 0) + ($0.routineEntries?.count ?? 0) }
+            guard let keeper = copies.max(by: { usage($0) < usage($1) }) else { continue }
+            for duplicate in copies where duplicate !== keeper {
+                for entry in duplicate.workoutEntries ?? [] { entry.exercise = keeper }
+                for entry in duplicate.routineEntries ?? [] { entry.exercise = keeper }
+                context.delete(duplicate)
+                changed = true
+            }
+        }
+        if changed { try? context.save() }
+    }
+
     private static let library: [(String, MuscleGroup, Equipment, Int)] = [
         // Chest
         ("Bench Press", .chest, .barbell, 150),

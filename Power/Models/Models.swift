@@ -25,6 +25,9 @@ final class Exercise {
     /// Rest timer length started after each completed set. 0 turns it off.
     var restSeconds: Int = 90
     var notes: String = ""
+    /// Weight unit for this exercise only (e.g. lb for a machine labeled in pounds);
+    /// nil follows the app setting. Weights are still stored in kilograms.
+    var unitRaw: String?
 
     @Relationship(deleteRule: .nullify, inverse: \WorkoutExercise.exercise)
     var workoutEntries: [WorkoutExercise]? = []
@@ -51,6 +54,11 @@ final class Exercise {
     }
 
     var subtitle: String { "\(muscleGroup.title) · \(equipment.title)" }
+
+    /// The unit to show this exercise's weights in.
+    func unit(default appUnit: WeightUnit) -> WeightUnit {
+        unitRaw.flatMap(WeightUnit.init(rawValue:)) ?? appUnit
+    }
 
     /// Entries of this exercise in finished workouts, newest first.
     var completedEntries: [WorkoutExercise] {
@@ -85,6 +93,15 @@ final class Workout {
         (exercises ?? []).sorted { $0.order < $1.order }
     }
 
+    /// Letter for each superset in this workout ("A", "B", …), in exercise order.
+    var supersetLetters: [String: String] {
+        var letters: [String: String] = [:]
+        for id in sortedExercises.compactMap(\.supersetID) where letters[id] == nil {
+            letters[id] = String(UnicodeScalar(UInt8(65 + letters.count % 26)))
+        }
+        return letters
+    }
+
     var duration: TimeInterval {
         (endDate ?? .now).timeIntervalSince(startDate)
     }
@@ -102,6 +119,8 @@ final class Workout {
 final class WorkoutExercise {
     var order: Int = 0
     var notes: String = ""
+    /// Exercises sharing an ID are done back to back as a superset; nil when standalone.
+    var supersetID: String?
     var exercise: Exercise?
     var workout: Workout?
 
@@ -190,6 +209,8 @@ final class RoutineExercise {
     var order: Int = 0
     var targetSets: Int = 3
     var targetReps: Int = 10
+    /// Same meaning as `WorkoutExercise.supersetID`; copied when a workout starts.
+    var supersetID: String?
     var exercise: Exercise?
     var routine: Routine?
 

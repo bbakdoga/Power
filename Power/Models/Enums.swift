@@ -20,6 +20,16 @@ enum Equipment: String, CaseIterable, Identifiable, Codable {
     var title: String { rawValue.capitalized }
 }
 
+/// Which figure the exercise illustrations show.
+enum BodyType: String, CaseIterable, Identifiable {
+    case man, woman
+
+    static let storageKey = "bodyType"
+
+    var id: String { rawValue }
+    var title: String { rawValue.capitalized }
+}
+
 enum SetType: String, CaseIterable, Identifiable, Codable {
     case normal, warmup, drop, failure
 
@@ -49,4 +59,54 @@ enum BodyMeasurementKind: String, CaseIterable, Identifiable, Codable {
     case bodyweight, bodyFat, chest, waist, hips, arm, thigh
 
     var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .bodyweight: return "Bodyweight"
+        case .bodyFat: return "Body Fat"
+        case .chest: return "Chest"
+        case .waist: return "Waist"
+        case .hips: return "Hips"
+        case .arm: return "Arms"
+        case .thigh: return "Thighs"
+        }
+    }
+
+    var systemImage: String {
+        switch self {
+        case .bodyweight: return "scalemass"
+        case .bodyFat: return "percent"
+        default: return "ruler"
+        }
+    }
+
+    /// Stored values are kilograms, percent, or centimetres; lb users see lb and inches.
+    func unitLabel(_ unit: WeightUnit) -> String {
+        switch self {
+        case .bodyweight: return unit.rawValue
+        case .bodyFat: return "%"
+        default: return unit == .kg ? "cm" : "in"
+        }
+    }
+
+    func displayValue(_ stored: Double, unit: WeightUnit) -> Double {
+        switch self {
+        case .bodyweight: return unit.fromKg(stored)
+        case .bodyFat: return stored
+        default: return unit == .kg ? stored : stored / 2.54
+        }
+    }
+
+    func storedValue(_ shown: Double, unit: WeightUnit) -> Double {
+        switch self {
+        case .bodyweight: return unit.toKg(shown)
+        case .bodyFat: return shown
+        default: return unit == .kg ? shown : shown * 2.54
+        }
+    }
+
+    func format(_ stored: Double, unit: WeightUnit) -> String {
+        let value = displayValue(stored, unit: unit).formatted(.number.precision(.fractionLength(0...1)))
+        return self == .bodyFat ? "\(value)%" : "\(value) \(unitLabel(unit))"
+    }
 }

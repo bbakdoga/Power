@@ -21,11 +21,14 @@ struct ExercisesView: View {
                         Section(group.title) {
                             ForEach(items) { exercise in
                                 NavigationLink(value: exercise) {
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        Text(exercise.name)
-                                        Text(exercise.equipment.title)
-                                            .font(.caption)
-                                            .foregroundStyle(.secondary)
+                                    HStack(spacing: 12) {
+                                        ExerciseThumbnail(exercise: exercise)
+                                        VStack(alignment: .leading, spacing: 2) {
+                                            Text(exercise.name)
+                                            Text(exercise.equipment.title)
+                                                .font(.caption)
+                                                .foregroundStyle(.secondary)
+                                        }
                                     }
                                 }
                             }
@@ -56,8 +59,10 @@ struct ExerciseDetailView: View {
     @Bindable var exercise: Exercise
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
-    @AppStorage(WeightUnit.storageKey) private var unit: WeightUnit = .kg
+    @AppStorage(WeightUnit.storageKey) private var appUnit: WeightUnit = .kg
     @State private var editing = false
+
+    private var unit: WeightUnit { exercise.unit(default: appUnit) }
     @State private var confirmingDelete = false
 
     private struct ChartPoint: Identifiable {
@@ -80,6 +85,10 @@ struct ExerciseDetailView: View {
         let entries = exercise.completedEntries
 
         List {
+            Section {
+                ExerciseGraphicView(exercise: exercise)
+            }
+
             Section("Estimated 1-rep max (\(unit.rawValue))") {
                 if points.count < 2 {
                     Text("Log this exercise in two workouts to see your progress here.")
