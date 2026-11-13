@@ -95,7 +95,7 @@
 		B22D35C930A78884001E9E97 /* HealthSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthSync.swift; sourceTree = "<group>"; };
 		B22D35CB30A788B2001E9E97 /* WeeklySummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklySummaryView.swift; sourceTree = "<group>"; };
 		B22D35CD30A78D2F001E9E97 /* WorkoutStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStats.swift; sourceTree = "<group>"; };
-		B22D35CF30A78D4C001E9E97 /* ProfileView.swift */ = {isa = PBXFileReference; path = ProfileView.swift; sourceTree = "<group>"; };
+		B22D35CF30A78D4C001E9E97 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		CBF9980EBBE9ABCC86A1BC61 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		CCE8DF83929F30AFEA3C1C7E /* ExercisePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisePickerView.swift; sourceTree = "<group>"; };
 		FDD4EEE543726C2496DE1FCD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -444,6 +444,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Power/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Power;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Power reads your bodyweight from Health so it appears in your body measurements.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Power saves your finished workouts and the bodyweight you log to Health.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
@@ -477,6 +478,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Power/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Power;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Power reads your bodyweight from Health so it appears in your body measurements.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Power saves your finished workouts and the bodyweight you log to Health.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
