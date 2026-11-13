@@ -16,8 +16,9 @@ enum WorkoutStarter {
         context.insert(workout)
         for (index, item) in routine.sortedExercises.enumerated() {
             guard let exercise = item.exercise else { continue }
-            addExercise(exercise, to: workout, order: index, in: context,
-                        setCount: item.targetSets, targetReps: item.targetReps)
+            let entry = addExercise(exercise, to: workout, order: index, in: context,
+                                    setCount: item.targetSets, targetReps: item.targetReps)
+            entry.supersetID = item.supersetID
         }
         return workout
     }
@@ -53,11 +54,37 @@ enum WorkoutStarter {
             let item = RoutineExercise(order: index,
                                        targetSets: max(working.count, 1),
                                        targetReps: working.last?.reps ?? 10)
+            item.supersetID = entry.supersetID
             context.insert(item)
             item.routine = routine
             item.exercise = exercise
         }
         return routine
+    }
+
+    /// Links an exercise with the one after it, joining its superset if it has one.
+    static func supersetWithNext(_ entry: WorkoutExercise) {
+        let exercises = entry.workout?.sortedExercises ?? []
+        guard let index = exercises.firstIndex(of: entry), index + 1 < exercises.count else { return }
+        let next = exercises[index + 1]
+        let id = entry.supersetID ?? next.supersetID ?? UUID().uuidString
+        entry.supersetID = id
+        next.supersetID = id
+    }
+
+    /// Takes an exercise out of its superset; a superset left with one exercise is dissolved.
+    static func removeFromSuperset(_ entry: WorkoutExercise) {
+        guard let id = entry.supersetID else { return }
+        entry.supersetID = nil
+        let remaining = (entry.workout?.sortedExercises ?? []).filter { $0.supersetID == id }
+        if remaining.count == 1 { remaining[0].supersetID = nil }
+    }
+
+    /// In a superset, rest only after the last exercise of the round.
+    static func shouldRest(after entry: WorkoutExercise) -> Bool {
+        guard let id = entry.supersetID else { return true }
+        let group = (entry.workout?.sortedExercises ?? []).filter { $0.supersetID == id }
+        return group.last == entry
     }
 
     static func defaultName(for date: Date = .now) -> String {

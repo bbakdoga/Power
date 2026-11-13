@@ -97,14 +97,15 @@ struct WorkoutDetailView: View {
             ForEach(workout.sortedExercises) { entry in
                 Section(entry.exercise?.name ?? "Exercise") {
                     let labels = WorkoutExerciseSection.labels(for: entry.sortedSets)
+                    let entryUnit = entry.exercise?.unit(default: unit) ?? unit
                     ForEach(Array(entry.sortedSets.enumerated()), id: \.element.id) { index, set in
                         HStack {
                             Text(labels[index])
                                 .font(.subheadline.bold())
                                 .frame(width: 32, alignment: .leading)
-                            Text("\(unit.format(kg: set.weightKg)) \(unit.rawValue) × \(set.reps)")
+                            Text("\(entryUnit.format(kg: set.weightKg)) \(entryUnit.rawValue) × \(set.reps)")
                             Spacer()
-                            Text("e1RM \(unit.format(kg: set.estimatedOneRepMaxKg))")
+                            Text("e1RM \(entryUnit.format(kg: set.estimatedOneRepMaxKg))")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
