@@ -127,7 +127,7 @@ struct WorkoutDetailView: View {
         .alert("Routine saved", isPresented: $savedRoutine) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text("You can find it in the Routines tab.")
+            Text("You can find it under My routines on the Workout tab.")
         }
     }
 }

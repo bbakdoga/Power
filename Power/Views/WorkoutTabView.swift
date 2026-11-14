@@ -9,6 +9,9 @@ struct WorkoutTabView: View {
     private var activeWorkouts: [Workout]
     @Query(sort: \Routine.name) private var routines: [Routine]
     @State private var path: [Routine] = []
+    @State private var justFinished: Workout?
+    @State private var askingToSaveRoutine = false
+    @State private var routineName = ""
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -23,10 +26,42 @@ struct WorkoutTabView: View {
                 RoutineEditorView(routine: routine)
             }
         }
-        .onChange(of: activeWorkouts.isEmpty) {
+        .onChange(of: activeWorkouts.first?.persistentModelID) { previous, current in
             // Starting from a routine's page: pop back so the running workout is visible.
             path = []
+            if let previous, current == nil {
+                offerRoutine(forFinished: previous)
+            }
         }
+        .alert("Save as a routine?", isPresented: $askingToSaveRoutine) {
+            TextField("Routine name", text: $routineName)
+            Button("Save Routine") { saveRoutine() }
+            Button("Not Now", role: .cancel) { justFinished = nil }
+        } message: {
+            Text("Your workout is saved in History. Save it as a routine to start it again from My routines.")
+        }
+    }
+
+    /// After a workout is saved (not discarded), offer to turn it into a routine,
+    /// unless it was started from a routine with the same name.
+    private func offerRoutine(forFinished id: PersistentIdentifier) {
+        let descriptor = FetchDescriptor<Workout>(predicate: #Predicate { $0.persistentModelID == id })
+        guard let workout = try? context.fetch(descriptor).first,
+              workout.endDate != nil,
+              !workout.sortedExercises.isEmpty,
+              !routines.contains(where: { $0.name == workout.name }) else { return }
+        justFinished = workout
+        routineName = workout.name
+        askingToSaveRoutine = true
+    }
+
+    private func saveRoutine() {
+        guard let workout = justFinished else { return }
+        let routine = WorkoutStarter.saveAsRoutine(workout, in: context)
+        let name = routineName.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !name.isEmpty { routine.name = name }
+        try? context.save()
+        justFinished = nil
     }
 
     private var startList: some View {
