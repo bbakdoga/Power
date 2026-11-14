@@ -110,26 +110,39 @@ struct ActiveWorkoutView: View {
                 .transition(.opacity)
 
             VStack(spacing: 12) {
-                Text(hasUnfinished ? "You have unfinished sets" : "Finish workout?")
+                Text("Save this workout?")
                     .font(.headline)
-                Text(!hasUnfinished ? "It will appear in your History."
-                     : hasCheckedSets ? "Sets without reps are always removed."
-                     : "No sets are checked off, so ignoring them discards this workout.")
-                    .font(.subheadline)
+                Text(summaryText)
+                    .font(.subheadline.monospacedDigit())
                     .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
+                if hasUnfinished {
+                    Text("Some sets aren't checked off. Sets without reps are always removed.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                }
 
-                if hasUncheckedLoggedSets || !hasUnfinished {
-                    promptButton(hasUnfinished ? "Complete Unfinished Sets" : "Save Workout", tint: .green) {
+                if !hasUnfinished {
+                    promptButton("Save Workout", tint: .green) {
                         finish(includeUnchecked: true)
                     }
-                }
-                if hasUnfinished {
-                    promptButton("Ignore Unfinished Sets", tint: .red) {
-                        finish(includeUnchecked: false)
+                } else {
+                    if hasUncheckedLoggedSets {
+                        promptButton("Save & Complete Unfinished Sets", tint: .green) {
+                            finish(includeUnchecked: true)
+                        }
+                    }
+                    if hasCheckedSets {
+                        promptButton("Save Only Checked Sets", tint: .blue) {
+                            finish(includeUnchecked: false)
+                        }
                     }
                 }
-                promptButton("Cancel", tint: .gray) {
+                promptButton("Don't Save", tint: .red) {
+                    dismissFinishPrompt()
+                    confirmingDiscard = true
+                }
+                promptButton("Keep Training", tint: .gray) {
                     dismissFinishPrompt()
                 }
             }
@@ -159,6 +172,16 @@ struct ActiveWorkoutView: View {
 
     private func dismissFinishPrompt() {
         withAnimation(.spring(duration: 0.3)) { confirmingFinish = false }
+    }
+
+    /// "48:12 · 5 exercises · 17 sets" for the save prompt.
+    private var summaryText: String {
+        let entries = workout.sortedExercises
+        let sets = entries.reduce(0) { total, entry in
+            total + entry.sortedSets.filter { $0.isDone || $0.reps > 0 }.count
+        }
+        let elapsed = Date.now.timeIntervalSince(workout.startDate).clockString
+        return "\(elapsed) · \(entries.count == 1 ? "1 exercise" : "\(entries.count) exercises") · \(sets == 1 ? "1 set" : "\(sets) sets")"
     }
 
     private var hasCheckedSets: Bool {

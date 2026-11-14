@@ -27,7 +27,11 @@ struct ExerciseGuide {
         switch exercise.name {
         case "Running": return "figure.run"
         case "Rowing Machine": return "figure.rower"
-        case "Pull-up", "Chin-up", "Hanging Leg Raise": return "figure.climbing"
+        case "Pull-up", "Chin-up", "Hanging Leg Raise", "Assisted Pull-up": return "figure.climbing"
+        case "Stationary Bike": return "figure.indoor.cycle"
+        case "Elliptical": return "figure.elliptical"
+        case "Stair Climber": return "figure.stair.stepper"
+        case "Jump Rope": return "figure.jumprope"
         default: break
         }
         switch exercise.muscleGroup {
@@ -384,5 +388,286 @@ struct ExerciseGuide {
                     "Stay upright with relaxed shoulders.",
                     "Land with your feet under your hips and take quick, light steps.",
                     "Cool down with easy walking at the end."]),
+
+        // Chest (library version 2)
+        "Chest Fly Machine": ExerciseGuide(
+            primary: ["Chest"], secondary: ["Front Delts"],
+            steps: ["Adjust the seat so the handles are at chest height and sit with your back flat on the pad.",
+                    "With a slight bend in your elbows, bring the handles together in front of your chest.",
+                    "Squeeze your chest for a moment at the middle.",
+                    "Open your arms slowly until you feel a stretch across your chest."]),
+        "Decline Bench Press": ExerciseGuide(
+            primary: ["Lower Chest"], secondary: ["Front Delts", "Triceps"],
+            steps: ["Hook your legs under the pads of a decline bench and lie back.",
+                    "Unrack the bar with a grip slightly wider than your shoulders.",
+                    "Lower it to your lower chest under control.",
+                    "Press back up until your arms are straight."]),
+        "Smith Machine Bench Press": ExerciseGuide(
+            primary: ["Chest"], secondary: ["Front Delts", "Triceps"],
+            steps: ["Place a flat bench so the bar lines up with your mid-chest.",
+                    "Grip slightly wider than your shoulders and twist the bar to unhook it.",
+                    "Lower the bar to your chest, elbows at about 45°.",
+                    "Press up, then twist the bar back onto the hooks when you're done."]),
+        "Incline Chest Press Machine": ExerciseGuide(
+            primary: ["Upper Chest"], secondary: ["Front Delts", "Triceps"],
+            steps: ["Set the seat so the handles start just below your shoulders.",
+                    "Press the handles up and forward until your arms are almost straight.",
+                    "Return slowly until you feel a stretch in your upper chest."]),
+        "Incline Dumbbell Fly": ExerciseGuide(
+            primary: ["Upper Chest"], secondary: ["Front Delts"],
+            steps: ["Lie on a 30° incline bench holding dumbbells above your chest, palms facing each other.",
+                    "With a slight bend in your elbows, lower the weights out to the sides in a wide arc.",
+                    "Stop when you feel a stretch, then bring them back together over your chest."]),
+        "Low-to-High Cable Fly": ExerciseGuide(
+            primary: ["Upper Chest"], secondary: ["Front Delts"],
+            steps: ["Set both pulleys at the bottom and stand in the middle with one handle in each hand.",
+                    "With slightly bent elbows, sweep your hands up and together to chin height.",
+                    "Lower slowly back to the start."]),
+
+        // Back
+        "Assisted Pull-up": ExerciseGuide(
+            primary: ["Lats"], secondary: ["Biceps", "Upper Back"],
+            steps: ["Choose the assistance weight; more weight makes it easier.",
+                    "Kneel or stand on the pad and grip the handles slightly wider than your shoulders.",
+                    "Pull your chest up toward the bar, leading with your elbows.",
+                    "Lower yourself slowly until your arms are straight."]),
+        "Seated Row Machine": ExerciseGuide(
+            primary: ["Upper Back", "Lats"], secondary: ["Biceps", "Rear Delts"],
+            steps: ["Sit with your chest against the pad and grab the handles.",
+                    "Pull the handles toward your body, squeezing your shoulder blades together.",
+                    "Return slowly until your arms are straight and your shoulders stretch forward."]),
+        "Close-Grip Lat Pulldown": ExerciseGuide(
+            primary: ["Lats"], secondary: ["Biceps", "Middle Back"],
+            steps: ["Attach a V-handle and sit with your thighs under the pads.",
+                    "Lean back slightly and pull the handle to your upper chest.",
+                    "Let it rise slowly until your arms are straight."]),
+        "Straight-Arm Pulldown": ExerciseGuide(
+            primary: ["Lats"], secondary: ["Triceps (long head)", "Core"],
+            steps: ["Stand facing a high pulley holding a bar or rope with straight arms.",
+                    "Hinge slightly at the hips and keep your arms nearly straight.",
+                    "Pull the bar down in an arc to your thighs.",
+                    "Let it rise slowly back to eye level."]),
+        "Chest-Supported Dumbbell Row": ExerciseGuide(
+            primary: ["Upper Back", "Lats"], secondary: ["Biceps", "Rear Delts"],
+            steps: ["Lie face down on an incline bench holding a dumbbell in each hand.",
+                    "Row the dumbbells up toward your hips, squeezing your shoulder blades.",
+                    "Lower them slowly until your arms are straight."]),
+        "Inverted Row": ExerciseGuide(
+            primary: ["Upper Back", "Lats"], secondary: ["Biceps", "Core"],
+            steps: ["Hang under a bar set at waist height, body straight and heels on the floor.",
+                    "Pull your chest to the bar, keeping your body in one line.",
+                    "Lower yourself slowly until your arms are straight."]),
+        "Rack Pull": ExerciseGuide(
+            primary: ["Upper Back", "Lower Back"], secondary: ["Glutes", "Hamstrings", "Traps"],
+            steps: ["Set the bar on the rack pins just below your knees.",
+                    "Grip it just outside your legs, brace your core and keep your back flat.",
+                    "Drive your hips forward and stand up tall.",
+                    "Lower the bar back to the pins under control."]),
+
+        // Shoulders
+        "Shoulder Press Machine": ExerciseGuide(
+            primary: ["Front Delts"], secondary: ["Side Delts", "Triceps"],
+            steps: ["Set the seat so the handles start at about shoulder height.",
+                    "Press the handles overhead until your arms are almost straight.",
+                    "Lower them slowly back to shoulder height."]),
+        "Arnold Press": ExerciseGuide(
+            primary: ["Front Delts", "Side Delts"], secondary: ["Triceps"],
+            steps: ["Sit holding dumbbells in front of your shoulders, palms facing you.",
+                    "As you press up, rotate your palms to face forward.",
+                    "Reverse the rotation as you lower the weights back down."]),
+        "Front Raise": ExerciseGuide(
+            primary: ["Front Delts"], secondary: ["Upper Chest"],
+            steps: ["Stand holding dumbbells in front of your thighs.",
+                    "Raise them straight in front of you to shoulder height, elbows slightly bent.",
+                    "Lower them slowly."]),
+        "Lateral Raise Machine": ExerciseGuide(
+            primary: ["Side Delts"], secondary: ["Traps"],
+            steps: ["Sit with your arms against the pads, which rest on the outside of your elbows.",
+                    "Raise your arms out to the sides up to shoulder height.",
+                    "Lower slowly without letting the weight stack touch down."]),
+        "Reverse Pec Deck": ExerciseGuide(
+            primary: ["Rear Delts"], secondary: ["Upper Back"],
+            steps: ["Sit facing the pad of the fly machine and grip the handles at shoulder height.",
+                    "With slightly bent elbows, pull the handles out and back in a wide arc.",
+                    "Squeeze your upper back, then return slowly."]),
+        "Upright Row": ExerciseGuide(
+            primary: ["Side Delts", "Traps"], secondary: ["Biceps"],
+            steps: ["Hold a barbell in front of your thighs with a shoulder-width grip.",
+                    "Pull it up along your body, leading with your elbows, to lower-chest height.",
+                    "Lower it slowly. Stop lower if you feel any pinching in your shoulders."]),
+        "Band Pull-Apart": ExerciseGuide(
+            primary: ["Rear Delts"], secondary: ["Upper Back"],
+            steps: ["Hold a resistance band in front of you at shoulder height, arms straight.",
+                    "Pull the band apart until it touches your chest, squeezing your shoulder blades.",
+                    "Return slowly."]),
+
+        // Arms
+        "EZ-Bar Curl": ExerciseGuide(
+            primary: ["Biceps"], secondary: ["Forearms"],
+            steps: ["Hold an EZ bar on the angled grips, arms straight.",
+                    "Curl the bar up, keeping your elbows at your sides.",
+                    "Lower it slowly until your arms are straight."]),
+        "Incline Dumbbell Curl": ExerciseGuide(
+            primary: ["Biceps (long head)"], secondary: ["Forearms"],
+            steps: ["Sit back on a 45–60° incline bench with your arms hanging straight down.",
+                    "Curl the dumbbells up without moving your upper arms.",
+                    "Lower them slowly to a full stretch."]),
+        "Concentration Curl": ExerciseGuide(
+            primary: ["Biceps"], secondary: ["Forearms"],
+            steps: ["Sit on a bench and rest the back of your upper arm against your inner thigh.",
+                    "Curl the dumbbell up toward your shoulder.",
+                    "Lower it slowly until your arm is straight."]),
+        "Biceps Curl Machine": ExerciseGuide(
+            primary: ["Biceps"], secondary: ["Forearms"],
+            steps: ["Set the seat so your upper arms rest flat on the pad.",
+                    "Curl the handles up toward your shoulders.",
+                    "Lower slowly until your arms are almost straight."]),
+        "Rope Pushdown": ExerciseGuide(
+            primary: ["Triceps"], secondary: [],
+            steps: ["Attach a rope to a high pulley and hold one end in each hand.",
+                    "Keep your elbows at your sides and push the rope down.",
+                    "Spread the ends apart at the bottom, then let it rise slowly."]),
+        "Triceps Kickback": ExerciseGuide(
+            primary: ["Triceps"], secondary: ["Rear Delts"],
+            steps: ["Hinge forward with a flat back, upper arm parallel to the floor.",
+                    "Straighten your arm behind you, keeping your upper arm still.",
+                    "Bend your elbow slowly to return."]),
+        "Triceps Dip Machine": ExerciseGuide(
+            primary: ["Triceps"], secondary: ["Chest", "Front Delts"],
+            steps: ["Sit upright and grab the handles at your sides.",
+                    "Push the handles down until your arms are straight.",
+                    "Let them rise slowly until your elbows are at about 90°."]),
+        "Diamond Push-up": ExerciseGuide(
+            primary: ["Triceps"], secondary: ["Chest", "Front Delts"],
+            steps: ["Get into a push-up position with your hands together under your chest, thumbs and index fingers touching.",
+                    "Lower your chest to your hands, keeping your elbows close.",
+                    "Push back up until your arms are straight."]),
+
+        // Legs and glutes
+        "Hack Squat": ExerciseGuide(
+            primary: ["Quads"], secondary: ["Glutes", "Hamstrings"],
+            steps: ["Stand on the platform with your back and shoulders against the pads.",
+                    "Release the safety handles and bend your knees until your thighs are about parallel.",
+                    "Push through your whole foot to stand back up."]),
+        "Smith Machine Squat": ExerciseGuide(
+            primary: ["Quads", "Glutes"], secondary: ["Hamstrings", "Core"],
+            steps: ["Set the bar across your upper back and step your feet slightly forward.",
+                    "Unhook the bar and squat down until your thighs are about parallel.",
+                    "Drive back up and re-hook the bar when you're done."]),
+        "Sumo Deadlift": ExerciseGuide(
+            primary: ["Glutes", "Quads", "Hamstrings"], secondary: ["Lower Back", "Adductors"],
+            steps: ["Stand with a wide stance, toes turned out, bar over your mid-foot.",
+                    "Grip the bar inside your knees with a flat back and chest up.",
+                    "Push the floor away and stand tall, driving your hips forward.",
+                    "Lower the bar back down under control."]),
+        "Seated Leg Curl": ExerciseGuide(
+            primary: ["Hamstrings"], secondary: ["Calves"],
+            steps: ["Sit with the pad just above your heels and the thigh pad locked down.",
+                    "Curl your heels down and back as far as you can.",
+                    "Return slowly until your legs are straight."]),
+        "Seated Calf Raise": ExerciseGuide(
+            primary: ["Calves (soleus)"], secondary: [],
+            steps: ["Sit with the balls of your feet on the platform and the pad on your thighs.",
+                    "Lower your heels as far as you can for a stretch.",
+                    "Push up onto your toes as high as you can and pause."]),
+        "Hip Adduction Machine": ExerciseGuide(
+            primary: ["Adductors (inner thighs)"], secondary: [],
+            steps: ["Sit with the pads against the inside of your knees, legs apart.",
+                    "Squeeze your legs together.",
+                    "Let them open slowly back to the start."]),
+        "Reverse Lunge": ExerciseGuide(
+            primary: ["Quads", "Glutes"], secondary: ["Hamstrings", "Core"],
+            steps: ["Stand holding dumbbells at your sides.",
+                    "Step one foot back and lower until both knees are at about 90°.",
+                    "Push through your front heel to return, then switch legs."]),
+        "Step-up": ExerciseGuide(
+            primary: ["Quads", "Glutes"], secondary: ["Hamstrings"],
+            steps: ["Stand facing a box or bench holding dumbbells.",
+                    "Place one whole foot on the box and push through it to stand up.",
+                    "Step down slowly with the other leg, then repeat."]),
+        "Hip Abduction Machine": ExerciseGuide(
+            primary: ["Glutes (side)"], secondary: ["Hip Abductors"],
+            steps: ["Sit with the pads on the outside of your knees, legs together.",
+                    "Push your knees out as wide as you can.",
+                    "Let them come back together slowly."]),
+        "Cable Pull-Through": ExerciseGuide(
+            primary: ["Glutes"], secondary: ["Hamstrings", "Lower Back"],
+            steps: ["Face away from a low pulley holding a rope between your legs.",
+                    "Hinge at your hips, letting the rope pull your hands back.",
+                    "Drive your hips forward to stand up tall, squeezing your glutes."]),
+        "Glute Kickback Machine": ExerciseGuide(
+            primary: ["Glutes"], secondary: ["Hamstrings"],
+            steps: ["Place your forearms or chest on the pad and one foot on the platform.",
+                    "Push the platform back and up by extending your hip.",
+                    "Return slowly, then switch legs after your reps."]),
+
+        // Core
+        "Crunch": ExerciseGuide(
+            primary: ["Abs"], secondary: [],
+            steps: ["Lie on your back with knees bent and hands by your head.",
+                    "Curl your shoulders off the floor, bringing your ribs toward your hips.",
+                    "Lower slowly."]),
+        "Ab Crunch Machine": ExerciseGuide(
+            primary: ["Abs"], secondary: ["Obliques"],
+            steps: ["Sit and hold the handles or rest the pads on your chest.",
+                    "Curl your torso forward and down, crunching your abs.",
+                    "Return slowly."]),
+        "Russian Twist": ExerciseGuide(
+            primary: ["Obliques"], secondary: ["Abs"],
+            steps: ["Sit with knees bent and lean back slightly with a straight back.",
+                    "Rotate your torso to touch the floor beside one hip, then the other.",
+                    "Hold a weight or lift your feet to make it harder."]),
+        "Side Plank": ExerciseGuide(
+            primary: ["Obliques"], secondary: ["Glutes", "Shoulders"],
+            steps: ["Lie on your side and prop yourself up on one forearm.",
+                    "Lift your hips so your body forms a straight line.",
+                    "Hold, then switch sides. Log the time as reps in seconds."]),
+        "Dead Bug": ExerciseGuide(
+            primary: ["Abs"], secondary: ["Hip Flexors"],
+            steps: ["Lie on your back with arms up and knees bent at 90° over your hips.",
+                    "Press your lower back into the floor.",
+                    "Lower the opposite arm and leg toward the floor, return, then switch."]),
+        "Pallof Press": ExerciseGuide(
+            primary: ["Obliques", "Abs"], secondary: ["Shoulders"],
+            steps: ["Stand side-on to a cable at chest height, holding the handle at your chest.",
+                    "Press the handle straight out in front of you without letting it pull you around.",
+                    "Bring it back to your chest, then switch sides."]),
+
+        // Full body and cardio
+        "Burpee": ExerciseGuide(
+            primary: ["Full Body"], secondary: ["Heart & Lungs"],
+            steps: ["Squat down and place your hands on the floor.",
+                    "Jump your feet back into a push-up position.",
+                    "Jump your feet forward again, then jump up with your arms overhead."]),
+        "Thruster": ExerciseGuide(
+            primary: ["Quads", "Shoulders"], secondary: ["Glutes", "Triceps", "Core"],
+            steps: ["Hold a barbell in the front-rack position on your shoulders.",
+                    "Squat down until your thighs are about parallel.",
+                    "Drive up and use that momentum to press the bar overhead in one movement."]),
+        "Sled Push": ExerciseGuide(
+            primary: ["Quads", "Glutes"], secondary: ["Calves", "Core", "Heart & Lungs"],
+            steps: ["Grip the sled's poles with your arms extended and lean forward.",
+                    "Drive with short, powerful steps, pushing through the balls of your feet.",
+                    "Log the load as weight and the distance in meters as reps."]),
+        "Stationary Bike": ExerciseGuide(
+            primary: ["Quads"], secondary: ["Hamstrings", "Glutes", "Heart & Lungs"],
+            steps: ["Set the seat so your knee is slightly bent at the bottom of the pedal stroke.",
+                    "Warm up for a few minutes at low resistance.",
+                    "Keep a steady cadence and adjust resistance for the workout you want."]),
+        "Elliptical": ExerciseGuide(
+            primary: ["Legs"], secondary: ["Glutes", "Arms", "Heart & Lungs"],
+            steps: ["Step onto the pedals and hold the moving handles.",
+                    "Push and pull with your arms while your legs move in a smooth oval.",
+                    "Keep your posture upright and adjust resistance as needed."]),
+        "Stair Climber": ExerciseGuide(
+            primary: ["Glutes", "Quads"], secondary: ["Calves", "Heart & Lungs"],
+            steps: ["Hold the rails lightly for balance and stand upright.",
+                    "Step with your whole foot on each stair.",
+                    "Start at a slow speed and increase it as you warm up."]),
+        "Jump Rope": ExerciseGuide(
+            primary: ["Calves"], secondary: ["Shoulders", "Heart & Lungs"],
+            steps: ["Hold the handles at hip height with your elbows close to your body.",
+                    "Turn the rope with your wrists, not your arms.",
+                    "Jump just high enough to clear the rope, landing softly on the balls of your feet."]),
     ]
 }

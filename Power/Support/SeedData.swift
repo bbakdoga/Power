@@ -3,13 +3,20 @@ import SwiftData
 
 /// Built-in exercise library, inserted on first launch.
 enum SeedData {
+    /// Bump when exercises are added to `library` so existing installs get them.
+    private static let libraryVersion = 2
+    private static let versionKey = "seedLibraryVersion"
+
+    /// Inserts built-in exercises that aren't in the store yet (by name). Runs once per
+    /// library version, so an exercise the user deleted doesn't keep coming back.
     static func seedIfNeeded(_ context: ModelContext) {
-        let count = (try? context.fetchCount(FetchDescriptor<Exercise>())) ?? 0
-        guard count == 0 else { return }
-        for item in library {
+        guard UserDefaults.standard.integer(forKey: versionKey) < libraryVersion else { return }
+        let existing = Set(((try? context.fetch(FetchDescriptor<Exercise>())) ?? []).map(\.name))
+        for item in library where !existing.contains(item.0) {
             context.insert(Exercise(name: item.0, muscleGroup: item.1, equipment: item.2, restSeconds: item.3))
         }
         try? context.save()
+        UserDefaults.standard.set(libraryVersion, forKey: versionKey)
     }
 
     /// With iCloud sync, a second device (or a reinstall) seeds the library before the
@@ -98,5 +105,68 @@ enum SeedData {
         ("Farmer's Carry", .fullBody, .dumbbell, 90),
         ("Rowing Machine", .cardio, .machine, 60),
         ("Running", .cardio, .other, 60),
+
+        // Library version 2
+        ("Chest Fly Machine", .chest, .machine, 60),
+        ("Decline Bench Press", .chest, .barbell, 150),
+        ("Smith Machine Bench Press", .chest, .machine, 120),
+        ("Incline Chest Press Machine", .chest, .machine, 90),
+        ("Incline Dumbbell Fly", .chest, .dumbbell, 90),
+        ("Low-to-High Cable Fly", .chest, .cable, 60),
+
+        ("Assisted Pull-up", .back, .machine, 90),
+        ("Seated Row Machine", .back, .machine, 90),
+        ("Close-Grip Lat Pulldown", .back, .cable, 90),
+        ("Straight-Arm Pulldown", .back, .cable, 60),
+        ("Chest-Supported Dumbbell Row", .back, .dumbbell, 90),
+        ("Inverted Row", .back, .bodyweight, 90),
+        ("Rack Pull", .back, .barbell, 150),
+
+        ("Shoulder Press Machine", .shoulders, .machine, 90),
+        ("Arnold Press", .shoulders, .dumbbell, 90),
+        ("Front Raise", .shoulders, .dumbbell, 60),
+        ("Lateral Raise Machine", .shoulders, .machine, 60),
+        ("Reverse Pec Deck", .shoulders, .machine, 60),
+        ("Upright Row", .shoulders, .barbell, 60),
+        ("Band Pull-Apart", .shoulders, .band, 45),
+
+        ("EZ-Bar Curl", .biceps, .barbell, 60),
+        ("Incline Dumbbell Curl", .biceps, .dumbbell, 60),
+        ("Concentration Curl", .biceps, .dumbbell, 60),
+        ("Biceps Curl Machine", .biceps, .machine, 60),
+
+        ("Rope Pushdown", .triceps, .cable, 60),
+        ("Triceps Kickback", .triceps, .dumbbell, 60),
+        ("Triceps Dip Machine", .triceps, .machine, 60),
+        ("Diamond Push-up", .triceps, .bodyweight, 60),
+
+        ("Hack Squat", .legs, .machine, 150),
+        ("Smith Machine Squat", .legs, .machine, 150),
+        ("Sumo Deadlift", .legs, .barbell, 180),
+        ("Seated Leg Curl", .legs, .machine, 60),
+        ("Seated Calf Raise", .legs, .machine, 60),
+        ("Hip Adduction Machine", .legs, .machine, 60),
+        ("Reverse Lunge", .legs, .dumbbell, 90),
+        ("Step-up", .legs, .dumbbell, 90),
+
+        ("Hip Abduction Machine", .glutes, .machine, 60),
+        ("Cable Pull-Through", .glutes, .cable, 60),
+        ("Glute Kickback Machine", .glutes, .machine, 60),
+
+        ("Crunch", .core, .bodyweight, 45),
+        ("Ab Crunch Machine", .core, .machine, 60),
+        ("Russian Twist", .core, .bodyweight, 45),
+        ("Side Plank", .core, .bodyweight, 45),
+        ("Dead Bug", .core, .bodyweight, 45),
+        ("Pallof Press", .core, .cable, 45),
+
+        ("Burpee", .fullBody, .bodyweight, 60),
+        ("Thruster", .fullBody, .barbell, 120),
+        ("Sled Push", .fullBody, .other, 120),
+
+        ("Stationary Bike", .cardio, .machine, 60),
+        ("Elliptical", .cardio, .machine, 60),
+        ("Stair Climber", .cardio, .machine, 60),
+        ("Jump Rope", .cardio, .other, 60),
     ]
 }
