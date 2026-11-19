@@ -10,6 +10,9 @@ import UserNotifications
 /// countdown on the Lock Screen and in the Dynamic Island.
 @Observable
 final class RestTimer {
+    /// One timer for the whole app, so Lock Screen buttons (RestTimerIntents) can reach it.
+    @MainActor static let shared = RestTimer()
+
     private(set) var endDate: Date?
     private(set) var totalSeconds: Int = 0
     /// The set whose checkmark started this rest, so its divider can show the countdown.
@@ -20,8 +23,20 @@ final class RestTimer {
     @ObservationIgnored private var activity: Activity<RestTimerAttributes>?
 
     init() {
-        // A countdown left over from a previous launch can't be resumed; clear it.
-        endAllLiveActivities()
+        // If iOS relaunched the app (e.g. for a Lock Screen button), pick up the running
+        // countdown from its Live Activity. Anything finished or duplicated is cleared.
+        let running = Activity<RestTimerAttributes>.activities.filter { $0.activityState == .active }
+        if let current = running.first, current.content.state.endDate > .now {
+            let state = current.content.state
+            endDate = state.endDate
+            totalSeconds = state.totalSeconds
+            exerciseName = state.exerciseName
+            activity = current
+            let extras = running.dropFirst()
+            Task { for extra in extras { await extra.end(nil, dismissalPolicy: .immediate) } }
+        } else {
+            endAllLiveActivities()
+        }
     }
 
     func remaining(at date: Date) -> TimeInterval {

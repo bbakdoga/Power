@@ -3,7 +3,7 @@ import SwiftData
 
 @main
 struct PowerApp: App {
-    @State private var restTimer = RestTimer()
+    @State private var restTimer = RestTimer.shared
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {

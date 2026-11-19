@@ -1,4 +1,5 @@
 import ActivityKit
+import AppIntents
 import WidgetKit
 import SwiftUI
 
@@ -33,6 +34,9 @@ struct RestTimerLiveActivity: Widget {
                                 .foregroundStyle(.secondary)
                         }
                         CountdownBar(state: state, isOver: isOver)
+                        if !isOver {
+                            TimerButtons()
+                        }
                     }
                 }
             } compactLeading: {
@@ -81,9 +85,32 @@ private struct LockScreenView: View {
                     .foregroundStyle(.white.opacity(0.8))
             }
             CountdownBar(state: state, isOver: isOver)
+            if !isOver {
+                TimerButtons()
+            }
         }
         .padding()
         .foregroundStyle(.white)
+    }
+}
+
+/// −10 / +10 / Skip, handled by the app without unlocking the phone.
+private struct TimerButtons: View {
+    var body: some View {
+        HStack(spacing: 8) {
+            Button(intent: AdjustRestIntent(seconds: -10)) {
+                Text("−10").frame(maxWidth: .infinity)
+            }
+            Button(intent: AdjustRestIntent(seconds: 10)) {
+                Text("+10").frame(maxWidth: .infinity)
+            }
+            Button(intent: SkipRestIntent()) {
+                Text("Skip").frame(maxWidth: .infinity)
+            }
+        }
+        .font(.subheadline.bold().monospacedDigit())
+        .buttonStyle(.bordered)
+        .tint(.orange)
     }
 }
 

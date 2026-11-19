@@ -23,7 +23,8 @@ struct ExerciseInfoView: View {
                 switch tab {
                 case .about: ExerciseAboutTab(exercise: exercise)
                 case .trend: ExerciseTrendTab(exercise: exercise)
-                case .charts, .records where exercise.tracking != .weightReps:
+                case .charts where exercise.tracking != .weightReps,
+                     .records where exercise.tracking != .weightReps:
                     ExerciseEnduranceTab(exercise: exercise, unit: unit)
                 case .charts: ExerciseChartsTab(exercise: exercise, unit: unit)
                 case .records: ExerciseRecordsTab(exercise: exercise, unit: unit)
