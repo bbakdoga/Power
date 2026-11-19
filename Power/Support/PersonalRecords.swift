@@ -23,7 +23,11 @@ enum PersonalRecords {
         guard set.isDone, set.setType != .warmup, set.hasData,
               let entry = set.workoutExercise, let exercise = entry.exercise else { return [] }
 
-        let history = exercise.completedWorkingSets
+        // Only workouts before this one count, so records still show correctly after saving.
+        let started = entry.workout?.startDate ?? .now
+        let history = exercise.completedWorkingSets.filter {
+            ($0.workoutExercise?.workout?.startDate ?? .distantFuture) < started
+        }
         guard !history.isEmpty else { return [] }
 
         let earlierToday = entry.completedSets.filter {
