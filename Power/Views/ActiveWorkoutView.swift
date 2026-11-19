@@ -55,6 +55,13 @@ struct ActiveWorkoutView: View {
                 }
                 .bold()
             }
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
+                .bold()
+            }
         }
         .safeAreaInset(edge: .bottom) {
             RestTimerBar()
@@ -320,12 +327,13 @@ struct WorkoutExerciseSection: View {
                                unit: unit,
                                isRecord: !PersonalRecords.newRecords(for: set).isEmpty) {
                         if WorkoutStarter.shouldRest(after: entry) {
-                            restTimer.start(seconds: restSeconds, exerciseName: entry.exercise?.name ?? "")
+                            restTimer.start(seconds: restSeconds, exerciseName: entry.exercise?.name ?? "",
+                                            setID: set.persistentModelID)
                         }
                         celebrateRecords(for: set)
                     }
                     if showsRest {
-                        RestDivider(seconds: restSeconds) { editingRest = true }
+                        RestDivider(seconds: restSeconds, setID: set.persistentModelID) { editingRest = true }
                     }
                 }
             }
@@ -576,22 +584,61 @@ struct WorkoutExerciseSection: View {
 }
 
 /// Thin line with the rest time between sets; tap to change it.
+/// Thin line with the rest time between sets; tap to change it. Under the set that
+/// started the current rest, it counts down and the line shrinks toward the time.
 struct RestDivider: View {
     let seconds: Int
+    let setID: PersistentIdentifier
     let onTap: () -> Void
+    @Environment(RestTimer.self) private var timer
 
     var body: some View {
         Button(action: onTap) {
-            HStack(spacing: 8) {
-                Capsule().fill(Color.accentColor.opacity(0.35)).frame(height: 3)
-                Text(seconds.restLabel)
-                    .font(.caption.bold().monospacedDigit())
-                    .foregroundStyle(.tint)
-                Capsule().fill(Color.accentColor.opacity(0.35)).frame(height: 3)
+            if timer.setID == setID {
+                TimelineView(.periodic(from: .now, by: 0.5)) { timeline in
+                    let remaining = timer.remaining(at: timeline.date)
+                    if remaining > 0 {
+                        line(label: (remaining + 0.99).clockString,
+                             fraction: min(remaining / Double(max(timer.totalSeconds, 1)), 1))
+                    } else {
+                        line(label: seconds.restLabel, fraction: 1)
+                    }
+                }
+            } else {
+                line(label: seconds.restLabel, fraction: 1)
             }
         }
         .buttonStyle(.borderless)
         .accessibilityLabel("Rest \(seconds.restLabel). Change rest time")
+    }
+
+    /// Two halves around the label; each fills from the label outward by `fraction`.
+    private func line(label: String, fraction: Double) -> some View {
+        let counting = fraction < 1
+        return HStack(spacing: 8) {
+            bar(fraction: fraction, alignment: .trailing, counting: counting)
+            Text(label)
+                .font(.caption.bold().monospacedDigit())
+                .foregroundStyle(.tint)
+                .contentTransition(.numericText(countsDown: true))
+            bar(fraction: fraction, alignment: .leading, counting: counting)
+        }
+    }
+
+    private func bar(fraction: Double, alignment: Alignment, counting: Bool) -> some View {
+        Capsule()
+            .fill(Color.accentColor.opacity(counting ? 0.15 : 0.35))
+            .overlay(alignment: alignment) {
+                if counting {
+                    GeometryReader { geometry in
+                        Capsule()
+                            .fill(Color.accentColor)
+                            .frame(width: geometry.size.width * fraction)
+                            .frame(maxWidth: .infinity, alignment: alignment)
+                    }
+                }
+            }
+            .frame(height: 3)
     }
 }
 
@@ -728,17 +775,13 @@ struct SetRowView: View {
             }
             .buttonStyle(.borderless)
 
-            TextField("0", value: weightBinding, format: .number)
-                .keyboardType(.decimalPad)
-                .multilineTextAlignment(.center)
-                .textFieldStyle(.roundedBorder)
+            NumberField(value: weightBinding, allowsDecimals: true)
                 .frame(width: 64)
+                .accessibilityLabel("Weight, \(unit.rawValue)")
 
-            TextField("0", value: $workoutSet.reps, format: .number)
-                .keyboardType(.numberPad)
-                .multilineTextAlignment(.center)
-                .textFieldStyle(.roundedBorder)
+            NumberField(value: repsBinding, allowsDecimals: false)
                 .frame(width: 48)
+                .accessibilityLabel("Reps")
 
             Button {
                 toggleDone()
@@ -765,6 +808,13 @@ struct SetRowView: View {
         )
     }
 
+    private var repsBinding: Binding<Double> {
+        Binding(
+            get: { Double(workoutSet.reps) },
+            set: { workoutSet.reps = max(Int($0), 0) }
+        )
+    }
+
     private func toggleDone() {
         workoutSet.isDone.toggle()
         if workoutSet.isDone {
@@ -776,6 +826,47 @@ struct SetRowView: View {
     }
 }
 
+/// Number box that saves on every keystroke. `TextField(value:format:)` only commits
+/// when editing ends, and the number pad has no return key, so typed values were lost
+/// when the user tapped the checkmark or scrolled with the keyboard still up.
+struct NumberField: View {
+    @Binding var value: Double
+    let allowsDecimals: Bool
+    @State private var text = ""
+    @FocusState private var focused: Bool
+
+    var body: some View {
+        TextField("0", text: $text)
+            .keyboardType(allowsDecimals ? .decimalPad : .numberPad)
+            .multilineTextAlignment(.center)
+            .textFieldStyle(.roundedBorder)
+            .monospacedDigit()
+            .focused($focused)
+            .onAppear { text = Self.display(value) }
+            .onChange(of: text) { _, newText in
+                let parsed = Self.parse(newText) ?? 0
+                if parsed != value { value = parsed }
+            }
+            .onChange(of: value) { _, newValue in
+                // Changed elsewhere (e.g. tapping "Previous"); don't fight the user's typing.
+                if (Self.parse(text) ?? 0) != newValue { text = Self.display(newValue) }
+            }
+            .onChange(of: focused) { _, isFocused in
+                if !isFocused { text = Self.display(value) }
+            }
+    }
+
+    /// Accepts both "62.5" and "62,5", whatever the keyboard's decimal separator is.
+    static func parse(_ text: String) -> Double? {
+        Double(text.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: ",", with: "."))
+    }
+
+    /// Empty for 0 so there's nothing to delete before typing.
+    static func display(_ value: Double) -> String {
+        value == 0 ? "" : value.formatted(.number.precision(.fractionLength(0...2)).grouping(.never))
+    }
+}
+
 struct RestTimerBar: View {
     @Environment(RestTimer.self) private var timer
 
@@ -784,14 +875,14 @@ struct RestTimerBar: View {
             let remaining = timer.remaining(at: timeline.date)
             if remaining > 0 {
                 HStack(spacing: 12) {
-                    Button("−15") { timer.adjust(by: -15) }
+                    Button("−10") { timer.adjust(by: -10) }
                     VStack(spacing: 4) {
                         Text("Rest \((remaining + 0.99).clockString)")
                             .font(.headline.monospacedDigit())
                         ProgressView(value: min(remaining, Double(timer.totalSeconds)),
                                      total: Double(max(timer.totalSeconds, 1)))
                     }
-                    Button("+15") { timer.adjust(by: 15) }
+                    Button("+10") { timer.adjust(by: 10) }
                     Button("Skip") { timer.stop() }
                 }
                 .buttonStyle(.bordered)

@@ -1,6 +1,7 @@
 import ActivityKit
 import Foundation
 import Observation
+import SwiftData
 import UserNotifications
 
 /// The rest timer shown under the active workout. It is driven by an end date,
@@ -11,6 +12,8 @@ import UserNotifications
 final class RestTimer {
     private(set) var endDate: Date?
     private(set) var totalSeconds: Int = 0
+    /// The set whose checkmark started this rest, so its divider can show the countdown.
+    private(set) var setID: PersistentIdentifier?
     private var exerciseName = ""
 
     private let notificationID = "rest-timer"
@@ -26,9 +29,10 @@ final class RestTimer {
         return max(0, endDate.timeIntervalSince(date))
     }
 
-    func start(seconds: Int, exerciseName: String = "") {
+    func start(seconds: Int, exerciseName: String = "", setID: PersistentIdentifier? = nil) {
         guard seconds > 0 else { return }
         totalSeconds = seconds
+        self.setID = setID
         self.exerciseName = exerciseName
         endDate = Date.now.addingTimeInterval(TimeInterval(seconds))
         scheduleNotification()
@@ -50,6 +54,7 @@ final class RestTimer {
 
     func stop() {
         endDate = nil
+        setID = nil
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationID])
         endAllLiveActivities()
     }
