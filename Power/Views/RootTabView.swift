@@ -10,6 +10,8 @@ struct RootTabView: View {
     @Query(filter: #Predicate<Workout> { $0.endDate == nil }) private var activeWorkouts: [Workout]
     @Query private var exercises: [Exercise]
     @State private var selection: Tab = .workout
+    @AppStorage(Onboarding.completedKey) private var onboarded = false
+    @State private var showingOnboarding = false
 
     var body: some View {
         TabView(selection: $selection) {
@@ -32,6 +34,18 @@ struct RootTabView: View {
         .task {
             SeedData.seedIfNeeded(context)
             SeedData.mergeDuplicates(context)
+            if !onboarded {
+                // People who already have workouts (from before onboarding existed, or via
+                // iCloud on a new device) don't need the welcome screens.
+                let hasWorkouts = ((try? context.fetchCount(FetchDescriptor<Workout>())) ?? 0) > 0
+                if hasWorkouts { onboarded = true } else { showingOnboarding = true }
+            }
+        }
+        .fullScreenCover(isPresented: $showingOnboarding) {
+            OnboardingView()
+        }
+        .onChange(of: onboarded) { _, done in
+            if done { showingOnboarding = false }
         }
         .onChange(of: exercises.count) {
             // Synced exercises from iCloud arrived; merge any built-ins that now appear twice.

@@ -10,6 +10,7 @@ struct WorkoutTabView: View {
     @Query(sort: \Routine.name) private var routines: [Routine]
     @State private var path: [Routine] = []
     @State private var summary: FinishedWorkout?
+    @State private var addingStarters = false
 
     private struct FinishedWorkout: Identifiable {
         let workout: Workout
@@ -36,6 +37,10 @@ struct WorkoutTabView: View {
             if let previous, current == nil {
                 offerRoutine(forFinished: previous)
             }
+        }
+        .sheet(isPresented: $addingStarters) {
+            StarterRoutinesPicker(buttonTitle: "Add Routines") { addingStarters = false }
+                .presentationDetents([.large])
         }
         .sheet(item: $summary) { item in
             WorkoutSummaryView(workout: item.workout, canSaveRoutine: item.canSaveRoutine)
@@ -68,6 +73,11 @@ struct WorkoutTabView: View {
                 if routines.isEmpty {
                     Text("Tap + to plan a workout you do often, or save a finished workout as a routine.")
                         .foregroundStyle(.secondary)
+                    Button {
+                        addingStarters = true
+                    } label: {
+                        Label("Add starter routines", systemImage: "sparkles")
+                    }
                 }
                 ForEach(routines) { routine in
                     HStack(spacing: 12) {
