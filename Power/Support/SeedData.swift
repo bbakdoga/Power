@@ -4,7 +4,7 @@ import SwiftData
 /// Built-in exercise library, inserted on first launch.
 enum SeedData {
     /// Bump when exercises are added to `library` so existing installs get them.
-    private static let libraryVersion = 2
+    private static let libraryVersion = 3
     private static let versionKey = "seedLibraryVersion"
 
     /// Inserts built-in exercises that aren't in the store yet (by name). Runs once per
@@ -14,6 +14,13 @@ enum SeedData {
         let existing = Set(((try? context.fetch(FetchDescriptor<Exercise>())) ?? []).map(\.name))
         for item in library where !existing.contains(item.0) {
             context.insert(Exercise(name: item.0, muscleGroup: item.1, equipment: item.2, restSeconds: item.3))
+        }
+        // Library version 3 added time and distance tracking; set it on built-ins.
+        let builtIns = (try? context.fetch(FetchDescriptor<Exercise>(predicate: #Predicate { !$0.isCustom }))) ?? []
+        for exercise in builtIns {
+            if let tracking = trackingTypes[exercise.name], exercise.tracking == .weightReps {
+                exercise.tracking = tracking
+            }
         }
         try? context.save()
         UserDefaults.standard.set(libraryVersion, forKey: versionKey)
@@ -39,6 +46,14 @@ enum SeedData {
         }
         if changed { try? context.save() }
     }
+
+    /// Built-ins that aren't weight × reps.
+    private static let trackingTypes: [String: TrackingType] = [
+        "Plank": .duration, "Side Plank": .duration, "Jump Rope": .duration, "Stair Climber": .duration,
+        "Running": .distanceDuration, "Rowing Machine": .distanceDuration,
+        "Stationary Bike": .distanceDuration, "Elliptical": .distanceDuration,
+        "Farmer's Carry": .weightDistance, "Sled Push": .weightDistance,
+    ]
 
     private static let library: [(String, MuscleGroup, Equipment, Int)] = [
         // Chest

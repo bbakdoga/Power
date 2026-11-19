@@ -34,9 +34,9 @@ enum WorkoutStarter {
         let previous = exercise.completedEntries.first?.completedSets.filter { $0.setType != .warmup } ?? []
         for index in 0..<max(setCount, 1) {
             let prior = index < previous.count ? previous[index] : previous.last
-            let set = WorkoutSet(order: index,
-                                 weightKg: prior?.weightKg ?? 0,
-                                 reps: targetReps ?? prior?.reps ?? 0)
+            let set = WorkoutSet(order: index)
+            if let prior { set.copyValues(from: prior) }
+            if let targetReps, exercise.tracking == .weightReps { set.reps = targetReps }
             context.insert(set)
             set.workoutExercise = entry
         }

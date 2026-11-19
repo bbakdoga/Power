@@ -23,6 +23,8 @@ struct ExerciseInfoView: View {
                 switch tab {
                 case .about: ExerciseAboutTab(exercise: exercise)
                 case .trend: ExerciseTrendTab(exercise: exercise)
+                case .charts, .records where exercise.tracking != .weightReps:
+                    ExerciseEnduranceTab(exercise: exercise, unit: unit)
                 case .charts: ExerciseChartsTab(exercise: exercise, unit: unit)
                 case .records: ExerciseRecordsTab(exercise: exercise, unit: unit)
                 }
@@ -247,6 +249,100 @@ private struct ExerciseChartsTab: View {
                 }
             }
         }
+    }
+}
+
+// MARK: - Time and distance exercises
+
+/// Charts and records for exercises tracked by time or distance instead of weight × reps.
+private struct ExerciseEnduranceTab: View {
+    let exercise: Exercise
+    let unit: WeightUnit
+
+    private struct Point: Identifiable {
+        let id: PersistentIdentifier
+        let date: Date
+        let value: Double
+    }
+
+    private var tracksDistance: Bool { exercise.tracking != .duration }
+    private var scale: Distance.Scale { exercise.tracking == .weightDistance ? .short : .long }
+
+    /// Best distance (or longest time) per session.
+    private var points: [Point] {
+        exercise.completedEntries.reversed().compactMap { entry -> Point? in
+            guard let date = entry.workout?.startDate else { return nil }
+            let sets = entry.completedSets.filter { $0.setType != .warmup }
+            let value = tracksDistance
+                ? Distance.value(meters: sets.map(\.distanceMeters).max() ?? 0, scale: scale, unit: unit)
+                : (sets.map(\.durationSeconds).max() ?? 0) / 60
+            return value > 0 ? Point(id: entry.persistentModelID, date: date, value: value) : nil
+        }
+    }
+
+    var body: some View {
+        let sets = exercise.completedWorkingSets
+        let data = points
+        let totalTime = sets.reduce(0) { $0 + $1.durationSeconds }
+        let totalDistance = sets.reduce(0) { $0 + $1.distanceMeters }
+
+        List {
+            Section(tracksDistance ? "Best distance per workout" : "Longest time per workout") {
+                if data.count < 2 {
+                    Text("Log this exercise in two workouts to see a chart here.")
+                        .foregroundStyle(.secondary)
+                } else {
+                    Chart(data) { point in
+                        LineMark(x: .value("Date", point.date), y: .value("Value", point.value))
+                        PointMark(x: .value("Date", point.date), y: .value("Value", point.value))
+                    }
+                    .chartYScale(domain: .automatic(includesZero: false))
+                    .chartYAxisLabel(tracksDistance ? Distance.symbol(scale, unit: unit) : "min")
+                    .frame(height: 220)
+                    .padding(.vertical, 8)
+                }
+            }
+
+            Section("Records") {
+                if exercise.tracking != .weightDistance {
+                    LabeledContent("Longest time", value: timeText(sets.map(\.durationSeconds).max()))
+                }
+                if tracksDistance {
+                    LabeledContent("Longest distance", value: distanceText(sets.map(\.distanceMeters).max()))
+                }
+                if exercise.tracking == .weightDistance {
+                    LabeledContent("Heaviest weight", value: (sets.map(\.weightKg).max() ?? 0) > 0
+                                   ? "\(unit.format(kg: sets.map(\.weightKg).max() ?? 0)) \(unit.rawValue)" : "–")
+                }
+                if exercise.tracking == .distanceDuration,
+                   let fastest = sets.filter({ $0.distanceMeters > 0 && $0.durationSeconds > 0 })
+                    .min(by: { $0.durationSeconds / $0.distanceMeters < $1.durationSeconds / $1.distanceMeters }) {
+                    let pace = fastest.durationSeconds / Distance.value(meters: fastest.distanceMeters, scale: .long, unit: unit)
+                    LabeledContent("Best pace", value: "\(pace.clockString) /\(Distance.symbol(.long, unit: unit))")
+                }
+            }
+
+            Section("Statistics") {
+                LabeledContent("Sessions", value: "\(exercise.completedEntries.count)")
+                LabeledContent("Sets", value: "\(sets.count)")
+                if exercise.tracking != .weightDistance {
+                    LabeledContent("Total time", value: timeText(totalTime))
+                }
+                if tracksDistance {
+                    LabeledContent("Total distance", value: distanceText(totalDistance))
+                }
+            }
+        }
+    }
+
+    private func timeText(_ seconds: Double?) -> String {
+        guard let seconds, seconds > 0 else { return "–" }
+        return seconds.clockString
+    }
+
+    private func distanceText(_ meters: Double?) -> String {
+        guard let meters, meters > 0 else { return "–" }
+        return Distance.format(meters: meters, scale: scale, unit: unit)
     }
 }
 

@@ -185,7 +185,7 @@ struct ActiveWorkoutView: View {
     private var summaryText: String {
         let entries = workout.sortedExercises
         let sets = entries.reduce(0) { total, entry in
-            total + entry.sortedSets.filter { $0.isDone || $0.reps > 0 }.count
+            total + entry.sortedSets.filter { $0.isDone || $0.hasData }.count
         }
         let elapsed = Date.now.timeIntervalSince(workout.startDate).clockString
         return "\(elapsed) · \(entries.count == 1 ? "1 exercise" : "\(entries.count) exercises") · \(sets == 1 ? "1 set" : "\(sets) sets")"
@@ -198,7 +198,7 @@ struct ActiveWorkoutView: View {
     /// Sets with reps entered that the user didn't tap the checkmark on.
     private var hasUncheckedLoggedSets: Bool {
         workout.sortedExercises.contains { entry in
-            entry.sortedSets.contains { !$0.isDone && $0.reps > 0 }
+            entry.sortedSets.contains { !$0.isDone && $0.hasData }
         }
     }
 
@@ -207,7 +207,7 @@ struct ActiveWorkoutView: View {
         var anyDone = false
         for entry in workout.sortedExercises {
             if includeUnchecked {
-                for set in entry.sortedSets where !set.isDone && set.reps > 0 {
+                for set in entry.sortedSets where !set.isDone && set.hasData {
                     set.isDone = true
                     set.completedAt = .now
                 }
@@ -315,16 +315,17 @@ struct WorkoutExerciseSection: View {
                 noteRow(text: $entry.notes, prompt: "Note for this workout",
                         systemImage: "note.text", tint: .secondary, kind: .workout)
             }
-            if showSuggestions, let suggestion = WeightSuggestion.make(for: entry, unit: unit) {
+            if showSuggestions, tracking == .weightReps, let suggestion = WeightSuggestion.make(for: entry, unit: unit) {
                 suggestionRow(suggestion)
             }
-            SetHeaderRow(unit: unit)
+            SetHeaderRow(unit: unit, tracking: tracking)
             ForEach(Array(sets.enumerated()), id: \.element.id) { index, set in
                 VStack(spacing: 8) {
                     SetRowView(workoutSet: set,
                                label: labels[index],
                                previous: index < previousSets.count ? previousSets[index] : nil,
                                unit: unit,
+                               tracking: tracking,
                                isRecord: !PersonalRecords.newRecords(for: set).isEmpty) {
                         if WorkoutStarter.shouldRest(after: entry) {
                             restTimer.start(seconds: restSeconds, exerciseName: entry.exercise?.name ?? "",
@@ -389,6 +390,8 @@ struct WorkoutExerciseSection: View {
             }
         }
     }
+
+    private var tracking: TrackingType { entry.exercise?.tracking ?? .weightReps }
 
     /// This exercise's own unit if it has one, otherwise the app setting.
     private var unit: WeightUnit {
@@ -489,7 +492,8 @@ struct WorkoutExerciseSection: View {
     /// Warm-ups ramp up to the first working set: 40% × 8, 60% × 5, 80% × 3.
     private var canAddWarmUps: Bool {
         let sets = entry.sortedSets
-        return !sets.contains { $0.setType == .warmup }
+        return tracking == .weightReps
+            && !sets.contains { $0.setType == .warmup }
             && (sets.first { $0.setType != .warmup }?.weightKg ?? 0) > 0
     }
 
@@ -556,6 +560,9 @@ struct WorkoutExerciseSection: View {
             case .heaviestWeight: return "\(kind.title): \(unit.format(kg: set.weightKg)) \(unit.rawValue)"
             case .oneRepMax: return "\(kind.title): \(unit.format(kg: set.estimatedOneRepMaxKg)) \(unit.rawValue)"
             case .mostReps: return "\(kind.title): \(set.reps)"
+            case .longestTime: return "\(kind.title): \(set.durationSeconds.clockString)"
+            case .longestDistance:
+                return "\(kind.title): \(Distance.format(meters: set.distanceMeters, scale: tracking == .weightDistance ? .short : .long, unit: unit))"
             }
         }
         onRecord(RecordBanner(exerciseName: entry.exercise?.name ?? "Exercise", details: details))
@@ -563,9 +570,8 @@ struct WorkoutExerciseSection: View {
 
     private func addSet() {
         let last = entry.sortedSets.last
-        let set = WorkoutSet(order: (last?.order ?? -1) + 1,
-                             weightKg: last?.weightKg ?? 0,
-                             reps: last?.reps ?? 0)
+        let set = WorkoutSet(order: (last?.order ?? -1) + 1)
+        if let last { set.copyValues(from: last) }
         context.insert(set)
         set.workoutExercise = entry
     }
@@ -672,12 +678,49 @@ struct FocusMetricsView: View {
     let unit: WeightUnit
 
     var body: some View {
+        let tracking = entry.exercise?.tracking ?? .weightReps
+        if tracking == .weightReps {
+            strengthMetrics
+        } else {
+            enduranceMetrics(tracking)
+        }
+    }
+
+    /// Time and distance totals for timed or distance exercises.
+    private func enduranceMetrics(_ tracking: TrackingType) -> some View {
+        let working = entry.completedSets.filter { $0.setType != .warmup }
+        let time = working.reduce(0) { $0 + $1.durationSeconds }
+        let distance = working.reduce(0) { $0 + $1.distanceMeters }
+        let scale: Distance.Scale = tracking == .weightDistance ? .short : .long
+        return VStack(alignment: .leading, spacing: 14) {
+            Text("Focus Metrics")
+                .font(.headline)
+            metric("Sets", working.isEmpty ? "N/A" : "\(working.count)")
+            if tracking != .weightDistance {
+                metric("Total Time", time > 0 ? time.clockString : "N/A")
+            }
+            if tracking != .duration {
+                metric("Total Distance", distance > 0 ? Distance.format(meters: distance, scale: scale, unit: unit) : "N/A")
+            }
+            if tracking == .distanceDuration, time > 0, distance > 0 {
+                let perUnit = time / Distance.value(meters: distance, scale: .long, unit: unit)
+                metric("Pace", "\(perUnit.clockString) /\(Distance.symbol(.long, unit: unit))")
+            }
+            Text("Counts checked-off sets.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+        .padding()
+        .frame(minWidth: 280)
+    }
+
+    private var strengthMetrics: some View {
         let working = entry.completedSets.filter { $0.setType != .warmup }
         let volume = entry.volumeKg
         let reps = working.reduce(0) { $0 + $1.reps }
         let lastVolume = entry.exercise?.completedEntries.first?.volumeKg ?? 0
 
-        VStack(alignment: .leading, spacing: 14) {
+        return VStack(alignment: .leading, spacing: 14) {
             Text("Focus Metrics")
                 .font(.headline)
             metric("Total Volume", volume > 0 ? weightText(volume) : "N/A")
@@ -713,13 +756,25 @@ struct FocusMetricsView: View {
 
 struct SetHeaderRow: View {
     let unit: WeightUnit
+    var tracking: TrackingType = .weightReps
 
     var body: some View {
         HStack(spacing: 8) {
             Text("Set").frame(width: 32)
             Text("Previous").frame(maxWidth: .infinity)
-            Text(unit.rawValue).frame(width: 64)
-            Text("Reps").frame(width: 48)
+            switch tracking {
+            case .weightReps:
+                Text(unit.rawValue).frame(width: 64)
+                Text("Reps").frame(width: 48)
+            case .duration:
+                Text("Time").frame(width: 120)
+            case .distanceDuration:
+                Text(Distance.symbol(.long, unit: unit)).frame(width: 56)
+                Text("Time").frame(width: 56)
+            case .weightDistance:
+                Text(unit.rawValue).frame(width: 56)
+                Text(Distance.symbol(.short, unit: unit)).frame(width: 56)
+            }
             Image(systemName: "checkmark").frame(width: 32)
         }
         .font(.caption.bold())
@@ -732,6 +787,7 @@ struct SetRowView: View {
     let label: String
     let previous: WorkoutSet?
     let unit: WeightUnit
+    var tracking: TrackingType = .weightReps
     var isRecord = false
     let onComplete: () -> Void
 
@@ -762,8 +818,7 @@ struct SetRowView: View {
 
             Button {
                 if let previous {
-                    workoutSet.weightKg = previous.weightKg
-                    workoutSet.reps = previous.reps
+                    workoutSet.copyValues(from: previous)
                 }
             } label: {
                 Text(previousText)
@@ -775,13 +830,33 @@ struct SetRowView: View {
             }
             .buttonStyle(.borderless)
 
-            NumberField(value: weightBinding, allowsDecimals: true)
-                .frame(width: 64)
-                .accessibilityLabel("Weight, \(unit.rawValue)")
-
-            NumberField(value: repsBinding, allowsDecimals: false)
-                .frame(width: 48)
-                .accessibilityLabel("Reps")
+            switch tracking {
+            case .weightReps:
+                NumberField(value: weightBinding, allowsDecimals: true)
+                    .frame(width: 64)
+                    .accessibilityLabel("Weight, \(unit.rawValue)")
+                NumberField(value: repsBinding, allowsDecimals: false)
+                    .frame(width: 48)
+                    .accessibilityLabel("Reps")
+            case .duration:
+                DurationField(seconds: $workoutSet.durationSeconds)
+                    .frame(width: 120)
+                    .accessibilityLabel("Time")
+            case .distanceDuration:
+                NumberField(value: distanceBinding(.long), allowsDecimals: true)
+                    .frame(width: 56)
+                    .accessibilityLabel("Distance, \(Distance.symbol(.long, unit: unit))")
+                DurationField(seconds: $workoutSet.durationSeconds)
+                    .frame(width: 56)
+                    .accessibilityLabel("Time")
+            case .weightDistance:
+                NumberField(value: weightBinding, allowsDecimals: true)
+                    .frame(width: 56)
+                    .accessibilityLabel("Weight, \(unit.rawValue)")
+                NumberField(value: distanceBinding(.short), allowsDecimals: false)
+                    .frame(width: 56)
+                    .accessibilityLabel("Distance, \(Distance.symbol(.short, unit: unit))")
+            }
 
             Button {
                 toggleDone()
@@ -798,13 +873,22 @@ struct SetRowView: View {
 
     private var previousText: String {
         guard let previous else { return "–" }
-        return "\(unit.format(kg: previous.weightKg)) × \(previous.reps)"
+        return tracking == .weightReps
+            ? "\(unit.format(kg: previous.weightKg)) × \(previous.reps)"
+            : previous.summary(tracking, unit: unit)
     }
 
     private var weightBinding: Binding<Double> {
         Binding(
             get: { (unit.fromKg(workoutSet.weightKg) * 100).rounded() / 100 },
             set: { workoutSet.weightKg = unit.toKg($0) }
+        )
+    }
+
+    private func distanceBinding(_ scale: Distance.Scale) -> Binding<Double> {
+        Binding(
+            get: { (Distance.value(meters: workoutSet.distanceMeters, scale: scale, unit: unit) * 100).rounded() / 100 },
+            set: { workoutSet.distanceMeters = $0 * Distance.metersPerUnit(scale, unit: unit) }
         )
     }
 
@@ -864,6 +948,67 @@ struct NumberField: View {
     /// Empty for 0 so there's nothing to delete before typing.
     static func display(_ value: Double) -> String {
         value == 0 ? "" : value.formatted(.number.precision(.fractionLength(0...2)).grouping(.never))
+    }
+}
+
+/// Time box with digit-shift entry like a microwave: typing 1, 3, 0 shows 1:30.
+struct DurationField: View {
+    @Binding var seconds: Double
+    @State private var digits = ""
+    @FocusState private var focused: Bool
+
+    var body: some View {
+        TextField("0:00", text: Binding(get: { Self.display(digits) }, set: { newText in
+            digits = String(newText.filter(\.isNumber).drop { $0 == "0" }.suffix(6))
+        }))
+        .keyboardType(.numberPad)
+        .multilineTextAlignment(.center)
+        .textFieldStyle(.roundedBorder)
+        .monospacedDigit()
+        .focused($focused)
+        .onAppear { digits = Self.digits(for: seconds) }
+        .onChange(of: digits) { _, newDigits in
+            let parsed = Self.seconds(from: newDigits)
+            if parsed != seconds { seconds = parsed }
+        }
+        .onChange(of: seconds) { _, newValue in
+            if Self.seconds(from: digits) != newValue { digits = Self.digits(for: newValue) }
+        }
+        .onChange(of: focused) { _, isFocused in
+            // "0:90" becomes "1:30" once you're done typing.
+            if !isFocused { digits = Self.digits(for: seconds) }
+        }
+    }
+
+    /// Digits read from the right: seconds, minutes, hours ("130" → 90 s, "10000" → 1 h).
+    static func seconds(from digits: String) -> Double {
+        let values = digits.compactMap(\.wholeNumberValue)
+        var total = 0
+        for (position, multiplier) in [1, 10, 60, 600, 3600, 36000].enumerated() where position < values.count {
+            total += values[values.count - 1 - position] * multiplier
+        }
+        return Double(total)
+    }
+
+    static func digits(for seconds: Double) -> String {
+        guard seconds > 0 else { return "" }
+        let total = Int(seconds)
+        let text = String(format: "%d%02d%02d", total / 3600, (total % 3600) / 60, total % 60)
+        return String(text.drop { $0 == "0" })
+    }
+
+    /// "130" → "1:30", "5" → "0:05", "10000" → "1:00:00".
+    static func display(_ digits: String) -> String {
+        guard !digits.isEmpty else { return "" }
+        let padded = String(repeating: "0", count: max(0, 3 - digits.count)) + digits
+        var parts: [String] = []
+        var rest = Substring(padded)
+        while rest.count > 2 {
+            parts.insert(String(rest.suffix(2)), at: 0)
+            rest = rest.dropLast(2)
+        }
+        parts.insert(String(rest), at: 0)
+        return parts.joined(separator: ":")
     }
 }
 

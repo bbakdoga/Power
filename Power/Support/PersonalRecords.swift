@@ -3,13 +3,15 @@ import Foundation
 /// Detects when a completed set beats the lifter's previous best for that exercise.
 enum PersonalRecords {
     enum Kind: CaseIterable {
-        case heaviestWeight, oneRepMax, mostReps
+        case heaviestWeight, oneRepMax, mostReps, longestTime, longestDistance
 
         var title: String {
             switch self {
             case .heaviestWeight: return "Heaviest weight"
             case .oneRepMax: return "Best est. 1RM"
             case .mostReps: return "Most reps"
+            case .longestTime: return "Longest time"
+            case .longestDistance: return "Longest distance"
             }
         }
     }
@@ -18,7 +20,7 @@ enum PersonalRecords {
     /// sets before it in the current workout. Warm-ups never count, and an exercise's
     /// first-ever session sets no records (there's nothing to beat yet).
     static func newRecords(for set: WorkoutSet) -> [Kind] {
-        guard set.isDone, set.setType != .warmup, set.reps > 0,
+        guard set.isDone, set.setType != .warmup, set.hasData,
               let entry = set.workoutExercise, let exercise = entry.exercise else { return [] }
 
         let history = exercise.completedWorkingSets
@@ -30,6 +32,20 @@ enum PersonalRecords {
         let baseline = history + earlierToday
 
         var records: [Kind] = []
+        switch exercise.tracking {
+        case .duration:
+            if set.durationSeconds > (baseline.map(\.durationSeconds).max() ?? 0) { records.append(.longestTime) }
+            return records
+        case .distanceDuration, .weightDistance:
+            if exercise.tracking == .weightDistance, set.weightKg > (baseline.map(\.weightKg).max() ?? 0) {
+                records.append(.heaviestWeight)
+            }
+            if set.distanceMeters > (baseline.map(\.distanceMeters).max() ?? 0) { records.append(.longestDistance) }
+            return records
+        case .weightReps:
+            break
+        }
+        guard set.reps > 0 else { return [] }
         if set.weightKg > 0 {
             if set.weightKg > (baseline.map(\.weightKg).max() ?? 0) {
                 records.append(.heaviestWeight)

@@ -621,7 +621,7 @@ struct ExerciseGuide {
             primary: ["Obliques"], secondary: ["Glutes", "Shoulders"],
             steps: ["Lie on your side and prop yourself up on one forearm.",
                     "Lift your hips so your body forms a straight line.",
-                    "Hold, then switch sides. Log the time as reps in seconds."]),
+                    "Hold, then switch sides."]),
         "Dead Bug": ExerciseGuide(
             primary: ["Abs"], secondary: ["Hip Flexors"],
             steps: ["Lie on your back with arms up and knees bent at 90° over your hips.",
@@ -648,7 +648,7 @@ struct ExerciseGuide {
             primary: ["Quads", "Glutes"], secondary: ["Calves", "Core", "Heart & Lungs"],
             steps: ["Grip the sled's poles with your arms extended and lean forward.",
                     "Drive with short, powerful steps, pushing through the balls of your feet.",
-                    "Log the load as weight and the distance in meters as reps."]),
+                    "Push for a set distance, then rest."]),
         "Stationary Bike": ExerciseGuide(
             primary: ["Quads"], secondary: ["Hamstrings", "Glutes", "Heart & Lungs"],
             steps: ["Set the seat so your knee is slightly bent at the bottom of the pedal stroke.",

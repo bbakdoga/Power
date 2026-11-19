@@ -20,6 +20,24 @@ enum Equipment: String, CaseIterable, Identifiable, Codable {
     var title: String { rawValue.capitalized }
 }
 
+/// What each set of an exercise records.
+enum TrackingType: String, CaseIterable, Identifiable, Codable {
+    case weightReps, duration, distanceDuration, weightDistance
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .weightReps: return "Weight & Reps"
+        case .duration: return "Time"
+        case .distanceDuration: return "Distance & Time"
+        case .weightDistance: return "Weight & Distance"
+        }
+    }
+
+    var usesWeight: Bool { self == .weightReps || self == .weightDistance }
+}
+
 /// Which figure the exercise illustrations show.
 enum BodyType: String, CaseIterable, Identifiable {
     case man, woman

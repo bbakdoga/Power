@@ -37,6 +37,40 @@ enum WeightUnit: String, CaseIterable, Identifiable {
     }
 }
 
+/// Distances are stored in meters. Long distances (running) show as km or miles,
+/// short ones (carries, sled) as meters or yards, following the weight unit.
+enum Distance {
+    enum Scale { case long, short }
+
+    static func metersPerUnit(_ scale: Scale, unit: WeightUnit) -> Double {
+        switch (scale, unit) {
+        case (.long, .kg): return 1000
+        case (.long, .lb): return 1609.344
+        case (.short, .kg): return 1
+        case (.short, .lb): return 0.9144
+        }
+    }
+
+    static func symbol(_ scale: Scale, unit: WeightUnit) -> String {
+        switch (scale, unit) {
+        case (.long, .kg): return "km"
+        case (.long, .lb): return "mi"
+        case (.short, .kg): return "m"
+        case (.short, .lb): return "yd"
+        }
+    }
+
+    static func value(meters: Double, scale: Scale, unit: WeightUnit) -> Double {
+        meters / metersPerUnit(scale, unit: unit)
+    }
+
+    static func format(meters: Double, scale: Scale, unit: WeightUnit) -> String {
+        let shown = value(meters: meters, scale: scale, unit: unit)
+        let digits = scale == .long ? 0...2 : 0...0
+        return "\(shown.formatted(.number.precision(.fractionLength(digits)))) \(symbol(scale, unit: unit))"
+    }
+}
+
 enum OneRepMax {
     /// Epley formula: weight × (1 + reps / 30).
     static func epley(weight: Double, reps: Int) -> Double {

@@ -103,11 +103,14 @@ struct WorkoutDetailView: View {
                             Text(labels[index])
                                 .font(.subheadline.bold())
                                 .frame(width: 32, alignment: .leading)
-                            Text("\(entryUnit.format(kg: set.weightKg)) \(entryUnit.rawValue) × \(set.reps)")
+                            let tracking = entry.exercise?.tracking ?? .weightReps
+                            Text(set.summary(tracking, unit: entryUnit))
                             Spacer()
-                            Text("e1RM \(entryUnit.format(kg: set.estimatedOneRepMaxKg))")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                            if tracking == .weightReps {
+                                Text("e1RM \(entryUnit.format(kg: set.estimatedOneRepMaxKg))")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
                         }
                     }
                 }

@@ -120,7 +120,7 @@ struct ExerciseDetailView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(entry.workout?.startDate.formatted(date: .abbreviated, time: .omitted) ?? "")
                             .font(.subheadline.bold())
-                        Text(entry.completedSets.map { "\(unit.format(kg: $0.weightKg)) × \($0.reps)" }.joined(separator: "   "))
+                        Text(entry.completedSets.map { $0.summary(exercise.tracking, unit: unit) }.joined(separator: "   "))
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
@@ -165,6 +165,7 @@ struct ExerciseEditorView: View {
     @State private var muscleGroup: MuscleGroup = .chest
     @State private var equipment: Equipment = .barbell
     @State private var restSeconds = 90
+    @State private var tracking: TrackingType = .weightReps
 
     var body: some View {
         NavigationStack {
@@ -175,6 +176,9 @@ struct ExerciseEditorView: View {
                 }
                 Picker("Equipment", selection: $equipment) {
                     ForEach(Equipment.allCases) { Text($0.title).tag($0) }
+                }
+                Picker("Tracks", selection: $tracking) {
+                    ForEach(TrackingType.allCases) { Text($0.title).tag($0) }
                 }
                 Stepper("Rest timer: \(restSeconds.restLabel)", value: $restSeconds, in: 0...600, step: 15)
             }
@@ -195,6 +199,7 @@ struct ExerciseEditorView: View {
                     muscleGroup = exercise.muscleGroup
                     equipment = exercise.equipment
                     restSeconds = exercise.restSeconds
+                    tracking = exercise.tracking
                 }
             }
         }
@@ -207,9 +212,12 @@ struct ExerciseEditorView: View {
             exercise.muscleGroup = muscleGroup
             exercise.equipment = equipment
             exercise.restSeconds = restSeconds
+            exercise.tracking = tracking
         } else {
-            context.insert(Exercise(name: trimmed, muscleGroup: muscleGroup, equipment: equipment,
-                                    isCustom: true, restSeconds: restSeconds))
+            let new = Exercise(name: trimmed, muscleGroup: muscleGroup, equipment: equipment,
+                               isCustom: true, restSeconds: restSeconds)
+            new.tracking = tracking
+            context.insert(new)
         }
         dismiss()
     }
