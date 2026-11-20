@@ -412,36 +412,8 @@ private struct MuscleBalanceView: View {
                 Text("Log some workouts to see which muscles you train most.")
                     .foregroundStyle(.secondary)
             } else {
-                // Plain rows (label · bar · count) so labels never overlap the bars.
-                VStack(spacing: 8) {
-                    ForEach(items) { item in
-                        let isBehind = behind.contains { $0.group == item.group }
-                        HStack(spacing: 10) {
-                            Text(item.group.title)
-                                .font(.subheadline)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.8)
-                                .frame(width: 84, alignment: .leading)
-                            GeometryReader { geometry in
-                                ZStack(alignment: .leading) {
-                                    Capsule()
-                                        .fill(.quaternary.opacity(0.5))
-                                    Capsule()
-                                        .fill(isBehind ? AnyShapeStyle(.orange) : AnyShapeStyle(.tint))
-                                        .frame(width: item.sets == 0 ? 0
-                                               : max(6, geometry.size.width * CGFloat(item.sets) / CGFloat(top)))
-                                }
-                            }
-                            .frame(height: 8)
-                            Text("\(item.sets)")
-                                .font(.subheadline.monospacedDigit())
-                                .foregroundStyle(.secondary)
-                                .frame(width: 28, alignment: .trailing)
-                        }
-                        .accessibilityElement(children: .ignore)
-                        .accessibilityLabel("\(item.group.title), \(item.sets) sets")
-                    }
-                }
+                MuscleSetBars(items: items.map { ($0.group, $0.sets) },
+                              highlighted: Set(behind.map(\.group)))
 
                 Label {
                     Text(behind.isEmpty

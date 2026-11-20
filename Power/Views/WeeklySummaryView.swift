@@ -95,16 +95,12 @@ struct WeeklySummaryView: View {
                     Text("No sets logged this week.")
                         .foregroundStyle(.secondary)
                 } else {
-                    Chart(groups) { item in
-                        BarMark(x: .value("Sets", item.sets), y: .value("Body part", item.group.title))
-                            .annotation(position: .trailing) {
-                                Text("\(item.sets)")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Working sets")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        MuscleSetBars(items: groups.map { ($0.group, $0.sets) })
                     }
-                    .chartXAxisLabel("Working sets")
-                    .frame(height: CGFloat(groups.count) * 32 + 40)
                     .padding(.vertical, 8)
                 }
             } header: {
@@ -140,6 +136,45 @@ struct WeeklySummaryView: View {
 
     private var trainedDays: Set<Date> {
         Set(workouts.map { calendar.startOfDay(for: $0.startDate) })
+    }
+}
+
+/// Sets per body part as plain rows (label · bar · count). Used instead of a chart so the
+/// labels never overlap the bars. `highlighted` groups are drawn in orange.
+struct MuscleSetBars: View {
+    let items: [(group: MuscleGroup, sets: Int)]
+    var highlighted: Set<MuscleGroup> = []
+
+    var body: some View {
+        let top = max(items.map(\.sets).max() ?? 0, 1)
+        VStack(spacing: 8) {
+            ForEach(items, id: \.group) { item in
+                HStack(spacing: 10) {
+                    Text(item.group.title)
+                        .font(.subheadline)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                        .frame(width: 84, alignment: .leading)
+                    GeometryReader { geometry in
+                        ZStack(alignment: .leading) {
+                            Capsule()
+                                .fill(.quaternary.opacity(0.5))
+                            Capsule()
+                                .fill(highlighted.contains(item.group) ? AnyShapeStyle(.orange) : AnyShapeStyle(.tint))
+                                .frame(width: item.sets == 0 ? 0
+                                       : max(6, geometry.size.width * CGFloat(item.sets) / CGFloat(top)))
+                        }
+                    }
+                    .frame(height: 8)
+                    Text("\(item.sets)")
+                        .font(.subheadline.monospacedDigit())
+                        .foregroundStyle(.secondary)
+                        .frame(width: 28, alignment: .trailing)
+                }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("\(item.group.title), \(item.sets) sets")
+            }
+        }
     }
 }
 
