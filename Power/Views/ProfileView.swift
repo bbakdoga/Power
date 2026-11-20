@@ -49,7 +49,7 @@ struct ProfileView: View {
                 Section("Lifetime") {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
                         StatTile(title: "Workouts", value: "\(workouts.count)",
-                                 systemImage: "figure.strengthtraining.traditional", tint: .accentColor)
+                                 systemImage: "figure.strengthtraining.traditional", tint: nil)
                         StatTile(title: "Week streak", value: "\(WorkoutStats.weekStreak(workouts))",
                                  systemImage: "flame.fill", tint: .orange)
                         StatTile(title: "Total volume", value: compactWeight(totalVolume),
@@ -110,6 +110,7 @@ struct ProfileView: View {
                 }
             }
             .navigationTitle("Profile")
+            .themedScreen()
             .toolbar {
                 Button("Edit") { editing = true }
             }
@@ -125,7 +126,7 @@ struct ProfileView: View {
                 .font(.title.bold())
                 .foregroundStyle(.white)
                 .frame(width: 64, height: 64)
-                .background(Circle().fill(Color.accentColor.gradient))
+                .background(Circle().fill(.tint))
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 4) {
                 Text(name.isEmpty ? String(localized: "Your Profile") : name)

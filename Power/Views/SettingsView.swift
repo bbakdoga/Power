@@ -5,6 +5,7 @@ import CloudKit
 struct SettingsView: View {
     @AppStorage(WeightUnit.storageKey) private var unit: WeightUnit = .kg
     @AppStorage(AppLanguage.storageKey) private var language: AppLanguage = .system
+    @AppStorage(AppTheme.storageKey) private var theme: AppTheme = .system
     @State private var iCloudStatus: ICloudStatus = .checking
 
     /// The picked language differs from the one this launch is running in.
@@ -33,6 +34,21 @@ struct SettingsView: View {
                         Text("Close and reopen Power to switch everything, including the Lock Screen timer.")
                             .foregroundStyle(.orange)
                     }
+                }
+
+                Section("Appearance") {
+                    Picker("Theme", selection: $theme) {
+                        ForEach(AppTheme.allCases) { option in
+                            Label {
+                                Text(option.title)
+                            } icon: {
+                                ThemeSwatch(theme: option)
+                            }
+                            .tag(option)
+                        }
+                    }
+                    .pickerStyle(.inline)
+                    .labelsHidden()
                 }
 
                 Section("Units") {
@@ -88,6 +104,7 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
+            .themedScreen()
             .task { await refreshICloudStatus() }
             .onReceive(NotificationCenter.default.publisher(for: .CKAccountChanged)) { _ in
                 Task { await refreshICloudStatus() }
@@ -128,5 +145,19 @@ private enum ICloudStatus {
         case .signedOut: return String(localized: "Sign in to iCloud in the Settings app (and allow iCloud Drive) to back up your workouts. Until then they're stored only on this iPhone.")
         case .unavailable: return String(localized: "iCloud couldn't be reached. Your workouts are safe on this iPhone and will back up when iCloud is available.")
         }
+    }
+}
+
+/// Two-color circle previewing a theme.
+private struct ThemeSwatch: View {
+    let theme: AppTheme
+
+    var body: some View {
+        let colors = theme.swatch
+        Circle()
+            .fill(LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing))
+            .overlay(Circle().strokeBorder(.secondary.opacity(0.4), lineWidth: 1))
+            .frame(width: 24, height: 24)
+            .accessibilityHidden(true)
     }
 }

@@ -259,7 +259,7 @@ private struct FilterChip: View {
         .padding(.horizontal, 12)
         .padding(.vertical, 6)
         .foregroundStyle(isActive ? Color.white : Color.primary)
-        .background(Capsule().fill(isActive ? AnyShapeStyle(Color.accentColor) : AnyShapeStyle(.quaternary)))
+        .background(Capsule().fill(isActive ? AnyShapeStyle(.tint) : AnyShapeStyle(.quaternary)))
     }
 }
 

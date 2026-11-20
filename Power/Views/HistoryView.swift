@@ -45,6 +45,7 @@ struct HistoryView: View {
                 }
             }
             .navigationTitle("History")
+            .themedScreen()
             .navigationDestination(for: Workout.self) { workout in
                 WorkoutDetailView(workout: workout)
             }
@@ -128,6 +129,7 @@ struct WorkoutDetailView: View {
             }
         }
         .navigationTitle(workout.name)
+        .themedScreen()
         .navigationBarTitleDisplayMode(.inline)
         .alert("Routine saved", isPresented: $savedRoutine) {
             Button("OK", role: .cancel) {}

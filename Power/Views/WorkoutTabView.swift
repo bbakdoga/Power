@@ -119,6 +119,7 @@ struct WorkoutTabView: View {
             }
         }
         .navigationTitle("Workout")
+        .themedScreen()
     }
 
     private func newRoutine() {

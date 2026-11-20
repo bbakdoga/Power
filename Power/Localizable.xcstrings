@@ -573,6 +573,16 @@
         }
       }
     },
+    "Appearance" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Erscheinungsbild"
+          }
+        }
+      }
+    },
     "Apple Health" : {
       "localizations" : {
         "de" : {
@@ -1010,6 +1020,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "D"
+          }
+        }
+      }
+    },
+    "Dark" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dunkel"
           }
         }
       }
@@ -1719,6 +1739,16 @@
         }
       }
     },
+    "Light" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Hell"
+          }
+        }
+      }
+    },
     "Load on each side" : {
       "localizations" : {
         "de" : {
@@ -2139,6 +2169,16 @@
         }
       }
     },
+    "Ocean" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ozean"
+          }
+        }
+      }
+    },
     "Off" : {
       "localizations" : {
         "de" : {
@@ -2235,6 +2275,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Wähle ein Programm, um loszulegen. Du kannst die Routinen jederzeit bearbeiten oder löschen."
+          }
+        }
+      }
+    },
+    "Pink" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Pink"
           }
         }
       }
@@ -2913,6 +2963,16 @@
         }
       }
     },
+    "System" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "System"
+          }
+        }
+      }
+    },
     "System Default" : {
       "localizations" : {
         "de" : {
@@ -2949,6 +3009,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zielgewicht"
+          }
+        }
+      }
+    },
+    "Theme" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Design"
           }
         }
       }

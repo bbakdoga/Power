@@ -33,6 +33,7 @@
 		B22D35CC30A788B2001E9E97 /* WeeklySummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22D35CB30A788B2001E9E97 /* WeeklySummaryView.swift */; };
 		B22D35CE30A78D2F001E9E97 /* WorkoutStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22D35CD30A78D2F001E9E97 /* WorkoutStats.swift */; };
 		B22D35D030A78D4C001E9E97 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22D35CF30A78D4C001E9E97 /* ProfileView.swift */; };
+		B2ACEBCE30B093BD000D3112 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBCD30B093BD000D3112 /* AppTheme.swift */; };
 		B2BC8B6130AF8C6500C69B70 /* WorkoutSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BC8B6030AF8C6500C69B70 /* WorkoutSummaryView.swift */; };
 		B2BC8B6330AF8D1F00C69B70 /* StarterRoutines.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BC8B6230AF8D1F00C69B70 /* StarterRoutines.swift */; };
 		B2BC8B6530AF8D3100C69B70 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BC8B6430AF8D3100C69B70 /* OnboardingView.swift */; };
@@ -101,6 +102,7 @@
 		B22D35CB30A788B2001E9E97 /* WeeklySummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklySummaryView.swift; sourceTree = "<group>"; };
 		B22D35CD30A78D2F001E9E97 /* WorkoutStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStats.swift; sourceTree = "<group>"; };
 		B22D35CF30A78D4C001E9E97 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		B2ACEBCD30B093BD000D3112 /* AppTheme.swift */ = {isa = PBXFileReference; path = AppTheme.swift; sourceTree = "<group>"; };
 		B2BC8B6030AF8C6500C69B70 /* WorkoutSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSummaryView.swift; sourceTree = "<group>"; };
 		B2BC8B6230AF8D1F00C69B70 /* StarterRoutines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarterRoutines.swift; sourceTree = "<group>"; };
 		B2BC8B6430AF8D3100C69B70 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				B22D35C930A78884001E9E97 /* HealthSync.swift */,
 				B22D35CD30A78D2F001E9E97 /* WorkoutStats.swift */,
 				B2BC8B6230AF8D1F00C69B70 /* StarterRoutines.swift */,
+				B2ACEBCD30B093BD000D3112 /* AppTheme.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				B22D35D030A78D4C001E9E97 /* ProfileView.swift in Sources */,
 				B22D35CE30A78D2F001E9E97 /* WorkoutStats.swift in Sources */,
 				B2BC8B6530AF8D3100C69B70 /* OnboardingView.swift in Sources */,
+				B2ACEBCE30B093BD000D3112 /* AppTheme.swift in Sources */,
 				B22D35C630A78814001E9E97 /* WeightSuggestion.swift in Sources */,
 				40CFFCD12AEE7BB82CF1767D /* Enums.swift in Sources */,
 				B22D35C830A7886D001E9E97 /* BodyMeasurementsView.swift in Sources */,

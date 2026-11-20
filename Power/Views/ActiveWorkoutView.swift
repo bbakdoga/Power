@@ -39,6 +39,7 @@ struct ActiveWorkoutView: View {
             }
         }
         .navigationTitle("Workout")
+        .themedScreen()
         .navigationBarTitleDisplayMode(.inline)
         .scrollDismissesKeyboard(.interactively)
         .toolbar {
@@ -637,12 +638,12 @@ struct RestDivider: View {
 
     private func bar(fraction: Double, alignment: Alignment, counting: Bool) -> some View {
         Capsule()
-            .fill(Color.accentColor.opacity(counting ? 0.15 : 0.35))
+            .fill(.tint.opacity(counting ? 0.15 : 0.35))
             .overlay(alignment: alignment) {
                 if counting {
                     GeometryReader { geometry in
                         Capsule()
-                            .fill(Color.accentColor)
+                            .fill(.tint)
                             .frame(width: geometry.size.width * fraction)
                             .frame(maxWidth: .infinity, alignment: alignment)
                     }

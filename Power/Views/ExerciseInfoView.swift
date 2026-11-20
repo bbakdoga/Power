@@ -130,7 +130,7 @@ private struct MuscleRow: View {
                             .padding(.horizontal, 10)
                             .padding(.vertical, 4)
                             .foregroundStyle(highlighted ? Color.white : Color.primary)
-                            .background(Capsule().fill(highlighted ? AnyShapeStyle(Color.accentColor) : AnyShapeStyle(.quaternary)))
+                            .background(Capsule().fill(highlighted ? AnyShapeStyle(.tint) : AnyShapeStyle(.quaternary)))
                     }
                 }
             }

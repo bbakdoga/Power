@@ -5,6 +5,7 @@ import SwiftData
 struct PowerApp: App {
     @State private var restTimer = RestTimer.shared
     @AppStorage(AppLanguage.storageKey) private var language: AppLanguage = .system
+    @AppStorage(AppTheme.storageKey) private var theme: AppTheme = .system
     @Environment(\.scenePhase) private var scenePhase
 
     init() {
@@ -18,6 +19,8 @@ struct PowerApp: App {
             RootTabView()
                 .environment(restTimer)
                 .environment(\.locale, language.locale)
+                .preferredColorScheme(theme.colorScheme)
+                .tint(theme.accent)
         }
         .onChange(of: language) { _, newLanguage in
             newLanguage.applyToBundle()

@@ -38,6 +38,7 @@ struct ExercisesView: View {
             }
             .searchable(text: $search)
             .navigationTitle("Exercises")
+            .themedScreen()
             .navigationDestination(for: Exercise.self) { exercise in
                 ExerciseDetailView(exercise: exercise)
             }
@@ -134,6 +135,7 @@ struct ExerciseDetailView: View {
             }
         }
         .navigationTitle(exercise.name)
+        .themedScreen()
         .toolbar {
             Button("Edit") { editing = true }
         }

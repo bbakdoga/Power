@@ -39,6 +39,7 @@ struct BodyMeasurementsView: View {
             }
         }
         .navigationTitle("Body")
+        .themedScreen()
         .task {
             if healthEnabled {
                 await HealthSync.shared.importBodyweight(into: context)
@@ -108,6 +109,7 @@ struct BodyMeasurementDetailView: View {
             }
         }
         .navigationTitle(kind.localizedTitle(language: language))
+        .themedScreen()
         .toolbar {
             Button {
                 adding = true

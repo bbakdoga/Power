@@ -54,7 +54,7 @@ struct WeeklySummaryView: View {
                 HStack(spacing: 12) {
                     StatTile(title: "Week streak", value: "\(streak)", systemImage: "flame.fill", tint: .orange)
                     StatTile(title: "This week", value: "\(workouts.filter { thisWeek.contains($0.startDate) }.count)",
-                             systemImage: "figure.strengthtraining.traditional", tint: .accentColor)
+                             systemImage: "figure.strengthtraining.traditional", tint: nil)
                 }
                 .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
             }
@@ -120,6 +120,7 @@ struct WeeklySummaryView: View {
             }
         }
         .navigationTitle("Summary")
+        .themedScreen()
     }
 
     private var thisWeek: DateInterval {
@@ -142,13 +143,14 @@ struct StatTile: View {
     let title: LocalizedStringKey
     let value: String
     let systemImage: String
-    let tint: Color
+    /// nil uses the theme's accent color.
+    var tint: Color?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Label(title, systemImage: systemImage)
                 .font(.caption)
-                .foregroundStyle(tint)
+                .foregroundStyle(tint.map(AnyShapeStyle.init) ?? AnyShapeStyle(.tint))
             Text(value)
                 .font(.title.bold().monospacedDigit())
         }
@@ -204,8 +206,8 @@ private struct TrainingCalendar: View {
                             .font(.subheadline.monospacedDigit())
                             .frame(width: 32, height: 32)
                             .foregroundStyle(trained ? Color.white : Color.primary)
-                            .background(Circle().fill(trained ? Color.accentColor : Color.clear))
-                            .overlay(Circle().strokeBorder(isToday ? Color.accentColor : Color.clear, lineWidth: 1.5))
+                            .background(Circle().fill(trained ? AnyShapeStyle(.tint) : AnyShapeStyle(.clear)))
+                            .overlay(Circle().strokeBorder(isToday ? AnyShapeStyle(.tint) : AnyShapeStyle(.clear), lineWidth: 1.5))
                             .accessibilityLabel(day.formatted(date: .complete, time: .omitted) + (trained ? ", trained" : ""))
                     } else {
                         Color.clear.frame(height: 32)
