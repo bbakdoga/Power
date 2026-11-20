@@ -36,15 +36,19 @@ struct ActiveWorkoutView: View {
                 } label: {
                     Label("Add exercises", systemImage: "plus")
                 }
-                Button("Discard workout", role: .destructive) {
-                    confirmingDiscard = true
-                }
             }
         }
         .navigationTitle("Workout")
         .navigationBarTitleDisplayMode(.inline)
         .scrollDismissesKeyboard(.interactively)
         .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel", role: .destructive) {
+                    confirmingDiscard = true
+                }
+                .tint(.red)
+                .accessibilityHint("Discard workout")
+            }
             ToolbarItem(placement: .confirmationAction) {
                 Button("Finish") {
                     if hasCheckedSets || hasUncheckedLoggedSets {
