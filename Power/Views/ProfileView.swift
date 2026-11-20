@@ -18,6 +18,7 @@ struct ProfileView: View {
     @State private var photo: UIImage?
     @State private var range: StatsRange = .month
     @State private var editing = false
+    @State private var openedLift: Exercise?
 
     private struct ExerciseCount: Identifiable {
         let name: String
@@ -61,7 +62,7 @@ struct ProfileView: View {
 
                 Section("Big lifts") {
                     BigLiftsGrid(names: bigLiftNames.split(separator: "|").map(String.init),
-                                 exercises: exercises, appUnit: unit)
+                                 exercises: exercises, appUnit: unit, opened: $openedLift)
                         .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                 }
                 .themedRows()
@@ -107,6 +108,9 @@ struct ProfileView: View {
             }
             .navigationTitle("Profile")
             .themedScreen()
+            .navigationDestination(item: $openedLift) { exercise in
+                ExerciseDetailView(exercise: exercise)
+            }
             .toolbar {
                 Button("Edit") { editing = true }
             }
@@ -325,14 +329,17 @@ private struct BigLiftsGrid: View {
     let names: [String]
     let exercises: [Exercise]
     let appUnit: WeightUnit
+    /// Set to open a lift's page; the destination lives on ProfileView, outside the List.
+    @Binding var opened: Exercise?
 
     var body: some View {
         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
             ForEach(names, id: \.self) { name in
                 if let exercise = exercises.first(where: { $0.name == name && !$0.isCustom })
                     ?? exercises.first(where: { $0.name == name }) {
-                    NavigationLink {
-                        ExerciseDetailView(exercise: exercise)
+                    // A button + navigationDestination avoids the list's disclosure arrows.
+                    Button {
+                        opened = exercise
                     } label: {
                         tile(for: exercise)
                     }
@@ -405,17 +412,36 @@ private struct MuscleBalanceView: View {
                 Text("Log some workouts to see which muscles you train most.")
                     .foregroundStyle(.secondary)
             } else {
-                Chart(items) { item in
-                    BarMark(x: .value("Sets", item.sets), y: .value("Body part", item.group.title))
-                        .foregroundStyle(behind.contains { $0.group == item.group } ? AnyShapeStyle(.orange) : AnyShapeStyle(.tint))
-                        .annotation(position: .trailing) {
+                // Plain rows (label · bar · count) so labels never overlap the bars.
+                VStack(spacing: 8) {
+                    ForEach(items) { item in
+                        let isBehind = behind.contains { $0.group == item.group }
+                        HStack(spacing: 10) {
+                            Text(item.group.title)
+                                .font(.subheadline)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
+                                .frame(width: 84, alignment: .leading)
+                            GeometryReader { geometry in
+                                ZStack(alignment: .leading) {
+                                    Capsule()
+                                        .fill(.quaternary.opacity(0.5))
+                                    Capsule()
+                                        .fill(isBehind ? AnyShapeStyle(.orange) : AnyShapeStyle(.tint))
+                                        .frame(width: item.sets == 0 ? 0
+                                               : max(6, geometry.size.width * CGFloat(item.sets) / CGFloat(top)))
+                                }
+                            }
+                            .frame(height: 8)
                             Text("\(item.sets)")
-                                .font(.caption)
+                                .font(.subheadline.monospacedDigit())
                                 .foregroundStyle(.secondary)
+                                .frame(width: 28, alignment: .trailing)
                         }
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityLabel("\(item.group.title), \(item.sets) sets")
+                    }
                 }
-                .chartXAxis(.hidden)
-                .frame(height: CGFloat(items.count) * 26)
 
                 Label {
                     Text(behind.isEmpty
