@@ -93,8 +93,8 @@ final class RestTimer {
         center.requestAuthorization(options: [.alert, .sound]) { granted, _ in
             guard granted else { return }
             let content = UNMutableNotificationContent()
-            content.title = "Rest is over"
-            content.body = "Time for your next set."
+            content.title = String(localized: "Rest is over")
+            content.body = String(localized: "Time for your next set.")
             content.sound = .default
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
             center.add(UNNotificationRequest(identifier: identifier, content: content, trigger: trigger))
@@ -105,8 +105,17 @@ final class RestTimer {
 
     private func updateLiveActivity() {
         guard let endDate else { return }
+        let name = exerciseName
+        let labels = RestTimerAttributes.Labels(
+            rest: String(localized: "Rest"),
+            resting: String(localized: "Resting"),
+            restIsOver: String(localized: "Rest is over"),
+            go: String(localized: "Go!"),
+            skip: String(localized: "Skip"),
+            next: name.isEmpty ? "" : String(localized: "Next: \(name)"),
+            nextSet: name.isEmpty ? "" : String(localized: "Time for your next set of \(name)"))
         let state = RestTimerAttributes.ContentState(endDate: endDate, totalSeconds: totalSeconds,
-                                                     exerciseName: exerciseName)
+                                                     exerciseName: name, labels: labels)
         // Going stale at the end date switches the activity to its "rest is over" look.
         let content = ActivityContent(state: state, staleDate: endDate)
 

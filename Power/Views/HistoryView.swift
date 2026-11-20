@@ -3,7 +3,9 @@ import SwiftData
 
 struct HistoryView: View {
     @Environment(\.modelContext) private var context
-    @Query(filter: #Predicate<Workout> { $0.endDate != nil }, sort: \Workout.startDate, order: .reverse)
+    @Query(filter: #Predicate<Workout> { $0.endDate != nil && $0.isSavedToHistory },
+           sort: \Workout.startDate,
+           order: .reverse)
     private var workouts: [Workout]
     @AppStorage(WeightUnit.storageKey) private var unit: WeightUnit = .kg
 

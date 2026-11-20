@@ -86,6 +86,9 @@ final class Workout {
     var startDate: Date = Date.now
     /// nil while the workout is in progress.
     var endDate: Date?
+    /// False when the user finishes without adding the workout to History.
+    /// The completed data remains available for statistics and personal records.
+    var isSavedToHistory: Bool = true
     var notes: String = ""
 
     @Relationship(deleteRule: .cascade, inverse: \WorkoutExercise.workout)

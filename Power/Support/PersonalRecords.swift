@@ -7,11 +7,11 @@ enum PersonalRecords {
 
         var title: String {
             switch self {
-            case .heaviestWeight: return "Heaviest weight"
-            case .oneRepMax: return "Best est. 1RM"
-            case .mostReps: return "Most reps"
-            case .longestTime: return "Longest time"
-            case .longestDistance: return "Longest distance"
+            case .heaviestWeight: return String(localized: "Heaviest weight")
+            case .oneRepMax: return String(localized: "Best est. 1RM")
+            case .mostReps: return String(localized: "Most reps")
+            case .longestTime: return String(localized: "Longest time")
+            case .longestDistance: return String(localized: "Longest distance")
             }
         }
     }

@@ -89,10 +89,10 @@ enum WorkoutStarter {
 
     static func defaultName(for date: Date = .now) -> String {
         switch Calendar.current.component(.hour, from: date) {
-        case 5..<12: return "Morning Workout"
-        case 12..<17: return "Afternoon Workout"
-        case 17..<22: return "Evening Workout"
-        default: return "Night Workout"
+        case 5..<12: return String(localized: "Morning Workout")
+        case 12..<17: return String(localized: "Afternoon Workout")
+        case 17..<22: return String(localized: "Evening Workout")
+        default: return String(localized: "Night Workout")
         }
     }
 }

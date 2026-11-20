@@ -9,17 +9,17 @@ enum StarterProgram: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .pushPullLegs: return "Push / Pull / Legs"
-        case .fullBody: return "Full Body"
-        case .upperLower: return "Upper / Lower"
+        case .pushPullLegs: return String(localized: "Push / Pull / Legs")
+        case .fullBody: return String(localized: "Full Body")
+        case .upperLower: return String(localized: "Upper / Lower")
         }
     }
 
     var detail: String {
         switch self {
-        case .pushPullLegs: return "3 routines · train 3–6 days a week"
-        case .fullBody: return "1 routine · great for beginners, 2–3 days a week"
-        case .upperLower: return "2 routines · train 4 days a week"
+        case .pushPullLegs: return String(localized: "3 routines · train 3–6 days a week")
+        case .fullBody: return String(localized: "1 routine · great for beginners, 2–3 days a week")
+        case .upperLower: return String(localized: "2 routines · train 4 days a week")
         }
     }
 

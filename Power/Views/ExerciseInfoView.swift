@@ -15,6 +15,15 @@ struct ExerciseInfoView: View {
     enum Tab: String, CaseIterable, Identifiable {
         case about = "About", trend = "Trend", charts = "Charts", records = "Records"
         var id: String { rawValue }
+
+        var title: String {
+            switch self {
+            case .about: return String(localized: "About")
+            case .trend: return String(localized: "Trend")
+            case .charts: return String(localized: "Charts")
+            case .records: return String(localized: "Records")
+            }
+        }
     }
 
     var body: some View {
@@ -32,7 +41,7 @@ struct ExerciseInfoView: View {
             }
             .safeAreaInset(edge: .top) {
                 Picker("Section", selection: $tab) {
-                    ForEach(Tab.allCases) { Text($0.rawValue).tag($0) }
+                    ForEach(Tab.allCases) { Text($0.title).tag($0) }
                 }
                 .pickerStyle(.segmented)
                 .padding(.horizontal)
@@ -161,7 +170,7 @@ private struct ExerciseTrendTab: View {
                 ForEach(routineItems) { item in
                     HStack {
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(item.routine?.name ?? "Routine")
+                            Text(item.routine?.name ?? String(localized: "Routine"))
                             Text(item.routine?.summary ?? "")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
@@ -188,6 +197,14 @@ private struct ExerciseChartsTab: View {
     enum Metric: String, CaseIterable, Identifiable {
         case oneRepMax = "Est. 1RM", heaviest = "Heaviest", volume = "Volume"
         var id: String { rawValue }
+
+        var title: String {
+            switch self {
+            case .oneRepMax: return String(localized: "Est. 1RM")
+            case .heaviest: return String(localized: "Heaviest")
+            case .volume: return String(localized: "Volume")
+            }
+        }
     }
 
     private struct Point: Identifiable {
@@ -218,7 +235,7 @@ private struct ExerciseChartsTab: View {
         List {
             Section {
                 Picker("Metric", selection: $metric) {
-                    ForEach(Metric.allCases) { Text($0.rawValue).tag($0) }
+                    ForEach(Metric.allCases) { Text($0.title).tag($0) }
                 }
                 .pickerStyle(.segmented)
 
@@ -227,8 +244,8 @@ private struct ExerciseChartsTab: View {
                         .foregroundStyle(.secondary)
                 } else {
                     Chart(data) { point in
-                        LineMark(x: .value("Date", point.date), y: .value(metric.rawValue, point.value))
-                        PointMark(x: .value("Date", point.date), y: .value(metric.rawValue, point.value))
+                        LineMark(x: .value("Date", point.date), y: .value(metric.title, point.value))
+                        PointMark(x: .value("Date", point.date), y: .value(metric.title, point.value))
                     }
                     .chartYScale(domain: .automatic(includesZero: false))
                     .chartYAxisLabel(unit.rawValue)
@@ -439,7 +456,7 @@ private struct ExerciseRecordsTab: View {
 }
 
 private struct RecordTile: View {
-    let title: String
+    let title: LocalizedStringKey
     let value: String
 
     var body: some View {

@@ -131,23 +131,22 @@ struct ActiveWorkoutView: View {
 
                 if !hasUnfinished {
                     promptButton("Save Workout", tint: .green) {
-                        finish(includeUnchecked: true)
+                        finish(includeUnchecked: true, saveToHistory: true)
                     }
                 } else {
                     if hasUncheckedLoggedSets {
                         promptButton("Save & Complete Unfinished Sets", tint: .green) {
-                            finish(includeUnchecked: true)
+                            finish(includeUnchecked: true, saveToHistory: true)
                         }
                     }
                     if hasCheckedSets {
                         promptButton("Save Only Checked Sets", tint: .blue) {
-                            finish(includeUnchecked: false)
+                            finish(includeUnchecked: false, saveToHistory: true)
                         }
                     }
                 }
                 promptButton("Don't Save", tint: .red) {
-                    dismissFinishPrompt()
-                    confirmingDiscard = true
+                    finish(includeUnchecked: true, saveToHistory: false)
                 }
                 promptButton("Keep Training", tint: .gray) {
                     dismissFinishPrompt()
@@ -162,7 +161,7 @@ struct ActiveWorkoutView: View {
         }
     }
 
-    private func promptButton(_ title: String, tint: Color, action: @escaping () -> Void) -> some View {
+    private func promptButton(_ title: LocalizedStringKey, tint: Color, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Text(title)
                 .font(.headline)
@@ -202,8 +201,9 @@ struct ActiveWorkoutView: View {
         }
     }
 
-    private func finish(includeUnchecked: Bool) {
+    private func finish(includeUnchecked: Bool, saveToHistory: Bool) {
         confirmingFinish = false
+        workout.isSavedToHistory = saveToHistory
         var anyDone = false
         for entry in workout.sortedExercises {
             if includeUnchecked {
@@ -360,7 +360,7 @@ struct WorkoutExerciseSection: View {
                         .padding(.vertical, 3)
                         .background(Capsule().fill(.purple))
                 }
-                Text(entry.exercise?.name ?? "Exercise")
+                Text(entry.exercise?.name ?? String(localized: "Exercise"))
                     .font(.headline)
                     .foregroundStyle(.tint)
                     .textCase(nil)
@@ -534,8 +534,8 @@ struct WorkoutExerciseSection: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Text(suggestion.isIncrease
-                     ? "Try \(unit.format(kg: suggestion.suggestedWeightKg)) \(unit.rawValue) today"
-                     : "Stay at \(unit.format(kg: suggestion.suggestedWeightKg)) \(unit.rawValue), aim for \(suggestion.targetReps) reps on every set")
+                     ? String(localized: "Try \(unit.format(kg: suggestion.suggestedWeightKg)) \(unit.rawValue) today")
+                     : String(localized: "Stay at \(unit.format(kg: suggestion.suggestedWeightKg)) \(unit.rawValue), aim for \(suggestion.targetReps) reps on every set"))
                     .font(.subheadline.weight(.medium))
             }
             Spacer(minLength: 0)
@@ -695,12 +695,12 @@ struct FocusMetricsView: View {
         return VStack(alignment: .leading, spacing: 14) {
             Text("Focus Metrics")
                 .font(.headline)
-            metric("Sets", working.isEmpty ? "N/A" : "\(working.count)")
+            metric("Sets", working.isEmpty ? String(localized: "N/A") : "\(working.count)")
             if tracking != .weightDistance {
-                metric("Total Time", time > 0 ? time.clockString : "N/A")
+                metric("Total Time", time > 0 ? time.clockString : String(localized: "N/A"))
             }
             if tracking != .duration {
-                metric("Total Distance", distance > 0 ? Distance.format(meters: distance, scale: scale, unit: unit) : "N/A")
+                metric("Total Distance", distance > 0 ? Distance.format(meters: distance, scale: scale, unit: unit) : String(localized: "N/A"))
             }
             if tracking == .distanceDuration, time > 0, distance > 0 {
                 let perUnit = time / Distance.value(meters: distance, scale: .long, unit: unit)
@@ -723,12 +723,12 @@ struct FocusMetricsView: View {
         return VStack(alignment: .leading, spacing: 14) {
             Text("Focus Metrics")
                 .font(.headline)
-            metric("Total Volume", volume > 0 ? weightText(volume) : "N/A")
+            metric("Total Volume", volume > 0 ? weightText(volume) : String(localized: "N/A"))
             metric("Volume vs. Last Time", volume > 0 && lastVolume > 0
                    ? ((volume - lastVolume) / lastVolume).formatted(.percent.precision(.fractionLength(0)).sign(strategy: .always()))
-                   : "N/A")
-            metric("Total Reps", reps > 0 ? "\(reps)" : "N/A")
-            metric("Weight per Rep", reps > 0 && volume > 0 ? weightText(volume / Double(reps)) : "N/A")
+                   : String(localized: "N/A"))
+            metric("Total Reps", reps > 0 ? "\(reps)" : String(localized: "N/A"))
+            metric("Weight per Rep", reps > 0 && volume > 0 ? weightText(volume / Double(reps)) : String(localized: "N/A"))
             Text("Counts checked-off working sets.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
@@ -737,7 +737,7 @@ struct FocusMetricsView: View {
         .frame(minWidth: 280)
     }
 
-    private func metric(_ title: String, _ value: String) -> some View {
+    private func metric(_ title: LocalizedStringKey, _ value: String) -> some View {
         HStack {
             Text(title)
                 .font(.subheadline.bold())
@@ -837,7 +837,7 @@ struct SetRowView: View {
                     .accessibilityLabel("Weight, \(unit.rawValue)")
                 NumberField(value: repsBinding, allowsDecimals: false)
                     .frame(width: 48)
-                    .accessibilityLabel("Reps")
+                    .accessibilityLabel("Repetitions")
             case .duration:
                 DurationField(seconds: $workoutSet.durationSeconds)
                     .frame(width: 120)

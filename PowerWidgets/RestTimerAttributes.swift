@@ -9,6 +9,19 @@ struct RestTimerAttributes: ActivityAttributes {
         var endDate: Date
         var totalSeconds: Int
         var exerciseName: String
+        /// Text shown on the Lock Screen, translated by the app so it always matches the
+        /// app's language (the widget extension doesn't see the in-app language choice).
+        var labels: Labels = Labels()
+    }
+
+    struct Labels: Codable, Hashable {
+        var rest = "Rest"
+        var resting = "Resting"
+        var restIsOver = "Rest is over"
+        var go = "Go!"
+        var skip = "Skip"
+        var next = ""
+        var nextSet = ""
     }
 }
 

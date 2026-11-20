@@ -127,8 +127,8 @@ struct WeeklySummaryView: View {
     }
 
     private var weekTitle: String {
-        if weekOffset == 0 { return "This week" }
-        if weekOffset == -1 { return "Last week" }
+        if weekOffset == 0 { return String(localized: "This week") }
+        if weekOffset == -1 { return String(localized: "Last week") }
         let end = selectedWeek.end.addingTimeInterval(-1)
         return "\(selectedWeek.start.formatted(.dateTime.day().month(.abbreviated))) – \(end.formatted(.dateTime.day().month(.abbreviated)))"
     }
@@ -139,7 +139,7 @@ struct WeeklySummaryView: View {
 }
 
 struct StatTile: View {
-    let title: String
+    let title: LocalizedStringKey
     let value: String
     let systemImage: String
     let tint: Color

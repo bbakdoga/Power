@@ -39,7 +39,7 @@ struct WorkoutTabView: View {
             }
         }
         .sheet(isPresented: $addingStarters) {
-            StarterRoutinesPicker(buttonTitle: "Add Routines") { addingStarters = false }
+            StarterRoutinesPicker(buttonTitle: String(localized: "Add Routines")) { addingStarters = false }
                 .presentationDetents([.large])
         }
         .sheet(item: $summary) { item in

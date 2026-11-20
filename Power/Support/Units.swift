@@ -117,7 +117,7 @@ extension TimeInterval {
 
 extension Int {
     var restLabel: String {
-        self == 0 ? "Off" : TimeInterval(self).clockString
+        self == 0 ? String(localized: "Off") : TimeInterval(self).clockString
     }
 }
 

@@ -18,7 +18,7 @@ struct OnboardingView: View {
         TabView(selection: $step) {
             welcome.tag(0)
             aboutYou.tag(1)
-            StarterRoutinesPicker(buttonTitle: "Start Training") {
+            StarterRoutinesPicker(buttonTitle: String(localized: "Start Training")) {
                 completed = true
             }
             .tag(2)
@@ -96,7 +96,7 @@ struct OnboardingView: View {
         .scrollDismissesKeyboard(.interactively)
     }
 
-    private func feature(_ systemImage: String, _ text: String) -> some View {
+    private func feature(_ systemImage: String, _ text: LocalizedStringKey) -> some View {
         Label {
             Text(text)
         } icon: {
@@ -106,7 +106,7 @@ struct OnboardingView: View {
         .font(.body)
     }
 
-    private func primaryButton(_ title: String, action: @escaping () -> Void) -> some View {
+    private func primaryButton(_ title: LocalizedStringKey, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Text(title)
                 .font(.headline)
@@ -168,7 +168,7 @@ struct StarterRoutinesPicker: View {
                 }
                 onDone()
             } label: {
-                Text(selected.isEmpty ? "Skip" : buttonTitle)
+                Text(selected.isEmpty ? String(localized: "Skip") : buttonTitle)
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 8)

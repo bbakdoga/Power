@@ -10,6 +10,7 @@ struct WorkoutSummaryView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
+    @Environment(\.locale) private var locale
     @AppStorage(WeightUnit.storageKey) private var unit: WeightUnit = .kg
     @State private var naming = false
     @State private var routineName = ""
@@ -46,6 +47,10 @@ struct WorkoutSummaryView: View {
                         StatTile(title: "Records", value: "\(stats.records.count)", systemImage: "trophy.fill", tint: .yellow)
                     }
                     .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                }
+
+                if let cardio = stats.cardio {
+                    CardioSummarySection(cardio: cardio)
                 }
 
                 if !stats.records.isEmpty {
@@ -97,7 +102,7 @@ struct WorkoutSummaryView: View {
             } message: {
                 Text("Start it again any time from My routines on the Workout tab.")
             }
-            .task {
+            .task(id: locale.identifier) {
                 shareImage = renderShareCard(stats)
             }
         }
@@ -113,17 +118,54 @@ struct WorkoutSummaryView: View {
 
     @MainActor
     private func renderShareCard(_ stats: WorkoutSummaryStats) -> Image? {
-        let renderer = ImageRenderer(content: WorkoutShareCard(workout: workout, stats: stats))
+        let content = WorkoutShareCard(workout: workout, stats: stats)
+            .environment(\.locale, locale)
+        let renderer = ImageRenderer(content: content)
         renderer.scale = 3
         return renderer.uiImage.map { Image(uiImage: $0) }
     }
 }
 
+private struct CardioSummarySection: View {
+    let cardio: WorkoutSummaryStats.Cardio
+
+    var body: some View {
+        Section("Cardio") {
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
+                StatTile(title: "Cardio time",
+                         value: cardio.durationText,
+                         systemImage: "timer",
+                         tint: .orange)
+                if let distanceText = cardio.distanceText {
+                    StatTile(title: "Distance",
+                             value: distanceText,
+                             systemImage: "figure.run",
+                             tint: .blue)
+                }
+                if let paceText = cardio.paceText {
+                    StatTile(title: "Average pace",
+                             value: paceText,
+                             systemImage: "speedometer",
+                             tint: .mint)
+                }
+            }
+            .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+        }
+    }
+}
+
 /// Numbers shared by the summary screen and the share image.
 struct WorkoutSummaryStats {
+    struct Cardio {
+        let durationText: String
+        let distanceText: String?
+        let paceText: String?
+    }
+
     let volumeText: String
     let records: [String]
     let bestSets: [(name: String, best: String)]
+    let cardio: Cardio?
 
     init(workout: Workout, unit appUnit: WeightUnit) {
         let volume = appUnit.fromKg(workout.totalVolumeKg)
@@ -133,10 +175,19 @@ struct WorkoutSummaryStats {
 
         var records: [String] = []
         var bestSets: [(String, String)] = []
+        var cardioDuration: TimeInterval = 0
+        var cardioDistanceMeters = 0.0
+        var cardioSetCount = 0
+
         for entry in workout.sortedExercises {
             guard let exercise = entry.exercise else { continue }
             let unit = exercise.unit(default: appUnit)
             let working = entry.completedSets.filter { $0.setType != .warmup }
+            if exercise.muscleGroup == .cardio {
+                cardioSetCount += working.count
+                cardioDuration += working.reduce(0) { $0 + $1.durationSeconds }
+                cardioDistanceMeters += working.reduce(0) { $0 + $1.distanceMeters }
+            }
             for set in working {
                 for kind in PersonalRecords.newRecords(for: set) {
                     records.append("\(exercise.name): \(kind.title)")
@@ -156,6 +207,25 @@ struct WorkoutSummaryStats {
         // One line per exercise and record type, even if several sets broke it.
         self.records = records.reduce(into: []) { if !$0.contains($1) { $0.append($1) } }
         self.bestSets = bestSets
+
+        if cardioSetCount > 0 {
+            let distanceText = cardioDistanceMeters > 0
+                ? Distance.format(meters: cardioDistanceMeters, scale: .long, unit: appUnit)
+                : nil
+            let paceText: String?
+            if cardioDuration > 0, cardioDistanceMeters > 0 {
+                let distanceUnits = Distance.value(meters: cardioDistanceMeters, scale: .long, unit: appUnit)
+                let secondsPerUnit = cardioDuration / distanceUnits
+                paceText = "\(secondsPerUnit.clockString) / \(Distance.symbol(.long, unit: appUnit))"
+            } else {
+                paceText = nil
+            }
+            cardio = Cardio(durationText: cardioDuration.clockString,
+                            distanceText: distanceText,
+                            paceText: paceText)
+        } else {
+            cardio = nil
+        }
     }
 }
 
@@ -184,6 +254,18 @@ struct WorkoutShareCard: View {
                 if !stats.records.isEmpty {
                     stat("\(stats.records.count)", "Records")
                 }
+            }
+            if let cardio = stats.cardio {
+                HStack(spacing: 16) {
+                    Label(cardio.durationText, systemImage: "timer")
+                    if let distanceText = cardio.distanceText {
+                        Label(distanceText, systemImage: "figure.run")
+                    }
+                    if let paceText = cardio.paceText {
+                        Label(paceText, systemImage: "speedometer")
+                    }
+                }
+                .font(.caption.bold())
             }
             VStack(alignment: .leading, spacing: 8) {
                 ForEach(stats.bestSets.prefix(6), id: \.name) { item in
@@ -214,7 +296,7 @@ struct WorkoutShareCard: View {
         .clipShape(RoundedRectangle(cornerRadius: 28))
     }
 
-    private func stat(_ value: String, _ title: String) -> some View {
+    private func stat(_ value: String, _ title: LocalizedStringKey) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(value)
                 .font(.title3.bold().monospacedDigit())

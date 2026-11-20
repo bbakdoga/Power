@@ -58,7 +58,7 @@ struct ProfileView: View {
                                  systemImage: "clock", tint: .teal)
                         StatTile(title: "Sets", value: "\(totalSets)",
                                  systemImage: "checkmark.circle", tint: .green)
-                        StatTile(title: "Best streak", value: "\(WorkoutStats.longestWeekStreak(workouts)) wk",
+                        StatTile(title: "Best streak", value: String(localized: "\(WorkoutStats.longestWeekStreak(workouts)) wk", comment: "Best streak in weeks, abbreviated"),
                                  systemImage: "trophy.fill", tint: .yellow)
                     }
                     .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
@@ -93,7 +93,7 @@ struct ProfileView: View {
                             .foregroundStyle(.secondary)
                     }
                     ForEach(topExercises) { item in
-                        LabeledContent(item.name, value: item.sessions == 1 ? "1 workout" : "\(item.sessions) workouts")
+                        LabeledContent(item.name, value: String(localized: "\(item.sessions) workouts"))
                     }
                 }
 
@@ -128,7 +128,7 @@ struct ProfileView: View {
                 .background(Circle().fill(Color.accentColor.gradient))
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 4) {
-                Text(name.isEmpty ? "Your Profile" : name)
+                Text(name.isEmpty ? String(localized: "Your Profile") : name)
                     .font(.title2.bold())
                 if let first = workouts.last?.startDate {
                     Text("Training since \(first.formatted(.dateTime.month(.wide).year()))")

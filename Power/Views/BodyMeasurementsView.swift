@@ -7,6 +7,7 @@ struct BodyMeasurementsView: View {
     @Environment(\.modelContext) private var context
     @Query(sort: \BodyMeasurement.date, order: .reverse) private var measurements: [BodyMeasurement]
     @AppStorage(WeightUnit.storageKey) private var unit: WeightUnit = .kg
+    @AppStorage(AppLanguage.storageKey) private var language: AppLanguage = .system
     @AppStorage(HealthSync.enabledKey) private var healthEnabled = false
     @State private var adding = false
 
@@ -18,7 +19,8 @@ struct BodyMeasurementsView: View {
                     BodyMeasurementDetailView(kind: kind)
                 } label: {
                     HStack {
-                        Label(kind.title, systemImage: kind.systemImage)
+                        Label(kind.localizedTitle(language: language),
+                              systemImage: kind.systemImage)
                         Spacer()
                         if let latest = entries.first {
                             VStack(alignment: .trailing, spacing: 2) {
@@ -62,6 +64,7 @@ struct BodyMeasurementDetailView: View {
     @Environment(\.modelContext) private var context
     @Query(sort: \BodyMeasurement.date, order: .reverse) private var measurements: [BodyMeasurement]
     @AppStorage(WeightUnit.storageKey) private var unit: WeightUnit = .kg
+    @AppStorage(AppLanguage.storageKey) private var language: AppLanguage = .system
     @State private var adding = false
 
     var body: some View {
@@ -75,9 +78,11 @@ struct BodyMeasurementDetailView: View {
                 } else {
                     Chart(entries) { entry in
                         LineMark(x: .value("Date", entry.date),
-                                 y: .value(kind.title, kind.displayValue(entry.value, unit: unit)))
+                                 y: .value(kind.localizedTitle(language: language),
+                                           kind.displayValue(entry.value, unit: unit)))
                         PointMark(x: .value("Date", entry.date),
-                                  y: .value(kind.title, kind.displayValue(entry.value, unit: unit)))
+                                  y: .value(kind.localizedTitle(language: language),
+                                           kind.displayValue(entry.value, unit: unit)))
                     }
                     .chartYScale(domain: .automatic(includesZero: false))
                     .chartYAxisLabel(kind.unitLabel(unit))
@@ -102,14 +107,14 @@ struct BodyMeasurementDetailView: View {
                 }
             }
         }
-        .navigationTitle(kind.title)
+        .navigationTitle(kind.localizedTitle(language: language))
         .toolbar {
             Button {
                 adding = true
             } label: {
                 Image(systemName: "plus")
             }
-            .accessibilityLabel("Add \(kind.title)")
+            .accessibilityLabel("Add \(kind.localizedTitle(language: language))")
         }
         .sheet(isPresented: $adding) {
             AddMeasurementView(initialKind: kind)
@@ -124,7 +129,7 @@ private struct ChangeText: View {
 
     var body: some View {
         let shown = kind.displayValue(abs(change), unit: unit).formatted(.number.precision(.fractionLength(0...1)))
-        Text(change == 0 ? "No change" : "\(change > 0 ? "+" : "−")\(shown)")
+        Text(change == 0 ? String(localized: "No change") : "\(change > 0 ? "+" : "−")\(shown)")
             .font(.caption)
             .foregroundStyle(.secondary)
     }
@@ -134,6 +139,7 @@ struct AddMeasurementView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
     @AppStorage(WeightUnit.storageKey) private var unit: WeightUnit = .kg
+    @AppStorage(AppLanguage.storageKey) private var language: AppLanguage = .system
     @AppStorage(HealthSync.enabledKey) private var healthEnabled = false
     @State private var kind: BodyMeasurementKind
     @State private var value: Double?
@@ -147,7 +153,10 @@ struct AddMeasurementView: View {
         NavigationStack {
             Form {
                 Picker("Measurement", selection: $kind) {
-                    ForEach(BodyMeasurementKind.allCases) { Text($0.title).tag($0) }
+                    ForEach(BodyMeasurementKind.allCases) { option in
+                        Text(option.localizedTitle(language: language))
+                            .tag(option)
+                    }
                 }
                 HStack {
                     TextField("Value", value: $value, format: .number)

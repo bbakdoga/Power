@@ -4,12 +4,23 @@ import SwiftData
 @main
 struct PowerApp: App {
     @State private var restTimer = RestTimer.shared
+    @AppStorage(AppLanguage.storageKey) private var language: AppLanguage = .system
     @Environment(\.scenePhase) private var scenePhase
+
+    init() {
+        // Keep the bundle language in sync with the in-app choice from launch on.
+        let stored = UserDefaults.standard.string(forKey: AppLanguage.storageKey)
+        (stored.flatMap(AppLanguage.init(rawValue:)) ?? .system).applyToBundle()
+    }
 
     var body: some Scene {
         WindowGroup {
             RootTabView()
                 .environment(restTimer)
+                .environment(\.locale, language.locale)
+        }
+        .onChange(of: language) { _, newLanguage in
+            newLanguage.applyToBundle()
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active { restTimer.clearIfFinished() }
