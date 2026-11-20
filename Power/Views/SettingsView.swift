@@ -67,6 +67,11 @@ struct SettingsView: View {
                     } label: {
                         Label("Plate calculator", systemImage: "circle.circle")
                     }
+                    NavigationLink {
+                        ImportWorkoutsView()
+                    } label: {
+                        Label("Import Workouts", systemImage: "square.and.arrow.down")
+                    }
                 }
                 .themedRows()
 

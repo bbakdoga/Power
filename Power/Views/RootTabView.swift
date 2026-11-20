@@ -12,6 +12,12 @@ struct RootTabView: View {
     @State private var selection: Tab = .workout
     @AppStorage(Onboarding.completedKey) private var onboarded = false
     @State private var showingOnboarding = false
+    @State private var openedFile: OpenedFile?
+
+    private struct OpenedFile: Identifiable {
+        let url: URL
+        var id: URL { url }
+    }
 
     var body: some View {
         TabView(selection: $selection) {
@@ -46,6 +52,20 @@ struct RootTabView: View {
         }
         .onChange(of: onboarded) { _, done in
             if done { showingOnboarding = false }
+        }
+        .onOpenURL { url in
+            // A CSV shared to Power from another app (e.g. Strong's export): offer to import it.
+            if url.isFileURL { openedFile = OpenedFile(url: url) }
+        }
+        .sheet(item: $openedFile) { file in
+            NavigationStack {
+                ImportWorkoutsView(fileURL: file.url)
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Cancel") { openedFile = nil }
+                        }
+                    }
+            }
         }
         .onChange(of: exercises.count) {
             // Synced exercises from iCloud arrived; merge any built-ins that now appear twice.

@@ -35,6 +35,9 @@
 		B22D35D030A78D4C001E9E97 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22D35CF30A78D4C001E9E97 /* ProfileView.swift */; };
 		B2ACEBCE30B093BD000D3112 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBCD30B093BD000D3112 /* AppTheme.swift */; };
 		B2ACEBD030B09C65000D3112 /* WorkoutSettingsSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBCF30B09C65000D3112 /* WorkoutSettingsSnapshot.swift */; };
+		B2ACEBD230B0A1D7000D3112 /* WorkoutCSVParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBD130B0A1D7000D3112 /* WorkoutCSVParser.swift */; };
+		B2ACEBD430B0A278000D3112 /* WorkoutImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBD330B0A278000D3112 /* WorkoutImporter.swift */; };
+		B2ACEBD630B0A297000D3112 /* ImportWorkoutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBD530B0A297000D3112 /* ImportWorkoutsView.swift */; };
 		B2BC8B6130AF8C6500C69B70 /* WorkoutSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BC8B6030AF8C6500C69B70 /* WorkoutSummaryView.swift */; };
 		B2BC8B6330AF8D1F00C69B70 /* StarterRoutines.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BC8B6230AF8D1F00C69B70 /* StarterRoutines.swift */; };
 		B2BC8B6530AF8D3100C69B70 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BC8B6430AF8D3100C69B70 /* OnboardingView.swift */; };
@@ -104,7 +107,10 @@
 		B22D35CD30A78D2F001E9E97 /* WorkoutStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStats.swift; sourceTree = "<group>"; };
 		B22D35CF30A78D4C001E9E97 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		B2ACEBCD30B093BD000D3112 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
-		B2ACEBCF30B09C65000D3112 /* WorkoutSettingsSnapshot.swift */ = {isa = PBXFileReference; path = WorkoutSettingsSnapshot.swift; sourceTree = "<group>"; };
+		B2ACEBCF30B09C65000D3112 /* WorkoutSettingsSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSettingsSnapshot.swift; sourceTree = "<group>"; };
+		B2ACEBD130B0A1D7000D3112 /* WorkoutCSVParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCSVParser.swift; sourceTree = "<group>"; };
+		B2ACEBD330B0A278000D3112 /* WorkoutImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutImporter.swift; sourceTree = "<group>"; };
+		B2ACEBD530B0A297000D3112 /* ImportWorkoutsView.swift */ = {isa = PBXFileReference; path = ImportWorkoutsView.swift; sourceTree = "<group>"; };
 		B2BC8B6030AF8C6500C69B70 /* WorkoutSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSummaryView.swift; sourceTree = "<group>"; };
 		B2BC8B6230AF8D1F00C69B70 /* StarterRoutines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarterRoutines.swift; sourceTree = "<group>"; };
 		B2BC8B6430AF8D3100C69B70 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -190,6 +196,8 @@
 				B2BC8B6230AF8D1F00C69B70 /* StarterRoutines.swift */,
 				B2ACEBCD30B093BD000D3112 /* AppTheme.swift */,
 				B2ACEBCF30B09C65000D3112 /* WorkoutSettingsSnapshot.swift */,
+				B2ACEBD130B0A1D7000D3112 /* WorkoutCSVParser.swift */,
+				B2ACEBD330B0A278000D3112 /* WorkoutImporter.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -223,6 +231,7 @@
 				B22D35CF30A78D4C001E9E97 /* ProfileView.swift */,
 				B2BC8B6030AF8C6500C69B70 /* WorkoutSummaryView.swift */,
 				B2BC8B6430AF8D3100C69B70 /* OnboardingView.swift */,
+				B2ACEBD530B0A297000D3112 /* ImportWorkoutsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -382,10 +391,13 @@
 				B2ACEBD030B09C65000D3112 /* WorkoutSettingsSnapshot.swift in Sources */,
 				57B597B3DB88370329D7DDEE /* PowerApp.swift in Sources */,
 				3DB3ACB35CDE03107CF77DF7 /* RestTimer.swift in Sources */,
+				B2ACEBD430B0A278000D3112 /* WorkoutImporter.swift in Sources */,
+				B2ACEBD230B0A1D7000D3112 /* WorkoutCSVParser.swift in Sources */,
 				775D3D526170F3B992D4DC28 /* RootTabView.swift in Sources */,
 				F583958722BE681A50DBCA44 /* RoutinesView.swift in Sources */,
 				B22D35C230A78157001E9E97 /* RestTimerAttributes.swift in Sources */,
 				863C18179F238CB387DBE6FB /* SeedData.swift in Sources */,
+				B2ACEBD630B0A297000D3112 /* ImportWorkoutsView.swift in Sources */,
 				B22D35CC30A788B2001E9E97 /* WeeklySummaryView.swift in Sources */,
 				AA8D9491A537B916E9774D3E /* SettingsView.swift in Sources */,
 				A6591BFEC8E1FB82625ACEB8 /* Units.swift in Sources */,

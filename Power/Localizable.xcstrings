@@ -69,6 +69,22 @@
         }
       }
     },
+    "%@ × %lld → %@ × %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$@ × %2$lld → %3$@ × %4$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ × %2$lld → %3$@ × %4$lld"
+          }
+        }
+      }
+    },
     "%@, %lld sets" : {
       "localizations" : {
         "de" : {
@@ -164,12 +180,116 @@
         }
       }
     },
+    "%lld matched to Power exercises" : {
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Power-Übung zugeordnet"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Power-Übungen zugeordnet"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Power-Übungen zugeordnet"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld matched to a Power exercise"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld matched to Power exercises"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld matched to Power exercises"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld more to reach your goal" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Noch %lld bis zu deinem Ziel"
+          }
+        }
+      }
+    },
+    "%lld new custom exercises" : {
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld neue eigene Übung"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld neue eigene Übungen"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld neue eigene Übungen"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld new custom exercise"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld new custom exercises"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld new custom exercises"
+                }
+              }
+            }
           }
         }
       }
@@ -814,6 +934,16 @@
         }
       }
     },
+    "Already in Power (skipped)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Schon in Power (übersprungen)"
+          }
+        }
+      }
+    },
     "AMOLED Black" : {
       "localizations" : {
         "de" : {
@@ -1175,6 +1305,16 @@
         }
       }
     },
+    "Bring your history" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Bring deinen Verlauf mit"
+          }
+        }
+      }
+    },
     "Cable" : {
       "localizations" : {
         "de" : {
@@ -1261,6 +1401,26 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Brust"
+          }
+        }
+      }
+    },
+    "Choose a Different File" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Andere Datei auswählen"
+          }
+        }
+      }
+    },
+    "Choose CSV File" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "CSV-Datei auswählen"
           }
         }
       }
@@ -1362,6 +1522,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Datum"
+          }
+        }
+      }
+    },
+    "Dates" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zeitraum"
           }
         }
       }
@@ -1717,6 +1887,16 @@
         }
       }
     },
+    "File" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Datei"
+          }
+        }
+      }
+    },
     "Finish" : {
       "localizations" : {
         "de" : {
@@ -1784,6 +1964,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Fokus-Kennzahlen"
+          }
+        }
+      }
+    },
+    "Format" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Format"
           }
         }
       }
@@ -2008,12 +2198,156 @@
         }
       }
     },
+    "Import %lld workouts" : {
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Workout importieren"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Workouts importieren"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Workouts importieren"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Import %lld workout"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Import %lld workouts"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Import %lld workouts"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Import Workouts" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Workouts importieren"
+          }
+        }
+      }
+    },
+    "Import workouts exported as a CSV file from Strong, Hevy or another app. Your sets, records and charts carry over." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Importiere Workouts, die du als CSV-Datei aus Strong, Hevy oder einer anderen App exportiert hast. Deine Sätze, Rekorde und Diagramme werden übernommen."
+          }
+        }
+      }
+    },
+    "Imported %lld workouts" : {
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Workout importiert"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Workouts importiert"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Workouts importiert"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Imported %lld workout"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Imported %lld workouts"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Imported %lld workouts"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Imported Workout" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Importiertes Workout"
+          }
+        }
+      }
+    },
     "In routines" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "In Routinen"
+          }
+        }
+      }
+    },
+    "In Strong: Settings → Export Data. In Hevy: Settings → Export & Import Data." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "In Strong: Einstellungen → Daten exportieren. In Hevy: Einstellungen → Daten exportieren & importieren."
           }
         }
       }
@@ -2585,6 +2919,16 @@
         }
       }
     },
+    "No workouts were found in this file." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "In dieser Datei wurden keine Workouts gefunden."
+          }
+        }
+      }
+    },
     "No workouts yet" : {
       "localizations" : {
         "de" : {
@@ -2631,6 +2975,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Notizen"
+          }
+        }
+      }
+    },
+    "Nothing new to import" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nichts Neues zu importieren"
           }
         }
       }
@@ -2805,6 +3159,16 @@
         }
       }
     },
+    "Possible typos" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mögliche Tippfehler"
+          }
+        }
+      }
+    },
     "POWER" : {
       "localizations" : {
         "de" : {
@@ -2821,6 +3185,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Einstellungen"
+          }
+        }
+      }
+    },
+    "Preview" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Vorschau"
           }
         }
       }
@@ -3549,12 +3923,62 @@
         }
       }
     },
+    "The file couldn't be read." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Die Datei konnte nicht gelesen werden."
+          }
+        }
+      }
+    },
+    "The file doesn't say. Pick the unit you used in the other app." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Die Datei enthält dazu keine Angabe. Wähle die Einheit, die du in der anderen App verwendet hast."
+          }
+        }
+      }
+    },
+    "The file is empty." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Die Datei ist leer."
+          }
+        }
+      }
+    },
     "Theme" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Design"
+          }
+        }
+      }
+    },
+    "These weights are much heavier than your usual sets, like a missing decimal point. Turned on means the corrected weight is imported." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Diese Gewichte sind viel schwerer als bei deinen üblichen Sätzen, als würde ein Komma fehlen. Ist ein Schalter aktiviert, wird das korrigierte Gewicht importiert."
+          }
+        }
+      }
+    },
+    "They're in History now, and your records, charts and profile include them." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Sie sind jetzt im Verlauf und fließen in deine Rekorde, Diagramme und dein Profil ein."
           }
         }
       }
@@ -3575,6 +3999,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Diese Übung ist noch in keiner Routine."
+          }
+        }
+      }
+    },
+    "This file doesn't look like a workout export. Missing columns: %@." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Diese Datei scheint kein Workout-Export zu sein. Fehlende Spalten: %@."
           }
         }
       }
@@ -4113,6 +4547,16 @@
         }
       }
     },
+    "Weights in this file are in" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Gewichte in dieser Datei sind in"
+          }
+        }
+      }
+    },
     "Welcome to Power" : {
       "localizations" : {
         "de" : {
@@ -4211,6 +4655,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Workouts pro Woche in den letzten 12 Wochen"
+          }
+        }
+      }
+    },
+    "Workouts to import" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zu importierende Workouts"
           }
         }
       }
