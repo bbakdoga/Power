@@ -176,7 +176,7 @@ struct WorkoutSummaryStats {
     init(workout: Workout, unit appUnit: WeightUnit) {
         let volume = appUnit.fromKg(workout.totalVolumeKg)
         volumeText = volume >= 10_000
-            ? "\((volume / 1000).formatted(.number.precision(.fractionLength(0...1))))k \(appUnit.rawValue)"
+            ? "\(volume.formatted(.number.notation(.compactName).precision(.fractionLength(0...1)))) \(appUnit.rawValue)"
             : "\(volume.formatted(.number.precision(.fractionLength(0)))) \(appUnit.rawValue)"
 
         var records: [String] = []

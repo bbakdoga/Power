@@ -112,6 +112,16 @@
         }
       }
     },
+    "%lld more to reach your goal" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Noch %lld bis zu deinem Ziel"
+          }
+        }
+      }
+    },
     "%lld reps" : {
       "localizations" : {
         "de" : {
@@ -192,8 +202,61 @@
         }
       }
     },
+    "%lld week streak" : {
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Woche in Folge"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Wochen in Folge"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Wochen in Folge"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld week streak"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld week streak"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld week streak"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld wk" : {
       "comment" : "Best streak in weeks, abbreviated",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -243,6 +306,126 @@
         }
       }
     },
+    "%lld workouts a week" : {
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Workout pro Woche"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Workouts pro Woche"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Workouts pro Woche"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld workout a week"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld workouts a week"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld workouts a week"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld workouts in the last 12 months" : {
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Workout in den letzten 12 Monaten"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Workouts in den letzten 12 Monaten"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Workouts in den letzten 12 Monaten"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld workout in the last 12 months"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld workouts in the last 12 months"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld workouts in the last 12 months"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld/%lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$lld/%2$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld"
+          }
+        }
+      }
+    },
     "%lld×" : {
       "localizations" : {
         "de" : {
@@ -259,6 +442,22 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "+ %lld weitere"
+          }
+        }
+      }
+    },
+    "+%@ %@ since start" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "+%1$@ %2$@ seit Beginn"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "+%1$@ %2$@ since start"
           }
         }
       }
@@ -533,6 +732,16 @@
         }
       }
     },
+    "All" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Gesamt"
+          }
+        }
+      }
+    },
     "All Body Parts" : {
       "localizations" : {
         "de" : {
@@ -643,6 +852,16 @@
         }
       }
     },
+    "Avg. workout" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ø Workout"
+          }
+        }
+      }
+    },
     "Back" : {
       "localizations" : {
         "de" : {
@@ -699,6 +918,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Langhantel"
+          }
+        }
+      }
+    },
+    "Behind: %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zu wenig: %@"
           }
         }
       }
@@ -774,6 +1003,7 @@
       }
     },
     "Best streak" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -799,6 +1029,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Bizeps"
+          }
+        }
+      }
+    },
+    "Big lifts" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Grundübungen"
           }
         }
       }
@@ -923,6 +1163,16 @@
         }
       }
     },
+    "Change Photo" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Foto ändern"
+          }
+        }
+      }
+    },
     "Charts" : {
       "localizations" : {
         "de" : {
@@ -959,6 +1209,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Brust"
+          }
+        }
+      }
+    },
+    "Choose Photo" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Foto auswählen"
           }
         }
       }
@@ -1416,6 +1676,7 @@
       }
     },
     "Finish a workout to see your training here." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1521,6 +1782,78 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Los!"
+          }
+        }
+      }
+    },
+    "Goal (e.g. Building strength 💪)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ziel (z. B. Kraft aufbauen 💪)"
+          }
+        }
+      }
+    },
+    "Goal reached! 🎉" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ziel erreicht! 🎉"
+          }
+        }
+      }
+    },
+    "Goal: %lld workouts a week" : {
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Ziel: %lld Workout pro Woche"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Ziel: %lld Workouts pro Woche"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Ziel: %lld Workouts pro Woche"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Goal: %lld workout a week"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Goal: %lld workouts a week"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Goal: %lld workouts a week"
+                }
+              }
+            }
           }
         }
       }
@@ -1739,12 +2072,33 @@
         }
       }
     },
+    "Less" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Weniger"
+          }
+        }
+      }
+    },
     "Lifetime" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Insgesamt"
+          }
+        }
+      }
+    },
+    "Lift %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Übung %lld"
           }
         }
       }
@@ -1765,6 +2119,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Gewicht pro Seite"
+          }
+        }
+      }
+    },
+    "Log some workouts to see which muscles you train most." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Erfasse ein paar Workouts, um zu sehen, welche Muskeln du am meisten trainierst."
           }
         }
       }
@@ -1879,6 +2243,26 @@
         }
       }
     },
+    "Month" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Monat"
+          }
+        }
+      }
+    },
+    "More" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mehr"
+          }
+        }
+      }
+    },
     "Morning Workout" : {
       "localizations" : {
         "de" : {
@@ -1905,6 +2289,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Meiste Wdh. in einem Satz"
+          }
+        }
+      }
+    },
+    "Muscle balance" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Muskelbalance"
           }
         }
       }
@@ -2049,6 +2443,16 @@
         }
       }
     },
+    "Nicely balanced 👍" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Schön ausgewogen 👍"
+          }
+        }
+      }
+    },
     "Night Workout" : {
       "localizations" : {
         "de" : {
@@ -2149,6 +2553,16 @@
         }
       }
     },
+    "Not done yet" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Noch nicht gemacht"
+          }
+        }
+      }
+    },
     "Not trained this week" : {
       "localizations" : {
         "de" : {
@@ -2245,6 +2659,26 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Vergangene Workouts behalten ihre Sätze, zeigen den Namen dieser Übung aber nicht mehr an."
+          }
+        }
+      }
+    },
+    "Per week" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Pro Woche"
+          }
+        }
+      }
+    },
+    "Period" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zeitraum"
           }
         }
       }
@@ -2405,6 +2839,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Aus Supersatz entfernen"
+          }
+        }
+      }
+    },
+    "Remove Photo" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Foto entfernen"
           }
         }
       }
@@ -2779,6 +3223,26 @@
         }
       }
     },
+    "Shown as a ring on your profile." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Wird als Ring in deinem Profil angezeigt."
+          }
+        }
+      }
+    },
+    "Shown with your best estimated 1RM on your profile." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Wird mit deinem besten geschätzten 1RM in deinem Profil angezeigt."
+          }
+        }
+      }
+    },
     "Sign in to iCloud in the Settings app (and allow iCloud Drive) to back up your workouts. Until then they're stored only on this iPhone." : {
       "localizations" : {
         "de" : {
@@ -2927,6 +3391,16 @@
         }
       }
     },
+    "Stats" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Statistik"
+          }
+        }
+      }
+    },
     "Stay at %@ %@, aim for %lld reps on every set" : {
       "localizations" : {
         "de" : {
@@ -3049,6 +3523,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Diese Übung ist noch in keiner Routine."
+          }
+        }
+      }
+    },
+    "this week" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "diese Woche"
           }
         }
       }
@@ -3224,11 +3708,38 @@
       }
     },
     "Training since %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Training seit %@"
+          }
+        }
+      }
+    },
+    "Training since %@ · %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Training seit %1$@ · %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Training since %1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "Training year" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Trainingsjahr"
           }
         }
       }
@@ -3440,6 +3951,16 @@
         }
       }
     },
+    "Weekly goal" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Wochenziel"
+          }
+        }
+      }
+    },
     "Weekly summary" : {
       "localizations" : {
         "de" : {
@@ -3570,6 +4091,16 @@
         }
       }
     },
+    "Working sets in the last 30 days." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Arbeitssätze in den letzten 30 Tagen."
+          }
+        }
+      }
+    },
     "Workout" : {
       "localizations" : {
         "de" : {
@@ -3611,6 +4142,7 @@
       }
     },
     "Workouts per week" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3621,6 +4153,7 @@
       }
     },
     "Workouts per week for the last 12 weeks" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3636,6 +4169,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Workouts, Routinen und Übungen werden in deiner iCloud gesichert und mit deinen anderen Geräten synchronisiert."
+          }
+        }
+      }
+    },
+    "Year" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Jahr"
           }
         }
       }
