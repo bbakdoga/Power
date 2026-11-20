@@ -234,17 +234,22 @@ struct ActiveWorkoutView: View {
         if anyDone {
             let end = Date.now
             workout.endDate = end
+            WorkoutSettingsSnapshot.clear()
             if healthEnabled {
                 HealthSync.shared.saveWorkout(start: workout.startDate, end: end)
             }
         } else {
+            // Nothing to save, so treat it like a cancel.
+            WorkoutSettingsSnapshot.restore(for: workout, in: context)
             context.delete(workout)
         }
         try? context.save()
     }
 
+    /// Cancel: delete the workout and undo exercise setting changes made during it.
     private func discard() {
         restTimer.stop()
+        WorkoutSettingsSnapshot.restore(for: workout, in: context)
         context.delete(workout)
         try? context.save()
     }
@@ -296,7 +301,7 @@ struct WorkoutExerciseSection: View {
     @Environment(\.modelContext) private var context
     @Environment(RestTimer.self) private var restTimer
     @AppStorage(WeightUnit.storageKey) private var appUnit: WeightUnit = .kg
-    @AppStorage("showWeightSuggestions") private var showSuggestions = true
+    @AppStorage(WorkoutSettingsSnapshot.showSuggestionsKey) private var showSuggestions = true
     @State private var showingNote = false
     @State private var showingStickyNote = false
     @State private var editingRest = false
@@ -392,11 +397,24 @@ struct WorkoutExerciseSection: View {
             }
             .sheet(isPresented: $replacing) {
                 ExercisePickerView(singleSelection: true) { selected in
-                    if let replacement = selected.first { entry.exercise = replacement }
+                    if let replacement = selected.first {
+                        rememberSettings(of: replacement)
+                        entry.exercise = replacement
+                    }
                 }
             }
         }
         .themedRows()
+        .onAppear {
+            if let exercise = entry.exercise { rememberSettings(of: exercise) }
+        }
+    }
+
+    /// Lets Cancel undo setting changes made during this workout.
+    private func rememberSettings(of exercise: Exercise) {
+        if let workout = entry.workout {
+            WorkoutSettingsSnapshot.remember(exercise, in: workout)
+        }
     }
 
     private var tracking: TrackingType { entry.exercise?.tracking ?? .weightReps }
