@@ -26,6 +26,7 @@ struct PlateCalculatorView: View {
                     }
                 }
             }
+            .themedRows()
 
             Section("Load on each side") {
                 if result.perSide.isEmpty {
@@ -44,6 +45,7 @@ struct PlateCalculatorView: View {
                         .foregroundStyle(.orange)
                 }
             }
+            .themedRows()
         }
         .navigationTitle("Plate Calculator")
         .onAppear {

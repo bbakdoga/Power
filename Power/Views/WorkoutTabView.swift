@@ -68,6 +68,7 @@ struct WorkoutTabView: View {
                         .font(.headline)
                 }
             }
+            .themedRows()
 
             Section {
                 if routines.isEmpty {
@@ -117,6 +118,7 @@ struct WorkoutTabView: View {
                     }
                 }
             }
+            .themedRows()
         }
         .navigationTitle("Workout")
         .themedScreen()

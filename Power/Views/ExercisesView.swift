@@ -33,6 +33,7 @@ struct ExercisesView: View {
                                 }
                             }
                         }
+                        .themedRows()
                     }
                 }
             }
@@ -89,6 +90,7 @@ struct ExerciseDetailView: View {
             Section {
                 ExerciseGraphicView(exercise: exercise)
             }
+            .themedRows()
 
             Section("Estimated 1-rep max (\(unit.rawValue))") {
                 if points.count < 2 {
@@ -104,6 +106,7 @@ struct ExerciseDetailView: View {
                     .padding(.vertical, 8)
                 }
             }
+            .themedRows()
 
             Section("Personal records") {
                 LabeledContent("Heaviest weight", value: weightText(sets.map(\.weightKg).max()))
@@ -111,6 +114,7 @@ struct ExerciseDetailView: View {
                 LabeledContent("Most reps in one set", value: sets.map(\.reps).max().map { "\($0)" } ?? "–")
                 LabeledContent("Best session volume", value: weightText(entries.map(\.volumeKg).max()))
             }
+            .themedRows()
 
             Section("History") {
                 if entries.isEmpty {
@@ -127,11 +131,13 @@ struct ExerciseDetailView: View {
                     }
                 }
             }
+            .themedRows()
 
             if exercise.isCustom {
                 Section {
                     Button("Delete exercise", role: .destructive) { confirmingDelete = true }
                 }
+                .themedRows()
             }
         }
         .navigationTitle(exercise.name)

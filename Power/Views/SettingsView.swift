@@ -35,6 +35,7 @@ struct SettingsView: View {
                             .foregroundStyle(.orange)
                     }
                 }
+                .themedRows()
 
                 Section("Appearance") {
                     Picker("Theme", selection: $theme) {
@@ -50,6 +51,7 @@ struct SettingsView: View {
                     .pickerStyle(.inline)
                     .labelsHidden()
                 }
+                .themedRows()
 
                 Section("Units") {
                     Picker("Weight", selection: $unit) {
@@ -57,6 +59,7 @@ struct SettingsView: View {
                     }
                     .pickerStyle(.segmented)
                 }
+                .themedRows()
 
                 Section("Tools") {
                     NavigationLink {
@@ -65,6 +68,7 @@ struct SettingsView: View {
                         Label("Plate calculator", systemImage: "circle.circle")
                     }
                 }
+                .themedRows()
 
                 if HealthSync.shared.isAvailable {
                     Section {
@@ -84,6 +88,7 @@ struct SettingsView: View {
                     } footer: {
                         Text("Saves finished workouts and the bodyweight you log to Health, and imports bodyweight from your scale or the Health app. You can change exactly what's shared in the Health app.")
                     }
+                    .themedRows()
                 }
 
                 Section {
@@ -96,12 +101,14 @@ struct SettingsView: View {
                 } footer: {
                     Text(iCloudStatus.footer)
                 }
+                .themedRows()
 
                 Section {
                     LabeledContent("Version", value: Bundle.main.appVersion)
                 } footer: {
                     Text("Every feature is free.")
                 }
+                .themedRows()
             }
             .navigationTitle("Settings")
             .themedScreen()

@@ -23,6 +23,7 @@ struct ActiveWorkoutView: View {
                         .foregroundStyle(.secondary)
                 }
             }
+            .themedRows()
 
             ForEach(workout.sortedExercises) { entry in
                 WorkoutExerciseSection(entry: entry) { banner in
@@ -37,6 +38,7 @@ struct ActiveWorkoutView: View {
                     Label("Add exercises", systemImage: "plus")
                 }
             }
+            .themedRows()
         }
         .navigationTitle("Workout")
         .themedScreen()
@@ -394,6 +396,7 @@ struct WorkoutExerciseSection: View {
                 }
             }
         }
+        .themedRows()
     }
 
     private var tracking: TrackingType { entry.exercise?.tracking ?? .weightReps }

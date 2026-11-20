@@ -75,6 +75,7 @@ private struct ExerciseAboutTab: View {
                 LabeledContent("Body part", value: exercise.muscleGroup.title)
                 LabeledContent("Equipment", value: exercise.equipment.title)
             }
+            .themedRows()
 
             if let guide {
                 Section("Muscles worked") {
@@ -83,6 +84,7 @@ private struct ExerciseAboutTab: View {
                         MuscleRow(title: "Secondary", muscles: guide.secondary, highlighted: false)
                     }
                 }
+                .themedRows()
 
                 Section("How to perform") {
                     ForEach(Array(guide.steps.enumerated()), id: \.offset) { index, step in
@@ -96,17 +98,20 @@ private struct ExerciseAboutTab: View {
                         }
                     }
                 }
+                .themedRows()
             } else {
                 Section("How to perform") {
                     Text("No instructions for this exercise yet.")
                         .foregroundStyle(.secondary)
                 }
+                .themedRows()
             }
 
             if !exercise.notes.isEmpty {
                 Section("Notes") {
                     Text(exercise.notes)
                 }
+                .themedRows()
             }
         }
     }
@@ -161,6 +166,7 @@ private struct ExerciseTrendTab: View {
                 }
                 LabeledContent("In routines", value: "\(routineItems.count)")
             }
+            .themedRows()
 
             Section("Routines with this exercise") {
                 if routineItems.isEmpty {
@@ -183,6 +189,7 @@ private struct ExerciseTrendTab: View {
                     }
                 }
             }
+            .themedRows()
         }
     }
 }
@@ -253,6 +260,7 @@ private struct ExerciseChartsTab: View {
                     .padding(.vertical, 8)
                 }
             }
+            .themedRows()
 
             Section("Statistics") {
                 LabeledContent("Sessions", value: "\(exercise.completedEntries.count)")
@@ -266,6 +274,7 @@ private struct ExerciseChartsTab: View {
                                     .formatted(.number.precision(.fractionLength(0...1))))
                 }
             }
+            .themedRows()
         }
     }
 }
@@ -320,6 +329,7 @@ private struct ExerciseEnduranceTab: View {
                     .padding(.vertical, 8)
                 }
             }
+            .themedRows()
 
             Section("Records") {
                 if exercise.tracking != .weightDistance {
@@ -339,6 +349,7 @@ private struct ExerciseEnduranceTab: View {
                     LabeledContent("Best pace", value: "\(pace.clockString) /\(Distance.symbol(.long, unit: unit))")
                 }
             }
+            .themedRows()
 
             Section("Statistics") {
                 LabeledContent("Sessions", value: "\(exercise.completedEntries.count)")
@@ -350,6 +361,7 @@ private struct ExerciseEnduranceTab: View {
                     LabeledContent("Total distance", value: distanceText(totalDistance))
                 }
             }
+            .themedRows()
         }
     }
 
@@ -413,6 +425,7 @@ private struct ExerciseRecordsTab: View {
                 }
                 LabeledContent("Most reps in one set", value: sets.map(\.reps).max().map { "\($0)" } ?? "–")
             }
+            .themedRows()
 
             Section("Rep records") {
                 if records.isEmpty {
@@ -446,6 +459,7 @@ private struct ExerciseRecordsTab: View {
                     .padding(.vertical, 4)
                 }
             }
+            .themedRows()
         }
     }
 

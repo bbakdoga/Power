@@ -16,6 +16,7 @@ struct RoutineEditorView: View {
                     .font(.headline)
                 TextField("Notes", text: $routine.notes, axis: .vertical)
             }
+            .themedRows()
 
             Section("Exercises") {
                 ForEach(routine.sortedExercises) { item in
@@ -40,6 +41,7 @@ struct RoutineEditorView: View {
                     Label("Add exercises", systemImage: "plus")
                 }
             }
+            .themedRows()
 
             Section {
                 Button {
@@ -54,6 +56,7 @@ struct RoutineEditorView: View {
                     Text("Finish your current workout before starting another.")
                 }
             }
+            .themedRows()
         }
         .navigationTitle(routine.name.isEmpty ? "Routine" : routine.name)
         .navigationBarTitleDisplayMode(.inline)

@@ -91,6 +91,7 @@ struct BodyMeasurementDetailView: View {
                     .padding(.vertical, 8)
                 }
             }
+            .themedRows()
 
             Section("History") {
                 if entries.isEmpty {
@@ -107,6 +108,7 @@ struct BodyMeasurementDetailView: View {
                     }
                 }
             }
+            .themedRows()
         }
         .navigationTitle(kind.localizedTitle(language: language))
         .themedScreen()

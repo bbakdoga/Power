@@ -38,6 +38,7 @@ struct WorkoutSummaryView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 8)
                 }
+                .themedRows()
 
                 Section {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
@@ -48,6 +49,7 @@ struct WorkoutSummaryView: View {
                     }
                     .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                 }
+                .themedRows()
 
                 if let cardio = stats.cardio {
                     CardioSummarySection(cardio: cardio)
@@ -60,6 +62,7 @@ struct WorkoutSummaryView: View {
                                 .labelStyle(TintedIconLabelStyle(tint: .yellow))
                         }
                     }
+                    .themedRows()
                 }
 
                 Section("Best sets") {
@@ -67,6 +70,7 @@ struct WorkoutSummaryView: View {
                         LabeledContent(item.name, value: item.best)
                     }
                 }
+                .themedRows()
 
                 Section {
                     if let shareImage {
@@ -87,6 +91,7 @@ struct WorkoutSummaryView: View {
                             .foregroundStyle(.secondary)
                     }
                 }
+                .themedRows()
             }
             .navigationTitle("Summary")
             .navigationBarTitleDisplayMode(.inline)
@@ -151,6 +156,7 @@ private struct CardioSummarySection: View {
             }
             .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
         }
+        .themedRows()
     }
 }
 

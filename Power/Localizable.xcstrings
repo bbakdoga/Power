@@ -553,6 +553,16 @@
         }
       }
     },
+    "AMOLED Black" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "AMOLED-Schwarz"
+          }
+        }
+      }
+    },
     "App Default (%@)" : {
       "localizations" : {
         "de" : {

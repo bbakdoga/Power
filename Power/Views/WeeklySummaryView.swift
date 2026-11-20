@@ -58,10 +58,12 @@ struct WeeklySummaryView: View {
                 }
                 .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
             }
+            .themedRows()
 
             Section("Training days") {
                 TrainingCalendar(month: $month, trainedDays: trainedDays)
             }
+            .themedRows()
 
             Section {
                 HStack {
@@ -108,6 +110,7 @@ struct WeeklySummaryView: View {
             } header: {
                 Text("Weekly volume")
             }
+            .themedRows()
 
             if !neglected.isEmpty && !weekWorkouts.isEmpty {
                 Section {
@@ -117,6 +120,7 @@ struct WeeklySummaryView: View {
                 } footer: {
                     Text("Body parts with no working sets in the selected week.")
                 }
+                .themedRows()
             }
         }
         .navigationTitle("Summary")

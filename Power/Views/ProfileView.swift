@@ -45,6 +45,7 @@ struct ProfileView: View {
                 Section {
                     header
                 }
+                .themedRows()
 
                 Section("Lifetime") {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
@@ -63,6 +64,7 @@ struct ProfileView: View {
                     }
                     .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                 }
+                .themedRows()
 
                 Section("Workouts per week") {
                     if workouts.isEmpty {
@@ -86,6 +88,7 @@ struct ProfileView: View {
                         Label("Weekly summary", systemImage: "chart.bar.xaxis")
                     }
                 }
+                .themedRows()
 
                 Section("Favorite exercises") {
                     if topExercises.isEmpty {
@@ -96,6 +99,7 @@ struct ProfileView: View {
                         LabeledContent(item.name, value: String(localized: "\(item.sessions) workouts"))
                     }
                 }
+                .themedRows()
 
                 Section("Body") {
                     NavigationLink {
@@ -108,6 +112,7 @@ struct ProfileView: View {
                         }
                     }
                 }
+                .themedRows()
             }
             .navigationTitle("Profile")
             .themedScreen()
@@ -187,6 +192,7 @@ struct EditProfileView: View {
                 } footer: {
                     Text("Used for the exercise illustrations.")
                 }
+                .themedRows()
             }
             .navigationTitle("Edit Profile")
             .navigationBarTitleDisplayMode(.inline)

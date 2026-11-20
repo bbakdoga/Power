@@ -40,6 +40,7 @@ struct HistoryView: View {
                                     }
                                 }
                             }
+                            .themedRows()
                         }
                     }
                 }
@@ -96,6 +97,7 @@ struct WorkoutDetailView: View {
                 LabeledContent("Volume", value: "\(unit.format(kg: workout.totalVolumeKg)) \(unit.rawValue)")
                 TextField("Notes", text: $workout.notes, axis: .vertical)
             }
+            .themedRows()
 
             ForEach(workout.sortedExercises) { entry in
                 Section(entry.exercise?.name ?? "Exercise") {
@@ -117,6 +119,7 @@ struct WorkoutDetailView: View {
                         }
                     }
                 }
+                .themedRows()
             }
 
             Section {
@@ -127,6 +130,7 @@ struct WorkoutDetailView: View {
                     Label("Save as routine", systemImage: "square.and.arrow.down")
                 }
             }
+            .themedRows()
         }
         .navigationTitle(workout.name)
         .themedScreen()
