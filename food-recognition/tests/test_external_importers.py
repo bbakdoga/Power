@@ -195,14 +195,15 @@ def test_kaggle_mirror_layout_and_licence_gate(project, tmp_path, capsys):
     assert main(["propose-mapping", "--release", "v2.0", str(archive)]) == 0
     mapping = project / "configs/external/myfoodrepo_mapping_v2.0.yaml"
     mapping.write_text(mapping.read_text().replace("reviewed: false", "reviewed: true"))
+    assets = project / "licenses/assets.yaml"
+    approved = assets.read_text()
+    start = approved.index("  - id: myfoodrepo_2022_v2")
+    assets.write_text(approved[:start] + approved[start:].replace("status: approved", "status: needs_review", 1))
     capsys.readouterr()
     assert main(["import-myfoodrepo", "--release", "v2.0", str(archive)]) == 1
     assert "myfoodrepo_2022_v2: status is needs_review" in capsys.readouterr().out
 
-    assets = project / "licenses/assets.yaml"
-    text = assets.read_text()
-    start = text.index("  - id: myfoodrepo_2022_v2")
-    assets.write_text(text[:start] + text[start:].replace("status: needs_review", "status: approved", 1))
+    assets.write_text(approved)
     assert main(["import-myfoodrepo", "--release", "v2.0", str(archive)]) == 0
     records, _ = load_manifest(project / "data/manifests/images.jsonl")
     assert len(records) == 2   # 3 photos, one has only water
