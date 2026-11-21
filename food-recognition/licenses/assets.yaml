@@ -117,12 +117,12 @@ assets:
   - id: myfoodrepo_2022_v2
     kind: dataset
     name: Food Recognition Benchmark 2022 v2.0 (MyFoodRepo, AIcrowd), incl. Kaggle mirror awsaf49/food-recognition-2022-dataset
-    license: expected CC BY 4.0 like v0.4; not yet confirmed for this release
+    license: Kaggle page lists CC0 (checked by Baris 2026-11-21); treated as CC BY 4.0 like the original AIcrowd release
     url: https://www.kaggle.com/datasets/awsaf49/food-recognition-2022-dataset
-    status: needs_review
+    status: approved
     notes: >-
-      Newer, larger release of the same MyFoodRepo data. Approve once the licence on the Kaggle page
-      (or the AIcrowd 2022 benchmark page) says CC BY 4.0. Credit MyFoodRepo/AIcrowd, not the mirror uploader.
+      Approved 2026-11-21. A mirror uploader cannot waive the original CC BY 4.0 terms, so we follow the
+      stricter CC BY 4.0 and credit MyFoodRepo / AIcrowd, not the uploader. Both allow commercial use.
 
   - id: roboflow_universe
     kind: dataset

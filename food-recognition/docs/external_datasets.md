@@ -46,9 +46,9 @@ food-rec import-myfoodrepo --release v2.0 ~/Downloads/archive.zip
 The importer finds every `annotations.json` inside, whatever the folder
 names are, and skips test folders that have no labels. The credit recorded for
 each photo names MyFoodRepo / AIcrowd, not the Kaggle uploader. This release
-is a separate entry in the licence register (`myfoodrepo_2022_v2`). The import
-is refused until that entry is `approved`, which needs the licence for this
-release confirmed as CC BY 4.0.
+is its own entry in the licence register (`myfoodrepo_2022_v2`, approved
+2026-11-21). Kaggle lists it as CC0, but we follow the original CC BY 4.0
+terms, since a mirror cannot relicense the data.
 
 ## Open Images V7 (photos CC BY 2.0, boxes CC BY 4.0)
 
