@@ -1,0 +1,169 @@
+# Machine-readable licence register for every external model, weight file,
+# dataset and tool the pipeline can use. `food-rec check-licenses` fails when a
+# config refers to an asset that is missing here or whose status is not
+# `approved`. Training commands run that check first.
+#
+# status:
+#   approved      cleared for commercial App Store use
+#   needs_review  might be fine, but Baris must decide (and ideally a lawyer) first
+#   blocked       research-only, non-commercial, copyleft, or unknown terms
+#
+# This is an engineering record, not legal advice. Explanations are in
+# licenses/THIRD_PARTY.md.
+
+assets:
+  # ---- Model code -----------------------------------------------------------
+  - id: yolox_code
+    kind: code
+    name: YOLOX (Megvii)
+    license: Apache-2.0
+    url: https://github.com/Megvii-BaseDetection/YOLOX
+    status: approved
+    notes: Code only. The official COCO-pretrained weights are a separate asset.
+
+  - id: torchvision_code
+    kind: code
+    name: torchvision model definitions
+    license: BSD-3-Clause
+    url: https://github.com/pytorch/vision
+    status: approved
+    notes: Code only. Pretrained weights are separate assets.
+
+  - id: timm_code
+    kind: code
+    name: PyTorch Image Models (timm)
+    license: Apache-2.0
+    url: https://github.com/huggingface/pytorch-image-models
+    status: approved
+    notes: Code only. Each pretrained weight has its own terms.
+
+  - id: ultralytics_yolo
+    kind: code
+    name: Ultralytics YOLOv5/v8/11
+    license: AGPL-3.0 (or paid Ultralytics Enterprise licence)
+    url: https://github.com/ultralytics/ultralytics
+    status: blocked
+    notes: AGPL would require releasing the app's source. Do not import.
+
+  # ---- Pretrained weights ---------------------------------------------------
+  - id: yolox_coco_weights
+    kind: weights
+    name: YOLOX official COCO weights
+    license: Apache-2.0 (weights) trained on COCO 2017
+    url: https://github.com/Megvii-BaseDetection/YOLOX/releases
+    status: needs_review
+    notes: COCO images are Flickr photos under mixed licences, some non-commercial.
+
+  - id: imagenet_weights
+    kind: weights
+    name: Any ImageNet-1k/21k pretrained backbone (torchvision, timm)
+    license: varies; ImageNet terms are non-commercial research
+    url: https://image-net.org/download
+    status: needs_review
+    notes: Widely used commercially, but the training data terms are non-commercial.
+
+  - id: openimages_pretrain_own
+    kind: weights
+    name: Backbones we pretrain ourselves on Open Images V7
+    license: our own weights; data CC BY 4.0 annotations, images listed as CC BY 2.0
+    url: https://storage.googleapis.com/openimages/web/index.html
+    status: needs_review
+    notes: Recommended path. Becomes approved once Baris signs off on Open Images.
+
+  - id: dinov2_weights
+    kind: weights
+    name: DINOv2 (Meta)
+    license: Apache-2.0
+    url: https://github.com/facebookresearch/dinov2
+    status: needs_review
+    notes: Permissive weights, but trained on LVD-142M web images. Also large for phones.
+
+  # ---- Datasets -------------------------------------------------------------
+  - id: owned_photos
+    kind: dataset
+    name: Photos owned by Baris or used with written commercial permission
+    license: owned / permission-commercial
+    url: null
+    status: approved
+    notes: Every image still needs its own record in data/manifests/images.jsonl.
+
+  - id: open_images_v7
+    kind: dataset
+    name: Open Images V7 (Google)
+    license: annotations CC BY 4.0; images listed as CC BY 2.0 by Google
+    url: https://storage.googleapis.com/openimages/web/index.html
+    status: needs_review
+    notes: Google does not verify each image's licence; keep per-image licence and attribution.
+
+  - id: nutrition5k
+    kind: dataset
+    name: Nutrition5k (Google)
+    license: CC BY 4.0
+    url: https://github.com/google-research-datasets/Nutrition5k
+    status: needs_review
+    notes: Overhead cafeteria plates with ingredient lists, no boxes. Narrow domain.
+
+  - id: coco_2017
+    kind: dataset
+    name: MS COCO 2017
+    license: annotations CC BY 4.0; images Flickr, mixed licences incl. non-commercial
+    url: https://cocodataset.org
+    status: needs_review
+    notes: Only the non-NC subset could be considered.
+
+  - id: food101
+    kind: dataset
+    name: Food-101
+    license: unclear; images scraped from foodspotting.com
+    url: https://data.vision.ee.ethz.ch/cvl/datasets_extra/food-101/
+    status: blocked
+    notes: No clear commercial grant for the images.
+
+  - id: uec_food
+    kind: dataset
+    name: UEC FOOD-100 / UEC FOOD-256
+    license: research use only
+    url: http://foodcam.mobi/dataset.html
+    status: blocked
+    notes: Non-commercial.
+
+  - id: isia_food
+    kind: dataset
+    name: ISIA Food-200 / Food-500
+    license: research use only
+    url: null
+    status: blocked
+    notes: Non-commercial.
+
+  - id: foodseg103
+    kind: dataset
+    name: FoodSeg103
+    license: images from Recipe1M (non-commercial research)
+    url: https://xiongweiwu.github.io/foodseg103.html
+    status: blocked
+    notes: Image source is non-commercial.
+
+  - id: usda_fdc
+    kind: dataset
+    name: USDA FoodData Central
+    license: Public domain (CC0 1.0)
+    url: https://fdc.nal.usda.gov
+    status: approved
+    notes: Used by the app for nutrition after the user confirms a food. Not training data.
+
+  # ---- Tools ----------------------------------------------------------------
+  - id: label_studio
+    kind: tool
+    name: Label Studio Community Edition
+    license: Apache-2.0
+    url: https://github.com/HumanSignal/label-studio
+    status: approved
+    notes: Runs locally; images never leave the Mac.
+
+  - id: coremltools
+    kind: tool
+    name: coremltools
+    license: BSD-3-Clause
+    url: https://github.com/apple/coremltools
+    status: approved
+    notes: Core ML conversion and compression.

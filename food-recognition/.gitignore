@@ -1,0 +1,47 @@
+# Never commit photos, user data, credentials or model files.
+data/raw/**
+!data/raw/.gitkeep
+data/annotations/**
+!data/annotations/.gitkeep
+data/splits/**
+!data/splits/.gitkeep
+data/manifests/images.jsonl
+data/manifests/corrections_pending.jsonl
+data/manifests/sources.yaml
+models/**
+!models/.gitkeep
+!models/README.md
+!models/registry.yaml
+reports/**
+!reports/.gitkeep
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.mlpackage/
+*.mlmodel
+*.mlmodelc/
+
+# Credentials and cluster settings
+.env
+*.env
+!cluster/cluster.env.example
+cluster/cluster.env
+*.pem
+*.key
+id_*
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+
+# Label Studio local data
+label-studio-data/

@@ -1,0 +1,22 @@
+model_version: "0.0.0-dev"
+author: Power
+license_note: Proprietary. Trained only on assets listed as approved in licenses/assets.yaml.
+
+detector:
+  checkpoint: models/detector/best.pt
+  output: models/coreml/FoodDetector.mlpackage
+classifier:
+  checkpoint: models/classifier/best.pt
+  output: models/coreml/FoodClassifier.mlpackage
+
+compression:
+  precision: float16             # float16 | int8_weights
+  validate_int8: true            # int8 is kept only if accuracy drop <= max_metric_drop
+  max_metric_drop: 0.01
+
+parity:
+  samples: 200                   # held-out images compared between PyTorch and Core ML
+  max_abs_diff: 0.02
+  min_top1_agreement: 0.99
+size_budget_mb: 100
+minimum_deployment_target: iOS17

@@ -1,0 +1,42 @@
+# Dataset paths and validation rules. Paths are relative to food-recognition/.
+seed: 1337
+
+paths:
+  taxonomy: configs/taxonomy.yaml
+  raw_dir: data/raw                         # images, never committed
+  annotations: data/annotations/instances.json   # COCO JSON
+  manifest: data/manifests/images.jsonl     # one rights/consent record per image
+  sources: data/manifests/sources.yaml      # one entry per image source
+  splits_dir: data/splits
+  dataset_versions_dir: data/manifests/datasets
+  reports_dir: reports
+
+validation:
+  allowed_image_formats: [JPEG, PNG, HEIF, WEBP]
+  min_image_side: 224            # px
+  max_image_side: 8192
+  min_box_side: 8                # px; smaller boxes are almost always mistakes
+  bbox_tolerance: 1.0            # px a box may stick out of the image (rounding)
+  near_duplicate_hamming: 4      # dHash bits; <= this counts as a near duplicate
+  min_instances_per_class: 50    # warning below this
+  max_imbalance_ratio: 20.0      # warning when largest / smallest class exceeds this
+  allow_images_without_boxes: true   # true negatives (no food) must set no_food: true
+
+rights:
+  # Licences accepted for commercial training. Anything else fails validation.
+  allowed_licenses:
+    - owned                      # photos Baris took or commissioned
+    - permission-commercial      # written permission on file (see sources.yaml)
+    - CC0-1.0
+    - CC-BY-2.0
+    - CC-BY-4.0
+    - user-correction-consented  # opt-in app corrections, see docs/user_corrections.md
+  require_commercial_use: true
+  # user corrections only enter training after a person reviews them
+  require_review_for_source_types: [user_correction]
+
+split:
+  ratios: {train: 0.8, val: 0.1, test: 0.1}
+  # Images are grouped before splitting so near-identical photos (same meal,
+  # same session, same photographer-day) never land in two splits.
+  group_field: group_id          # falls back to source_id when empty
