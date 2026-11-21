@@ -50,6 +50,32 @@ def test_myfoodrepo_mapping_proposal(taxonomy):
     }
 
 
+# Tricky names from the real 2022 v2.0 category list (reviewed 2026-11-21).
+REAL_CASES = {
+    "yaourt-yahourt-yogourt-ou-yoghourt-natural": "yogurt", "cheddar": "cheese", "french-beans": "green_beans",
+    "apple-pie": "unknown_food", "cheesecake": "unknown_food", "risotto-without-cheese-cooked": "unknown_food",
+    "mixed-salad-chopped-without-sauce": "green_salad", "watermelon-fresh": "unknown_food",
+    "sugar-melon": "unknown_food", "fish-fingers-breaded": "unknown_food", "hamburger-bun": "bread",
+    "rice-noodles-vermicelli": "pasta", "pancakes": "pancakes", "bread-sourdough": "bread",
+    "fajita-bread-only": "tortilla_wrap", "oat-milk": "drop", "white-coffee-with-caffeine": "drop",
+    "peanut-butter": "drop", "tartar-sauce": "drop", "white-bread-with-butter-eggs-and-milk": "bread",
+}
+
+
+def test_myfoodrepo_real_category_edge_cases(taxonomy):
+    cfg = load_yaml(ROOT / "configs/external/myfoodrepo.yaml")
+    proposal = myfoodrepo.propose_mapping(Counter({n: 1 for n in REAL_CASES}), cfg, taxonomy)
+    assert {k: v["class"] for k, v in proposal.items()} == REAL_CASES
+
+
+def test_reviewed_v2_mapping_matches_rules(taxonomy):
+    path = ROOT / "configs/external/myfoodrepo_mapping_v2.0.yaml"
+    mapping = myfoodrepo.load_reviewed_mapping(path, taxonomy)
+    cfg = load_yaml(ROOT / "configs/external/myfoodrepo.yaml")
+    proposal = myfoodrepo.propose_mapping(Counter({n: 1 for n in mapping}), cfg, taxonomy)
+    assert {k: v["class"] for k, v in proposal.items()} == mapping
+
+
 def test_open_images_mapping_names_exist():
     cfg = load_yaml(ROOT / "configs/external/open_images.yaml")
     assert len(cfg["classes"]) == 43   # all but grilled_chicken and white_fish

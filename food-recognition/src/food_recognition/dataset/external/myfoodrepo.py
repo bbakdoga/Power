@@ -52,7 +52,7 @@ def category_counts(folders: list[Path]) -> Counter[str]:
 
 
 def propose_mapping(counts: Counter[str], config: dict[str, Any], taxonomy: Taxonomy) -> dict[str, dict[str, Any]]:
-    """Apply the drop list and class patterns (first match wins) to every source category."""
+    """Apply the unknown list, drop list and class patterns (first match wins) to every source category."""
     valid = {c.name for c in taxonomy.active}
     patterns = config["patterns"]
     unknown_classes = set(patterns) - valid
@@ -62,8 +62,11 @@ def propose_mapping(counts: Counter[str], config: dict[str, Any], taxonomy: Taxo
     for name in sorted(counts):
         lowered = name.lower()
         entry: dict[str, Any] = {"class": taxonomy.unknown.name, "rule": None, "boxes": counts[name]}
+        unknown_rule = next((p for p in config.get("unknown", []) if re.search(p, lowered)), None)
         drop_rule = next((p for p in config.get("drop", []) if re.search(p, lowered)), None)
-        if drop_rule:
+        if unknown_rule:
+            entry["rule"] = f"unknown: {unknown_rule}"
+        elif drop_rule:
             entry.update({"class": DROP, "rule": f"drop: {drop_rule}"})
         else:
             for cls, pattern in patterns.items():
