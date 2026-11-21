@@ -12,7 +12,7 @@ cluster scaffolding are ready. No model has been trained yet.
 | Phase | Content | State |
 |---|---|---|
 | 1 | Taxonomy, architecture, dataset validation, licence manifest | ✅ |
-| 2 | Collect and annotate owned photos (Label Studio) | next |
+| 2 | Import MyFoodRepo + Open Images (`docs/external_datasets.md`), collect and annotate owned photos | next |
 | 3 | Pretrained-weights decision: Open Images pretraining | ✅ decided |
 | 4 | Detector and classifier training on Pegasus | |
 | 5 | Core ML export, fp16/int8, parity check, Swift example | |
@@ -36,9 +36,11 @@ pytest
 # 1. Register the source in data/manifests/sources.yaml (copy sources.example.yaml)
 food-rec import --folder ~/Pictures/meals-2026-11 --source-id baris_kitchen_2026_11 --group-id 2026-11-20-dinner
 
+# 1b. Public datasets: see docs/external_datasets.md (MyFoodRepo, Open Images)
+
 # 2. Annotate (docs/annotation_guidelines.md), export COCO, map labels onto the taxonomy
 food-rec labelstudio-config
-food-rec normalize --input ~/Downloads/result.json --strip-prefix "/data/local-files/?d=raw/"
+food-rec normalize --merge --input ~/Downloads/result.json --strip-prefix "/data/local-files/?d=raw/"
 
 # 3. Validate, split, report, freeze
 food-rec validate            # annotations, files, rights, consent, duplicates, class balance
@@ -69,7 +71,7 @@ src/food_recognition/
   evaluation/     classification and detection metrics, evaluation records
   export/         Core ML metadata and parity checks
 cluster/          SLURM / LSF job scripts with placeholders, no credentials
-docs/             architecture, annotation guidelines, user-correction format
+docs/             architecture, annotation guidelines, external datasets, user-correction format
 licenses/         THIRD_PARTY.md and machine-readable assets.yaml
 tests/
 ```

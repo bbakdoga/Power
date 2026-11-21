@@ -3,6 +3,7 @@ data/raw/**
 !data/raw/.gitkeep
 data/annotations/**
 !data/annotations/.gitkeep
+data/external/
 data/splits/**
 !data/splits/.gitkeep
 data/manifests/images.jsonl

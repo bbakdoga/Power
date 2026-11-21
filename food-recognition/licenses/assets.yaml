@@ -106,10 +106,13 @@ assets:
   - id: myfoodrepo_273
     kind: dataset
     name: Food Recognition Benchmark / MyFoodRepo-273 (EPFL, AIcrowd)
-    license: CC BY 4.0 (stated in the paper, PMC9121091); dataset page needs an AIcrowd login
+    license: CC BY 4.0 (train-v0.4 and val-v0.4 on the AIcrowd Resources tab, checked by Baris 2026-11-21)
     url: https://www.aicrowd.com/challenges/food-recognition-challenge
-    status: needs_review
-    notes: ~24k real phone photos that app users chose to make public, 273 classes, polygon masks (convert to boxes). Confirm licence and class list on the download page.
+    status: approved
+    notes: >-
+      Approved by Baris on 2026-11-21. ~24k real phone photos that app users chose to make public,
+      polygon masks converted to boxes. Attribution: MyFoodRepo / Food Recognition Benchmark v0.4
+      (Mohanty et al., 2022, Front. Nutr. 9:875143), AIcrowd, CC BY 4.0.
 
   - id: roboflow_universe
     kind: dataset

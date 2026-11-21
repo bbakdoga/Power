@@ -60,7 +60,7 @@ training data.
 | Photos Baris owns or has written commercial permission for | owned / permission | ✅ | Each image needs a manifest record. |
 | Open Images V7 | Boxes CC BY 4.0; images listed by Google as CC BY 2.0 | ✅ approved by Baris, 2026-11-21 | Google does not verify each image's licence. We would keep each image's licence and author, and publish an attribution list. CC BY covers copyright, not people shown in photos; food-only crops reduce that concern. |
 | Nutrition5k | CC BY 4.0 | ⚠️ | Commercial use allowed with attribution, but overhead cafeteria trays only; no boxes. |
-| Food Recognition Benchmark / MyFoodRepo-273 | CC BY 4.0 per the paper | ⚠️ | Real phone photos shared by consenting app users, 273 classes, polygon masks. Confirm licence and classes on the AIcrowd download page (needs login). |
+| Food Recognition Benchmark / MyFoodRepo v0.4 | CC BY 4.0 (stated on each AIcrowd download, checked 2026-11-21) | ✅ approved by Baris, 2026-11-21 | Real phone photos shared by consenting app users, polygon masks converted to boxes. Credit: "MyFoodRepo / Food Recognition Benchmark v0.4 (Mohanty et al., 2022, Front. Nutr. 9:875143), AIcrowd, CC BY 4.0". `test_images-v0.4` duplicates `val` and is not imported. |
 | Roboflow Universe food sets | Chosen by each uploader | ⛔ | Licence is self-declared; image origin usually unknown (often Food-101 or web scrapes). |
 | MS COCO 2017 | Boxes CC BY 4.0; images mixed Flickr licences | ⚠️ | Only images under commercial-friendly licences could be considered. |
 | Food-101 | Unclear; scraped from foodspotting.com | ⛔ | No clear commercial grant. |
@@ -69,6 +69,15 @@ training data.
 | FoodSeg103 | Images from Recipe1M (non-commercial) | ⛔ | |
 | Opt-in user corrections | Consent under our own terms (`food-corrections-v1`) | ✅ after review | See docs/user_corrections.md. |
 | USDA FoodData Central | Public domain (CC0 1.0) | ✅ | Nutrition lookup in the app after the user confirms. Not used for training. |
+
+## Attribution
+
+CC BY needs credit when the material is shared. The app ships only model
+weights, not photos, but we credit the sources anyway: the app's About screen
+should name "Open Images V7 (Google)" and "MyFoodRepo / Food Recognition
+Benchmark (EPFL, AIcrowd)". `food-rec attributions` writes the full
+per-photo list (author and URL for every Open Images photo) to
+`reports/attributions.tsv`.
 
 ## Before adding anything new
 

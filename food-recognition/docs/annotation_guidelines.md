@@ -18,7 +18,7 @@ label-studio start --data-dir label-studio-data
    `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT` to the absolute `data/` path).
 3. When done, **Export › COCO**, then:
    ```bash
-   food-rec normalize --input ~/Downloads/result.json --strip-prefix "/data/local-files/?d=raw/"
+   food-rec normalize --merge --input ~/Downloads/result.json --strip-prefix "/data/local-files/?d=raw/"
    food-rec validate
    ```
 

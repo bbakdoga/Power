@@ -11,6 +11,26 @@ sources:
     permission_document: null        # path or reference to a signed agreement
     pinned_split: null               # train | val | test | null
 
+  - source_id: myfoodrepo_v04
+    source_type: open_dataset
+    license: CC-BY-4.0
+    commercial_use: true
+    redistribution: true
+    description: MyFoodRepo / Food Recognition Benchmark v0.4 (AIcrowd), CC BY 4.0
+    contact: null
+    permission_document: null
+    pinned_split: null
+
+  - source_id: open_images_v7
+    source_type: open_dataset
+    license: CC-BY-2.0
+    commercial_use: true
+    redistribution: true
+    description: Open Images V7 photos listed as CC BY 2.0; author and URL kept per photo
+    contact: null
+    permission_document: null
+    pinned_split: null
+
   - source_id: phone_eval_2026_11
     source_type: owned
     license: owned

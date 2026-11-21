@@ -260,3 +260,35 @@ def normalize_categories(dataset: CocoDataset, taxonomy: Taxonomy) -> tuple[Coco
                              categories=taxonomy.coco_categories(),
                              info={**dataset.info, "taxonomy_version": taxonomy.version})
     return normalized, issues
+
+
+def merge_datasets(base: CocoDataset, incoming: CocoDataset) -> tuple[CocoDataset, int, int]:
+    """Merge `incoming` into `base` by file name and return (merged, images_added, images_replaced).
+
+    Images already in `base` with the same file name get their annotations
+    replaced by the incoming ones, so re-exporting a Label Studio project or
+    re-running an importer never duplicates boxes. Ids are reassigned for
+    incoming items so they never collide.
+    """
+    by_file = {img.file_name: img for img in base.images}
+    replaced_ids = {by_file[img.file_name].id for img in incoming.images if img.file_name in by_file}
+    images = [i for i in base.images if i.id not in replaced_ids]
+    annotations = [a for a in base.annotations if a.image_id not in replaced_ids]
+    next_image = max([i.id for i in base.images] + [0]) + 1
+    next_ann = max([a.id for a in base.annotations] + [0]) + 1
+    incoming_anns = incoming.annotations_by_image()
+    added = 0
+    for img in incoming.images:
+        old = by_file.get(img.file_name)
+        new_id = old.id if old is not None else next_image
+        if old is None:
+            next_image += 1
+            added += 1
+        images.append(CocoImage(new_id, img.file_name, img.width, img.height, img.no_food))
+        for ann in incoming_anns.get(img.id, []):
+            annotations.append(CocoAnnotation(next_ann, new_id, ann.category_id, ann.bbox, ann.iscrowd, dict(ann.attributes)))
+            next_ann += 1
+    images.sort(key=lambda i: i.id)
+    merged = CocoDataset(images=images, annotations=annotations,
+                         categories=incoming.categories or base.categories, info={**base.info, **incoming.info})
+    return merged, added, len(replaced_ids)

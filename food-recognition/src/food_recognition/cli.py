@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import load_yaml, project_root, resolve, seed_everything
-from .dataset.coco import CocoAnnotation, CocoImage, load_coco, normalize_categories, save_coco
+from .dataset.coco import CocoAnnotation, CocoImage, load_coco, merge_datasets, normalize_categories, save_coco
 from .dataset.issues import Issue, errors
 from .dataset.manifest import append_records, load_manifest, load_sources, write_manifest
 from .dataset.taxonomy import load_taxonomy
@@ -111,6 +111,10 @@ def cmd_normalize(ctx: Context, args: argparse.Namespace) -> int:
         print("not written: fix the errors above")
         return 1
     out = Path(args.output) if args.output else ctx.paths["annotations"]
+    if args.merge and out.exists():
+        existing, _ = load_coco(out)
+        normalized, added, replaced = merge_datasets(existing, normalized)
+        print(f"merged: {added} new images, {replaced} re-annotated")
     save_coco(normalized, out)
     print(f"wrote {out} ({len(normalized.images)} images, {len(normalized.annotations)} boxes)")
     return 0
@@ -261,6 +265,123 @@ def cmd_promote_corrections(ctx: Context, args: argparse.Namespace) -> int:
     return 0
 
 
+def _require_source(ctx: Context, source_id: str, license_name: str) -> int | None:
+    source = ctx.sources().get(source_id)
+    if source is None:
+        print(f"add a `{source_id}` entry to data/manifests/sources.yaml first (see sources.example.yaml)")
+        return 1
+    if source.license != license_name or not source.commercial_use:
+        print(f"sources.yaml entry {source_id} must have license {license_name} and commercial_use: true")
+        return 1
+    return None
+
+
+def _commit_import(ctx: Context, records, dataset, stats) -> None:  # type: ignore[no-untyped-def]
+    append_records(ctx.paths["manifest"], records)
+    out = ctx.paths["annotations"]
+    if out.exists():
+        existing, _ = load_coco(out)
+        dataset, _, _ = merge_datasets(existing, dataset)
+    save_coco(dataset, out)
+    for line in stats.lines():
+        print(f"  {line}")
+
+
+def cmd_propose_mapping(ctx: Context, args: argparse.Namespace) -> int:
+    from .dataset.external import myfoodrepo
+
+    cfg = load_yaml(resolve("configs/external/myfoodrepo.yaml", ctx.root))
+    folders = myfoodrepo.find_splits([Path(p) for p in args.paths], resolve("data/external", ctx.root))
+    proposal = myfoodrepo.propose_mapping(myfoodrepo.category_counts(folders), cfg, ctx.taxonomy())
+    out = resolve(args.output, ctx.root)
+    myfoodrepo.write_mapping(proposal, out, "# MyFoodRepo v0.4 category -> our class. Proposed by `food-rec propose-mapping`.\n"
+                             "# Targets: a taxonomy class, unknown_food, or drop (not boxed).")
+    summary: dict[str, int] = {}
+    for entry in proposal.values():
+        summary[entry["class"]] = summary.get(entry["class"], 0) + 1
+    covered = sorted(k for k in summary if k not in ("drop", ctx.taxonomy().unknown.name))
+    missing = sorted(set(ctx.taxonomy().classifier_labels()) - set(covered))
+    print(f"wrote {out}: {len(proposal)} categories -> {len(covered)} of our classes, "
+          f"{summary.get(ctx.taxonomy().unknown.name, 0)} unknown_food, {summary.get('drop', 0)} dropped")
+    if missing:
+        print(f"no MyFoodRepo category for: {', '.join(missing)}")
+    print("Check every line, fix any wrong ones, set `reviewed: true`, then run `food-rec import-myfoodrepo`.")
+    return 0
+
+
+def cmd_import_myfoodrepo(ctx: Context, args: argparse.Namespace) -> int:
+    from .dataset.external import myfoodrepo
+
+    cfg = load_yaml(resolve("configs/external/myfoodrepo.yaml", ctx.root))
+    if (failed := _require_source(ctx, cfg["source_id"], "CC-BY-4.0")) is not None:
+        return failed
+    taxonomy = ctx.taxonomy()
+    try:
+        mapping = myfoodrepo.load_reviewed_mapping(resolve(args.mapping, ctx.root), taxonomy)
+    except ValueError as exc:
+        print(exc)
+        return 1
+    folders = myfoodrepo.find_splits([Path(p) for p in args.paths], resolve("data/external", ctx.root))
+    existing, _ = ctx.records()
+    records, dataset, stats = myfoodrepo.import_splits(
+        folders, mapping, taxonomy, ctx.paths["raw_dir"], source_id=cfg["source_id"],
+        attribution=" ".join(cfg["attribution"].split()), known_hashes={r.sha256 for r in existing})
+    _commit_import(ctx, records, dataset, stats)
+    return 0
+
+
+def cmd_select_openimages(ctx: Context, args: argparse.Namespace) -> int:
+    from .dataset.external import openimages
+
+    cfg = load_yaml(resolve("configs/external/open_images.yaml", ctx.root))
+    class_map = openimages.build_class_map(cfg, Path(args.classes_csv), ctx.taxonomy())
+    selection = openimages.select_images(
+        class_map, boxes_csv=Path(args.boxes_csv), metadata_csv=Path(args.metadata_csv),
+        labels_csv=Path(args.labels_csv) if args.labels_csv else None, max_per_class=args.max_per_class,
+        skip_depictions=bool(cfg.get("skip_depictions", True)))
+    sel_path = resolve(f"data/external/openimages_{args.split}_selection.json", ctx.root)
+    openimages.save_selection(selection, sel_path)
+    ids_path = sel_path.with_name(f"openimages_{args.split}_ids.txt")
+    ids_path.write_text("\n".join(selection.image_ids()) + "\n", encoding="utf-8")
+    print(f"{len(selection.boxes)} images with boxes, {len(selection.to_annotate)} to annotate; "
+          f"skipped {selection.skipped_license} (licence) and {selection.skipped_rotation} (rotated)")
+    print(f"ids -> {ids_path}\nnext: python scripts/download_openimages.py {ids_path} data/external/openimages_images "
+          f"--split {args.split}")
+    return 0
+
+
+def cmd_import_openimages(ctx: Context, args: argparse.Namespace) -> int:
+    from .dataset.external import openimages
+
+    cfg = load_yaml(resolve("configs/external/open_images.yaml", ctx.root))
+    if (failed := _require_source(ctx, cfg["source_id"], "CC-BY-2.0")) is not None:
+        return failed
+    taxonomy = ctx.taxonomy()
+    class_map = openimages.build_class_map(cfg, Path(args.classes_csv), taxonomy)
+    selection = openimages.load_selection(resolve(f"data/external/openimages_{args.split}_selection.json", ctx.root))
+    existing, _ = ctx.records()
+    records, dataset, to_annotate, stats = openimages.import_images(
+        selection, class_map, taxonomy, Path(args.images_dir), ctx.paths["raw_dir"],
+        source_id=cfg["source_id"], known_hashes={r.sha256 for r in existing})
+    _commit_import(ctx, records, dataset, stats)
+    if to_annotate:
+        todo = ctx.paths["annotations"].with_name("to_annotate_openimages.tsv")
+        with open(todo, "a", encoding="utf-8") as handle:
+            handle.writelines(f"{file}\t{label}\n" for file, label in to_annotate)
+        print(f"  {len(to_annotate)} photos need boxes drawn: listed in {todo}")
+    return 0
+
+
+def cmd_attributions(ctx: Context, args: argparse.Namespace) -> int:
+    records, _ = ctx.records()
+    out = resolve(args.output, ctx.root)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    rows = sorted({(r.license, r.attribution) for r in records if r.attribution})
+    out.write_text("license\tattribution\n" + "".join(f"{lic}\t{text}\n" for lic, text in rows), encoding="utf-8")
+    print(f"wrote {out}: {len(rows)} attributions")
+    return 0
+
+
 def _train(kind: str, ctx: Context, args: argparse.Namespace) -> int:
     from .licensing import LicenseError
 
@@ -299,6 +420,8 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--input", required=True)
     p.add_argument("--output")
     p.add_argument("--strip-prefix", default="")
+    p.add_argument("--merge", action="store_true",
+                   help="merge into the existing annotations (keeps imported datasets) instead of replacing the file")
     p.set_defaults(func=cmd_normalize)
 
     p = sub.add_parser("validate", help="validate annotations, files, rights, duplicates and balance")
@@ -328,6 +451,36 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("promote-corrections", help="move reviewer-approved corrections into training data")
     p.add_argument("--decisions", required=True, help="JSONL of {scan_id, decision, reviewer, reviewed_at}")
     p.set_defaults(func=cmd_promote_corrections)
+
+
+    p = sub.add_parser("propose-mapping", help="propose MyFoodRepo category -> taxonomy mapping for review")
+    p.add_argument("paths", nargs="+", help="downloaded train/val .tar.gz files or extracted folders")
+    p.add_argument("--output", default="configs/external/myfoodrepo_mapping_v0.4.yaml")
+    p.set_defaults(func=cmd_propose_mapping)
+
+    p = sub.add_parser("import-myfoodrepo", help="import MyFoodRepo v0.4 (CC BY 4.0) with a reviewed mapping")
+    p.add_argument("paths", nargs="+")
+    p.add_argument("--mapping", default="configs/external/myfoodrepo_mapping_v0.4.yaml")
+    p.set_defaults(func=cmd_import_myfoodrepo)
+
+    p = sub.add_parser("select-openimages", help="choose CC BY 2.0 Open Images photos of our foods to download")
+    p.add_argument("--classes-csv", required=True)
+    p.add_argument("--boxes-csv", required=True)
+    p.add_argument("--metadata-csv", required=True)
+    p.add_argument("--labels-csv", help="human image-level labels, for foods without boxes")
+    p.add_argument("--split", default="train")
+    p.add_argument("--max-per-class", type=int, default=1500)
+    p.set_defaults(func=cmd_select_openimages)
+
+    p = sub.add_parser("import-openimages", help="import downloaded Open Images photos and boxes")
+    p.add_argument("--classes-csv", required=True)
+    p.add_argument("--images-dir", required=True)
+    p.add_argument("--split", default="train")
+    p.set_defaults(func=cmd_import_openimages)
+
+    p = sub.add_parser("attributions", help="write the CC BY attribution list for imported photos")
+    p.add_argument("--output", default="reports/attributions.tsv")
+    p.set_defaults(func=cmd_attributions)
 
     for kind in ("detection", "classification"):
         p = sub.add_parser(f"train-{'detector' if kind == 'detection' else 'classifier'}",
