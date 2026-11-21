@@ -62,6 +62,61 @@ enum MuscleGroup: String, CaseIterable, Identifiable, Codable {
         case .other: return String(localized: "Other")
         }
     }
+
+    func localizedTitle(language: AppLanguage) -> String {
+        if language == .english {
+            switch self {
+            case .chest: return "Chest"
+            case .back: return "Back"
+            case .shoulders: return "Shoulders"
+            case .biceps: return "Biceps"
+            case .triceps: return "Triceps"
+            case .legs: return "Legs"
+            case .glutes: return "Glutes"
+            case .core: return "Core"
+            case .fullBody: return "Full Body"
+            case .cardio: return "Cardio"
+            case .other: return "Other"
+            }
+        }
+
+        switch self {
+        case .chest: return String(localized: "Chest", locale: language.locale)
+        case .back: return String(localized: "Back", locale: language.locale)
+        case .shoulders: return String(localized: "Shoulders", locale: language.locale)
+        case .biceps: return String(localized: "Biceps", locale: language.locale)
+        case .triceps: return String(localized: "Triceps", locale: language.locale)
+        case .legs: return String(localized: "Legs", locale: language.locale)
+        case .glutes: return String(localized: "Glutes", locale: language.locale)
+        case .core: return String(localized: "Core", locale: language.locale)
+        case .fullBody: return String(localized: "Full Body", locale: language.locale)
+        case .cardio: return String(localized: "Cardio", locale: language.locale)
+        case .other: return String(localized: "Other", locale: language.locale)
+        }
+    }
+
+    var assetName: String? {
+        switch self {
+        case .chest: "muscle-group-chest"
+        case .back: "muscle-group-back"
+        case .shoulders: "muscle-group-shoulders"
+        case .biceps: "muscle-group-biceps"
+        case .triceps: "muscle-group-triceps"
+        case .legs: "muscle-group-legs"
+        case .glutes: "muscle-group-glutes"
+        case .core: "muscle-group-core"
+        case .fullBody: "muscle-group-full-body"
+        case .cardio, .other: nil
+        }
+    }
+
+    var systemImage: String {
+        switch self {
+        case .cardio: "heart.fill"
+        case .other: "square.grid.2x2.fill"
+        default: "figure.strengthtraining.traditional"
+        }
+    }
 }
 
 enum Equipment: String, CaseIterable, Identifiable, Codable {

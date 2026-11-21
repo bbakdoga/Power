@@ -38,6 +38,12 @@
 		B2ACEBD230B0A1D7000D3112 /* WorkoutCSVParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBD130B0A1D7000D3112 /* WorkoutCSVParser.swift */; };
 		B2ACEBD430B0A278000D3112 /* WorkoutImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBD330B0A278000D3112 /* WorkoutImporter.swift */; };
 		B2ACEBD630B0A297000D3112 /* ImportWorkoutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBD530B0A297000D3112 /* ImportWorkoutsView.swift */; };
+		B2ACEBD830B0B537000D3112 /* NutritionModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBD730B0B537000D3112 /* NutritionModels.swift */; };
+		B2ACEBDA30B0B584000D3112 /* NutritionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBD930B0B584000D3112 /* NutritionView.swift */; };
+		B2ACEBDC30B0B865000D3112 /* NutritionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBDB30B0B865000D3112 /* NutritionAPI.swift */; };
+		B2ACEBDE30B0B885000D3112 /* FoodSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBDD30B0B885000D3112 /* FoodSearchView.swift */; };
+		B2ACEBE030B0C41B000D3112 /* Food101Classifier.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBDF30B0C41B000D3112 /* Food101Classifier.mlpackage */; };
+		B2ACEBE230B0C45A000D3112 /* FoodImageClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBE130B0C45A000D3112 /* FoodImageClassifier.swift */; };
 		B2BC8B6130AF8C6500C69B70 /* WorkoutSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BC8B6030AF8C6500C69B70 /* WorkoutSummaryView.swift */; };
 		B2BC8B6330AF8D1F00C69B70 /* StarterRoutines.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BC8B6230AF8D1F00C69B70 /* StarterRoutines.swift */; };
 		B2BC8B6530AF8D3100C69B70 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BC8B6430AF8D3100C69B70 /* OnboardingView.swift */; };
@@ -110,7 +116,13 @@
 		B2ACEBCF30B09C65000D3112 /* WorkoutSettingsSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSettingsSnapshot.swift; sourceTree = "<group>"; };
 		B2ACEBD130B0A1D7000D3112 /* WorkoutCSVParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCSVParser.swift; sourceTree = "<group>"; };
 		B2ACEBD330B0A278000D3112 /* WorkoutImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutImporter.swift; sourceTree = "<group>"; };
-		B2ACEBD530B0A297000D3112 /* ImportWorkoutsView.swift */ = {isa = PBXFileReference; path = ImportWorkoutsView.swift; sourceTree = "<group>"; };
+		B2ACEBD530B0A297000D3112 /* ImportWorkoutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportWorkoutsView.swift; sourceTree = "<group>"; };
+		B2ACEBD730B0B537000D3112 /* NutritionModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionModels.swift; sourceTree = "<group>"; };
+		B2ACEBD930B0B584000D3112 /* NutritionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionView.swift; sourceTree = "<group>"; };
+		B2ACEBDB30B0B865000D3112 /* NutritionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionAPI.swift; sourceTree = "<group>"; };
+		B2ACEBDD30B0B885000D3112 /* FoodSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchView.swift; sourceTree = "<group>"; };
+		B2ACEBDF30B0C41B000D3112 /* Food101Classifier.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = Food101Classifier.mlpackage; sourceTree = "<group>"; };
+		B2ACEBE130B0C45A000D3112 /* FoodImageClassifier.swift */ = {isa = PBXFileReference; path = FoodImageClassifier.swift; sourceTree = "<group>"; };
 		B2BC8B6030AF8C6500C69B70 /* WorkoutSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSummaryView.swift; sourceTree = "<group>"; };
 		B2BC8B6230AF8D1F00C69B70 /* StarterRoutines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarterRoutines.swift; sourceTree = "<group>"; };
 		B2BC8B6430AF8D3100C69B70 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -174,8 +186,10 @@
 		74EDD8B484A3CED8E5ED0DB9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B2ACEBDF30B0C41B000D3112 /* Food101Classifier.mlpackage */,
 				957C7749A68FE03A2D89C8F6 /* Enums.swift */,
 				CBF9980EBBE9ABCC86A1BC61 /* Models.swift */,
+				B2ACEBD730B0B537000D3112 /* NutritionModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -198,6 +212,8 @@
 				B2ACEBCF30B09C65000D3112 /* WorkoutSettingsSnapshot.swift */,
 				B2ACEBD130B0A1D7000D3112 /* WorkoutCSVParser.swift */,
 				B2ACEBD330B0A278000D3112 /* WorkoutImporter.swift */,
+				B2ACEBDB30B0B865000D3112 /* NutritionAPI.swift */,
+				B2ACEBE130B0C45A000D3112 /* FoodImageClassifier.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -232,6 +248,8 @@
 				B2BC8B6030AF8C6500C69B70 /* WorkoutSummaryView.swift */,
 				B2BC8B6430AF8D3100C69B70 /* OnboardingView.swift */,
 				B2ACEBD530B0A297000D3112 /* ImportWorkoutsView.swift */,
+				B2ACEBD930B0B584000D3112 /* NutritionView.swift */,
+				B2ACEBDD30B0B885000D3112 /* FoodSearchView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -368,8 +386,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2ACEBDA30B0B584000D3112 /* NutritionView.swift in Sources */,
 				C27DF1FEA73849D78DA4C703 /* ActiveWorkoutView.swift in Sources */,
 				B22D35D030A78D4C001E9E97 /* ProfileView.swift in Sources */,
+				B2ACEBDC30B0B865000D3112 /* NutritionAPI.swift in Sources */,
 				B22D35CE30A78D2F001E9E97 /* WorkoutStats.swift in Sources */,
 				B2BC8B6530AF8D3100C69B70 /* OnboardingView.swift in Sources */,
 				B2ACEBCE30B093BD000D3112 /* AppTheme.swift in Sources */,
@@ -379,8 +399,11 @@
 				2C209B7D36B4A562C83032B4 /* ExercisePickerView.swift in Sources */,
 				B2BC8B6330AF8D1F00C69B70 /* StarterRoutines.swift in Sources */,
 				B2BC8B6130AF8C6500C69B70 /* WorkoutSummaryView.swift in Sources */,
+				B2ACEBE030B0C41B000D3112 /* Food101Classifier.mlpackage in Sources */,
 				DFE38E3E1C9712ED59922AA0 /* ExercisesView.swift in Sources */,
 				B22D35CA30A78884001E9E97 /* HealthSync.swift in Sources */,
+				B2ACEBE230B0C45A000D3112 /* FoodImageClassifier.swift in Sources */,
+				B2ACEBDE30B0B885000D3112 /* FoodSearchView.swift in Sources */,
 				DD3B671E312797809998A7F2 /* HistoryView.swift in Sources */,
 				7C84CD5B3C570FAA67960F38 /* Models.swift in Sources */,
 				B22D35A430A78031001E9E97 /* PersonalRecords.swift in Sources */,
@@ -396,6 +419,7 @@
 				775D3D526170F3B992D4DC28 /* RootTabView.swift in Sources */,
 				F583958722BE681A50DBCA44 /* RoutinesView.swift in Sources */,
 				B22D35C230A78157001E9E97 /* RestTimerAttributes.swift in Sources */,
+				B2ACEBD830B0B537000D3112 /* NutritionModels.swift in Sources */,
 				863C18179F238CB387DBE6FB /* SeedData.swift in Sources */,
 				B2ACEBD630B0A297000D3112 /* ImportWorkoutsView.swift in Sources */,
 				B22D35CC30A788B2001E9E97 /* WeeklySummaryView.swift in Sources */,
@@ -486,6 +510,8 @@
 				INFOPLIST_FILE = Power/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Power;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = NO;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Power uses the camera to estimate foods and nutrition from a photo.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Power reads your bodyweight from Health so it appears in your body measurements.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Power saves your finished workouts and the bodyweight you log to Health.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
@@ -520,6 +546,8 @@
 				INFOPLIST_FILE = Power/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Power;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = NO;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Power uses the camera to estimate foods and nutrition from a photo.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Power reads your bodyweight from Health so it appears in your body measurements.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Power saves your finished workouts and the bodyweight you log to Health.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;

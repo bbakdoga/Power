@@ -25,7 +25,7 @@ struct ExerciseGuide {
     /// SF Symbol shown when an exercise has no illustration (e.g. custom exercises).
     static func symbolName(for exercise: Exercise) -> String {
         switch exercise.name {
-        case "Running": return "figure.run"
+        case "Running", "Running (Treadmill)": return "figure.run"
         case "Rowing Machine": return "figure.rower"
         case "Pull-up", "Chin-up", "Hanging Leg Raise", "Assisted Pull-up": return "figure.climbing"
         case "Stationary Bike": return "figure.indoor.cycle"
@@ -388,6 +388,12 @@ struct ExerciseGuide {
                     "Stay upright with relaxed shoulders.",
                     "Land with your feet under your hips and take quick, light steps.",
                     "Cool down with easy walking at the end."]),
+        "Running (Treadmill)": ExerciseGuide(
+            primary: ["Legs"], secondary: ["Core", "Heart & Lungs"],
+            steps: ["Attach the safety clip and begin with an easy walking pace.",
+                    "Increase the speed gradually while staying tall and looking forward.",
+                    "Run near the center of the belt with quick, light steps and relaxed arms.",
+                    "Reduce the speed gradually and finish with an easy walking cooldown."]),
 
         // Chest (library version 2)
         "Chest Fly Machine": ExerciseGuide(

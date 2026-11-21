@@ -3,43 +3,52 @@ import SwiftData
 import Charts
 
 struct ExercisesView: View {
-    @Environment(\.modelContext) private var context
     @Query(sort: \Exercise.name) private var exercises: [Exercise]
-    @State private var search = ""
+    @AppStorage(AppLanguage.storageKey) private var language: AppLanguage = .system
     @State private var showingNew = false
 
-    private var filtered: [Exercise] {
-        search.isEmpty ? exercises : exercises.filter { $0.name.localizedCaseInsensitiveContains(search) }
+    private var availableGroups: [MuscleGroup] {
+        MuscleGroup.allCases.filter { !exercises(for: $0).isEmpty }
+    }
+
+    private func exercises(for group: MuscleGroup) -> [Exercise] {
+        guard group == .fullBody else {
+            return exercises.filter { $0.muscleGroup == group }
+        }
+
+        return exercises.filter { exercise in
+            guard exercise.muscleGroup != .cardio else { return false }
+            if exercise.muscleGroup == .fullBody { return true }
+            guard let guide = ExerciseGuide.guide(for: exercise) else { return false }
+            return Set(guide.primary + guide.secondary).count > 1
+        }
     }
 
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(MuscleGroup.allCases) { group in
-                    let items = filtered.filter { $0.muscleGroup == group }
-                    if !items.isEmpty {
-                        Section(group.title) {
-                            ForEach(items) { exercise in
-                                NavigationLink(value: exercise) {
-                                    HStack(spacing: 12) {
-                                        ExerciseThumbnail(exercise: exercise)
-                                        VStack(alignment: .leading, spacing: 2) {
-                                            Text(exercise.name)
-                                            Text(exercise.equipment.title)
-                                                .font(.caption)
-                                                .foregroundStyle(.secondary)
-                                        }
-                                    }
-                                }
-                            }
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 140), spacing: 16)], spacing: 16) {
+                    ForEach(availableGroups) { group in
+                        NavigationLink(value: group) {
+                            BodyPartCard(
+                                title: group.localizedTitle(language: language),
+                                assetName: group.assetName,
+                                systemImage: group.systemImage
+                            )
                         }
-                        .themedRows()
+                        .buttonStyle(.plain)
                     }
                 }
+                .padding()
             }
-            .searchable(text: $search)
             .navigationTitle("Exercises")
             .themedScreen()
+            .navigationDestination(for: MuscleGroup.self) { group in
+                ExerciseGroupView(
+                    group: group,
+                    exercises: exercises(for: group)
+                )
+            }
             .navigationDestination(for: Exercise.self) { exercise in
                 ExerciseDetailView(exercise: exercise)
             }
@@ -49,9 +58,88 @@ struct ExercisesView: View {
                 } label: {
                     Image(systemName: "plus")
                 }
+                .accessibilityLabel("New exercise")
             }
             .sheet(isPresented: $showingNew) {
                 ExerciseEditorView(exercise: nil)
+            }
+        }
+    }
+}
+
+private struct BodyPartCard: View {
+    let title: String
+    let assetName: String?
+    let systemImage: String
+
+    var body: some View {
+        VStack(spacing: 8) {
+            Group {
+                if let assetName {
+                    Image(assetName)
+                        .resizable()
+                        .scaledToFit()
+                } else {
+                    Image(systemName: systemImage)
+                        .font(.system(size: 42, weight: .semibold))
+                        .foregroundStyle(Color.accentColor)
+                }
+            }
+            .frame(height: 88)
+
+            Text(title)
+                .font(.headline)
+                .foregroundStyle(.primary)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .frame(minHeight: 150)
+        .padding(12)
+        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 18))
+        .overlay {
+            RoundedRectangle(cornerRadius: 18)
+                .strokeBorder(.quaternary, lineWidth: 1)
+        }
+        .accessibilityElement(children: .combine)
+    }
+}
+
+private struct ExerciseGroupView: View {
+    let group: MuscleGroup
+    let exercises: [Exercise]
+
+    @AppStorage(AppLanguage.storageKey) private var language: AppLanguage = .system
+    @State private var search = ""
+
+    private var filteredExercises: [Exercise] {
+        search.isEmpty
+            ? exercises
+            : exercises.filter { $0.name.localizedCaseInsensitiveContains(search) }
+    }
+
+    var body: some View {
+        List(filteredExercises) { exercise in
+            NavigationLink(value: exercise) {
+                ExerciseListRow(exercise: exercise)
+            }
+        }
+        .searchable(text: $search)
+        .navigationTitle(group.localizedTitle(language: language))
+        .themedScreen()
+    }
+}
+
+private struct ExerciseListRow: View {
+    let exercise: Exercise
+
+    var body: some View {
+        HStack(spacing: 12) {
+            ExerciseThumbnail(exercise: exercise)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(exercise.name)
+                Text(exercise.equipment.title)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
         }
     }

@@ -13,6 +13,7 @@ enum AppSchema {
         Routine.self,
         RoutineExercise.self,
         BodyMeasurement.self,
+        NutritionEntry.self,
     ]
 }
 

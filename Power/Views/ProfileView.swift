@@ -53,6 +53,11 @@ struct ProfileView: View {
                     } label: {
                         Label("Weekly summary", systemImage: "chart.bar.xaxis")
                     }
+                    NavigationLink {
+                        HistoryView()
+                    } label: {
+                        Label("Workout history", systemImage: "clock.arrow.circlepath")
+                    }
                 } header: {
                     Text("Weekly goal")
                 }

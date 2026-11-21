@@ -4,14 +4,23 @@ import SwiftData
 /// Built-in exercise library, inserted on first launch.
 enum SeedData {
     /// Bump when exercises are added to `library` so existing installs get them.
-    private static let libraryVersion = 3
+    private static let libraryVersion = 5
     private static let versionKey = "seedLibraryVersion"
 
     /// Inserts built-in exercises that aren't in the store yet (by name). Runs once per
     /// library version, so an exercise the user deleted doesn't keep coming back.
     static func seedIfNeeded(_ context: ModelContext) {
         guard UserDefaults.standard.integer(forKey: versionKey) < libraryVersion else { return }
-        let existing = Set(((try? context.fetch(FetchDescriptor<Exercise>())) ?? []).map(\.name))
+        let storedExercises = (try? context.fetch(FetchDescriptor<Exercise>())) ?? []
+
+        // Preserve routines and workout history when a built-in exercise is renamed.
+        if let treadmillRun = storedExercises.first(where: {
+            !$0.isCustom && $0.name == "Running with Treadmill"
+        }) {
+            treadmillRun.name = "Running (Treadmill)"
+        }
+
+        let existing = Set(storedExercises.map(\.name))
         for item in library where !existing.contains(item.0) {
             context.insert(Exercise(name: item.0, muscleGroup: item.1, equipment: item.2, restSeconds: item.3))
         }
@@ -50,7 +59,8 @@ enum SeedData {
     /// Built-ins that aren't weight × reps.
     private static let trackingTypes: [String: TrackingType] = [
         "Plank": .duration, "Side Plank": .duration, "Jump Rope": .duration, "Stair Climber": .duration,
-        "Running": .distanceDuration, "Rowing Machine": .distanceDuration,
+        "Running": .distanceDuration, "Running (Treadmill)": .distanceDuration,
+        "Rowing Machine": .distanceDuration,
         "Stationary Bike": .distanceDuration, "Elliptical": .distanceDuration,
         "Farmer's Carry": .weightDistance, "Sled Push": .weightDistance,
     ]
@@ -120,6 +130,7 @@ enum SeedData {
         ("Farmer's Carry", .fullBody, .dumbbell, 90),
         ("Rowing Machine", .cardio, .machine, 60),
         ("Running", .cardio, .other, 60),
+        ("Running (Treadmill)", .cardio, .machine, 60),
 
         // Library version 2
         ("Chest Fly Machine", .chest, .machine, 60),

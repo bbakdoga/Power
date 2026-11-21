@@ -3,7 +3,7 @@ import SwiftData
 
 struct RootTabView: View {
     enum Tab: Hashable {
-        case profile, history, workout, exercises, settings
+        case profile, nutrition, workout, exercises, settings
     }
 
     @Environment(\.modelContext) private var context
@@ -24,9 +24,9 @@ struct RootTabView: View {
             ProfileView()
                 .tabItem { Label("Profile", systemImage: "person.crop.circle") }
                 .tag(Tab.profile)
-            HistoryView()
-                .tabItem { Label("History", systemImage: "clock.arrow.circlepath") }
-                .tag(Tab.history)
+            NutritionView()
+                .tabItem { Label("Nutrition", systemImage: "fork.knife") }
+                .tag(Tab.nutrition)
             WorkoutTabView()
                 .tabItem { Label("Workout", systemImage: "plus.circle.fill") }
                 .tag(Tab.workout)

@@ -18,8 +18,8 @@
 			</array>
 		</dict>
 	</array>
-	<key>LSSupportsOpeningDocumentsInPlace</key>
-	<false/>
+	<key>NutritionAPIBaseURL</key>
+	<string>https://power-nutrition-api.bbakdoga.workers.dev</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
