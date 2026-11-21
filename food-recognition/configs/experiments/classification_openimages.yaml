@@ -1,0 +1,26 @@
+# Experiment (production path): start from our own Open Images pretraining.
+seed: 1337
+assets:
+- timm_code
+- owned_photos
+model:
+  architecture: mobilenetv3_large_100
+  input_size: 224
+  pretrained: openimages_pretrain_own
+  crop_padding: 0.1
+train:
+  epochs: 60
+  batch_size: 128
+  lr: 0.002
+  label_smoothing: 0.1
+  mixed_precision: true
+  class_balanced_sampling: true
+  use_unknown_as_negative: true
+inference:
+  top_k: 3
+  reject_below: 0.4
+  reject_margin: 0.05
+experiment:
+  name: classification-openimages
+  init: openimages
+  compare_with: classification-scratch

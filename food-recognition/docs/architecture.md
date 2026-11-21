@@ -66,6 +66,30 @@ and `openimages_pretrain_own` are approved in `licenses/assets.yaml`. The
 configs keep `pretrained: null` until those weights exist; ImageNet and COCO
 checkpoints stay blocked by the licence gate.
 
+## From-scratch comparison
+
+Baris also wants a model trained with no pretrained weights at all, to compare
+against the production path. `configs/experiments/` has a matched pair for
+each model:
+
+| Config | Starting weights | Schedule |
+|---|---|---|
+| `detection_openimages.yaml` / `classification_openimages.yaml` | our Open Images pretraining | normal |
+| `detection_scratch.yaml` / `classification_scratch.yaml` | random | 2× epochs, stronger augmentation |
+
+Rules that keep the comparison fair:
+
+- Both runs use the same frozen dataset version, the same seed and the same
+  held-out test split (including the pinned phone-photo set).
+- Both produce evaluation records (`evaluation/records.py`) with the same
+  metrics and condition slices, before and after Core ML compression.
+- Report GPU hours for each run as well, since from-scratch costs more.
+- Expect from-scratch to be clearly worse with only a few thousand photos; the
+  size of that gap is the interesting result.
+
+The from-scratch run uses no third-party data, so it is also the cleanest
+possible licence story.
+
 ## Taxonomy v0.1.0 (45 foods + unknown)
 
 Chosen for a fitness app: things people log daily, that look different

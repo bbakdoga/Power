@@ -23,5 +23,5 @@ else
   model="${job#train_}"
   ssh "$CLUSTER_HOST" "cd '$CLUSTER_WORKDIR' && \
     sed -e 's/__PARTITION__/$CLUSTER_PARTITION/' -e 's/__ACCOUNT__/$CLUSTER_ACCOUNT/' cluster/lsf/train.lsf | \
-    MODEL=$model DATASET_VERSION=${1:-} bsub"
+    MODEL=$model DATASET_VERSION=${1:-} CONFIG=${2:-} bsub"
 fi

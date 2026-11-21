@@ -27,6 +27,12 @@ this repository holds credentials.
 cluster/submit.sh validate                  # CPU: licence check + dataset validation
 cluster/submit.sh train_detector v0.1.0     # GPU: needs a frozen dataset version
 cluster/submit.sh train_classifier v0.1.0
+
+# Pretrained vs from-scratch comparison (same dataset version and test split)
+cluster/submit.sh train_detector   v0.1.0 configs/experiments/detection_openimages.yaml
+cluster/submit.sh train_detector   v0.1.0 configs/experiments/detection_scratch.yaml
+cluster/submit.sh train_classifier v0.1.0 configs/experiments/classification_openimages.yaml
+cluster/submit.sh train_classifier v0.1.0 configs/experiments/classification_scratch.yaml
 ```
 
 Every job runs `food-rec check-licenses` first and stops if a config uses an

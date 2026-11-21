@@ -53,3 +53,17 @@ def test_licence_gate_blocks_unapproved_assets():
         raise AssertionError("needs_review weights must be blocked")
     assert check_assets(["made_up"], registry) == ["made_up: not listed in licenses/assets.yaml"]
 
+
+
+def test_experiment_pairs_differ_only_in_initialisation():
+    registry = load_assets(ROOT / "licenses" / "assets.yaml")
+    for model in ("detection", "classification"):
+        scratch = load_yaml(ROOT / "configs" / "experiments" / f"{model}_scratch.yaml")
+        pretrained = load_yaml(ROOT / "configs" / "experiments" / f"{model}_openimages.yaml")
+        assert scratch["model"]["pretrained"] is None
+        assert pretrained["model"]["pretrained"] == "openimages_pretrain_own"
+        assert scratch["seed"] == pretrained["seed"]
+        assert {k: v for k, v in scratch["model"].items() if k != "pretrained"} == \
+               {k: v for k, v in pretrained["model"].items() if k != "pretrained"}
+        for cfg in (scratch, pretrained):
+            assert check_assets(assets_used_by(cfg), registry) == [], cfg["experiment"]["name"]
