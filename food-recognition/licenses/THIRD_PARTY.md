@@ -60,6 +60,8 @@ training data.
 | Photos Baris owns or has written commercial permission for | owned / permission | ✅ | Each image needs a manifest record. |
 | Open Images V7 | Boxes CC BY 4.0; images listed by Google as CC BY 2.0 | ✅ approved by Baris, 2026-11-21 | Google does not verify each image's licence. We would keep each image's licence and author, and publish an attribution list. CC BY covers copyright, not people shown in photos; food-only crops reduce that concern. |
 | Nutrition5k | CC BY 4.0 | ⚠️ | Commercial use allowed with attribution, but overhead cafeteria trays only; no boxes. |
+| Food Recognition Benchmark / MyFoodRepo-273 | CC BY 4.0 per the paper | ⚠️ | Real phone photos shared by consenting app users, 273 classes, polygon masks. Confirm licence and classes on the AIcrowd download page (needs login). |
+| Roboflow Universe food sets | Chosen by each uploader | ⛔ | Licence is self-declared; image origin usually unknown (often Food-101 or web scrapes). |
 | MS COCO 2017 | Boxes CC BY 4.0; images mixed Flickr licences | ⚠️ | Only images under commercial-friendly licences could be considered. |
 | Food-101 | Unclear; scraped from foodspotting.com | ⛔ | No clear commercial grant. |
 | UEC FOOD-100 / 256 | Research use only | ⛔ | |

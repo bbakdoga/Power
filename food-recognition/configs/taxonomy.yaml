@@ -31,8 +31,8 @@ classes:
   - {id: 4,  name: salmon,           display_name: Salmon,           group: protein,   fdc_query: "salmon cooked",                open_images_candidate: null}
   - {id: 5,  name: white_fish,       display_name: White fish fillet, group: protein,  fdc_query: "cod cooked",                   open_images_candidate: null}
   - {id: 6,  name: shrimp,           display_name: Shrimp,           group: protein,   fdc_query: "shrimp cooked",                open_images_candidate: Shrimp}
-  - {id: 7,  name: fried_egg,        display_name: Fried egg,        group: protein,   fdc_query: "egg fried",                    open_images_candidate: Egg (Food)}
-  - {id: 8,  name: boiled_egg,       display_name: Boiled egg,       group: protein,   fdc_query: "egg hard-boiled",              open_images_candidate: Egg (Food)}
+  - {id: 7,  name: fried_egg,        display_name: Fried egg,        group: protein,   fdc_query: "egg fried",                    open_images_candidate: Egg}
+  - {id: 8,  name: boiled_egg,       display_name: Boiled egg,       group: protein,   fdc_query: "egg hard-boiled",              open_images_candidate: Egg}
   - {id: 9,  name: scrambled_eggs,   display_name: Scrambled eggs,   group: protein,   fdc_query: "egg scrambled",                open_images_candidate: null}
   - {id: 10, name: tofu,             display_name: Tofu,             group: protein,   fdc_query: "tofu",                         open_images_candidate: null}
   - {id: 11, name: bacon,            display_name: Bacon,            group: protein,   fdc_query: "bacon cooked",                 open_images_candidate: null}
@@ -62,7 +62,7 @@ classes:
   # Fruit
   - {id: 33, name: apple,            display_name: Apple,            group: fruit,     fdc_query: "apple raw",                    open_images_candidate: Apple}
   - {id: 34, name: banana,           display_name: Banana,           group: fruit,     fdc_query: "banana raw",                   open_images_candidate: Banana}
-  - {id: 35, name: orange,           display_name: Orange,           group: fruit,     fdc_query: "orange raw",                   open_images_candidate: Orange}
+  - {id: 35, name: orange,           display_name: Orange,           group: fruit,     fdc_query: "orange raw",                   open_images_candidate: Orange (fruit)}
   - {id: 36, name: strawberries,     display_name: Strawberries,     group: fruit,     fdc_query: "strawberries raw",             open_images_candidate: Strawberry}
   - {id: 37, name: blueberries,      display_name: Blueberries,      group: fruit,     fdc_query: "blueberries raw",              open_images_candidate: null}
   - {id: 38, name: grapes,           display_name: Grapes,           group: fruit,     fdc_query: "grapes raw",                   open_images_candidate: Grape}

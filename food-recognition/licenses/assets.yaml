@@ -103,6 +103,22 @@ assets:
     status: needs_review
     notes: Overhead cafeteria plates with ingredient lists, no boxes. Narrow domain.
 
+  - id: myfoodrepo_273
+    kind: dataset
+    name: Food Recognition Benchmark / MyFoodRepo-273 (EPFL, AIcrowd)
+    license: CC BY 4.0 (stated in the paper, PMC9121091); dataset page needs an AIcrowd login
+    url: https://www.aicrowd.com/challenges/food-recognition-challenge
+    status: needs_review
+    notes: ~24k real phone photos that app users chose to make public, 273 classes, polygon masks (convert to boxes). Confirm licence and class list on the download page.
+
+  - id: roboflow_universe
+    kind: dataset
+    name: Food datasets on Roboflow Universe
+    license: set per dataset by the uploader
+    url: https://universe.roboflow.com
+    status: blocked
+    notes: Uploaders choose the licence and Roboflow does not verify image rights; most food sets are re-uploads of scraped or research-only images.
+
   - id: coco_2017
     kind: dataset
     name: MS COCO 2017
