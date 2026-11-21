@@ -1,0 +1,33 @@
+# Experiment: random initialisation, no pretrained weights.
+# Same dataset version, same test split and same evaluation as the Open Images run,
+# so the two can be compared fairly. From-scratch models need longer schedules and
+# stronger augmentation, so this config trains longer.
+seed: 1337
+assets:
+- timm_code
+- owned_photos
+model:
+  architecture: mobilenetv3_large_100
+  input_size: 224
+  pretrained: null
+  crop_padding: 0.1
+train:
+  epochs: 120
+  batch_size: 128
+  lr: 0.002
+  label_smoothing: 0.1
+  mixed_precision: true
+  class_balanced_sampling: true
+  use_unknown_as_negative: true
+  augment:
+    randaugment: true
+    mixup: 0.2
+    cutmix: 0.2
+inference:
+  top_k: 3
+  reject_below: 0.4
+  reject_margin: 0.05
+experiment:
+  name: classification-scratch
+  init: scratch
+  compare_with: classification-openimages

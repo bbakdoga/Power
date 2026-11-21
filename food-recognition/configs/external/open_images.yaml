@@ -1,0 +1,103 @@
+# Open Images V7 class names (DisplayName from oidv7-class-descriptions.csv)
+# mapped onto our taxonomy. Checked against the official class lists on 2026-11-21.
+#
+# boxable:     classes with human-drawn boxes -> imported with boxes
+# image_level: classes with human-verified photo-level labels only -> imported
+#              without boxes and listed for boxing in Label Studio
+#
+# "Egg" boxes cover all egg dishes. They are imported as unknown_food (food
+# for the detector) and annotators relabel them as fried/boiled/scrambled.
+# Boxes of other food classes not listed here (e.g. Doughnut, Taco) are
+# imported as unknown_food so the detector still learns they are food.
+
+source_id: open_images_v7
+license_required: CC-BY-2.0       # images with any other licence are skipped
+skip_depictions: true             # drawings, toys, posters of food
+other_food_as_unknown:
+  - Food
+  - Fast food
+  - Snack
+  - Dessert
+  - Baked goods
+  - Seafood
+  - Shellfish
+  - Fruit
+  - Vegetable
+  - Doughnut
+  - Taco
+  - Hot dog
+  - Muffin
+  - Cookie
+  - Cake
+  - Waffle
+  - Croissant
+  - Pretzel
+  - Submarine sandwich
+  - Guacamole
+  - Lemon (plant)
+  - Mango
+  - Pineapple
+  - Watermelon
+  - Peach
+  - Pear
+  - Pomegranate
+  - Grapefruit
+  - Cantaloupe
+  - Zucchini
+  - Cabbage
+  - Mushroom
+  - Radish
+  - Pumpkin
+  - Squash (Plant)
+  - Ice cream
+  - Popcorn
+  - Lobster
+  - Oyster
+  - Crab
+  - Egg
+
+classes:
+  shrimp:        {boxable: [Shrimp]}
+  pasta:         {boxable: [Pasta]}
+  bread:         {boxable: [Bread]}
+  bagel:         {boxable: [Bagel]}
+  potato:        {boxable: [Potato]}
+  french_fries:  {boxable: [French fries]}
+  pancakes:      {boxable: [Pancake]}
+  tortilla_wrap: {boxable: [Burrito]}
+  broccoli:      {boxable: [Broccoli]}
+  green_salad:   {boxable: [Salad]}
+  carrot:        {boxable: [Carrot]}
+  tomato:        {boxable: [Tomato]}
+  cucumber:      {boxable: [Cucumber]}
+  bell_pepper:   {boxable: [Bell pepper]}
+  apple:         {boxable: [Apple]}
+  banana:        {boxable: [Banana]}
+  orange:        {boxable: [Orange (fruit)]}
+  strawberries:  {boxable: [Strawberry]}
+  grapes:        {boxable: [Grape]}
+  cheese:        {boxable: [Cheese]}
+  pizza:         {boxable: [Pizza]}
+  burger:        {boxable: [Hamburger]}
+  sandwich:      {boxable: [Sandwich]}
+  sushi:         {boxable: [Sushi]}
+  fried_chicken: {image_level: [Fried chicken]}
+  steak:         {image_level: [Steak]}
+  salmon:        {image_level: [Salmon]}
+  fried_egg:     {image_level: [Fried egg]}
+  boiled_egg:    {image_level: [Boiled egg]}
+  scrambled_eggs: {image_level: [Scrambled eggs]}
+  tofu:          {image_level: [Tofu]}
+  bacon:         {image_level: [Bacon]}
+  sausage:       {image_level: [Sausage]}
+  white_rice:    {image_level: [White rice]}
+  fried_rice:    {image_level: [Fried rice]}
+  sweet_potato:  {image_level: [Sweet potato]}
+  oatmeal:       {image_level: [Oatmeal]}
+  avocado:       {image_level: [Avocado]}
+  green_beans:   {image_level: [Green bean]}
+  corn:          {image_level: [Sweet corn]}
+  blueberries:   {image_level: [Blueberry]}
+  yogurt:        {image_level: [Yogurt]}
+  nuts:          {image_level: [Almond]}
+  # No good Open Images match: grilled_chicken, white_fish

@@ -1,0 +1,52 @@
+# Copy to sources.yaml (gitignored) and fill in. Every image in images.jsonl
+# must reference one of these sources.
+sources:
+  - source_id: baris_kitchen_2026_11
+    source_type: owned               # owned | permission | open_dataset | user_correction
+    license: owned
+    commercial_use: true
+    redistribution: true
+    description: Meals photographed by Baris on an iPhone, November 2026
+    contact: null
+    permission_document: null        # path or reference to a signed agreement
+    pinned_split: null               # train | val | test | null
+
+  - source_id: myfoodrepo_v04
+    source_type: open_dataset
+    license: CC-BY-4.0
+    commercial_use: true
+    redistribution: true
+    description: MyFoodRepo / Food Recognition Benchmark v0.4 (AIcrowd), CC BY 4.0
+    contact: null
+    permission_document: null
+    pinned_split: null
+
+  - source_id: myfoodrepo_2022_v2
+    source_type: open_dataset
+    license: CC-BY-4.0
+    commercial_use: true
+    redistribution: true
+    description: MyFoodRepo / Food Recognition Benchmark 2022 v2.0 (AIcrowd; files from the Kaggle mirror)
+    contact: null
+    permission_document: null
+    pinned_split: null
+
+  - source_id: open_images_v7
+    source_type: open_dataset
+    license: CC-BY-2.0
+    commercial_use: true
+    redistribution: true
+    description: Open Images V7 photos listed as CC BY 2.0; author and URL kept per photo
+    contact: null
+    permission_document: null
+    pinned_split: null
+
+  - source_id: phone_eval_2026_11
+    source_type: owned
+    license: owned
+    commercial_use: true
+    redistribution: true
+    description: Held-out everyday phone photos (mixed plates, low light, odd angles)
+    contact: null
+    permission_document: null
+    pinned_split: test               # never trained on

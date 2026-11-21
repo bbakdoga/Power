@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# LSF version, in case the cluster uses bsub instead of sbatch.
+#BSUB -J food-train
+#BSUB -q __PARTITION__
+#BSUB -P __ACCOUNT__
+#BSUB -gpu "num=1"
+#BSUB -n 16
+#BSUB -R "rusage[mem=4G]"
+#BSUB -W 24:00
+#BSUB -o logs/%J.out
+# Usage: bsub < cluster/lsf/train.lsf  (set MODEL=detector|classifier, DATASET_VERSION and optionally CONFIG)
+set -euo pipefail
+cd "${LS_SUBCWD:-$PWD}"
+[[ -f cluster/cluster.env ]] && source cluster/cluster.env
+eval "${CLUSTER_ENV_SETUP:-true}"
+export PYTHONHASHSEED=1337 CUBLAS_WORKSPACE_CONFIG=:4096:8
+mkdir -p logs
+food-rec check-licenses ${CONFIG:+"$CONFIG"}
+food-rec "train-${MODEL:?set MODEL}" --dataset-version "${DATASET_VERSION:?set DATASET_VERSION}" ${CONFIG:+--config "$CONFIG"}

@@ -1,0 +1,62 @@
+<View>
+  <Header value="Draw one box around every separate food. Read docs/annotation_guidelines.md first."/>
+  <Image name="image" value="$image" zoom="true" zoomControl="true" rotateControl="false"/>
+  <RectangleLabels name="label" toName="image" strokeWidth="2" canRotate="false">
+    <Label value="unknown_food" hint="Food not in the list, or you cannot tell what it is" background="#888888"/>
+    <Label value="grilled_chicken" hint="Grilled chicken"/>
+    <Label value="fried_chicken" hint="Fried chicken"/>
+    <Label value="steak" hint="Steak"/>
+    <Label value="salmon" hint="Salmon"/>
+    <Label value="white_fish" hint="White fish fillet"/>
+    <Label value="shrimp" hint="Shrimp"/>
+    <Label value="fried_egg" hint="Fried egg"/>
+    <Label value="boiled_egg" hint="Boiled egg"/>
+    <Label value="scrambled_eggs" hint="Scrambled eggs"/>
+    <Label value="tofu" hint="Tofu"/>
+    <Label value="bacon" hint="Bacon"/>
+    <Label value="sausage" hint="Sausage"/>
+    <Label value="white_rice" hint="Rice"/>
+    <Label value="fried_rice" hint="Fried rice"/>
+    <Label value="pasta" hint="Pasta"/>
+    <Label value="bread" hint="Bread or toast"/>
+    <Label value="bagel" hint="Bagel"/>
+    <Label value="potato" hint="Potato"/>
+    <Label value="french_fries" hint="French fries"/>
+    <Label value="sweet_potato" hint="Sweet potato"/>
+    <Label value="oatmeal" hint="Oatmeal"/>
+    <Label value="pancakes" hint="Pancakes"/>
+    <Label value="tortilla_wrap" hint="Wrap or burrito"/>
+    <Label value="broccoli" hint="Broccoli"/>
+    <Label value="green_salad" hint="Green salad"/>
+    <Label value="carrot" hint="Carrot"/>
+    <Label value="tomato" hint="Tomato"/>
+    <Label value="cucumber" hint="Cucumber"/>
+    <Label value="avocado" hint="Avocado"/>
+    <Label value="green_beans" hint="Green beans"/>
+    <Label value="corn" hint="Corn"/>
+    <Label value="bell_pepper" hint="Bell pepper"/>
+    <Label value="apple" hint="Apple"/>
+    <Label value="banana" hint="Banana"/>
+    <Label value="orange" hint="Orange"/>
+    <Label value="strawberries" hint="Strawberries"/>
+    <Label value="blueberries" hint="Blueberries"/>
+    <Label value="grapes" hint="Grapes"/>
+    <Label value="yogurt" hint="Yogurt"/>
+    <Label value="cheese" hint="Cheese"/>
+    <Label value="nuts" hint="Nuts"/>
+    <Label value="pizza" hint="Pizza"/>
+    <Label value="burger" hint="Burger"/>
+    <Label value="sandwich" hint="Sandwich"/>
+    <Label value="sushi" hint="Sushi"/>
+  </RectangleLabels>
+  <Choices name="flags" toName="image" perRegion="true" choice="multiple" showInline="true">
+    <Choice value="occluded" hint="More than a quarter of the food is hidden"/>
+    <Choice value="truncated" hint="The food is cut off by the photo edge"/>
+    <Choice value="uncertain" hint="You are not sure about the label"/>
+    <Choice value="mixed_dish" hint="Box covers a dish whose parts cannot be separated"/>
+  </Choices>
+  <Choices name="image_flags" toName="image" choice="multiple" showInline="true">
+    <Choice value="no_food" hint="The photo contains no food at all"/>
+    <Choice value="reject_image" hint="Blurry, private, or not a real photo; exclude it"/>
+  </Choices>
+</View>
