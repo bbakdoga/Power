@@ -23,6 +23,7 @@ struct ActiveWorkoutView: View {
                         .foregroundStyle(.secondary)
                 }
             }
+            .themedRows()
 
             ForEach(workout.sortedExercises) { entry in
                 WorkoutExerciseSection(entry: entry) { banner in
@@ -36,15 +37,21 @@ struct ActiveWorkoutView: View {
                 } label: {
                     Label("Add exercises", systemImage: "plus")
                 }
-                Button("Discard workout", role: .destructive) {
-                    confirmingDiscard = true
-                }
             }
+            .themedRows()
         }
         .navigationTitle("Workout")
+        .themedScreen()
         .navigationBarTitleDisplayMode(.inline)
         .scrollDismissesKeyboard(.interactively)
         .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel", role: .destructive) {
+                    confirmingDiscard = true
+                }
+                .tint(.red)
+                .accessibilityHint("Discard workout")
+            }
             ToolbarItem(placement: .confirmationAction) {
                 Button("Finish") {
                     if hasCheckedSets || hasUncheckedLoggedSets {
@@ -52,6 +59,13 @@ struct ActiveWorkoutView: View {
                     } else {
                         showingNothingToSave = true
                     }
+                }
+                .bold()
+            }
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 }
                 .bold()
             }
@@ -110,26 +124,38 @@ struct ActiveWorkoutView: View {
                 .transition(.opacity)
 
             VStack(spacing: 12) {
-                Text(hasUnfinished ? "You have unfinished sets" : "Finish workout?")
+                Text("Save this workout?")
                     .font(.headline)
-                Text(!hasUnfinished ? "It will appear in your History."
-                     : hasCheckedSets ? "Sets without reps are always removed."
-                     : "No sets are checked off, so ignoring them discards this workout.")
-                    .font(.subheadline)
+                Text(summaryText)
+                    .font(.subheadline.monospacedDigit())
                     .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-
-                if hasUncheckedLoggedSets || !hasUnfinished {
-                    promptButton(hasUnfinished ? "Complete Unfinished Sets" : "Save Workout", tint: .green) {
-                        finish(includeUnchecked: true)
-                    }
-                }
                 if hasUnfinished {
-                    promptButton("Ignore Unfinished Sets", tint: .red) {
-                        finish(includeUnchecked: false)
+                    Text("Some sets aren't checked off. Sets without reps are always removed.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                }
+
+                if !hasUnfinished {
+                    promptButton("Save Workout", tint: .green) {
+                        finish(includeUnchecked: true, saveToHistory: true)
+                    }
+                } else {
+                    if hasUncheckedLoggedSets {
+                        promptButton("Save & Complete Unfinished Sets", tint: .green) {
+                            finish(includeUnchecked: true, saveToHistory: true)
+                        }
+                    }
+                    if hasCheckedSets {
+                        promptButton("Save Only Checked Sets", tint: .blue) {
+                            finish(includeUnchecked: false, saveToHistory: true)
+                        }
                     }
                 }
-                promptButton("Cancel", tint: .gray) {
+                promptButton("Don't Save", tint: .red) {
+                    finish(includeUnchecked: true, saveToHistory: false)
+                }
+                promptButton("Keep Training", tint: .gray) {
                     dismissFinishPrompt()
                 }
             }
@@ -142,7 +168,7 @@ struct ActiveWorkoutView: View {
         }
     }
 
-    private func promptButton(_ title: String, tint: Color, action: @escaping () -> Void) -> some View {
+    private func promptButton(_ title: LocalizedStringKey, tint: Color, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Text(title)
                 .font(.headline)
@@ -161,6 +187,16 @@ struct ActiveWorkoutView: View {
         withAnimation(.spring(duration: 0.3)) { confirmingFinish = false }
     }
 
+    /// "48:12 · 5 exercises · 17 sets" for the save prompt.
+    private var summaryText: String {
+        let entries = workout.sortedExercises
+        let sets = entries.reduce(0) { total, entry in
+            total + entry.sortedSets.filter { $0.isDone || $0.hasData }.count
+        }
+        let elapsed = Date.now.timeIntervalSince(workout.startDate).clockString
+        return "\(elapsed) · \(entries.count == 1 ? "1 exercise" : "\(entries.count) exercises") · \(sets == 1 ? "1 set" : "\(sets) sets")"
+    }
+
     private var hasCheckedSets: Bool {
         workout.sortedExercises.contains { entry in entry.sortedSets.contains(where: \.isDone) }
     }
@@ -168,16 +204,17 @@ struct ActiveWorkoutView: View {
     /// Sets with reps entered that the user didn't tap the checkmark on.
     private var hasUncheckedLoggedSets: Bool {
         workout.sortedExercises.contains { entry in
-            entry.sortedSets.contains { !$0.isDone && $0.reps > 0 }
+            entry.sortedSets.contains { !$0.isDone && $0.hasData }
         }
     }
 
-    private func finish(includeUnchecked: Bool) {
+    private func finish(includeUnchecked: Bool, saveToHistory: Bool) {
         confirmingFinish = false
+        workout.isSavedToHistory = saveToHistory
         var anyDone = false
         for entry in workout.sortedExercises {
             if includeUnchecked {
-                for set in entry.sortedSets where !set.isDone && set.reps > 0 {
+                for set in entry.sortedSets where !set.isDone && set.hasData {
                     set.isDone = true
                     set.completedAt = .now
                 }
@@ -197,17 +234,22 @@ struct ActiveWorkoutView: View {
         if anyDone {
             let end = Date.now
             workout.endDate = end
+            WorkoutSettingsSnapshot.clear()
             if healthEnabled {
                 HealthSync.shared.saveWorkout(start: workout.startDate, end: end)
             }
         } else {
+            // Nothing to save, so treat it like a cancel.
+            WorkoutSettingsSnapshot.restore(for: workout, in: context)
             context.delete(workout)
         }
         try? context.save()
     }
 
+    /// Cancel: delete the workout and undo exercise setting changes made during it.
     private func discard() {
         restTimer.stop()
+        WorkoutSettingsSnapshot.restore(for: workout, in: context)
         context.delete(workout)
         try? context.save()
     }
@@ -259,7 +301,7 @@ struct WorkoutExerciseSection: View {
     @Environment(\.modelContext) private var context
     @Environment(RestTimer.self) private var restTimer
     @AppStorage(WeightUnit.storageKey) private var appUnit: WeightUnit = .kg
-    @AppStorage("showWeightSuggestions") private var showSuggestions = true
+    @AppStorage(WorkoutSettingsSnapshot.showSuggestionsKey) private var showSuggestions = true
     @State private var showingNote = false
     @State private var showingStickyNote = false
     @State private var editingRest = false
@@ -285,24 +327,26 @@ struct WorkoutExerciseSection: View {
                 noteRow(text: $entry.notes, prompt: "Note for this workout",
                         systemImage: "note.text", tint: .secondary, kind: .workout)
             }
-            if showSuggestions, let suggestion = WeightSuggestion.make(for: entry, unit: unit) {
+            if showSuggestions, tracking == .weightReps, let suggestion = WeightSuggestion.make(for: entry, unit: unit) {
                 suggestionRow(suggestion)
             }
-            SetHeaderRow(unit: unit)
+            SetHeaderRow(unit: unit, tracking: tracking)
             ForEach(Array(sets.enumerated()), id: \.element.id) { index, set in
                 VStack(spacing: 8) {
                     SetRowView(workoutSet: set,
                                label: labels[index],
                                previous: index < previousSets.count ? previousSets[index] : nil,
                                unit: unit,
+                               tracking: tracking,
                                isRecord: !PersonalRecords.newRecords(for: set).isEmpty) {
                         if WorkoutStarter.shouldRest(after: entry) {
-                            restTimer.start(seconds: restSeconds, exerciseName: entry.exercise?.name ?? "")
+                            restTimer.start(seconds: restSeconds, exerciseName: entry.exercise?.name ?? "",
+                                            setID: set.persistentModelID)
                         }
                         celebrateRecords(for: set)
                     }
                     if showsRest {
-                        RestDivider(seconds: restSeconds) { editingRest = true }
+                        RestDivider(seconds: restSeconds, setID: set.persistentModelID) { editingRest = true }
                     }
                 }
             }
@@ -328,7 +372,7 @@ struct WorkoutExerciseSection: View {
                         .padding(.vertical, 3)
                         .background(Capsule().fill(.purple))
                 }
-                Text(entry.exercise?.name ?? "Exercise")
+                Text(entry.exercise?.name ?? String(localized: "Exercise"))
                     .font(.headline)
                     .foregroundStyle(.tint)
                     .textCase(nil)
@@ -353,11 +397,27 @@ struct WorkoutExerciseSection: View {
             }
             .sheet(isPresented: $replacing) {
                 ExercisePickerView(singleSelection: true) { selected in
-                    if let replacement = selected.first { entry.exercise = replacement }
+                    if let replacement = selected.first {
+                        rememberSettings(of: replacement)
+                        entry.exercise = replacement
+                    }
                 }
             }
         }
+        .themedRows()
+        .onAppear {
+            if let exercise = entry.exercise { rememberSettings(of: exercise) }
+        }
     }
+
+    /// Lets Cancel undo setting changes made during this workout.
+    private func rememberSettings(of exercise: Exercise) {
+        if let workout = entry.workout {
+            WorkoutSettingsSnapshot.remember(exercise, in: workout)
+        }
+    }
+
+    private var tracking: TrackingType { entry.exercise?.tracking ?? .weightReps }
 
     /// This exercise's own unit if it has one, otherwise the app setting.
     private var unit: WeightUnit {
@@ -458,7 +518,8 @@ struct WorkoutExerciseSection: View {
     /// Warm-ups ramp up to the first working set: 40% × 8, 60% × 5, 80% × 3.
     private var canAddWarmUps: Bool {
         let sets = entry.sortedSets
-        return !sets.contains { $0.setType == .warmup }
+        return tracking == .weightReps
+            && !sets.contains { $0.setType == .warmup }
             && (sets.first { $0.setType != .warmup }?.weightKg ?? 0) > 0
     }
 
@@ -499,8 +560,8 @@ struct WorkoutExerciseSection: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Text(suggestion.isIncrease
-                     ? "Try \(unit.format(kg: suggestion.suggestedWeightKg)) \(unit.rawValue) today"
-                     : "Stay at \(unit.format(kg: suggestion.suggestedWeightKg)) \(unit.rawValue), aim for \(suggestion.targetReps) reps on every set")
+                     ? String(localized: "Try \(unit.format(kg: suggestion.suggestedWeightKg)) \(unit.rawValue) today")
+                     : String(localized: "Stay at \(unit.format(kg: suggestion.suggestedWeightKg)) \(unit.rawValue), aim for \(suggestion.targetReps) reps on every set"))
                     .font(.subheadline.weight(.medium))
             }
             Spacer(minLength: 0)
@@ -525,6 +586,9 @@ struct WorkoutExerciseSection: View {
             case .heaviestWeight: return "\(kind.title): \(unit.format(kg: set.weightKg)) \(unit.rawValue)"
             case .oneRepMax: return "\(kind.title): \(unit.format(kg: set.estimatedOneRepMaxKg)) \(unit.rawValue)"
             case .mostReps: return "\(kind.title): \(set.reps)"
+            case .longestTime: return "\(kind.title): \(set.durationSeconds.clockString)"
+            case .longestDistance:
+                return "\(kind.title): \(Distance.format(meters: set.distanceMeters, scale: tracking == .weightDistance ? .short : .long, unit: unit))"
             }
         }
         onRecord(RecordBanner(exerciseName: entry.exercise?.name ?? "Exercise", details: details))
@@ -532,9 +596,8 @@ struct WorkoutExerciseSection: View {
 
     private func addSet() {
         let last = entry.sortedSets.last
-        let set = WorkoutSet(order: (last?.order ?? -1) + 1,
-                             weightKg: last?.weightKg ?? 0,
-                             reps: last?.reps ?? 0)
+        let set = WorkoutSet(order: (last?.order ?? -1) + 1)
+        if let last { set.copyValues(from: last) }
         context.insert(set)
         set.workoutExercise = entry
     }
@@ -553,22 +616,61 @@ struct WorkoutExerciseSection: View {
 }
 
 /// Thin line with the rest time between sets; tap to change it.
+/// Thin line with the rest time between sets; tap to change it. Under the set that
+/// started the current rest, it counts down and the line shrinks toward the time.
 struct RestDivider: View {
     let seconds: Int
+    let setID: PersistentIdentifier
     let onTap: () -> Void
+    @Environment(RestTimer.self) private var timer
 
     var body: some View {
         Button(action: onTap) {
-            HStack(spacing: 8) {
-                Capsule().fill(Color.accentColor.opacity(0.35)).frame(height: 3)
-                Text(seconds.restLabel)
-                    .font(.caption.bold().monospacedDigit())
-                    .foregroundStyle(.tint)
-                Capsule().fill(Color.accentColor.opacity(0.35)).frame(height: 3)
+            if timer.setID == setID {
+                TimelineView(.periodic(from: .now, by: 0.5)) { timeline in
+                    let remaining = timer.remaining(at: timeline.date)
+                    if remaining > 0 {
+                        line(label: (remaining + 0.99).clockString,
+                             fraction: min(remaining / Double(max(timer.totalSeconds, 1)), 1))
+                    } else {
+                        line(label: seconds.restLabel, fraction: 1)
+                    }
+                }
+            } else {
+                line(label: seconds.restLabel, fraction: 1)
             }
         }
         .buttonStyle(.borderless)
         .accessibilityLabel("Rest \(seconds.restLabel). Change rest time")
+    }
+
+    /// Two halves around the label; each fills from the label outward by `fraction`.
+    private func line(label: String, fraction: Double) -> some View {
+        let counting = fraction < 1
+        return HStack(spacing: 8) {
+            bar(fraction: fraction, alignment: .trailing, counting: counting)
+            Text(label)
+                .font(.caption.bold().monospacedDigit())
+                .foregroundStyle(.tint)
+                .contentTransition(.numericText(countsDown: true))
+            bar(fraction: fraction, alignment: .leading, counting: counting)
+        }
+    }
+
+    private func bar(fraction: Double, alignment: Alignment, counting: Bool) -> some View {
+        Capsule()
+            .fill(.tint.opacity(counting ? 0.15 : 0.35))
+            .overlay(alignment: alignment) {
+                if counting {
+                    GeometryReader { geometry in
+                        Capsule()
+                            .fill(.tint)
+                            .frame(width: geometry.size.width * fraction)
+                            .frame(maxWidth: .infinity, alignment: alignment)
+                    }
+                }
+            }
+            .frame(height: 3)
     }
 }
 
@@ -602,20 +704,57 @@ struct FocusMetricsView: View {
     let unit: WeightUnit
 
     var body: some View {
+        let tracking = entry.exercise?.tracking ?? .weightReps
+        if tracking == .weightReps {
+            strengthMetrics
+        } else {
+            enduranceMetrics(tracking)
+        }
+    }
+
+    /// Time and distance totals for timed or distance exercises.
+    private func enduranceMetrics(_ tracking: TrackingType) -> some View {
+        let working = entry.completedSets.filter { $0.setType != .warmup }
+        let time = working.reduce(0) { $0 + $1.durationSeconds }
+        let distance = working.reduce(0) { $0 + $1.distanceMeters }
+        let scale: Distance.Scale = tracking == .weightDistance ? .short : .long
+        return VStack(alignment: .leading, spacing: 14) {
+            Text("Focus Metrics")
+                .font(.headline)
+            metric("Sets", working.isEmpty ? String(localized: "N/A") : "\(working.count)")
+            if tracking != .weightDistance {
+                metric("Total Time", time > 0 ? time.clockString : String(localized: "N/A"))
+            }
+            if tracking != .duration {
+                metric("Total Distance", distance > 0 ? Distance.format(meters: distance, scale: scale, unit: unit) : String(localized: "N/A"))
+            }
+            if tracking == .distanceDuration, time > 0, distance > 0 {
+                let perUnit = time / Distance.value(meters: distance, scale: .long, unit: unit)
+                metric("Pace", "\(perUnit.clockString) /\(Distance.symbol(.long, unit: unit))")
+            }
+            Text("Counts checked-off sets.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+        .padding()
+        .frame(minWidth: 280)
+    }
+
+    private var strengthMetrics: some View {
         let working = entry.completedSets.filter { $0.setType != .warmup }
         let volume = entry.volumeKg
         let reps = working.reduce(0) { $0 + $1.reps }
         let lastVolume = entry.exercise?.completedEntries.first?.volumeKg ?? 0
 
-        VStack(alignment: .leading, spacing: 14) {
+        return VStack(alignment: .leading, spacing: 14) {
             Text("Focus Metrics")
                 .font(.headline)
-            metric("Total Volume", volume > 0 ? weightText(volume) : "N/A")
+            metric("Total Volume", volume > 0 ? weightText(volume) : String(localized: "N/A"))
             metric("Volume vs. Last Time", volume > 0 && lastVolume > 0
                    ? ((volume - lastVolume) / lastVolume).formatted(.percent.precision(.fractionLength(0)).sign(strategy: .always()))
-                   : "N/A")
-            metric("Total Reps", reps > 0 ? "\(reps)" : "N/A")
-            metric("Weight per Rep", reps > 0 && volume > 0 ? weightText(volume / Double(reps)) : "N/A")
+                   : String(localized: "N/A"))
+            metric("Total Reps", reps > 0 ? "\(reps)" : String(localized: "N/A"))
+            metric("Weight per Rep", reps > 0 && volume > 0 ? weightText(volume / Double(reps)) : String(localized: "N/A"))
             Text("Counts checked-off working sets.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
@@ -624,7 +763,7 @@ struct FocusMetricsView: View {
         .frame(minWidth: 280)
     }
 
-    private func metric(_ title: String, _ value: String) -> some View {
+    private func metric(_ title: LocalizedStringKey, _ value: String) -> some View {
         HStack {
             Text(title)
                 .font(.subheadline.bold())
@@ -643,13 +782,25 @@ struct FocusMetricsView: View {
 
 struct SetHeaderRow: View {
     let unit: WeightUnit
+    var tracking: TrackingType = .weightReps
 
     var body: some View {
         HStack(spacing: 8) {
             Text("Set").frame(width: 32)
             Text("Previous").frame(maxWidth: .infinity)
-            Text(unit.rawValue).frame(width: 64)
-            Text("Reps").frame(width: 48)
+            switch tracking {
+            case .weightReps:
+                Text(unit.rawValue).frame(width: 64)
+                Text("Reps").frame(width: 48)
+            case .duration:
+                Text("Time").frame(width: 120)
+            case .distanceDuration:
+                Text(Distance.symbol(.long, unit: unit)).frame(width: 56)
+                Text("Time").frame(width: 56)
+            case .weightDistance:
+                Text(unit.rawValue).frame(width: 56)
+                Text(Distance.symbol(.short, unit: unit)).frame(width: 56)
+            }
             Image(systemName: "checkmark").frame(width: 32)
         }
         .font(.caption.bold())
@@ -662,6 +813,7 @@ struct SetRowView: View {
     let label: String
     let previous: WorkoutSet?
     let unit: WeightUnit
+    var tracking: TrackingType = .weightReps
     var isRecord = false
     let onComplete: () -> Void
 
@@ -692,8 +844,7 @@ struct SetRowView: View {
 
             Button {
                 if let previous {
-                    workoutSet.weightKg = previous.weightKg
-                    workoutSet.reps = previous.reps
+                    workoutSet.copyValues(from: previous)
                 }
             } label: {
                 Text(previousText)
@@ -705,17 +856,33 @@ struct SetRowView: View {
             }
             .buttonStyle(.borderless)
 
-            TextField("0", value: weightBinding, format: .number)
-                .keyboardType(.decimalPad)
-                .multilineTextAlignment(.center)
-                .textFieldStyle(.roundedBorder)
-                .frame(width: 64)
-
-            TextField("0", value: $workoutSet.reps, format: .number)
-                .keyboardType(.numberPad)
-                .multilineTextAlignment(.center)
-                .textFieldStyle(.roundedBorder)
-                .frame(width: 48)
+            switch tracking {
+            case .weightReps:
+                NumberField(value: weightBinding, allowsDecimals: true)
+                    .frame(width: 64)
+                    .accessibilityLabel("Weight, \(unit.rawValue)")
+                NumberField(value: repsBinding, allowsDecimals: false)
+                    .frame(width: 48)
+                    .accessibilityLabel("Repetitions")
+            case .duration:
+                DurationField(seconds: $workoutSet.durationSeconds)
+                    .frame(width: 120)
+                    .accessibilityLabel("Time")
+            case .distanceDuration:
+                NumberField(value: distanceBinding(.long), allowsDecimals: true)
+                    .frame(width: 56)
+                    .accessibilityLabel("Distance, \(Distance.symbol(.long, unit: unit))")
+                DurationField(seconds: $workoutSet.durationSeconds)
+                    .frame(width: 56)
+                    .accessibilityLabel("Time")
+            case .weightDistance:
+                NumberField(value: weightBinding, allowsDecimals: true)
+                    .frame(width: 56)
+                    .accessibilityLabel("Weight, \(unit.rawValue)")
+                NumberField(value: distanceBinding(.short), allowsDecimals: false)
+                    .frame(width: 56)
+                    .accessibilityLabel("Distance, \(Distance.symbol(.short, unit: unit))")
+            }
 
             Button {
                 toggleDone()
@@ -732,13 +899,29 @@ struct SetRowView: View {
 
     private var previousText: String {
         guard let previous else { return "–" }
-        return "\(unit.format(kg: previous.weightKg)) × \(previous.reps)"
+        return tracking == .weightReps
+            ? "\(unit.format(kg: previous.weightKg)) × \(previous.reps)"
+            : previous.summary(tracking, unit: unit)
     }
 
     private var weightBinding: Binding<Double> {
         Binding(
             get: { (unit.fromKg(workoutSet.weightKg) * 100).rounded() / 100 },
             set: { workoutSet.weightKg = unit.toKg($0) }
+        )
+    }
+
+    private func distanceBinding(_ scale: Distance.Scale) -> Binding<Double> {
+        Binding(
+            get: { (Distance.value(meters: workoutSet.distanceMeters, scale: scale, unit: unit) * 100).rounded() / 100 },
+            set: { workoutSet.distanceMeters = $0 * Distance.metersPerUnit(scale, unit: unit) }
+        )
+    }
+
+    private var repsBinding: Binding<Double> {
+        Binding(
+            get: { Double(workoutSet.reps) },
+            set: { workoutSet.reps = max(Int($0), 0) }
         )
     }
 
@@ -753,6 +936,108 @@ struct SetRowView: View {
     }
 }
 
+/// Number box that saves on every keystroke. `TextField(value:format:)` only commits
+/// when editing ends, and the number pad has no return key, so typed values were lost
+/// when the user tapped the checkmark or scrolled with the keyboard still up.
+struct NumberField: View {
+    @Binding var value: Double
+    let allowsDecimals: Bool
+    @State private var text = ""
+    @FocusState private var focused: Bool
+
+    var body: some View {
+        TextField("0", text: $text)
+            .keyboardType(allowsDecimals ? .decimalPad : .numberPad)
+            .multilineTextAlignment(.center)
+            .textFieldStyle(.roundedBorder)
+            .monospacedDigit()
+            .focused($focused)
+            .onAppear { text = Self.display(value) }
+            .onChange(of: text) { _, newText in
+                let parsed = Self.parse(newText) ?? 0
+                if parsed != value { value = parsed }
+            }
+            .onChange(of: value) { _, newValue in
+                // Changed elsewhere (e.g. tapping "Previous"); don't fight the user's typing.
+                if (Self.parse(text) ?? 0) != newValue { text = Self.display(newValue) }
+            }
+            .onChange(of: focused) { _, isFocused in
+                if !isFocused { text = Self.display(value) }
+            }
+    }
+
+    /// Accepts both "62.5" and "62,5", whatever the keyboard's decimal separator is.
+    static func parse(_ text: String) -> Double? {
+        Double(text.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: ",", with: "."))
+    }
+
+    /// Empty for 0 so there's nothing to delete before typing.
+    static func display(_ value: Double) -> String {
+        value == 0 ? "" : value.formatted(.number.precision(.fractionLength(0...2)).grouping(.never))
+    }
+}
+
+/// Time box with digit-shift entry like a microwave: typing 1, 3, 0 shows 1:30.
+struct DurationField: View {
+    @Binding var seconds: Double
+    @State private var digits = ""
+    @FocusState private var focused: Bool
+
+    var body: some View {
+        TextField("0:00", text: Binding(get: { Self.display(digits) }, set: { newText in
+            digits = String(newText.filter(\.isNumber).drop { $0 == "0" }.suffix(6))
+        }))
+        .keyboardType(.numberPad)
+        .multilineTextAlignment(.center)
+        .textFieldStyle(.roundedBorder)
+        .monospacedDigit()
+        .focused($focused)
+        .onAppear { digits = Self.digits(for: seconds) }
+        .onChange(of: digits) { _, newDigits in
+            let parsed = Self.seconds(from: newDigits)
+            if parsed != seconds { seconds = parsed }
+        }
+        .onChange(of: seconds) { _, newValue in
+            if Self.seconds(from: digits) != newValue { digits = Self.digits(for: newValue) }
+        }
+        .onChange(of: focused) { _, isFocused in
+            // "0:90" becomes "1:30" once you're done typing.
+            if !isFocused { digits = Self.digits(for: seconds) }
+        }
+    }
+
+    /// Digits read from the right: seconds, minutes, hours ("130" → 90 s, "10000" → 1 h).
+    static func seconds(from digits: String) -> Double {
+        let values = digits.compactMap(\.wholeNumberValue)
+        var total = 0
+        for (position, multiplier) in [1, 10, 60, 600, 3600, 36000].enumerated() where position < values.count {
+            total += values[values.count - 1 - position] * multiplier
+        }
+        return Double(total)
+    }
+
+    static func digits(for seconds: Double) -> String {
+        guard seconds > 0 else { return "" }
+        let total = Int(seconds)
+        let text = String(format: "%d%02d%02d", total / 3600, (total % 3600) / 60, total % 60)
+        return String(text.drop { $0 == "0" })
+    }
+
+    /// "130" → "1:30", "5" → "0:05", "10000" → "1:00:00".
+    static func display(_ digits: String) -> String {
+        guard !digits.isEmpty else { return "" }
+        let padded = String(repeating: "0", count: max(0, 3 - digits.count)) + digits
+        var parts: [String] = []
+        var rest = Substring(padded)
+        while rest.count > 2 {
+            parts.insert(String(rest.suffix(2)), at: 0)
+            rest = rest.dropLast(2)
+        }
+        parts.insert(String(rest), at: 0)
+        return parts.joined(separator: ":")
+    }
+}
+
 struct RestTimerBar: View {
     @Environment(RestTimer.self) private var timer
 
@@ -761,14 +1046,14 @@ struct RestTimerBar: View {
             let remaining = timer.remaining(at: timeline.date)
             if remaining > 0 {
                 HStack(spacing: 12) {
-                    Button("−15") { timer.adjust(by: -15) }
+                    Button("−10") { timer.adjust(by: -10) }
                     VStack(spacing: 4) {
                         Text("Rest \((remaining + 0.99).clockString)")
                             .font(.headline.monospacedDigit())
                         ProgressView(value: min(remaining, Double(timer.totalSeconds)),
                                      total: Double(max(timer.totalSeconds, 1)))
                     }
-                    Button("+15") { timer.adjust(by: 15) }
+                    Button("+10") { timer.adjust(by: 10) }
                     Button("Skip") { timer.stop() }
                 }
                 .buttonStyle(.bordered)

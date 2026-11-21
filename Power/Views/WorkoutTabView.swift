@@ -9,6 +9,14 @@ struct WorkoutTabView: View {
     private var activeWorkouts: [Workout]
     @Query(sort: \Routine.name) private var routines: [Routine]
     @State private var path: [Routine] = []
+    @State private var summary: FinishedWorkout?
+    @State private var addingStarters = false
+
+    private struct FinishedWorkout: Identifiable {
+        let workout: Workout
+        let canSaveRoutine: Bool
+        var id: PersistentIdentifier { workout.persistentModelID }
+    }
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -23,10 +31,31 @@ struct WorkoutTabView: View {
                 RoutineEditorView(routine: routine)
             }
         }
-        .onChange(of: activeWorkouts.isEmpty) {
+        .onChange(of: activeWorkouts.first?.persistentModelID) { previous, current in
             // Starting from a routine's page: pop back so the running workout is visible.
             path = []
+            if let previous, current == nil {
+                offerRoutine(forFinished: previous)
+            }
         }
+        .sheet(isPresented: $addingStarters) {
+            StarterRoutinesPicker(buttonTitle: String(localized: "Add Routines")) { addingStarters = false }
+                .presentationDetents([.large])
+        }
+        .sheet(item: $summary) { item in
+            WorkoutSummaryView(workout: item.workout, canSaveRoutine: item.canSaveRoutine)
+        }
+    }
+
+    /// After a workout is saved (not discarded), show its summary. "Save as Routine" is
+    /// offered unless it was started from a routine with the same name.
+    private func offerRoutine(forFinished id: PersistentIdentifier) {
+        let descriptor = FetchDescriptor<Workout>(predicate: #Predicate { $0.persistentModelID == id })
+        guard let workout = try? context.fetch(descriptor).first,
+              workout.endDate != nil,
+              !workout.sortedExercises.isEmpty else { return }
+        summary = FinishedWorkout(workout: workout,
+                                  canSaveRoutine: !routines.contains { $0.name == workout.name })
     }
 
     private var startList: some View {
@@ -39,11 +68,17 @@ struct WorkoutTabView: View {
                         .font(.headline)
                 }
             }
+            .themedRows()
 
             Section {
                 if routines.isEmpty {
                     Text("Tap + to plan a workout you do often, or save a finished workout as a routine.")
                         .foregroundStyle(.secondary)
+                    Button {
+                        addingStarters = true
+                    } label: {
+                        Label("Add starter routines", systemImage: "sparkles")
+                    }
                 }
                 ForEach(routines) { routine in
                     HStack(spacing: 12) {
@@ -83,8 +118,10 @@ struct WorkoutTabView: View {
                     }
                 }
             }
+            .themedRows()
         }
         .navigationTitle("Workout")
+        .themedScreen()
     }
 
     private func newRoutine() {

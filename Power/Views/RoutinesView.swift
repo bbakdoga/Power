@@ -16,6 +16,7 @@ struct RoutineEditorView: View {
                     .font(.headline)
                 TextField("Notes", text: $routine.notes, axis: .vertical)
             }
+            .themedRows()
 
             Section("Exercises") {
                 ForEach(routine.sortedExercises) { item in
@@ -40,6 +41,7 @@ struct RoutineEditorView: View {
                     Label("Add exercises", systemImage: "plus")
                 }
             }
+            .themedRows()
 
             Section {
                 Button {
@@ -54,6 +56,7 @@ struct RoutineEditorView: View {
                     Text("Finish your current workout before starting another.")
                 }
             }
+            .themedRows()
         }
         .navigationTitle(routine.name.isEmpty ? "Routine" : routine.name)
         .navigationBarTitleDisplayMode(.inline)
@@ -77,12 +80,16 @@ struct RoutineExerciseRow: View {
     @Bindable var item: RoutineExercise
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(item.exercise?.name ?? "Exercise")
+        VStack(alignment: .leading, spacing: 12) {
+            Text(item.exercise?.name ?? String(localized: "Exercise"))
                 .font(.headline)
+
             Stepper("\(item.targetSets) sets", value: $item.targetSets, in: 1...20)
+                .frame(minHeight: 44)
+
             Stepper("\(item.targetReps) reps", value: $item.targetReps, in: 1...100)
+                .frame(minHeight: 44)
         }
-        .padding(.vertical, 2)
+        .padding(.vertical, 8)
     }
 }

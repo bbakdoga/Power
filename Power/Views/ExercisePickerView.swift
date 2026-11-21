@@ -145,7 +145,7 @@ struct ExercisePickerView: View {
                         }
                     }
                 } label: {
-                    FilterChip(title: muscleFilter?.title ?? "Body Part", isActive: muscleFilter != nil)
+                    FilterChip(title: muscleFilter?.title ?? String(localized: "Body Part"), isActive: muscleFilter != nil)
                 }
 
                 Menu {
@@ -156,7 +156,7 @@ struct ExercisePickerView: View {
                         }
                     }
                 } label: {
-                    FilterChip(title: equipmentFilter?.title ?? "Equipment", isActive: equipmentFilter != nil)
+                    FilterChip(title: equipmentFilter?.title ?? String(localized: "Equipment"), isActive: equipmentFilter != nil)
                 }
 
                 Menu {
@@ -234,9 +234,9 @@ enum ExerciseSort: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .name: return "Name"
-        case .frequency: return "Frequency"
-        case .lastPerformed: return "Last Performed"
+        case .name: return String(localized: "Name")
+        case .frequency: return String(localized: "Frequency")
+        case .lastPerformed: return String(localized: "Last Performed")
         }
     }
 
@@ -259,7 +259,7 @@ private struct FilterChip: View {
         .padding(.horizontal, 12)
         .padding(.vertical, 6)
         .foregroundStyle(isActive ? Color.white : Color.primary)
-        .background(Capsule().fill(isActive ? AnyShapeStyle(Color.accentColor) : AnyShapeStyle(.quaternary)))
+        .background(Capsule().fill(isActive ? AnyShapeStyle(.tint) : AnyShapeStyle(.quaternary)))
     }
 }
 

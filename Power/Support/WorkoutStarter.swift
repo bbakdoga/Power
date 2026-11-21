@@ -34,9 +34,9 @@ enum WorkoutStarter {
         let previous = exercise.completedEntries.first?.completedSets.filter { $0.setType != .warmup } ?? []
         for index in 0..<max(setCount, 1) {
             let prior = index < previous.count ? previous[index] : previous.last
-            let set = WorkoutSet(order: index,
-                                 weightKg: prior?.weightKg ?? 0,
-                                 reps: targetReps ?? prior?.reps ?? 0)
+            let set = WorkoutSet(order: index)
+            if let prior { set.copyValues(from: prior) }
+            if let targetReps, exercise.tracking == .weightReps { set.reps = targetReps }
             context.insert(set)
             set.workoutExercise = entry
         }
@@ -89,10 +89,10 @@ enum WorkoutStarter {
 
     static func defaultName(for date: Date = .now) -> String {
         switch Calendar.current.component(.hour, from: date) {
-        case 5..<12: return "Morning Workout"
-        case 12..<17: return "Afternoon Workout"
-        case 17..<22: return "Evening Workout"
-        default: return "Night Workout"
+        case 5..<12: return String(localized: "Morning Workout")
+        case 12..<17: return String(localized: "Afternoon Workout")
+        case 17..<22: return String(localized: "Evening Workout")
+        default: return String(localized: "Night Workout")
         }
     }
 }

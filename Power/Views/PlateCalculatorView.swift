@@ -26,10 +26,11 @@ struct PlateCalculatorView: View {
                     }
                 }
             }
+            .themedRows()
 
             Section("Load on each side") {
                 if result.perSide.isEmpty {
-                    Text(target <= barWeight ? "Just the bar." : "No plates fit.")
+                    Text(target <= barWeight ? "Just the bar." as LocalizedStringKey : "No plates fit.")
                         .foregroundStyle(.secondary)
                 } else {
                     PlateStackView(plates: result.perSide, unit: unit)
@@ -44,6 +45,7 @@ struct PlateCalculatorView: View {
                         .foregroundStyle(.orange)
                 }
             }
+            .themedRows()
         }
         .navigationTitle("Plate Calculator")
         .onAppear {

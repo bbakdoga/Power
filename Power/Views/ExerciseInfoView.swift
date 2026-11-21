@@ -15,6 +15,15 @@ struct ExerciseInfoView: View {
     enum Tab: String, CaseIterable, Identifiable {
         case about = "About", trend = "Trend", charts = "Charts", records = "Records"
         var id: String { rawValue }
+
+        var title: String {
+            switch self {
+            case .about: return String(localized: "About")
+            case .trend: return String(localized: "Trend")
+            case .charts: return String(localized: "Charts")
+            case .records: return String(localized: "Records")
+            }
+        }
     }
 
     var body: some View {
@@ -23,13 +32,16 @@ struct ExerciseInfoView: View {
                 switch tab {
                 case .about: ExerciseAboutTab(exercise: exercise)
                 case .trend: ExerciseTrendTab(exercise: exercise)
+                case .charts where exercise.tracking != .weightReps,
+                     .records where exercise.tracking != .weightReps:
+                    ExerciseEnduranceTab(exercise: exercise, unit: unit)
                 case .charts: ExerciseChartsTab(exercise: exercise, unit: unit)
                 case .records: ExerciseRecordsTab(exercise: exercise, unit: unit)
                 }
             }
             .safeAreaInset(edge: .top) {
                 Picker("Section", selection: $tab) {
-                    ForEach(Tab.allCases) { Text($0.rawValue).tag($0) }
+                    ForEach(Tab.allCases) { Text($0.title).tag($0) }
                 }
                 .pickerStyle(.segmented)
                 .padding(.horizontal)
@@ -63,6 +75,7 @@ private struct ExerciseAboutTab: View {
                 LabeledContent("Body part", value: exercise.muscleGroup.title)
                 LabeledContent("Equipment", value: exercise.equipment.title)
             }
+            .themedRows()
 
             if let guide {
                 Section("Muscles worked") {
@@ -71,6 +84,7 @@ private struct ExerciseAboutTab: View {
                         MuscleRow(title: "Secondary", muscles: guide.secondary, highlighted: false)
                     }
                 }
+                .themedRows()
 
                 Section("How to perform") {
                     ForEach(Array(guide.steps.enumerated()), id: \.offset) { index, step in
@@ -84,17 +98,20 @@ private struct ExerciseAboutTab: View {
                         }
                     }
                 }
+                .themedRows()
             } else {
                 Section("How to perform") {
                     Text("No instructions for this exercise yet.")
                         .foregroundStyle(.secondary)
                 }
+                .themedRows()
             }
 
             if !exercise.notes.isEmpty {
                 Section("Notes") {
                     Text(exercise.notes)
                 }
+                .themedRows()
             }
         }
     }
@@ -118,7 +135,7 @@ private struct MuscleRow: View {
                             .padding(.horizontal, 10)
                             .padding(.vertical, 4)
                             .foregroundStyle(highlighted ? Color.white : Color.primary)
-                            .background(Capsule().fill(highlighted ? AnyShapeStyle(Color.accentColor) : AnyShapeStyle(.quaternary)))
+                            .background(Capsule().fill(highlighted ? AnyShapeStyle(.tint) : AnyShapeStyle(.quaternary)))
                     }
                 }
             }
@@ -149,6 +166,7 @@ private struct ExerciseTrendTab: View {
                 }
                 LabeledContent("In routines", value: "\(routineItems.count)")
             }
+            .themedRows()
 
             Section("Routines with this exercise") {
                 if routineItems.isEmpty {
@@ -158,7 +176,7 @@ private struct ExerciseTrendTab: View {
                 ForEach(routineItems) { item in
                     HStack {
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(item.routine?.name ?? "Routine")
+                            Text(item.routine?.name ?? String(localized: "Routine"))
                             Text(item.routine?.summary ?? "")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
@@ -171,6 +189,7 @@ private struct ExerciseTrendTab: View {
                     }
                 }
             }
+            .themedRows()
         }
     }
 }
@@ -185,6 +204,14 @@ private struct ExerciseChartsTab: View {
     enum Metric: String, CaseIterable, Identifiable {
         case oneRepMax = "Est. 1RM", heaviest = "Heaviest", volume = "Volume"
         var id: String { rawValue }
+
+        var title: String {
+            switch self {
+            case .oneRepMax: return String(localized: "Est. 1RM")
+            case .heaviest: return String(localized: "Heaviest")
+            case .volume: return String(localized: "Volume")
+            }
+        }
     }
 
     private struct Point: Identifiable {
@@ -215,7 +242,7 @@ private struct ExerciseChartsTab: View {
         List {
             Section {
                 Picker("Metric", selection: $metric) {
-                    ForEach(Metric.allCases) { Text($0.rawValue).tag($0) }
+                    ForEach(Metric.allCases) { Text($0.title).tag($0) }
                 }
                 .pickerStyle(.segmented)
 
@@ -224,8 +251,8 @@ private struct ExerciseChartsTab: View {
                         .foregroundStyle(.secondary)
                 } else {
                     Chart(data) { point in
-                        LineMark(x: .value("Date", point.date), y: .value(metric.rawValue, point.value))
-                        PointMark(x: .value("Date", point.date), y: .value(metric.rawValue, point.value))
+                        LineMark(x: .value("Date", point.date), y: .value(metric.title, point.value))
+                        PointMark(x: .value("Date", point.date), y: .value(metric.title, point.value))
                     }
                     .chartYScale(domain: .automatic(includesZero: false))
                     .chartYAxisLabel(unit.rawValue)
@@ -233,6 +260,7 @@ private struct ExerciseChartsTab: View {
                     .padding(.vertical, 8)
                 }
             }
+            .themedRows()
 
             Section("Statistics") {
                 LabeledContent("Sessions", value: "\(exercise.completedEntries.count)")
@@ -246,7 +274,105 @@ private struct ExerciseChartsTab: View {
                                     .formatted(.number.precision(.fractionLength(0...1))))
                 }
             }
+            .themedRows()
         }
+    }
+}
+
+// MARK: - Time and distance exercises
+
+/// Charts and records for exercises tracked by time or distance instead of weight × reps.
+private struct ExerciseEnduranceTab: View {
+    let exercise: Exercise
+    let unit: WeightUnit
+
+    private struct Point: Identifiable {
+        let id: PersistentIdentifier
+        let date: Date
+        let value: Double
+    }
+
+    private var tracksDistance: Bool { exercise.tracking != .duration }
+    private var scale: Distance.Scale { exercise.tracking == .weightDistance ? .short : .long }
+
+    /// Best distance (or longest time) per session.
+    private var points: [Point] {
+        exercise.completedEntries.reversed().compactMap { entry -> Point? in
+            guard let date = entry.workout?.startDate else { return nil }
+            let sets = entry.completedSets.filter { $0.setType != .warmup }
+            let value = tracksDistance
+                ? Distance.value(meters: sets.map(\.distanceMeters).max() ?? 0, scale: scale, unit: unit)
+                : (sets.map(\.durationSeconds).max() ?? 0) / 60
+            return value > 0 ? Point(id: entry.persistentModelID, date: date, value: value) : nil
+        }
+    }
+
+    var body: some View {
+        let sets = exercise.completedWorkingSets
+        let data = points
+        let totalTime = sets.reduce(0) { $0 + $1.durationSeconds }
+        let totalDistance = sets.reduce(0) { $0 + $1.distanceMeters }
+
+        List {
+            Section(tracksDistance ? "Best distance per workout" : "Longest time per workout") {
+                if data.count < 2 {
+                    Text("Log this exercise in two workouts to see a chart here.")
+                        .foregroundStyle(.secondary)
+                } else {
+                    Chart(data) { point in
+                        LineMark(x: .value("Date", point.date), y: .value("Value", point.value))
+                        PointMark(x: .value("Date", point.date), y: .value("Value", point.value))
+                    }
+                    .chartYScale(domain: .automatic(includesZero: false))
+                    .chartYAxisLabel(tracksDistance ? Distance.symbol(scale, unit: unit) : "min")
+                    .frame(height: 220)
+                    .padding(.vertical, 8)
+                }
+            }
+            .themedRows()
+
+            Section("Records") {
+                if exercise.tracking != .weightDistance {
+                    LabeledContent("Longest time", value: timeText(sets.map(\.durationSeconds).max()))
+                }
+                if tracksDistance {
+                    LabeledContent("Longest distance", value: distanceText(sets.map(\.distanceMeters).max()))
+                }
+                if exercise.tracking == .weightDistance {
+                    LabeledContent("Heaviest weight", value: (sets.map(\.weightKg).max() ?? 0) > 0
+                                   ? "\(unit.format(kg: sets.map(\.weightKg).max() ?? 0)) \(unit.rawValue)" : "–")
+                }
+                if exercise.tracking == .distanceDuration,
+                   let fastest = sets.filter({ $0.distanceMeters > 0 && $0.durationSeconds > 0 })
+                    .min(by: { $0.durationSeconds / $0.distanceMeters < $1.durationSeconds / $1.distanceMeters }) {
+                    let pace = fastest.durationSeconds / Distance.value(meters: fastest.distanceMeters, scale: .long, unit: unit)
+                    LabeledContent("Best pace", value: "\(pace.clockString) /\(Distance.symbol(.long, unit: unit))")
+                }
+            }
+            .themedRows()
+
+            Section("Statistics") {
+                LabeledContent("Sessions", value: "\(exercise.completedEntries.count)")
+                LabeledContent("Sets", value: "\(sets.count)")
+                if exercise.tracking != .weightDistance {
+                    LabeledContent("Total time", value: timeText(totalTime))
+                }
+                if tracksDistance {
+                    LabeledContent("Total distance", value: distanceText(totalDistance))
+                }
+            }
+            .themedRows()
+        }
+    }
+
+    private func timeText(_ seconds: Double?) -> String {
+        guard let seconds, seconds > 0 else { return "–" }
+        return seconds.clockString
+    }
+
+    private func distanceText(_ meters: Double?) -> String {
+        guard let meters, meters > 0 else { return "–" }
+        return Distance.format(meters: meters, scale: scale, unit: unit)
     }
 }
 
@@ -299,6 +425,7 @@ private struct ExerciseRecordsTab: View {
                 }
                 LabeledContent("Most reps in one set", value: sets.map(\.reps).max().map { "\($0)" } ?? "–")
             }
+            .themedRows()
 
             Section("Rep records") {
                 if records.isEmpty {
@@ -332,6 +459,7 @@ private struct ExerciseRecordsTab: View {
                     .padding(.vertical, 4)
                 }
             }
+            .themedRows()
         }
     }
 
@@ -342,7 +470,7 @@ private struct ExerciseRecordsTab: View {
 }
 
 private struct RecordTile: View {
-    let title: String
+    let title: LocalizedStringKey
     let value: String
 
     var body: some View {

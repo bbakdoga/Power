@@ -54,14 +54,16 @@ struct WeeklySummaryView: View {
                 HStack(spacing: 12) {
                     StatTile(title: "Week streak", value: "\(streak)", systemImage: "flame.fill", tint: .orange)
                     StatTile(title: "This week", value: "\(workouts.filter { thisWeek.contains($0.startDate) }.count)",
-                             systemImage: "figure.strengthtraining.traditional", tint: .accentColor)
+                             systemImage: "figure.strengthtraining.traditional", tint: nil)
                 }
                 .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
             }
+            .themedRows()
 
             Section("Training days") {
                 TrainingCalendar(month: $month, trainedDays: trainedDays)
             }
+            .themedRows()
 
             Section {
                 HStack {
@@ -93,21 +95,18 @@ struct WeeklySummaryView: View {
                     Text("No sets logged this week.")
                         .foregroundStyle(.secondary)
                 } else {
-                    Chart(groups) { item in
-                        BarMark(x: .value("Sets", item.sets), y: .value("Body part", item.group.title))
-                            .annotation(position: .trailing) {
-                                Text("\(item.sets)")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Working sets")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        MuscleSetBars(items: groups.map { ($0.group, $0.sets) })
                     }
-                    .chartXAxisLabel("Working sets")
-                    .frame(height: CGFloat(groups.count) * 32 + 40)
                     .padding(.vertical, 8)
                 }
             } header: {
                 Text("Weekly volume")
             }
+            .themedRows()
 
             if !neglected.isEmpty && !weekWorkouts.isEmpty {
                 Section {
@@ -117,9 +116,11 @@ struct WeeklySummaryView: View {
                 } footer: {
                     Text("Body parts with no working sets in the selected week.")
                 }
+                .themedRows()
             }
         }
         .navigationTitle("Summary")
+        .themedScreen()
     }
 
     private var thisWeek: DateInterval {
@@ -127,8 +128,8 @@ struct WeeklySummaryView: View {
     }
 
     private var weekTitle: String {
-        if weekOffset == 0 { return "This week" }
-        if weekOffset == -1 { return "Last week" }
+        if weekOffset == 0 { return String(localized: "This week") }
+        if weekOffset == -1 { return String(localized: "Last week") }
         let end = selectedWeek.end.addingTimeInterval(-1)
         return "\(selectedWeek.start.formatted(.dateTime.day().month(.abbreviated))) – \(end.formatted(.dateTime.day().month(.abbreviated)))"
     }
@@ -138,17 +139,57 @@ struct WeeklySummaryView: View {
     }
 }
 
+/// Sets per body part as plain rows (label · bar · count). Used instead of a chart so the
+/// labels never overlap the bars. `highlighted` groups are drawn in orange.
+struct MuscleSetBars: View {
+    let items: [(group: MuscleGroup, sets: Int)]
+    var highlighted: Set<MuscleGroup> = []
+
+    var body: some View {
+        let top = max(items.map(\.sets).max() ?? 0, 1)
+        VStack(spacing: 8) {
+            ForEach(items, id: \.group) { item in
+                HStack(spacing: 10) {
+                    Text(item.group.title)
+                        .font(.subheadline)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                        .frame(width: 84, alignment: .leading)
+                    GeometryReader { geometry in
+                        ZStack(alignment: .leading) {
+                            Capsule()
+                                .fill(.quaternary.opacity(0.5))
+                            Capsule()
+                                .fill(highlighted.contains(item.group) ? AnyShapeStyle(.orange) : AnyShapeStyle(.tint))
+                                .frame(width: item.sets == 0 ? 0
+                                       : max(6, geometry.size.width * CGFloat(item.sets) / CGFloat(top)))
+                        }
+                    }
+                    .frame(height: 8)
+                    Text("\(item.sets)")
+                        .font(.subheadline.monospacedDigit())
+                        .foregroundStyle(.secondary)
+                        .frame(width: 28, alignment: .trailing)
+                }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("\(item.group.title), \(item.sets) sets")
+            }
+        }
+    }
+}
+
 struct StatTile: View {
-    let title: String
+    let title: LocalizedStringKey
     let value: String
     let systemImage: String
-    let tint: Color
+    /// nil uses the theme's accent color.
+    var tint: Color?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Label(title, systemImage: systemImage)
                 .font(.caption)
-                .foregroundStyle(tint)
+                .foregroundStyle(tint.map(AnyShapeStyle.init) ?? AnyShapeStyle(.tint))
             Text(value)
                 .font(.title.bold().monospacedDigit())
         }
@@ -204,8 +245,8 @@ private struct TrainingCalendar: View {
                             .font(.subheadline.monospacedDigit())
                             .frame(width: 32, height: 32)
                             .foregroundStyle(trained ? Color.white : Color.primary)
-                            .background(Circle().fill(trained ? Color.accentColor : Color.clear))
-                            .overlay(Circle().strokeBorder(isToday ? Color.accentColor : Color.clear, lineWidth: 1.5))
+                            .background(Circle().fill(trained ? AnyShapeStyle(.tint) : AnyShapeStyle(.clear)))
+                            .overlay(Circle().strokeBorder(isToday ? AnyShapeStyle(.tint) : AnyShapeStyle(.clear), lineWidth: 1.5))
                             .accessibilityLabel(day.formatted(date: .complete, time: .omitted) + (trained ? ", trained" : ""))
                     } else {
                         Color.clear.frame(height: 32)

@@ -3,7 +3,9 @@ import SwiftData
 
 struct HistoryView: View {
     @Environment(\.modelContext) private var context
-    @Query(filter: #Predicate<Workout> { $0.endDate != nil }, sort: \Workout.startDate, order: .reverse)
+    @Query(filter: #Predicate<Workout> { $0.endDate != nil && $0.isSavedToHistory },
+           sort: \Workout.startDate,
+           order: .reverse)
     private var workouts: [Workout]
     @AppStorage(WeightUnit.storageKey) private var unit: WeightUnit = .kg
 
@@ -38,11 +40,13 @@ struct HistoryView: View {
                                     }
                                 }
                             }
+                            .themedRows()
                         }
                     }
                 }
             }
             .navigationTitle("History")
+            .themedScreen()
             .navigationDestination(for: Workout.self) { workout in
                 WorkoutDetailView(workout: workout)
             }
@@ -93,6 +97,7 @@ struct WorkoutDetailView: View {
                 LabeledContent("Volume", value: "\(unit.format(kg: workout.totalVolumeKg)) \(unit.rawValue)")
                 TextField("Notes", text: $workout.notes, axis: .vertical)
             }
+            .themedRows()
 
             ForEach(workout.sortedExercises) { entry in
                 Section(entry.exercise?.name ?? "Exercise") {
@@ -103,14 +108,18 @@ struct WorkoutDetailView: View {
                             Text(labels[index])
                                 .font(.subheadline.bold())
                                 .frame(width: 32, alignment: .leading)
-                            Text("\(entryUnit.format(kg: set.weightKg)) \(entryUnit.rawValue) × \(set.reps)")
+                            let tracking = entry.exercise?.tracking ?? .weightReps
+                            Text(set.summary(tracking, unit: entryUnit))
                             Spacer()
-                            Text("e1RM \(entryUnit.format(kg: set.estimatedOneRepMaxKg))")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                            if tracking == .weightReps {
+                                Text("e1RM \(entryUnit.format(kg: set.estimatedOneRepMaxKg))")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
                         }
                     }
                 }
+                .themedRows()
             }
 
             Section {
@@ -121,13 +130,15 @@ struct WorkoutDetailView: View {
                     Label("Save as routine", systemImage: "square.and.arrow.down")
                 }
             }
+            .themedRows()
         }
         .navigationTitle(workout.name)
+        .themedScreen()
         .navigationBarTitleDisplayMode(.inline)
         .alert("Routine saved", isPresented: $savedRoutine) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text("You can find it in the Routines tab.")
+            Text("You can find it under My routines on the Workout tab.")
         }
     }
 }

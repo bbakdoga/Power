@@ -4,13 +4,54 @@ import CloudKit
 
 struct SettingsView: View {
     @AppStorage(WeightUnit.storageKey) private var unit: WeightUnit = .kg
+    @AppStorage(AppLanguage.storageKey) private var language: AppLanguage = .system
+    @AppStorage(AppTheme.storageKey) private var theme: AppTheme = .system
     @State private var iCloudStatus: ICloudStatus = .checking
+
+    /// The picked language differs from the one this launch is running in.
+    private var needsRelaunch: Bool {
+        let wanted = language == .system
+            ? (Bundle.preferredLocalizations(from: Bundle.main.localizations, forPreferences: Locale.preferredLanguages).first ?? "en")
+            : language.rawValue
+        return !AppLanguage.active.hasPrefix(wanted)
+    }
     @AppStorage(HealthSync.enabledKey) private var healthEnabled = false
     @Environment(\.modelContext) private var context
 
     var body: some View {
         NavigationStack {
             Form {
+                Section {
+                    Picker("App Language", selection: $language) {
+                        ForEach(AppLanguage.allCases) { option in
+                            Text(option.title).tag(option)
+                        }
+                    }
+                } header: {
+                    Text("Language")
+                } footer: {
+                    if needsRelaunch {
+                        Text("Close and reopen Power to switch everything, including the Lock Screen timer.")
+                            .foregroundStyle(.orange)
+                    }
+                }
+                .themedRows()
+
+                Section("Appearance") {
+                    Picker("Theme", selection: $theme) {
+                        ForEach(AppTheme.allCases) { option in
+                            Label {
+                                Text(option.title)
+                            } icon: {
+                                ThemeSwatch(theme: option)
+                            }
+                            .tag(option)
+                        }
+                    }
+                    .pickerStyle(.inline)
+                    .labelsHidden()
+                }
+                .themedRows()
 
                 Section("Units") {
                     Picker("Weight", selection: $unit) {
@@ -18,6 +59,7 @@ struct SettingsView: View {
                     }
                     .pickerStyle(.segmented)
                 }
+                .themedRows()
 
                 Section("Tools") {
                     NavigationLink {
@@ -25,7 +67,13 @@ struct SettingsView: View {
                     } label: {
                         Label("Plate calculator", systemImage: "circle.circle")
                     }
+                    NavigationLink {
+                        ImportWorkoutsView()
+                    } label: {
+                        Label("Import Workouts", systemImage: "square.and.arrow.down")
+                    }
                 }
+                .themedRows()
 
                 if HealthSync.shared.isAvailable {
                     Section {
@@ -45,6 +93,7 @@ struct SettingsView: View {
                     } footer: {
                         Text("Saves finished workouts and the bodyweight you log to Health, and imports bodyweight from your scale or the Health app. You can change exactly what's shared in the Health app.")
                     }
+                    .themedRows()
                 }
 
                 Section {
@@ -57,14 +106,17 @@ struct SettingsView: View {
                 } footer: {
                     Text(iCloudStatus.footer)
                 }
+                .themedRows()
 
                 Section {
                     LabeledContent("Version", value: Bundle.main.appVersion)
                 } footer: {
                     Text("Every feature is free.")
                 }
+                .themedRows()
             }
             .navigationTitle("Settings")
+            .themedScreen()
             .task { await refreshICloudStatus() }
             .onReceive(NotificationCenter.default.publisher(for: .CKAccountChanged)) { _ in
                 Task { await refreshICloudStatus() }
@@ -83,10 +135,10 @@ private enum ICloudStatus {
 
     var title: String {
         switch self {
-        case .checking: return "Checking…"
-        case .on: return "On"
-        case .signedOut: return "Off"
-        case .unavailable: return "Unavailable"
+        case .checking: return String(localized: "Checking…")
+        case .on: return String(localized: "On")
+        case .signedOut: return String(localized: "Signed Out")
+        case .unavailable: return String(localized: "Unavailable")
         }
     }
 
@@ -101,9 +153,23 @@ private enum ICloudStatus {
     var footer: String {
         switch self {
         case .checking: return ""
-        case .on: return "Workouts, routines and exercises are backed up to your iCloud and sync to your other devices."
-        case .signedOut: return "Sign in to iCloud in the Settings app (and allow iCloud Drive) to back up your workouts. Until then they're stored only on this iPhone."
-        case .unavailable: return "iCloud couldn't be reached. Your workouts are safe on this iPhone and will back up when iCloud is available."
+        case .on: return String(localized: "Workouts, routines and exercises are backed up to your iCloud and sync to your other devices.")
+        case .signedOut: return String(localized: "Sign in to iCloud in the Settings app (and allow iCloud Drive) to back up your workouts. Until then they're stored only on this iPhone.")
+        case .unavailable: return String(localized: "iCloud couldn't be reached. Your workouts are safe on this iPhone and will back up when iCloud is available.")
         }
+    }
+}
+
+/// Two-color circle previewing a theme.
+private struct ThemeSwatch: View {
+    let theme: AppTheme
+
+    var body: some View {
+        let colors = theme.swatch
+        Circle()
+            .fill(LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing))
+            .overlay(Circle().strokeBorder(.secondary.opacity(0.4), lineWidth: 1))
+            .frame(width: 24, height: 24)
+            .accessibilityHidden(true)
     }
 }

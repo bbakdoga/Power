@@ -13,6 +13,7 @@ enum AppSchema {
         Routine.self,
         RoutineExercise.self,
         BodyMeasurement.self,
+        NutritionEntry.self,
     ]
 }
 
@@ -28,6 +29,8 @@ final class Exercise {
     /// Weight unit for this exercise only (e.g. lb for a machine labeled in pounds);
     /// nil follows the app setting. Weights are still stored in kilograms.
     var unitRaw: String?
+    /// What a set records: weight × reps, time, distance + time, or weight + distance.
+    var trackingRaw: String = TrackingType.weightReps.rawValue
 
     @Relationship(deleteRule: .nullify, inverse: \WorkoutExercise.exercise)
     var workoutEntries: [WorkoutExercise]? = []
@@ -51,6 +54,11 @@ final class Exercise {
     var equipment: Equipment {
         get { Equipment(rawValue: equipmentRaw) ?? .other }
         set { equipmentRaw = newValue.rawValue }
+    }
+
+    var tracking: TrackingType {
+        get { TrackingType(rawValue: trackingRaw) ?? .weightReps }
+        set { trackingRaw = newValue.rawValue }
     }
 
     var subtitle: String { "\(muscleGroup.title) · \(equipment.title)" }
@@ -79,6 +87,9 @@ final class Workout {
     var startDate: Date = Date.now
     /// nil while the workout is in progress.
     var endDate: Date?
+    /// False when the user finishes without adding the workout to History.
+    /// The completed data remains available for statistics and personal records.
+    var isSavedToHistory: Bool = true
     var notes: String = ""
 
     @Relationship(deleteRule: .cascade, inverse: \WorkoutExercise.workout)
@@ -160,6 +171,10 @@ final class WorkoutSet {
     /// Always stored in kilograms; converted for display.
     var weightKg: Double = 0
     var reps: Int = 0
+    /// For timed exercises (plank, cardio).
+    var durationSeconds: Double = 0
+    /// For distance exercises (running, carries).
+    var distanceMeters: Double = 0
     var setTypeRaw: String = SetType.normal.rawValue
     var isDone: Bool = false
     var completedAt: Date?
@@ -178,6 +193,33 @@ final class WorkoutSet {
 
     var estimatedOneRepMaxKg: Double {
         OneRepMax.epley(weight: weightKg, reps: reps)
+    }
+
+    /// Something was entered for this set (reps, time or distance).
+    var hasData: Bool {
+        reps > 0 || durationSeconds > 0 || distanceMeters > 0
+    }
+
+    /// Copies the logged values (not the done state) from another set.
+    func copyValues(from other: WorkoutSet) {
+        weightKg = other.weightKg
+        reps = other.reps
+        durationSeconds = other.durationSeconds
+        distanceMeters = other.distanceMeters
+    }
+
+    /// "80 kg × 8", "1:30", "5.2 km · 28:10", "60 kg · 40 m".
+    func summary(_ tracking: TrackingType, unit: WeightUnit) -> String {
+        switch tracking {
+        case .weightReps:
+            return "\(unit.format(kg: weightKg)) \(unit.rawValue) × \(reps)"
+        case .duration:
+            return durationSeconds.clockString
+        case .distanceDuration:
+            return "\(Distance.format(meters: distanceMeters, scale: .long, unit: unit)) · \(durationSeconds.clockString)"
+        case .weightDistance:
+            return "\(unit.format(kg: weightKg)) \(unit.rawValue) · \(Distance.format(meters: distanceMeters, scale: .short, unit: unit))"
+        }
     }
 }
 

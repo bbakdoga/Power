@@ -1,4 +1,5 @@
 import ActivityKit
+import AppIntents
 import WidgetKit
 import SwiftUI
 
@@ -16,7 +17,7 @@ struct RestTimerLiveActivity: Widget {
             let isOver = context.isStale
             return DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    Label("Rest", systemImage: "timer")
+                    Label(state.labels.rest, systemImage: "timer")
                         .font(.headline)
                         .foregroundStyle(.orange)
                 }
@@ -28,11 +29,14 @@ struct RestTimerLiveActivity: Widget {
                 DynamicIslandExpandedRegion(.bottom) {
                     VStack(alignment: .leading, spacing: 6) {
                         if !state.exerciseName.isEmpty {
-                            Text("Next: \(state.exerciseName)")
+                            Text(state.labels.next)
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                         }
                         CountdownBar(state: state, isOver: isOver)
+                        if !isOver {
+                            TimerButtons(skip: state.labels.skip)
+                        }
                     }
                 }
             } compactLeading: {
@@ -68,7 +72,7 @@ private struct LockScreenView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Label(isOver ? "Rest is over" : "Resting", systemImage: isOver ? "checkmark.circle.fill" : "timer")
+                Label(isOver ? state.labels.restIsOver : state.labels.resting, systemImage: isOver ? "checkmark.circle.fill" : "timer")
                     .font(.headline)
                     .foregroundStyle(isOver ? .green : .orange)
                 Spacer()
@@ -76,14 +80,39 @@ private struct LockScreenView: View {
                     .font(.system(size: 34, weight: .bold))
             }
             if !state.exerciseName.isEmpty {
-                Text(isOver ? "Time for your next set of \(state.exerciseName)" : "Next: \(state.exerciseName)")
+                Text(isOver ? state.labels.nextSet : state.labels.next)
                     .font(.subheadline)
                     .foregroundStyle(.white.opacity(0.8))
             }
             CountdownBar(state: state, isOver: isOver)
+            if !isOver {
+                TimerButtons(skip: state.labels.skip)
+            }
         }
         .padding()
         .foregroundStyle(.white)
+    }
+}
+
+/// −10 / +10 / Skip, handled by the app without unlocking the phone.
+private struct TimerButtons: View {
+    let skip: String
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Button(intent: AdjustRestIntent(seconds: -10)) {
+                Text("−10").frame(maxWidth: .infinity)
+            }
+            Button(intent: AdjustRestIntent(seconds: 10)) {
+                Text("+10").frame(maxWidth: .infinity)
+            }
+            Button(intent: SkipRestIntent()) {
+                Text(skip).frame(maxWidth: .infinity)
+            }
+        }
+        .font(.subheadline.bold().monospacedDigit())
+        .buttonStyle(.bordered)
+        .tint(.orange)
     }
 }
 
@@ -93,7 +122,7 @@ private struct CountdownText: View {
 
     var body: some View {
         if isOver {
-            Text("Go!")
+            Text(state.labels.go)
                 .foregroundStyle(.green)
         } else {
             Text(timerInterval: Date.now...max(Date.now, state.endDate), countsDown: true)
