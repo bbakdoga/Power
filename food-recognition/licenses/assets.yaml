@@ -114,6 +114,16 @@ assets:
       polygon masks converted to boxes. Attribution: MyFoodRepo / Food Recognition Benchmark v0.4
       (Mohanty et al., 2022, Front. Nutr. 9:875143), AIcrowd, CC BY 4.0.
 
+  - id: myfoodrepo_2022_v2
+    kind: dataset
+    name: Food Recognition Benchmark 2022 v2.0 (MyFoodRepo, AIcrowd), incl. Kaggle mirror awsaf49/food-recognition-2022-dataset
+    license: expected CC BY 4.0 like v0.4; not yet confirmed for this release
+    url: https://www.kaggle.com/datasets/awsaf49/food-recognition-2022-dataset
+    status: needs_review
+    notes: >-
+      Newer, larger release of the same MyFoodRepo data. Approve once the licence on the Kaggle page
+      (or the AIcrowd 2022 benchmark page) says CC BY 4.0. Credit MyFoodRepo/AIcrowd, not the mirror uploader.
+
   - id: roboflow_universe
     kind: dataset
     name: Food datasets on Roboflow Universe

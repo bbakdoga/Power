@@ -32,6 +32,24 @@ with hand-drawn outlines that the importer turns into boxes.
    Archives are extracted once into `data/external/`. Re-running the import is
    safe: photos that are already imported are skipped by content hash.
 
+### Kaggle mirror (2022 release)
+
+If the AIcrowd download fails, the Kaggle copy
+`awsaf49/food-recognition-2022-dataset` holds the newer **2022 v2.0** release of
+the same MyFoodRepo data. Download it as a `.zip` and pass `--release v2.0`:
+
+```bash
+food-rec propose-mapping --release v2.0 ~/Downloads/archive.zip
+food-rec import-myfoodrepo --release v2.0 ~/Downloads/archive.zip
+```
+
+The importer finds every `annotations.json` inside, whatever the folder
+names are, and skips test folders that have no labels. The credit recorded for
+each photo names MyFoodRepo / AIcrowd, not the Kaggle uploader. This release
+is a separate entry in the licence register (`myfoodrepo_2022_v2`). The import
+is refused until that entry is `approved`, which needs the licence for this
+release confirmed as CC BY 4.0.
+
 ## Open Images V7 (photos CC BY 2.0, boxes CC BY 4.0)
 
 No login is needed. Download these CSVs from the

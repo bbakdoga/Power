@@ -293,8 +293,9 @@ def cmd_propose_mapping(ctx: Context, args: argparse.Namespace) -> int:
     cfg = load_yaml(resolve("configs/external/myfoodrepo.yaml", ctx.root))
     folders = myfoodrepo.find_splits([Path(p) for p in args.paths], resolve("data/external", ctx.root))
     proposal = myfoodrepo.propose_mapping(myfoodrepo.category_counts(folders), cfg, ctx.taxonomy())
-    out = resolve(args.output, ctx.root)
-    myfoodrepo.write_mapping(proposal, out, "# MyFoodRepo v0.4 category -> our class. Proposed by `food-rec propose-mapping`.\n"
+    out = resolve(args.output or f"configs/external/myfoodrepo_mapping_{args.release}.yaml", ctx.root)
+    myfoodrepo.write_mapping(proposal, out, f"# MyFoodRepo {args.release} category -> our class. "
+                             "Proposed by `food-rec propose-mapping`.\n"
                              "# Targets: a taxonomy class, unknown_food, or drop (not boxed).")
     summary: dict[str, int] = {}
     for entry in proposal.values():
@@ -312,20 +313,25 @@ def cmd_propose_mapping(ctx: Context, args: argparse.Namespace) -> int:
 def cmd_import_myfoodrepo(ctx: Context, args: argparse.Namespace) -> int:
     from .dataset.external import myfoodrepo
 
-    cfg = load_yaml(resolve("configs/external/myfoodrepo.yaml", ctx.root))
-    if (failed := _require_source(ctx, cfg["source_id"], "CC-BY-4.0")) is not None:
+    release = load_yaml(resolve("configs/external/myfoodrepo.yaml", ctx.root))["releases"][args.release]
+    problems = check_assets([release["asset"]], load_assets(resolve("licenses/assets.yaml", ctx.root)))
+    if problems:
+        print("Import refused by the licence register:\n  " + "\n  ".join(problems))
+        return 1
+    if (failed := _require_source(ctx, release["source_id"], release["license"])) is not None:
         return failed
     taxonomy = ctx.taxonomy()
+    mapping_path = args.mapping or f"configs/external/myfoodrepo_mapping_{args.release}.yaml"
     try:
-        mapping = myfoodrepo.load_reviewed_mapping(resolve(args.mapping, ctx.root), taxonomy)
+        mapping = myfoodrepo.load_reviewed_mapping(resolve(mapping_path, ctx.root), taxonomy)
     except ValueError as exc:
         print(exc)
         return 1
     folders = myfoodrepo.find_splits([Path(p) for p in args.paths], resolve("data/external", ctx.root))
     existing, _ = ctx.records()
     records, dataset, stats = myfoodrepo.import_splits(
-        folders, mapping, taxonomy, ctx.paths["raw_dir"], source_id=cfg["source_id"],
-        attribution=" ".join(cfg["attribution"].split()), known_hashes={r.sha256 for r in existing})
+        folders, mapping, taxonomy, ctx.paths["raw_dir"], source_id=release["source_id"],
+        attribution=" ".join(release["attribution"].split()), known_hashes={r.sha256 for r in existing})
     _commit_import(ctx, records, dataset, stats)
     return 0
 
@@ -455,12 +461,14 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = sub.add_parser("propose-mapping", help="propose MyFoodRepo category -> taxonomy mapping for review")
     p.add_argument("paths", nargs="+", help="downloaded train/val .tar.gz files or extracted folders")
-    p.add_argument("--output", default="configs/external/myfoodrepo_mapping_v0.4.yaml")
+    p.add_argument("--release", default="v0.4", choices=["v0.4", "v2.0"])
+    p.add_argument("--output", help="default: configs/external/myfoodrepo_mapping_<release>.yaml")
     p.set_defaults(func=cmd_propose_mapping)
 
-    p = sub.add_parser("import-myfoodrepo", help="import MyFoodRepo v0.4 (CC BY 4.0) with a reviewed mapping")
+    p = sub.add_parser("import-myfoodrepo", help="import MyFoodRepo (AIcrowd or Kaggle mirror) with a reviewed mapping")
     p.add_argument("paths", nargs="+")
-    p.add_argument("--mapping", default="configs/external/myfoodrepo_mapping_v0.4.yaml")
+    p.add_argument("--release", default="v0.4", choices=["v0.4", "v2.0"])
+    p.add_argument("--mapping", help="default: configs/external/myfoodrepo_mapping_<release>.yaml")
     p.set_defaults(func=cmd_import_myfoodrepo)
 
     p = sub.add_parser("select-openimages", help="choose CC BY 2.0 Open Images photos of our foods to download")

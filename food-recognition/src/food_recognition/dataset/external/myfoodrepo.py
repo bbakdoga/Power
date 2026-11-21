@@ -1,9 +1,10 @@
-"""MyFoodRepo / Food Recognition Benchmark v0.4 (AIcrowd), CC BY 4.0.
+"""MyFoodRepo / Food Recognition Benchmark (AIcrowd), CC BY 4.0.
 
-Download train-v0.4.tar.gz and val-v0.4.tar.gz from the AIcrowd Resources tab
-(needs a free account). test_images-v0.4 is the same set as val and is ignored.
-Each extracted split has an `annotations.json` (COCO with polygon masks) and an
-`images/` folder.
+Accepts the AIcrowd downloads (train-v0.4.tar.gz, val-v0.4.tar.gz) or a mirror
+such as the Kaggle copy of the 2022 v2.0 release (a .zip). Any folder below the
+given paths that holds an `annotations.json` (COCO with polygon masks) is a
+split; its photos are in an `images/` folder next to it, or next to the JSON
+itself. Splits without annotations (public test sets) are skipped.
 """
 
 from __future__ import annotations
@@ -109,6 +110,8 @@ def import_splits(folders: list[Path], mapping: dict[str, str], taxonomy: Taxono
     next_image = next_ann = 1
     for folder in folders:
         data = load_split(folder)
+        if not data.get("annotations"):
+            continue  # a public test split without labels
         split_name = folder.name
         cat_names = {c["id"]: c["name"] for c in data["categories"]}
         missing = sorted({n for n in cat_names.values() if n not in mapping})
@@ -118,8 +121,9 @@ def import_splits(folders: list[Path], mapping: dict[str, str], taxonomy: Taxono
         anns_by_image: dict[int, list[dict[str, Any]]] = {}
         for ann in data["annotations"]:
             anns_by_image.setdefault(ann["image_id"], []).append(ann)
+        image_dir = folder / "images" if (folder / "images").is_dir() else folder
         for img in data["images"]:
-            src = folder / "images" / img["file_name"]
+            src = image_dir / img["file_name"]
             if not src.is_file():
                 stats.images_skipped_missing += 1
                 continue

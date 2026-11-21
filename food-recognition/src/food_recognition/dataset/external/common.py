@@ -5,6 +5,7 @@ from __future__ import annotations
 import re
 import shutil
 import tarfile
+import zipfile
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -56,14 +57,22 @@ def copy_unique(src: Path, raw_dir: Path, source_id: str, known_hashes: set[str]
 
 
 def extract_archive(archive: Path, cache_dir: Path) -> Path:
-    """Extract a .tar.gz once into cache_dir/<archive name> and return that folder."""
-    target = cache_dir / re.sub(r"\.tar\.gz$|\.tgz$|\.tar$", "", archive.name)
+    """Extract a .tar.gz or .zip once into cache_dir/<archive name> and return that folder."""
+    target = cache_dir / re.sub(r"\.tar\.gz$|\.tgz$|\.tar$|\.zip$", "", archive.name)
     marker = target / ".extracted"
     if marker.exists():
         return target
     target.mkdir(parents=True, exist_ok=True)
-    with tarfile.open(archive) as tar:
-        tar.extractall(target, filter="data")
+    if archive.suffix.lower() == ".zip":  # e.g. a Kaggle download
+        root = target.resolve()
+        with zipfile.ZipFile(archive) as zf:
+            for member in zf.namelist():
+                if not (target / member).resolve().is_relative_to(root):
+                    raise ValueError(f"unsafe path in {archive.name}: {member}")
+            zf.extractall(target)
+    else:
+        with tarfile.open(archive) as tar:
+            tar.extractall(target, filter="data")
     marker.touch()
     return target
 

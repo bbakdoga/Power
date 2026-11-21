@@ -21,6 +21,16 @@ sources:
     permission_document: null
     pinned_split: null
 
+  - source_id: myfoodrepo_2022_v2
+    source_type: open_dataset
+    license: CC-BY-4.0
+    commercial_use: true
+    redistribution: true
+    description: MyFoodRepo / Food Recognition Benchmark 2022 v2.0 (AIcrowd; files from the Kaggle mirror)
+    contact: null
+    permission_document: null
+    pinned_split: null
+
   - source_id: open_images_v7
     source_type: open_dataset
     license: CC-BY-2.0

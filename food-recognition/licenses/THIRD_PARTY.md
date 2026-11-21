@@ -61,6 +61,7 @@ training data.
 | Open Images V7 | Boxes CC BY 4.0; images listed by Google as CC BY 2.0 | ✅ approved by Baris, 2026-11-21 | Google does not verify each image's licence. We would keep each image's licence and author, and publish an attribution list. CC BY covers copyright, not people shown in photos; food-only crops reduce that concern. |
 | Nutrition5k | CC BY 4.0 | ⚠️ | Commercial use allowed with attribution, but overhead cafeteria trays only; no boxes. |
 | Food Recognition Benchmark / MyFoodRepo v0.4 | CC BY 4.0 (stated on each AIcrowd download, checked 2026-11-21) | ✅ approved by Baris, 2026-11-21 | Real phone photos shared by consenting app users, polygon masks converted to boxes. Credit: "MyFoodRepo / Food Recognition Benchmark v0.4 (Mohanty et al., 2022, Front. Nutr. 9:875143), AIcrowd, CC BY 4.0". `test_images-v0.4` duplicates `val` and is not imported. |
+| Food Recognition Benchmark 2022 v2.0 (Kaggle mirror by awsaf49) | Expected CC BY 4.0, not yet confirmed for this release | ⚠️ | Same MyFoodRepo source, newer release. Credit goes to MyFoodRepo / AIcrowd, not the mirror. |
 | Roboflow Universe food sets | Chosen by each uploader | ⛔ | Licence is self-declared; image origin usually unknown (often Food-101 or web scrapes). |
 | MS COCO 2017 | Boxes CC BY 4.0; images mixed Flickr licences | ⚠️ | Only images under commercial-friendly licences could be considered. |
 | Food-101 | Unclear; scraped from foodspotting.com | ⛔ | No clear commercial grant. |

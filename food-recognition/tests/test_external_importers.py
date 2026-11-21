@@ -176,3 +176,35 @@ def test_merge_keeps_imports_and_replaces_reannotated_images():
     by_file = {i.file_name: i.id for i in merged.images}
     assert [a.category_id for a in merged.annotations if a.image_id == by_file["b.jpg"]] == [13]
     assert len({a.id for a in merged.annotations}) == len(merged.annotations) == 3
+
+
+def test_kaggle_mirror_layout_and_licence_gate(project, tmp_path, capsys):
+    import zipfile
+
+    src = tmp_path / "kaggle" / "raw_data"
+    make_myfoodrepo(src, "public_training_set_release_2.0", n=3)
+    test_dir = src / "public_test_release_2.0"
+    make_image(test_dir / "images" / "t.jpg", seed=77)
+    (test_dir / "annotations.json").write_text(json.dumps({"images": [], "annotations": [], "categories": []}))
+    archive = tmp_path / "archive.zip"
+    with zipfile.ZipFile(archive, "w") as zf:
+        for path in sorted((tmp_path / "kaggle").rglob("*")):
+            if path.is_file():
+                zf.write(path, path.relative_to(tmp_path / "kaggle"))
+
+    assert main(["propose-mapping", "--release", "v2.0", str(archive)]) == 0
+    mapping = project / "configs/external/myfoodrepo_mapping_v2.0.yaml"
+    mapping.write_text(mapping.read_text().replace("reviewed: false", "reviewed: true"))
+    capsys.readouterr()
+    assert main(["import-myfoodrepo", "--release", "v2.0", str(archive)]) == 1
+    assert "myfoodrepo_2022_v2: status is needs_review" in capsys.readouterr().out
+
+    assets = project / "licenses/assets.yaml"
+    text = assets.read_text()
+    start = text.index("  - id: myfoodrepo_2022_v2")
+    assets.write_text(text[:start] + text[start:].replace("status: needs_review", "status: approved", 1))
+    assert main(["import-myfoodrepo", "--release", "v2.0", str(archive)]) == 0
+    records, _ = load_manifest(project / "data/manifests/images.jsonl")
+    assert len(records) == 2   # 3 photos, one has only water
+    assert all(r.source_id == "myfoodrepo_2022_v2" and "AIcrowd" in r.attribution and "Kaggle" not in r.attribution
+               for r in records)
