@@ -13,7 +13,7 @@ cluster scaffolding are ready. No model has been trained yet.
 |---|---|---|
 | 1 | Taxonomy, architecture, dataset validation, licence manifest | ✅ |
 | 2 | Collect and annotate owned photos (Label Studio) | next |
-| 3 | Pretrained-weights decision (see `docs/architecture.md`) | waiting on Baris |
+| 3 | Pretrained-weights decision: Open Images pretraining | ✅ decided |
 | 4 | Detector and classifier training on Pegasus | |
 | 5 | Core ML export, fp16/int8, parity check, Swift example | |
 | 6 | On-device benchmarks and held-out phone-photo evaluation | |

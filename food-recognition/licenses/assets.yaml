@@ -67,8 +67,8 @@ assets:
     name: Backbones we pretrain ourselves on Open Images V7
     license: our own weights; data CC BY 4.0 annotations, images listed as CC BY 2.0
     url: https://storage.googleapis.com/openimages/web/index.html
-    status: needs_review
-    notes: Recommended path. Becomes approved once Baris signs off on Open Images.
+    status: approved
+    notes: Approved by Baris on 2026-11-21. Pretrained on Pegasus from approved Open Images images only.
 
   - id: dinov2_weights
     kind: weights
@@ -92,8 +92,8 @@ assets:
     name: Open Images V7 (Google)
     license: annotations CC BY 4.0; images listed as CC BY 2.0 by Google
     url: https://storage.googleapis.com/openimages/web/index.html
-    status: needs_review
-    notes: Google does not verify each image's licence; keep per-image licence and attribution.
+    status: approved
+    notes: Approved by Baris on 2026-11-21. Keep each image's licence, author and URL; drop any image whose metadata is not CC BY 2.0.
 
   - id: nutrition5k
     kind: dataset

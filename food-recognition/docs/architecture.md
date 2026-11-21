@@ -61,8 +61,10 @@ ImageNet or COCO, whose image terms are non-commercial or mixed. Options:
 3. **Train from scratch on our own photos only.** No third-party data, but it
    needs many thousands of labelled photos for usable accuracy.
 
-Until Baris decides, `pretrained: null` in both configs and the licence gate
-blocks every `needs_review` asset.
+**Decision (2026-11-21): option 1, Open Images pretraining.** `open_images_v7`
+and `openimages_pretrain_own` are approved in `licenses/assets.yaml`. The
+configs keep `pretrained: null` until those weights exist; ImageNet and COCO
+checkpoints stay blocked by the licence gate.
 
 ## Taxonomy v0.1.0 (45 foods + unknown)
 

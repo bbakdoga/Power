@@ -51,14 +51,14 @@ training data.
 | YOLOX official checkpoints | Apache-2.0 | COCO 2017 (Flickr images, mixed licences including non-commercial) | ⚠️ |
 | ImageNet-pretrained backbones (torchvision, timm) | BSD/Apache | ImageNet (terms: non-commercial research) | ⚠️ |
 | DINOv2 | Apache-2.0 | LVD-142M (curated web images) | ⚠️ (also too large for phones as-is) |
-| Our own Open Images pretraining | ours | Open Images V7 (CC BY 2.0 images, CC BY 4.0 boxes) | ⚠️ until Open Images is approved; recommended path |
+| Our own Open Images pretraining | ours | Open Images V7 (CC BY 2.0 images, CC BY 4.0 boxes) | ✅ approved by Baris, 2026-11-21 |
 
 ## Datasets
 
 | Dataset | Licence | Status | Notes |
 |---|---|---|---|
 | Photos Baris owns or has written commercial permission for | owned / permission | ✅ | Each image needs a manifest record. |
-| Open Images V7 | Boxes CC BY 4.0; images listed by Google as CC BY 2.0 | ⚠️ | Google does not verify each image's licence. We would keep each image's licence and author, and publish an attribution list. CC BY covers copyright, not people shown in photos; food-only crops reduce that concern. |
+| Open Images V7 | Boxes CC BY 4.0; images listed by Google as CC BY 2.0 | ✅ approved by Baris, 2026-11-21 | Google does not verify each image's licence. We would keep each image's licence and author, and publish an attribution list. CC BY covers copyright, not people shown in photos; food-only crops reduce that concern. |
 | Nutrition5k | CC BY 4.0 | ⚠️ | Commercial use allowed with attribution, but overhead cafeteria trays only; no boxes. |
 | MS COCO 2017 | Boxes CC BY 4.0; images mixed Flickr licences | ⚠️ | Only images under commercial-friendly licences could be considered. |
 | Food-101 | Unclear; scraped from foodspotting.com | ⛔ | No clear commercial grant. |
