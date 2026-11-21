@@ -25,12 +25,20 @@ struct ProfileView: View {
 
     /// Exercises done in the most workouts.
     private var topExercises: [ExerciseCount] {
-        let names = workouts.flatMap { $0.sortedExercises.compactMap { $0.exercise?.name } }
-        return Dictionary(grouping: names, by: { $0 })
-            .map { ExerciseCount(name: $0.key, sessions: $0.value.count) }
-            .sorted { $0.sessions == $1.sessions ? $0.name < $1.name : $0.sessions > $1.sessions }
-            .prefix(5)
-            .map { $0 }
+        var sessions: [String: Int] = [:]
+        for workout in workouts {
+            for entry in workout.sortedExercises {
+                if let name = entry.exercise?.name {
+                    sessions[name, default: 0] += 1
+                }
+            }
+        }
+        let counts: [ExerciseCount] = sessions.map { ExerciseCount(name: $0.key, sessions: $0.value) }
+        let sorted: [ExerciseCount] = counts.sorted { (a: ExerciseCount, b: ExerciseCount) -> Bool in
+            if a.sessions != b.sessions { return a.sessions > b.sessions }
+            return a.name < b.name
+        }
+        return Array(sorted.prefix(5))
     }
 
     var body: some View {
