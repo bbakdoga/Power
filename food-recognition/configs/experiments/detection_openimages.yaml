@@ -3,6 +3,9 @@ seed: 1337
 assets:
 - yolox_code
 - owned_photos
+- myfoodrepo_2022_v2
+- open_images_v7
+- openimages_pretrain_own
 model:
   architecture: yolox_tiny
   num_classes: 1

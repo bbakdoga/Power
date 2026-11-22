@@ -1,0 +1,21 @@
+# Pretrain MobileNetV3 as a multi-label classifier of whole Open Images photos
+# (600 boxable classes). Produces models/pretrain/classifier_backbone_openimages.pt,
+# which the `classification_openimages` experiment loads.
+seed: 1337
+assets: [timm_code, open_images_v7, openimages_pretrain_own]
+
+data:
+  selection_dir: data/pretrain/openimages
+  images_dir: data/pretrain/openimages/images
+
+model:
+  architecture: mobilenetv3_large_100
+  input_size: 224
+
+train:
+  epochs: 40
+  batch_size: 256
+  lr: 0.002
+  weight_decay: 0.05
+  warmup_epochs: 3
+  mixed_precision: true

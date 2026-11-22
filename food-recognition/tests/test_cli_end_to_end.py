@@ -49,7 +49,22 @@ def annotate_everything(project):
     return path
 
 
-def test_full_workflow(project, tmp_path, capsys):
+def tiny_configs(project):
+    """One-epoch CPU versions of the real configs, so the test exercises the real training loops."""
+    import yaml
+
+    paths = {}
+    for kind in ("detection", "classification"):
+        cfg = yaml.safe_load((project / f"configs/{kind}.yaml").read_text())
+        cfg["train"].update({"epochs": 1, "batch_size": 4, "warmup_epochs": 0, "eval_every": 1, "mixed_precision": False})
+        cfg["model"]["input_size"] = [64, 64] if kind == "detection" else 64
+        paths[kind] = project / f"tiny_{kind}.yaml"
+        paths[kind].write_text(yaml.safe_dump(cfg))
+    return paths
+
+
+def test_full_workflow(project, tmp_path, capsys, monkeypatch):
+    monkeypatch.setenv("SLURM_CPUS_PER_TASK", "0")
     inbox = tmp_path / "inbox"
     for i in range(20):
         make_image(inbox / "meals" / f"{i}.png", seed=i)
@@ -86,8 +101,14 @@ def test_full_workflow(project, tmp_path, capsys):
     assert main(["labelstudio-config"]) == 0
 
     capsys.readouterr()
-    assert main(["train-detector", "--dataset-version", "v0.0.1"]) == 1
-    assert "Preflight checks passed" in capsys.readouterr().out
+    pytest.importorskip("torch")
+    pytest.importorskip("timm")
+    tiny = tiny_configs(project)
+    assert main(["train-detector", "--dataset-version", "v0.0.1", "--config", str(tiny["detection"])]) == 0
+    assert main(["train-classifier", "--dataset-version", "v0.0.1", "--config", str(tiny["classification"])]) == 0
+    runs = sorted((project / "models/runs").glob("*/*/summary.json"))
+    assert len(runs) == 2
+    assert {json.loads(r.read_text())["kind"] for r in runs} == {"detection", "classification"}
     assert main(["train-classifier", "--dataset-version", "v9.9.9"]) == 1
     assert "not frozen" in capsys.readouterr().out
 

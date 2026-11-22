@@ -405,6 +405,37 @@ def _train(kind: str, ctx: Context, args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_select_openimages_pretrain(ctx: Context, args: argparse.Namespace) -> int:
+    from .licensing import require_approved
+    from .training.openimages_pretrain import select_pretrain
+
+    require_approved({"assets": ["open_images_v7", "openimages_pretrain_own"]},
+                     load_assets(resolve("licenses/assets.yaml", ctx.root)))
+    out = resolve(args.out, ctx.root)
+    stats = select_pretrain(boxes_csv=Path(args.boxes_csv), metadata_csv=Path(args.metadata_csv),
+                            classes_csv=Path(args.classes_csv), out_dir=out, max_images=args.max_images, seed=ctx.seed)
+    print(f"selected {stats['images']} images ({stats['val']} for validation) over {stats['classes']} classes; "
+          f"skipped {stats['license']} for licence, {stats['rotation']} rotated")
+    print(f"next: python scripts/download_openimages.py {out / 'ids.txt'} {out / 'images'} --max-side 640")
+    return 0
+
+
+def _pretrain(kind: str, ctx: Context, args: argparse.Namespace) -> int:
+    from .licensing import LicenseError
+    from .training.pretrain_runs import pretrain_classifier, pretrain_detector
+
+    cfg = load_yaml(resolve(args.config or f"configs/pretrain/{kind}_openimages.yaml", ctx.root))
+    try:
+        if kind == "detection":
+            pretrain_detector(cfg, ctx.root, resume=Path(args.resume) if args.resume else None)
+        else:
+            pretrain_classifier(cfg, ctx.root)
+    except (LicenseError, FileNotFoundError, RuntimeError) as exc:
+        print(exc)
+        return 1
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="food-rec", description=__doc__)
     parser.add_argument("--dataset-config", default="configs/dataset.yaml")
@@ -490,9 +521,25 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--output", default="reports/attributions.tsv")
     p.set_defaults(func=cmd_attributions)
 
+    p = sub.add_parser("select-openimages-pretrain", help="choose general CC BY 2.0 Open Images photos for pretraining")
+    p.add_argument("--classes-csv", required=True, help="oidv7-class-descriptions-boxable.csv")
+    p.add_argument("--boxes-csv", required=True, help="oidv6-train-annotations-bbox.csv")
+    p.add_argument("--metadata-csv", required=True, help="train-images-boxable-with-rotation.csv")
+    p.add_argument("--max-images", type=int, default=200_000)
+    p.add_argument("--out", default="data/pretrain/openimages")
+    p.set_defaults(func=cmd_select_openimages_pretrain)
+
+    for kind in ("detection", "classification"):
+        name = "detector" if kind == "detection" else "classifier"
+        p = sub.add_parser(f"pretrain-{name}", help=f"pretrain the {name} on Open Images (produces openimages_pretrain_own)")
+        p.add_argument("--config")
+        if kind == "detection":
+            p.add_argument("--resume", help="run folder to continue after a job hit its time limit")
+        p.set_defaults(func=lambda c, a, k=kind: _pretrain(k, c, a))
+
     for kind in ("detection", "classification"):
         p = sub.add_parser(f"train-{'detector' if kind == 'detection' else 'classifier'}",
-                           help=f"train the {kind} model (preflight checks only until phase 4)")
+                           help=f"train the {kind} model on a frozen dataset version")
         p.add_argument("--dataset-version", required=True)
         p.add_argument("--config")
         p.set_defaults(func=lambda c, a, k=kind: _train(k, c, a))
