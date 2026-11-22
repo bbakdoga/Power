@@ -101,14 +101,6 @@ def test_full_workflow(project, tmp_path, capsys, monkeypatch):
     assert main(["labelstudio-config"]) == 0
 
     capsys.readouterr()
-    pytest.importorskip("torch")
-    pytest.importorskip("timm")
-    tiny = tiny_configs(project)
-    assert main(["train-detector", "--dataset-version", "v0.0.1", "--config", str(tiny["detection"])]) == 0
-    assert main(["train-classifier", "--dataset-version", "v0.0.1", "--config", str(tiny["classification"])]) == 0
-    runs = sorted((project / "models/runs").glob("*/*/summary.json"))
-    assert len(runs) == 2
-    assert {json.loads(r.read_text())["kind"] for r in runs} == {"detection", "classification"}
     assert main(["train-classifier", "--dataset-version", "v9.9.9"]) == 1
     assert "not frozen" in capsys.readouterr().out
 
@@ -117,6 +109,17 @@ def test_full_workflow(project, tmp_path, capsys, monkeypatch):
     annotations.write_text(annotations.read_text().replace('"iscrowd": 0', '"iscrowd": 1', 1))
     assert main(["train-detector", "--dataset-version", "v0.0.1"]) == 1
     assert "changed since it was frozen" in capsys.readouterr().out
+
+    # Real training loops, one CPU epoch each (skipped where torch is not installed, e.g. CI).
+    annotations.write_text(annotations.read_text().replace('"iscrowd": 1', '"iscrowd": 0', 1))
+    pytest.importorskip("torch")
+    pytest.importorskip("timm")
+    tiny = tiny_configs(project)
+    assert main(["train-detector", "--dataset-version", "v0.0.1", "--config", str(tiny["detection"])]) == 0
+    assert main(["train-classifier", "--dataset-version", "v0.0.1", "--config", str(tiny["classification"])]) == 0
+    runs = sorted((project / "models/runs").glob("*/*/summary.json"))
+    assert len(runs) == 2
+    assert {json.loads(r.read_text())["kind"] for r in runs} == {"detection", "classification"}
 
 
 def test_validate_fails_on_rights_problem(project, tmp_path):
