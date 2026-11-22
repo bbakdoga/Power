@@ -145,6 +145,44 @@ def cmd_validate(ctx: Context, args: argparse.Namespace) -> int:
     return 0 if result.ok else 1
 
 
+def cmd_exclude_images(ctx: Context, args: argparse.Namespace) -> int:
+    """Remove images whose validation errors cannot be fixed by hand (e.g. source boxes outside the photo).
+
+    The whole image goes, not just the bad box: a kept image with a missing box
+    would teach the detector that the food there is background. Every removal is
+    logged with its reason in data/manifests/excluded.jsonl so it can be reported.
+    """
+    codes = set(args.code)
+    _, _, records, result = _validate(ctx, not args.no_files)
+    reasons: dict[str, list[str]] = {}
+    for issue in result.issues:
+        if issue.severity == "error" and issue.code in codes and issue.image:
+            reasons.setdefault(issue.image, []).append(f"{issue.code}: {issue.message}")
+    other = [i for i in errors(result.issues) if i.code not in codes]
+    if not reasons:
+        print(f"no images with {', '.join(sorted(codes))}; nothing to do")
+    else:
+        dataset, _ = load_coco(ctx.paths["annotations"])
+        drop_ids = {img.id for img in dataset.images if img.file_name in reasons}
+        boxes_before = len(dataset.annotations)
+        dataset.images = [img for img in dataset.images if img.id not in drop_ids]
+        dataset.annotations = [a for a in dataset.annotations if a.image_id not in drop_ids]
+        log = ctx.paths["manifest"].with_name("excluded.jsonl")
+        if args.dry_run:
+            print("dry run: nothing written")
+        else:
+            with open(log, "a", encoding="utf-8") as handle:
+                for file_name in sorted(reasons):
+                    handle.write(json.dumps({"file": file_name, "reasons": reasons[file_name]}) + "\n")
+            save_coco(dataset, ctx.paths["annotations"])
+            write_manifest(ctx.paths["manifest"], [r for r in records if r.file not in reasons])
+        print(f"excluded {len(drop_ids)} images ({boxes_before - len(dataset.annotations)} boxes); "
+              f"{len(dataset.images)} images and {len(dataset.annotations)} boxes remain; reasons -> {log}")
+    if other:
+        print(f"{len(other)} other errors remain; run `food-rec validate`")
+    return 1 if other else 0
+
+
 def cmd_split(ctx: Context, args: argparse.Namespace) -> int:
     from .dataset.split import check_leakage, split_by_group
 
@@ -468,6 +506,12 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("split", help="leakage-safe train/val/test split by source group")
     p.add_argument("--force", action="store_true", help="split even when validation has errors (not for training)")
     p.set_defaults(func=cmd_split)
+
+    p = sub.add_parser("exclude-images", help="drop images with unfixable validation errors, logging why")
+    p.add_argument("--code", action="append", required=True, help="error code to exclude, e.g. bbox_out_of_bounds")
+    p.add_argument("--no-files", action="store_true", help="skip opening image files")
+    p.add_argument("--dry-run", action="store_true")
+    p.set_defaults(func=cmd_exclude_images)
 
     sub.add_parser("report", help="write reports/dataset_report.md").set_defaults(func=cmd_report)
 

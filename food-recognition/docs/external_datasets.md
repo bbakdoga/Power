@@ -93,5 +93,15 @@ What the importer does:
 food-rec validate && food-rec split && food-rec report
 ```
 
+MyFoodRepo 2022 v2.0 has about 400 boxes that lie outside their photo
+(source annotation errors; some look drawn on the unrotated image). They
+can't be fixed reliably, so the whole photo is removed, because keeping it
+with a box missing would teach the detector that the food is background.
+Every removal and its reason is logged in `data/manifests/excluded.jsonl`:
+
+```bash
+food-rec exclude-images --code bbox_out_of_bounds
+```
+
 Our own phone photos (the `phone_eval` source pinned to `test`) stay the
 final test set. Public photos are for training only.
