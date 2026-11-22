@@ -40,8 +40,7 @@ wget https://storage.googleapis.com/openimages/v7/oidv7-class-descriptions-boxab
 wget https://storage.googleapis.com/openimages/v6/oidv6-train-annotations-bbox.csv
 wget https://storage.googleapis.com/openimages/2018_04/train/train-images-boxable-with-rotation.csv
 cd -
-sbatch -p batch -c 4 --mem 32G --time=02:00:00 -o logs/select_%j.log --wrap "source .venv/bin/activate && \
-  food-rec select-openimages-pretrain --classes-csv data/external/openimages/oidv7-class-descriptions-boxable.csv \
+sbatch -p batch -c 4 --mem 32G --time=02:00:00 -o logs/select_%j.log --wrap ".venv/bin/food-rec select-openimages-pretrain --classes-csv data/external/openimages/oidv7-class-descriptions-boxable.csv \
   --boxes-csv data/external/openimages/oidv6-train-annotations-bbox.csv \
   --metadata-csv data/external/openimages/train-images-boxable-with-rotation.csv"
 python3 scripts/download_openimages.py data/pretrain/openimages/ids.txt data/pretrain/openimages/images \
