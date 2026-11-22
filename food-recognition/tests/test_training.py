@@ -95,3 +95,9 @@ def test_openimages_pretraining_pipeline(project, tmp_path):
     (run / "summary.json").unlink()
     assert main(["pretrain-detector", "--config", str(project / "tiny_detection.yaml"), "--resume", str(run)]) == 0
     assert (run / "summary.json").exists()
+
+    # Resubmitting without --resume finds the unfinished run by itself instead of starting over.
+    (run / "summary.json").unlink()
+    assert main(["pretrain-detector", "--config", str(project / "tiny_detection.yaml")]) == 0
+    assert (run / "summary.json").exists()
+    assert len(list((project / "models/runs/detection-pretrain").glob("openimages-*"))) == 1

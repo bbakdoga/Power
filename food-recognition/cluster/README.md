@@ -55,7 +55,7 @@ cluster/pegasus.sh validate
 cluster/pegasus.sh experiments v0.1.0
 ```
 
-If `pretrain_detector` hits the 1-day limit, submit it again: it continues
+If a detector job (pretraining or training) hits the 1-day limit, submit it again: it continues
 from the last finished epoch.
 
 ## Running from the Mac

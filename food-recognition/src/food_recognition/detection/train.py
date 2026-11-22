@@ -128,6 +128,8 @@ def fit(config: dict[str, Any], train_samples: list[Any], val_samples: list[Any]
     eval_post = PostprocessConfig(confidence_threshold=0.01, nms_iou_threshold=float(post.get("nms_iou_threshold", 0.5)),
                                   max_detections=100, min_box_side=0)
 
+    if resume is None and train_cfg.get("auto_resume", True):
+        resume = _unfinished_run(root, config, kind, run_label)
     out = resume if resume is not None else common.run_dir(root, config, kind, run_label)
     print(f"run folder {out}\nimages: train {len(train_ds)}, val {len(val_ds)}; classes {num_classes}; device {dev}, amp {amp}")
     timer = common.Timer()
@@ -196,6 +198,17 @@ def fit(config: dict[str, Any], train_samples: list[Any], val_samples: list[Any]
     common.write_json(out / "summary.json", summary)
     print(f"done: best val mAP50-95 {best:.4f} at epoch {best_epoch}; {out}")
     return out
+
+
+def _unfinished_run(root: Path, config: dict[str, Any], kind: str, run_label: str) -> Path | None:
+    """Newest run of this experiment that has a resume point but never finished (e.g. hit the time limit)."""
+    name = (config.get("experiment") or {}).get("name") or kind
+    runs = sorted((root / "models/runs" / name).glob(f"{run_label}-*"), reverse=True)
+    for run in runs:
+        if (run / "resume.pt").exists() and not (run / "summary.json").exists():
+            print(f"found unfinished run {run}; continuing it")
+            return run
+    return None
 
 
 def _evaluate(model: Any, loader: Any, dev: Any, class_names: list[str], post: Any, np: Any, torch: Any,
