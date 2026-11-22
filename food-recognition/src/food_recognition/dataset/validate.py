@@ -7,10 +7,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+import numpy as np
 from PIL import UnidentifiedImageError
 
 from .coco import CocoDataset, validate_annotations
-from .images import dhash, hamming, read_image_info, sha256_file
+from .images import dhash, read_image_info, sha256_file
 from .issues import Issue, errors, warnings
 from .manifest import ImageRecord, Source, check_record_rights
 from .taxonomy import Taxonomy
@@ -82,15 +83,28 @@ class ValidationResult:
 
 
 def find_near_duplicates(dhashes: dict[str, int], max_distance: int) -> list[tuple[str, str, int]]:
-    """All pairs within max_distance bits. O(n^2); fine up to tens of thousands of images."""
+    """All pairs within max_distance bits. Vectorised O(n^2): ~30k images take seconds, not hours."""
     items = sorted(dhashes.items())
+    if len(items) < 2:
+        return []
+    files = [f for f, _ in items]
+    hashes = np.array([h for _, h in items], dtype=np.uint64)
     pairs: list[tuple[str, str, int]] = []
-    for i, (file_a, hash_a) in enumerate(items):
-        for file_b, hash_b in items[i + 1:]:
-            distance = hamming(hash_a, hash_b)
-            if distance <= max_distance:
-                pairs.append((file_a, file_b, distance))
+    for i in range(len(items) - 1):
+        xor = np.bitwise_xor(hashes[i + 1:], hashes[i])
+        distances = _popcount64(xor)
+        for j in np.nonzero(distances <= max_distance)[0]:
+            pairs.append((files[i], files[i + 1 + int(j)], int(distances[j])))
     return pairs
+
+
+_BYTE_BITS = np.array([bin(b).count("1") for b in range(256)], dtype=np.uint8)
+
+
+def _popcount64(values: np.ndarray) -> np.ndarray:
+    """Bits set in each uint64 (works on every NumPy version we support)."""
+    as_bytes = values.astype("<u8").view(np.uint8).reshape(-1, 8)
+    return _BYTE_BITS[as_bytes].sum(axis=1, dtype=np.int64)
 
 
 def class_balance_issues(counts: dict[str, int], taxonomy: Taxonomy, settings: ValidationSettings) -> list[Issue]:
