@@ -443,6 +443,24 @@ def _train(kind: str, ctx: Context, args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_evaluate(ctx: Context, args: argparse.Namespace) -> int:
+    from .evaluation.run_eval import evaluate_run, headline
+    from .licensing import LicenseError
+
+    lines, failed = [], 0
+    for run in args.runs:
+        try:
+            result = evaluate_run(resolve(run, ctx.root), ctx.root, split=args.split, checkpoint=args.checkpoint)
+        except (LicenseError, FileNotFoundError, RuntimeError, ValueError) as exc:
+            print(f"{run}: {exc}")
+            failed += 1
+            continue
+        lines.append(headline(result))
+        print(f"wrote {Path(result['run']) / f'eval_{args.split}.json'}")
+    print("\n".join(["", *lines]))
+    return 1 if failed else 0
+
+
 def cmd_select_openimages_pretrain(ctx: Context, args: argparse.Namespace) -> int:
     from .licensing import require_approved
     from .training.openimages_pretrain import select_pretrain
@@ -587,6 +605,12 @@ def build_parser() -> argparse.ArgumentParser:
         p.add_argument("--dataset-version", required=True)
         p.add_argument("--config")
         p.set_defaults(func=lambda c, a, k=kind: _train(k, c, a))
+
+    p = sub.add_parser("evaluate", help="score finished runs on the held-out test split (writes eval_<split>.json)")
+    p.add_argument("runs", nargs="+", help="run folders, e.g. models/runs/detection-scratch/v0.1.0-*")
+    p.add_argument("--split", default="test", choices=["test", "val"])
+    p.add_argument("--checkpoint", default="best.pt")
+    p.set_defaults(func=cmd_evaluate)
     return parser
 
 

@@ -121,6 +121,18 @@ def test_full_workflow(project, tmp_path, capsys, monkeypatch):
     assert len(runs) == 2
     assert {json.loads(r.read_text())["kind"] for r in runs} == {"detection", "classification"}
 
+    # Test-set scoring of both finished runs, written next to each run.
+    capsys.readouterr()
+    assert main(["evaluate", *[str(r.parent) for r in runs]]) == 0
+    out = capsys.readouterr().out
+    assert "mAP50-95" in out and "top-1" in out
+    for r in runs:
+        result = json.loads((r.parent / "eval_test.json").read_text())
+        assert result["split"] == "test" and result["dataset_version"] == "v0.0.1" and result["images"] == 4
+        assert len(result["checkpoint_sha256"]) == 64
+    with pytest.raises(SystemExit):                       # scoring on training photos is refused
+        main(["evaluate", str(runs[0].parent), "--split", "train"])
+
 
 def test_validate_fails_on_rights_problem(project, tmp_path):
     inbox = tmp_path / "inbox"

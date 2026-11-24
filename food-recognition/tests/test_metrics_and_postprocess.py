@@ -87,3 +87,26 @@ def test_parity_and_metadata():
     meta = model_metadata(kind="classifier", labels=["a", "b"], model_version="0.1.0", dataset_version="v0.1.0",
                           taxonomy_version="0.1.0", author="Power", license_note="x")
     assert meta["com.power.food.labels"] == "a,b" and all(isinstance(v, str) for v in meta.values())
+
+
+def test_open_set_metrics_separation_and_ties():
+    from food_recognition.evaluation.classification_metrics import open_set_metrics
+
+    perfect = open_set_metrics(np.array([0.9, 0.8, 0.7]), np.array([0.1, 0.2]))
+    assert perfect["auroc"] == pytest.approx(1.0) and perfect["fpr_at_95_tpr"] == 0.0
+    useless = open_set_metrics(np.array([0.5, 0.5]), np.array([0.5, 0.5]))
+    assert useless["auroc"] == pytest.approx(0.5) and useless["fpr_at_95_tpr"] == 1.0
+    mixed = open_set_metrics(np.array([0.9, 0.3]), np.array([0.5]))
+    assert mixed["auroc"] == pytest.approx(0.5)
+    assert open_set_metrics(np.array([0.9]), np.array([])) == {}
+
+
+def test_classifier_metrics_report_open_set_when_unknown_crops_exist():
+    from food_recognition.classification.train import metrics_from
+
+    scores = np.array([[0.9, 0.1], [0.2, 0.8], [0.5, 0.5], [0.45, 0.55]])
+    targets = np.array([0, 1, -1, -1])
+    metrics = metrics_from(scores, targets, ["a", "b"], {"inference": {"reject_below": 0.6}})
+    assert metrics["top1_accuracy"] == 1.0 and metrics["unknown_crops"] == 2
+    assert metrics["unknown_rejected_rate"] == 1.0
+    assert metrics["open_set"]["auroc"] == pytest.approx(1.0)

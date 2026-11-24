@@ -24,7 +24,6 @@ def train(config: dict[str, Any], dataset_version: str, root: Path) -> Path:
 
     from ..config import load_yaml
     from ..dataset.taxonomy import load_taxonomy
-    from ..evaluation.classification_metrics import classification_report, rejection_curve
     from ..training import common
     from ..training.data import class_balanced_weights, crops_from, load_frozen
     from .dataset import CropDataset
@@ -117,7 +116,7 @@ def train(config: dict[str, Any], dataset_version: str, root: Path) -> Path:
             running += float(loss.detach())
             step += 1
 
-        metrics = _evaluate(model, val_dl, dev, labels, config, classification_report, rejection_curve)
+        metrics = _evaluate(model, val_dl, dev, labels, config)
         row = {"epoch": epoch + 1, "train_loss": running / max(steps_per_epoch, 1), "val_top1": metrics["top1_accuracy"],
                "val_top3": metrics["top3_accuracy"], "val_macro_f1": metrics["macro_f1"],
                "unknown_rejected": metrics.get("unknown_rejected_rate"), "hours": timer.hours()}
@@ -175,8 +174,8 @@ def _mix(images: Any, soft: Any, weight: Any, alpha: dict[str, float], rng: Any)
     return images, lam * soft + (1 - lam) * soft[perm], lam * weight + (1 - lam) * weight[perm]
 
 
-def _evaluate(model: Any, loader: Any, dev: Any, labels: list[str], config: dict[str, Any],
-              report_fn: Any, curve_fn: Any) -> dict[str, Any]:
+def predict(model: Any, loader: Any, dev: Any) -> tuple[Any, Any]:
+    """Softmax scores [N, C] and targets [N] (-1 = unknown_food) for every crop in the loader."""
     import numpy as np
     import torch
 
@@ -187,13 +186,25 @@ def _evaluate(model: Any, loader: Any, dev: Any, labels: list[str], config: dict
             logits = model(images.to(dev, non_blocking=True)).float()
             scores.append(torch.softmax(logits, dim=1).cpu().numpy())
             targets.append(target.numpy())
-    all_scores, all_targets = np.concatenate(scores), np.concatenate(targets)
+    return np.concatenate(scores), np.concatenate(targets)
+
+
+def metrics_from(all_scores: Any, all_targets: Any, labels: list[str], config: dict[str, Any]) -> dict[str, Any]:
+    """Closed-set metrics on known foods, plus how well unknown food is told apart (open-set)."""
+    from ..evaluation.classification_metrics import classification_report, open_set_metrics, rejection_curve
+
     known = all_targets >= 0
-    metrics: dict[str, Any] = report_fn(all_targets[known], all_scores[known], labels)
-    metrics["rejection_curve"] = curve_fn(all_targets[known], all_scores[known], [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8])
+    metrics: dict[str, Any] = classification_report(all_targets[known], all_scores[known], labels)
+    metrics["rejection_curve"] = rejection_curve(all_targets[known], all_scores[known], [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8])
     reject_below = float((config.get("inference") or {}).get("reject_below", 0.4))
     if (~known).any():
         metrics["unknown_rejected_rate"] = float((all_scores[~known].max(axis=1) < reject_below).mean())
         metrics["unknown_crops"] = int((~known).sum())
+        metrics["open_set"] = open_set_metrics(all_scores[known].max(axis=1), all_scores[~known].max(axis=1))
     metrics["known_accepted_rate"] = float((all_scores[known].max(axis=1) >= reject_below).mean())
     return metrics
+
+
+def _evaluate(model: Any, loader: Any, dev: Any, labels: list[str], config: dict[str, Any]) -> dict[str, Any]:
+    scores, targets = predict(model, loader, dev)
+    return metrics_from(scores, targets, labels, config)
