@@ -79,7 +79,7 @@ struct WorkoutSummaryView: View {
                             Label("Share Workout", systemImage: "square.and.arrow.up")
                         }
                     }
-                    if canSaveRoutine && !savedRoutine {
+                    if canSaveRoutine && WorkoutStarter.canSaveAsRoutine(workout) && !savedRoutine {
                         Button {
                             routineName = workout.name
                             naming = true
