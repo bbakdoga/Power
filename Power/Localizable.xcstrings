@@ -320,6 +320,22 @@
         }
       }
     },
+    "%lld of %lld exercises in lb" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$lld von %2$lld Übungen in lb"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld exercises in lb"
+          }
+        }
+      }
+    },
     "%lld reps" : {
       "localizations" : {
         "de" : {
@@ -968,6 +984,26 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Alle Ausrüstung"
+          }
+        }
+      }
+    },
+    "All kg" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Alle in kg"
+          }
+        }
+      }
+    },
+    "All lb" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Alle in lb"
           }
         }
       }
@@ -3470,6 +3506,58 @@
         }
       }
     },
+    "Replace the %lld workouts imported before" : {
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Das zuvor importierte Workout ersetzen"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld zuvor importierte Workouts ersetzen"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld zuvor importierte Workouts ersetzen"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Replace the workout imported before"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Replace the %lld workouts imported before"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Replace the %lld workouts imported before"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "Reps" : {
       "localizations" : {
         "de" : {
@@ -4118,7 +4206,18 @@
         }
       }
     },
+    "The file doesn't say which unit each exercise used, so Power guessed. Check the ones you logged in pounds. Each exercise keeps its unit for future workouts." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Die Datei enthält keine Angabe dazu, welche Einheit bei den einzelnen Übungen verwendet wurde, daher hat Power geschätzt. Prüfe die Übungen, die du in Pfund erfasst hast. Jede Übung behält ihre Einheit für künftige Workouts."
+          }
+        }
+      }
+    },
     "The file doesn't say. Pick the unit you used in the other app." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4470,6 +4569,22 @@
         }
       }
     },
+    "Typical: %@ · %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Typisch: %1$@ · %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Typical: %1$@ · %2$@"
+          }
+        }
+      }
+    },
     "Unavailable" : {
       "localizations" : {
         "de" : {
@@ -4516,6 +4631,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Übernehmen"
+          }
+        }
+      }
+    },
+    "Use this to fix units or typos in an earlier import. Those workouts are deleted and imported again with the settings below." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nutze dies, um Einheiten oder Tippfehler eines früheren Imports zu korrigieren. Diese Workouts werden gelöscht und mit den Einstellungen unten erneut importiert."
           }
         }
       }
@@ -4731,6 +4856,16 @@
         }
       }
     },
+    "Weight units" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Gewichtseinheiten"
+          }
+        }
+      }
+    },
     "Weight, %@" : {
       "localizations" : {
         "de" : {
@@ -4742,6 +4877,7 @@
       }
     },
     "Weights in this file are in" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
