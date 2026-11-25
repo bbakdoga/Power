@@ -38,13 +38,18 @@
       }
     },
     "NSCameraUsageDescription" : {
-      "comment" : "Privacy - Camera Usage Description",
-      "extractionState" : "extracted_with_value",
+      "comment" : "Camera permission prompt: food photos for nutrition and pictures of exercises/machines.",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Power nutzt die Kamera, um Lebensmittel anhand eines Fotos einzuschätzen und Fotos deiner Übungen aufzunehmen."
+          }
+        },
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Power uses the camera to estimate foods and nutrition from a photo."
+            "state" : "translated",
+            "value" : "Power uses the camera to estimate food from a photo and to take pictures of your exercises."
           }
         }
       }

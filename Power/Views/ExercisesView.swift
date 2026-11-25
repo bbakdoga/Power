@@ -1,4 +1,6 @@
 import SwiftUI
+import PhotosUI
+import ImagePlayground
 import SwiftData
 import Charts
 
@@ -262,10 +264,16 @@ struct ExerciseEditorView: View {
     @State private var equipment: Equipment = .barbell
     @State private var restSeconds = 90
     @State private var tracking: TrackingType = .weightReps
+    /// Picture being edited; saved to the exercise on Save.
+    @State private var imageData: Data?
+    @State private var pickedPhoto: PhotosPickerItem?
+    @State private var takingPhoto = false
+    @State private var generating = false
 
     var body: some View {
         NavigationStack {
             Form {
+                pictureSection
                 TextField("Name", text: $name)
                 Picker("Muscle group", selection: $muscleGroup) {
                     ForEach(MuscleGroup.allCases) { Text($0.title).tag($0) }
@@ -289,8 +297,28 @@ struct ExerciseEditorView: View {
                         .disabled(name.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
             }
+            .onChange(of: pickedPhoto) { _, item in
+                guard let item else { return }
+                Task {
+                    if let data = try? await item.loadTransferable(type: Data.self),
+                       let image = UIImage(data: data) {
+                        imageData = image.downscaledJPEG()
+                    }
+                    pickedPhoto = nil
+                }
+            }
+            .fullScreenCover(isPresented: $takingPhoto) {
+                ExercisePhotoCamera { image in
+                    imageData = image.downscaledJPEG()
+                }
+                .ignoresSafeArea()
+            }
+            .exerciseImagePlayground(isPresented: $generating, concepts: playgroundConcepts) { image in
+                imageData = image.downscaledJPEG()
+            }
             .onAppear {
                 if let exercise {
+                    imageData = exercise.imageData
                     name = exercise.name
                     muscleGroup = exercise.muscleGroup
                     equipment = exercise.equipment
@@ -301,6 +329,69 @@ struct ExerciseEditorView: View {
         }
     }
 
+    /// Preview of the picture plus ways to set it: camera, photo library, or Image Playground.
+    private var pictureSection: some View {
+        Section {
+            HStack(spacing: 16) {
+                picturePreview
+                    .frame(width: 88, height: 88)
+                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 10) {
+                    if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                        Button {
+                            takingPhoto = true
+                        } label: {
+                            Label("Take Photo", systemImage: "camera")
+                        }
+                    }
+                    PhotosPicker(selection: $pickedPhoto, matching: .images) {
+                        Label("Choose Photo", systemImage: "photo")
+                    }
+                    if #available(iOS 18.1, *) {
+                        GenerateDrawingButton(disabled: name.trimmingCharacters(in: .whitespaces).isEmpty) {
+                            generating = true
+                        }
+                    }
+                    if imageData != nil {
+                        Button("Remove Picture", role: .destructive) { imageData = nil }
+                    }
+                }
+                .buttonStyle(.borderless)
+            }
+        } footer: {
+            Text(imageData == nil
+                 ? "Without a picture, the drawing of the exercise's body part is used."
+                 : "Shown in your exercise list and on the exercise page.")
+        }
+    }
+
+    @ViewBuilder
+    private var picturePreview: some View {
+        if let imageData, let image = UIImage(data: imageData) {
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFill()
+        } else if let asset = muscleGroup.assetName, let image = UIImage(named: asset) {
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFill()
+                .background(Color.white)
+        } else {
+            Image(systemName: muscleGroup.systemImage)
+                .font(.largeTitle)
+                .foregroundStyle(.tint)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(.quaternary)
+        }
+    }
+
+    /// What Image Playground should draw: the exercise, its equipment and body part.
+    private var playgroundConcepts: [String] {
+        let trimmed = name.trimmingCharacters(in: .whitespaces)
+        return [trimmed, "Person doing the \(trimmed) exercise in a gym", "\(equipment.title), \(muscleGroup.title)"]
+    }
+
     private func save() {
         let trimmed = name.trimmingCharacters(in: .whitespaces)
         if let exercise {
@@ -309,12 +400,100 @@ struct ExerciseEditorView: View {
             exercise.equipment = equipment
             exercise.restSeconds = restSeconds
             exercise.tracking = tracking
+            exercise.imageData = imageData
         } else {
             let new = Exercise(name: trimmed, muscleGroup: muscleGroup, equipment: equipment,
                                isCustom: true, restSeconds: restSeconds)
             new.tracking = tracking
+            new.imageData = imageData
             context.insert(new)
         }
         dismiss()
+    }
+}
+
+/// The system camera, for taking a picture of a machine.
+private struct ExercisePhotoCamera: UIViewControllerRepresentable {
+    let onImage: (UIImage) -> Void
+    @Environment(\.dismiss) private var dismiss
+
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.sourceType = .camera
+        picker.delegate = context.coordinator
+        return picker
+    }
+
+    func updateUIViewController(_ controller: UIImagePickerController, context: Context) {}
+
+    func makeCoordinator() -> Coordinator { Coordinator(self) }
+
+    final class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+        let parent: ExercisePhotoCamera
+        init(_ parent: ExercisePhotoCamera) { self.parent = parent }
+
+        func imagePickerController(_ picker: UIImagePickerController,
+                                   didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+            if let image = info[.originalImage] as? UIImage { parent.onImage(image) }
+            parent.dismiss()
+        }
+
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            parent.dismiss()
+        }
+    }
+}
+
+// MARK: - Image Playground (iOS 18.1+)
+
+/// "Generate Drawing", shown only on devices that support Image Playground
+/// (Apple Intelligence, iOS 18.1 or later).
+@available(iOS 18.1, *)
+private struct GenerateDrawingButton: View {
+    let disabled: Bool
+    let action: () -> Void
+    @Environment(\.supportsImagePlayground) private var supportsImagePlayground
+
+    var body: some View {
+        if supportsImagePlayground {
+            Button(action: action) {
+                Label("Generate Drawing", systemImage: "apple.image.playground")
+            }
+            .disabled(disabled)
+        }
+    }
+}
+
+private struct ExerciseImagePlayground: ViewModifier {
+    @Binding var isPresented: Bool
+    let concepts: [String]
+    let onImage: (UIImage) -> Void
+
+    func body(content: Content) -> some View {
+        if #available(iOS 18.4, *) {
+            sheet(content)
+                .imagePlaygroundGenerationStyle(.illustration, in: [.illustration, .sketch, .animation])
+        } else if #available(iOS 18.1, *) {
+            sheet(content)
+        } else {
+            content
+        }
+    }
+
+    @available(iOS 18.1, *)
+    private func sheet(_ content: Content) -> some View {
+        content.imagePlaygroundSheet(isPresented: $isPresented, concepts: concepts.map { .text($0) }) { url in
+            if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
+                onImage(image)
+            }
+        }
+    }
+}
+
+private extension View {
+    /// Presents Image Playground to draw a picture for an exercise (no-op before iOS 18.1).
+    func exerciseImagePlayground(isPresented: Binding<Bool>, concepts: [String],
+                                 onImage: @escaping (UIImage) -> Void) -> some View {
+        modifier(ExerciseImagePlayground(isPresented: isPresented, concepts: concepts, onImage: onImage))
     }
 }

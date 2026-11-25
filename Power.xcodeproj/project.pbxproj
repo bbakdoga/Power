@@ -511,7 +511,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Power;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = NO;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Power uses the camera to estimate foods and nutrition from a photo.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Power uses the camera to estimate food from a photo and to take pictures of your exercises.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Power reads your bodyweight from Health so it appears in your body measurements.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Power saves your finished workouts and the bodyweight you log to Health.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
@@ -547,7 +547,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Power;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = NO;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Power uses the camera to estimate foods and nutrition from a photo.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Power uses the camera to estimate food from a photo and to take pictures of your exercises.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Power reads your bodyweight from Health so it appears in your body measurements.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Power saves your finished workouts and the bodyweight you log to Health.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;

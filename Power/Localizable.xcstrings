@@ -85,6 +85,23 @@
         }
       }
     },
+    "%@ doing %@, with %@ highlighted" : {
+      "comment" : "VoiceOver label for an exercise illustration: body type, exercise name, highlighted muscles",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$@ bei %2$@, hervorgehobene Muskeln: %3$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ doing %2$@, with %3$@ highlighted"
+          }
+        }
+      }
+    },
     "%@ g · P %@ · C %@ · F %@" : {
       "localizations" : {
         "en" : {
@@ -104,6 +121,16 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@ kcal · P %2$@ · C %3$@ · F %4$@"
+          }
+        }
+      }
+    },
+    "%@ muscles highlighted" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Hervorgehobene Muskeln: %@"
           }
         }
       }
@@ -2135,6 +2162,16 @@
     "g" : {
 
     },
+    "Generate Drawing" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zeichnung erstellen"
+          }
+        }
+      }
+    },
     "Get Started" : {
       "localizations" : {
         "de" : {
@@ -3311,6 +3348,16 @@
         }
       }
     },
+    "Picture of %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Bild von %@"
+          }
+        }
+      }
+    },
     "Pink" : {
       "localizations" : {
         "de" : {
@@ -3472,6 +3519,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Foto entfernen"
+          }
+        }
+      }
+    },
+    "Remove Picture" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Bild entfernen"
           }
         }
       }
@@ -3929,6 +3986,16 @@
         }
       }
     },
+    "Shown in your exercise list and on the exercise page." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Wird in deiner Übungsliste und auf der Übungsseite angezeigt."
+          }
+        }
+      }
+    },
     "Shown with your best estimated 1RM on your profile." : {
       "localizations" : {
         "de" : {
@@ -4165,6 +4232,16 @@
     },
     "Take food photo" : {
 
+    },
+    "Take Photo" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Foto aufnehmen"
+          }
+        }
+      }
     },
     "Tap + to plan a workout you do often, or save a finished workout as a routine." : {
       "localizations" : {
@@ -4893,6 +4970,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Willkommen bei Power"
+          }
+        }
+      }
+    },
+    "Without a picture, the drawing of the exercise's body part is used." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ohne Bild wird die Zeichnung des Körperteils der Übung verwendet."
           }
         }
       }

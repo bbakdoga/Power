@@ -31,6 +31,9 @@ final class Exercise {
     var unitRaw: String?
     /// What a set records: weight × reps, time, distance + time, or weight + distance.
     var trackingRaw: String = TrackingType.weightReps.rawValue
+    /// The user's own picture for this exercise (a photo or a generated drawing), as JPEG.
+    /// Stored outside the database file and synced to iCloud as an asset.
+    @Attribute(.externalStorage) var imageData: Data?
 
     @Relationship(deleteRule: .nullify, inverse: \WorkoutExercise.exercise)
     var workoutEntries: [WorkoutExercise]? = []
