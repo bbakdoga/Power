@@ -221,7 +221,8 @@ enum OpenFoodFacts {
             fatPer100Grams: clamp(number(nutriments["fat_100g"]), max: 100),
             servingGrams: serving,
             isLiquid: isLiquid,
-            source: .openFoodFacts
+            source: .openFoodFacts,
+            nutritionStated: calories != nil
         )
     }
 
@@ -272,7 +273,8 @@ extension RemoteFood {
             fatPer100Grams: fatPer100Grams,
             servingGrams: servingInGrams ? servingSize.flatMap { $0 > 0 ? $0 : nil } : nil,
             isLiquid: unit == "ml" || unit == "mlt",
-            source: .usda
+            source: .usda,
+            nutritionStated: true
         )
     }
 }

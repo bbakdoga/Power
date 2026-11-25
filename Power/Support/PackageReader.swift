@@ -37,12 +37,29 @@ enum PackageReader {
     }
 
     static func read(_ image: UIImage) async throws -> PackageGuess {
-        guard let cgImage = image.cgImage else { return PackageGuess() }
+        await identify(try await textLines(in: image))
+    }
+
+    /// All text in the photo, with its size.
+    static func textLines(in image: UIImage) async throws -> [TextLine] {
+        guard let cgImage = image.cgImage else { return [] }
         let orientation = CGImagePropertyOrientation(image.imageOrientation)
-        let lines = try await Task.detached(priority: .userInitiated) {
+        return try await Task.detached(priority: .userInitiated) {
             try recognizeText(in: cgImage, orientation: orientation)
         }.value
-        return await identify(lines)
+    }
+
+    /// True when the photo shows a labeled product (bottle, can, package) rather than a
+    /// plated meal: there is large, printed text that isn't small print.
+    static func looksLikePackage(_ lines: [TextLine]) -> Bool {
+        let prominent = lines.filter { line in
+            let lower = line.text.lowercased()
+            return line.size >= 0.035
+                && line.text.filter(\.isLetter).count >= 3
+                && !smallPrint.contains { lower.contains($0) }
+        }
+        let letters = lines.reduce(0) { $0 + $1.text.filter(\.isLetter).count }
+        return !prominent.isEmpty && letters >= 6
     }
 
     /// Identifies the product from recognized text: language model first, heuristic as
@@ -89,6 +106,12 @@ enum PackageReader {
         "hergestellt", "made in", "e-mail", "kontakt", "%",
     ]
 
+    /// Words that describe a variety rather than name a brand.
+    private static let varietyWords: Set<String> = [
+        "zero", "light", "lite", "bio", "organic", "neu", "new", "classic", "original", "diet",
+        "sugar free", "zuckerfrei", "ohne zucker", "vegan", "protein", "max", "plus",
+    ]
+
     static func heuristicGuess(_ lines: [TextLine]) -> PackageGuess {
         var guess = PackageGuess()
         if let (amount, liquid) = packageSize(in: lines.map(\.text)) {
@@ -107,10 +130,16 @@ enum PackageReader {
         // Most prominent text first; skip repeats of the same words.
         var seen = Set<String>()
         let prominent = candidates.sorted { $0.size > $1.size }.filter { seen.insert($0.text.lowercased()).inserted }
-        guard let first = prominent.first else { return guess }
+        guard !prominent.isEmpty else { return guess }
 
-        // Brand logos are usually the largest, shortest text; the name follows.
-        let rest = prominent.dropFirst().prefix(2).map(\.text)
+        // Brand logos are usually the largest, shortest text; the name follows. Variety
+        // words ("zero", "light") are often printed even bigger, so they don't count.
+        var ordered = Array(prominent)
+        if let brandIndex = ordered.firstIndex(where: { !varietyWords.contains($0.text.lowercased()) }), brandIndex > 0 {
+            ordered.insert(ordered.remove(at: brandIndex), at: 0)
+        }
+        let first = ordered[0]
+        let rest = ordered.dropFirst().prefix(2).map(\.text)
         if first.text.split(separator: " ").count <= 2, !rest.isEmpty {
             guess.brand = first.text
             guess.name = uniqueWords(rest, excluding: first.text)

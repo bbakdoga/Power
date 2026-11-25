@@ -68,7 +68,9 @@ final class ScannedProduct {
             fatPer100Grams: fatPer100Grams,
             servingGrams: servingGrams > 0 ? servingGrams : nil,
             isLiquid: isLiquid,
-            source: source
+            source: source,
+            // Only products with values (or values the user entered) are stored.
+            nutritionStated: true
         )
     }
 }
@@ -85,10 +87,12 @@ struct ProductInfo: Hashable {
     var servingGrams: Double?
     var isLiquid: Bool = false
     var source: ProductDataSource
+    /// The source states nutrition values, even if they're all zero (Coke Zero, water).
+    var nutritionStated = false
 
-    /// The product is known but has no usable nutrition values yet.
+    /// False when the product is known but has no usable nutrition values yet.
     var hasNutrition: Bool {
-        caloriesPer100Grams > 0
+        caloriesPer100Grams > 0 || nutritionStated
     }
 
     var displayName: String {

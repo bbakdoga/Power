@@ -208,7 +208,8 @@ struct ProductNutritionForm: View {
 
     private var canSave: Bool {
         !product.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-            && product.caloriesPer100Grams > 0
+            // 0 kcal is valid for water and zero-sugar drinks.
+            && product.caloriesPer100Grams >= 0
             && product.caloriesPer100Grams <= 950
     }
 

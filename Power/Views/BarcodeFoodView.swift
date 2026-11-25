@@ -9,6 +9,9 @@ import VisionKit
 /// read on the phone.
 @MainActor
 struct BarcodeFoodView: View {
+    /// A photo of a package to identify right away (from "Take food photo").
+    var packageImage: UIImage? = nil
+
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
 
@@ -55,7 +58,12 @@ struct BarcodeFoodView: View {
                     }
                 }
         }
-        .task { await prepareCamera() }
+        .task {
+            if let packageImage {
+                readPackage(packageImage)
+            }
+            await prepareCamera()
+        }
         .alert("Enter barcode", isPresented: $showingBarcodeEntry) {
             TextField("Barcode number", text: $typedBarcode)
                 .keyboardType(.numberPad)
@@ -314,7 +322,8 @@ struct BarcodeFoodView: View {
             phase = .product(cached.info, isOfflineCopy: false)
             return
         }
-        let cachedInfo = cached.flatMap { $0.caloriesPer100Grams > 0 ? $0.info : nil }
+        // Stored products always have values (possibly 0 kcal, e.g. a zero-sugar drink).
+        let cachedInfo = cached?.info
 
         Task {
             let result: Phase
