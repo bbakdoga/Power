@@ -5,6 +5,7 @@
 #   cluster/pegasus.sh pretrain_classifier
 #   cluster/pegasus.sh train_detector   v0.1.0 configs/experiments/detection_openimages.yaml
 #   cluster/pegasus.sh experiments      v0.1.0     # all 4 runs of the pretrained vs scratch comparison
+#   cluster/pegasus.sh experiments      v0.1.0 1 2 # the same 4 runs again with seeds 1 and 2
 #   cluster/pegasus.sh evaluate         models/runs/*/v0.1.0-*   # test-set scores of finished runs
 #
 # GPU jobs are queued on every allowed GPU partition at once and start on
@@ -28,11 +29,15 @@ submit() {
 job="${1:?job: validate | pretrain_detector | pretrain_classifier | train_detector | train_classifier | evaluate | experiments}"
 shift
 if [[ "$job" == "experiments" ]]; then
-  version="${1:?usage: cluster/pegasus.sh experiments <dataset-version>}"
-  for model in detection classification; do
-    script=$([[ $model == detection ]] && echo train_detector || echo train_classifier)
-    for init in openimages scratch; do
-      submit "$script" "$version" "configs/experiments/${model}_${init}.yaml"
+  version="${1:?usage: cluster/pegasus.sh experiments <dataset-version> [seed ...]}"
+  shift
+  if [[ $# -eq 0 ]]; then seeds=(""); else seeds=("$@"); fi   # no seed given: the configs' own seed
+  for seed in "${seeds[@]}"; do
+    for model in detection classification; do
+      script=$([[ $model == detection ]] && echo train_detector || echo train_classifier)
+      for init in openimages scratch; do
+        submit "$script" "$version" "configs/experiments/${model}_${init}.yaml" ${seed:+"$seed"}
+      done
     done
   done
 else

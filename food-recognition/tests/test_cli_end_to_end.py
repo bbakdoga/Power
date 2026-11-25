@@ -130,6 +130,17 @@ def test_full_workflow(project, tmp_path, capsys, monkeypatch):
         result = json.loads((r.parent / "eval_test.json").read_text())
         assert result["split"] == "test" and result["dataset_version"] == "v0.0.1" and result["images"] == 4
         assert len(result["checkpoint_sha256"]) == 64
+    assert main(["compare"]) == 0
+    assert "n=1" in capsys.readouterr().out
+
+    # A second seed gets its own run folder, and compare averages over both.
+    assert main(["train-classifier", "--dataset-version", "v0.0.1", "--config", str(tiny["classification"]),
+                 "--seed", "7"]) == 0
+    seeded = next((project / "models/runs").glob("*/v0.0.1-s7-*"))
+    assert main(["evaluate", str(seeded)]) == 0
+    capsys.readouterr()
+    assert main(["compare"]) == 0
+    assert "n=2" in capsys.readouterr().out
     with pytest.raises(SystemExit):                       # scoring on training photos is refused
         main(["evaluate", str(runs[0].parent), "--split", "train"])
 

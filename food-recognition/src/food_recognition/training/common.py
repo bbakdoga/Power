@@ -57,10 +57,15 @@ def worker_seed(worker_id: int) -> None:
     random.seed(seed)
 
 
+def seed_tag(config: dict[str, Any]) -> str:
+    """Run folders carry the seed, so repeated runs of one experiment stay apart (e.g. v0.1.0-s2-<time>)."""
+    return f"s{int(config.get('seed', 1337))}"
+
+
 def run_dir(root: Path, config: dict[str, Any], kind: str, dataset_version: str) -> Path:
     name = (config.get("experiment") or {}).get("name") or kind
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    path = root / "models/runs" / name / f"{dataset_version}-{stamp}"
+    path = root / "models/runs" / name / f"{dataset_version}-{seed_tag(config)}-{stamp}"
     path.mkdir(parents=True, exist_ok=True)
     (path / "config.yaml").write_text(yaml.safe_dump(config, sort_keys=False), encoding="utf-8")
     return path

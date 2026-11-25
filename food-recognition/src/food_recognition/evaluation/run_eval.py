@@ -119,3 +119,36 @@ def headline(result: dict[str, Any]) -> str:
         if m.get("open_set"):
             numbers += f"  unknown AUROC {m['open_set']['auroc']:.3f}  FPR@95 {m['open_set']['fpr_at_95_tpr']:.3f}"
     return f"{name:28} {result['split']:5} {numbers}"
+
+
+HEADLINE_METRICS: dict[str, list[tuple[str, tuple[str, ...]]]] = {
+    "detection": [("mAP50-95", ("map50_95",)), ("mAP50", ("map50",))],
+    "classification": [("top-1", ("top1_accuracy",)), ("top-3", ("top3_accuracy",)), ("macro-F1", ("macro_f1",)),
+                       ("unknown AUROC", ("open_set", "auroc")), ("FPR@95", ("open_set", "fpr_at_95_tpr"))],
+}
+
+
+def compare(results: list[dict[str, Any]]) -> list[str]:
+    """Mean ± sample standard deviation over seeds, one line per experiment, for the paper's table."""
+    import statistics
+
+    groups: dict[tuple[str, str, str], list[dict[str, Any]]] = {}
+    for r in results:
+        key = (r["kind"], r.get("experiment") or Path(r["run"]).parent.name, r["dataset_version"])
+        groups.setdefault(key, []).append(r)
+    lines = []
+    for (kind, name, version), runs in sorted(groups.items()):
+        cells = []
+        for label, path in HEADLINE_METRICS[kind]:
+            values = []
+            for r in runs:
+                value: Any = r["metrics"]
+                for part in path:
+                    value = value.get(part) if isinstance(value, dict) else None
+                if isinstance(value, (int, float)):
+                    values.append(float(value))
+            if values:
+                spread = f" ± {statistics.stdev(values):.3f}" if len(values) > 1 else ""
+                cells.append(f"{label} {statistics.mean(values):.3f}{spread}")
+        lines.append(f"{name:28} {version:8} n={len(runs)}  " + "  ".join(cells))
+    return lines

@@ -430,6 +430,8 @@ def _train(kind: str, ctx: Context, args: argparse.Namespace) -> int:
     from .licensing import LicenseError
 
     cfg = load_yaml(resolve(args.config or f"configs/{kind}.yaml", ctx.root))
+    if args.seed is not None:
+        cfg["seed"] = args.seed            # repeat an experiment with another seed
     seed_everything(int(cfg.get("seed", ctx.seed)))
     if kind == "detection":
         from .detection.train import train
@@ -459,6 +461,20 @@ def cmd_evaluate(ctx: Context, args: argparse.Namespace) -> int:
         print(f"wrote {Path(result['run']) / f'eval_{args.split}.json'}")
     print("\n".join(["", *lines]))
     return 1 if failed else 0
+
+
+def cmd_compare(ctx: Context, args: argparse.Namespace) -> int:
+    from .evaluation.run_eval import compare
+
+    files = sorted((ctx.root / "models/runs").glob(f"*/*/eval_{args.split}.json"))
+    results = [json.loads(f.read_text(encoding="utf-8")) for f in files]
+    if args.dataset_version:
+        results = [r for r in results if r["dataset_version"] == args.dataset_version]
+    if not results:
+        print(f"no eval_{args.split}.json files yet; run `food-rec evaluate <run folders>` first")
+        return 1
+    print("\n".join(compare(results)))
+    return 0
 
 
 def cmd_select_openimages_pretrain(ctx: Context, args: argparse.Namespace) -> int:
@@ -604,6 +620,7 @@ def build_parser() -> argparse.ArgumentParser:
                            help=f"train the {kind} model on a frozen dataset version")
         p.add_argument("--dataset-version", required=True)
         p.add_argument("--config")
+        p.add_argument("--seed", type=int, help="override the config's seed (run folders are named by seed)")
         p.set_defaults(func=lambda c, a, k=kind: _train(k, c, a))
 
     p = sub.add_parser("evaluate", help="score finished runs on the held-out test split (writes eval_<split>.json)")
@@ -611,6 +628,11 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--split", default="test", choices=["test", "val"])
     p.add_argument("--checkpoint", default="best.pt")
     p.set_defaults(func=cmd_evaluate)
+
+    p = sub.add_parser("compare", help="mean ± std over seeds of every evaluated run, one line per experiment")
+    p.add_argument("--split", default="test", choices=["test", "val"])
+    p.add_argument("--dataset-version")
+    p.set_defaults(func=cmd_compare)
     return parser
 
 

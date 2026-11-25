@@ -203,7 +203,9 @@ def fit(config: dict[str, Any], train_samples: list[Any], val_samples: list[Any]
 def _unfinished_run(root: Path, config: dict[str, Any], kind: str, run_label: str) -> Path | None:
     """Newest run of this experiment that has a resume point but never finished (e.g. hit the time limit)."""
     name = (config.get("experiment") or {}).get("name") or kind
-    runs = sorted((root / "models/runs" / name).glob(f"{run_label}-*"), reverse=True)
+    from ..training.common import seed_tag
+
+    runs = sorted((root / "models/runs" / name).glob(f"{run_label}-{seed_tag(config)}-*"), reverse=True)
     for run in runs:
         if (run / "resume.pt").exists() and not (run / "summary.json").exists():
             print(f"found unfinished run {run}; continuing it")
