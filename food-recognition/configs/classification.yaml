@@ -1,0 +1,23 @@
+# Crop classifier: names each detected food and returns the top three.
+seed: 1337
+assets: [timm_code, owned_photos]
+
+model:
+  architecture: mobilenetv3_large_100   # ~5.5M params, ~11 MB float16
+  input_size: 224
+  pretrained: null                      # asset id once approved
+  crop_padding: 0.10                    # grow each box by 10% before cropping
+
+train:
+  epochs: 60
+  batch_size: 128
+  lr: 0.002
+  label_smoothing: 0.1
+  mixed_precision: true
+  class_balanced_sampling: true
+  use_unknown_as_negative: true         # unknown_food crops teach the rejection head
+
+inference:
+  top_k: 3
+  reject_below: 0.40                    # top-1 confidence below this -> "unknown food"
+  reject_margin: 0.05                   # top-1 minus top-2 below this -> ask the user

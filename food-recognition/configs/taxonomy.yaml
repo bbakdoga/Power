@@ -1,0 +1,77 @@
+# Food taxonomy v0.1.0
+#
+# 45 foods chosen for a fitness app: common meals that people log often and
+# that look different enough from each other to tell apart in a photo.
+#
+# Rules
+# - `id` values are permanent. Never reuse or renumber an id; retire a class with
+#   `retired: true` instead, so old annotations and models stay readable.
+# - `name` is the machine label (snake_case) stored in annotations and models.
+# - `fdc_query` is only a search hint the app uses to look up USDA FoodData
+#   Central AFTER the user confirms the food. The recognition models never
+#   output calories or nutrients.
+# - `open_images_candidate` names an Open Images V7 class that might be a useful
+#   source of extra training images. Each one must be checked against the
+#   official class list, and the images' licences checked, before use.
+# - id 0 `unknown_food` is reserved: annotators use it for food that is not in
+#   the taxonomy or that they cannot identify. The detector still learns it as
+#   food; the classifier never predicts it as a positive class.
+
+version: "0.1.0"
+unknown:
+  id: 0
+  name: unknown_food
+  display_name: Unknown food
+
+classes:
+  # Protein
+  - {id: 1,  name: grilled_chicken,  display_name: Grilled chicken,  group: protein,   fdc_query: "chicken breast grilled",       open_images_candidate: null}
+  - {id: 2,  name: fried_chicken,    display_name: Fried chicken,    group: protein,   fdc_query: "chicken fried breaded",        open_images_candidate: null}
+  - {id: 3,  name: steak,            display_name: Steak,            group: protein,   fdc_query: "beef steak cooked",            open_images_candidate: null}
+  - {id: 4,  name: salmon,           display_name: Salmon,           group: protein,   fdc_query: "salmon cooked",                open_images_candidate: null}
+  - {id: 5,  name: white_fish,       display_name: White fish fillet, group: protein,  fdc_query: "cod cooked",                   open_images_candidate: null}
+  - {id: 6,  name: shrimp,           display_name: Shrimp,           group: protein,   fdc_query: "shrimp cooked",                open_images_candidate: Shrimp}
+  - {id: 7,  name: fried_egg,        display_name: Fried egg,        group: protein,   fdc_query: "egg fried",                    open_images_candidate: Egg}
+  - {id: 8,  name: boiled_egg,       display_name: Boiled egg,       group: protein,   fdc_query: "egg hard-boiled",              open_images_candidate: Egg}
+  - {id: 9,  name: scrambled_eggs,   display_name: Scrambled eggs,   group: protein,   fdc_query: "egg scrambled",                open_images_candidate: null}
+  - {id: 10, name: tofu,             display_name: Tofu,             group: protein,   fdc_query: "tofu",                         open_images_candidate: null}
+  - {id: 11, name: bacon,            display_name: Bacon,            group: protein,   fdc_query: "bacon cooked",                 open_images_candidate: null}
+  - {id: 12, name: sausage,          display_name: Sausage,          group: protein,   fdc_query: "sausage cooked",               open_images_candidate: null}
+  # Grains and starches
+  - {id: 13, name: white_rice,       display_name: Rice,             group: starch,    fdc_query: "rice white cooked",            open_images_candidate: null}
+  - {id: 14, name: fried_rice,       display_name: Fried rice,       group: starch,    fdc_query: "fried rice",                   open_images_candidate: null}
+  - {id: 15, name: pasta,            display_name: Pasta,            group: starch,    fdc_query: "pasta cooked",                 open_images_candidate: Pasta}
+  - {id: 16, name: bread,            display_name: Bread or toast,   group: starch,    fdc_query: "bread",                        open_images_candidate: Bread}
+  - {id: 17, name: bagel,            display_name: Bagel,            group: starch,    fdc_query: "bagel",                        open_images_candidate: Bagel}
+  - {id: 18, name: potato,           display_name: Potato,           group: starch,    fdc_query: "potato baked",                 open_images_candidate: Potato}
+  - {id: 19, name: french_fries,     display_name: French fries,     group: starch,    fdc_query: "french fries",                 open_images_candidate: French fries}
+  - {id: 20, name: sweet_potato,     display_name: Sweet potato,     group: starch,    fdc_query: "sweet potato baked",           open_images_candidate: null}
+  - {id: 21, name: oatmeal,          display_name: Oatmeal,          group: starch,    fdc_query: "oatmeal cooked",               open_images_candidate: null}
+  - {id: 22, name: pancakes,         display_name: Pancakes,         group: starch,    fdc_query: "pancakes",                     open_images_candidate: Pancake}
+  - {id: 23, name: tortilla_wrap,    display_name: Wrap or burrito,  group: starch,    fdc_query: "burrito",                      open_images_candidate: Burrito}
+  # Vegetables
+  - {id: 24, name: broccoli,         display_name: Broccoli,         group: vegetable, fdc_query: "broccoli cooked",              open_images_candidate: Broccoli}
+  - {id: 25, name: green_salad,      display_name: Green salad,      group: vegetable, fdc_query: "salad greens",                 open_images_candidate: Salad}
+  - {id: 26, name: carrot,           display_name: Carrot,           group: vegetable, fdc_query: "carrot",                       open_images_candidate: Carrot}
+  - {id: 27, name: tomato,           display_name: Tomato,           group: vegetable, fdc_query: "tomato raw",                   open_images_candidate: Tomato}
+  - {id: 28, name: cucumber,         display_name: Cucumber,         group: vegetable, fdc_query: "cucumber raw",                 open_images_candidate: Cucumber}
+  - {id: 29, name: avocado,          display_name: Avocado,          group: vegetable, fdc_query: "avocado raw",                  open_images_candidate: null}
+  - {id: 30, name: green_beans,      display_name: Green beans,      group: vegetable, fdc_query: "green beans cooked",           open_images_candidate: null}
+  - {id: 31, name: corn,             display_name: Corn,             group: vegetable, fdc_query: "corn sweet cooked",            open_images_candidate: null}
+  - {id: 32, name: bell_pepper,      display_name: Bell pepper,      group: vegetable, fdc_query: "bell pepper raw",              open_images_candidate: Bell pepper}
+  # Fruit
+  - {id: 33, name: apple,            display_name: Apple,            group: fruit,     fdc_query: "apple raw",                    open_images_candidate: Apple}
+  - {id: 34, name: banana,           display_name: Banana,           group: fruit,     fdc_query: "banana raw",                   open_images_candidate: Banana}
+  - {id: 35, name: orange,           display_name: Orange,           group: fruit,     fdc_query: "orange raw",                   open_images_candidate: Orange (fruit)}
+  - {id: 36, name: strawberries,     display_name: Strawberries,     group: fruit,     fdc_query: "strawberries raw",             open_images_candidate: Strawberry}
+  - {id: 37, name: blueberries,      display_name: Blueberries,      group: fruit,     fdc_query: "blueberries raw",              open_images_candidate: null}
+  - {id: 38, name: grapes,           display_name: Grapes,           group: fruit,     fdc_query: "grapes raw",                   open_images_candidate: Grape}
+  # Dairy, nuts and snacks
+  - {id: 39, name: yogurt,           display_name: Yogurt,           group: dairy,     fdc_query: "yogurt plain",                 open_images_candidate: null}
+  - {id: 40, name: cheese,           display_name: Cheese,           group: dairy,     fdc_query: "cheese cheddar",               open_images_candidate: Cheese}
+  - {id: 41, name: nuts,             display_name: Nuts,             group: snack,     fdc_query: "almonds",                      open_images_candidate: null}
+  # Prepared dishes
+  - {id: 42, name: pizza,            display_name: Pizza,            group: dish,      fdc_query: "pizza cheese",                 open_images_candidate: Pizza}
+  - {id: 43, name: burger,           display_name: Burger,           group: dish,      fdc_query: "hamburger",                    open_images_candidate: Hamburger}
+  - {id: 44, name: sandwich,         display_name: Sandwich,         group: dish,      fdc_query: "sandwich",                     open_images_candidate: Sandwich}
+  - {id: 45, name: sushi,            display_name: Sushi,            group: dish,      fdc_query: "sushi",                        open_images_candidate: Sushi}

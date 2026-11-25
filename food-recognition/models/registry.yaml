@@ -1,0 +1,12 @@
+# One entry per released model. Filled in from phase 5 onward.
+models: []
+# - name: FoodDetector
+#   version: 0.1.0
+#   dataset_version: v0.1.0
+#   taxonomy_version: 0.1.0
+#   assets: [yolox_code, owned_photos, openimages_pretrain_own]
+#   files:
+#     mlpackage_sha256: <sha256>
+#     size_mb: 9.8
+#     precision: float16
+#   evaluation: reports/evaluations/FoodDetector-0.1.0-coreml-fp16-v0.1.0.json

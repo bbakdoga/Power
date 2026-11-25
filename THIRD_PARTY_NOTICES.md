@@ -27,3 +27,18 @@ SOFTWARE.
 
 The model was trained with the Food-101 dataset. Dataset images remain subject
 to the Food-101 dataset's terms and their respective image-owner rights.
+
+## Open Food Facts
+
+Barcode lookups use the Open Food Facts API (https://world.openfoodfacts.org).
+Open Food Facts data is made available under the Open Database License (ODbL)
+v1.0, https://opendatacommons.org/licenses/odbl/1-0/, and individual contents
+under the Database Contents License. Power does not bundle or redistribute the
+database: it requests one product at a time by barcode, keeps a private copy of
+the products a user scanned on their device, and shows "Data: Open Food Facts"
+with a link to the product page wherever that data is displayed.
+
+## USDA FoodData Central
+
+Food search and the US barcode fallback use USDA FoodData Central
+(https://fdc.nal.usda.gov), which is in the public domain (CC0 1.0).

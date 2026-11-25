@@ -67,14 +67,60 @@ enum NutritionAPI {
         let error: String
     }
 
-    static func search(query: String) async throws -> [RemoteFood] {
+    private struct ProductResponse: Decodable {
+        let food: RemoteFood
+    }
+
+    private static func configuredBaseURL() throws -> URL {
         guard
             let value = Bundle.main.object(forInfoDictionaryKey: "NutritionAPIBaseURL") as? String,
-            let baseURL = URL(string: value),
-            !value.isEmpty
+            !value.isEmpty,
+            let baseURL = URL(string: value)
         else {
             throw NutritionAPIError.notConfigured
         }
+        return baseURL
+    }
+
+    /// Finds a branded USDA food by its barcode (GTIN/UPC). Returns nil when USDA does not
+    /// list the product. Only the barcode is sent.
+    static func product(barcode: String) async throws -> RemoteFood? {
+        let baseURL = try configuredBaseURL()
+        var components = URLComponents(
+            url: baseURL.appending(path: "v1/foods/barcode"),
+            resolvingAgainstBaseURL: false
+        )
+        components?.queryItems = [URLQueryItem(name: "gtin", value: barcode)]
+        guard let url = components?.url else {
+            throw NutritionAPIError.invalidResponse
+        }
+
+        var request = URLRequest(url: url)
+        request.timeoutInterval = 12
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue(ProductLookup.userAgent, forHTTPHeaderField: "User-Agent")
+
+        let (data, response) = try await ProductLookup.session.data(for: request)
+        guard let http = response as? HTTPURLResponse else {
+            throw NutritionAPIError.invalidResponse
+        }
+        if http.statusCode == 404 {
+            // An older deployment without the barcode route also answers 404 ("Not found");
+            // only a product miss carries the product-not-found error text.
+            let message = (try? JSONDecoder().decode(ErrorResponse.self, from: data).error) ?? ""
+            if message == "Product not found" { return nil }
+            throw NutritionAPIError.notConfigured
+        }
+        guard 200..<300 ~= http.statusCode else {
+            let message = (try? JSONDecoder().decode(ErrorResponse.self, from: data).error)
+                ?? String(localized: "Online food search is temporarily unavailable.")
+            throw NutritionAPIError.server(message)
+        }
+        return try JSONDecoder().decode(ProductResponse.self, from: data).food
+    }
+
+    static func search(query: String) async throws -> [RemoteFood] {
+        let baseURL = try configuredBaseURL()
 
         let normalized = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard normalized.count >= 2 else { return [] }

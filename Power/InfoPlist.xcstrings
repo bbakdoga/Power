@@ -38,18 +38,19 @@
       }
     },
     "NSCameraUsageDescription" : {
-      "comment" : "Camera permission prompt: food photos for nutrition and pictures of exercises/machines.",
+      "comment" : "Camera permission prompt: barcode and nutrition-table scanning, food photos, and pictures of exercises.",
+      "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Power nutzt die Kamera, um Lebensmittel anhand eines Fotos einzuschätzen und Fotos deiner Übungen aufzunehmen."
+            "value" : "Power verwendet die Kamera, um Barcodes und Nährwerttabellen von Lebensmitteln zu scannen, Mahlzeiten anhand eines Fotos zu schätzen und Fotos deiner Übungen aufzunehmen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Power uses the camera to estimate food from a photo and to take pictures of your exercises."
+            "value" : "Power uses the camera to scan food barcodes and nutrition tables, to estimate foods from a photo, and to take pictures of your exercises."
           }
         }
       }

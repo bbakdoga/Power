@@ -41,6 +41,7 @@ final class NutritionEntry {
 enum NutritionSource: String, Codable {
     case manual
     case photo
+    case barcode
 }
 
 struct FoodReference: Identifiable, Hashable {

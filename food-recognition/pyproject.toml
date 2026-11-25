@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=69,<81"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "food-recognition"
+version = "0.1.0"
+description = "On-device food detection and classification training pipeline for the Power iOS app"
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+license = { text = "Proprietary" }
+# Licences of every dependency are listed in licenses/THIRD_PARTY.md.
+dependencies = [
+  "numpy>=1.26,<3",        # BSD-3-Clause
+  "pillow>=10.3,<13",      # MIT-CMU (HPND)
+  "pyyaml>=6.0.1,<7",      # MIT
+]
+
+[project.optional-dependencies]
+heic = ["pillow-heif>=0.16,<2"]                    # BSD-3-Clause (wraps libheif LGPL-3.0, dynamically linked)
+train = [
+  "torch>=2.4,<3",                                 # BSD-3-Clause
+  "torchvision>=0.19,<1",                          # BSD-3-Clause
+  "timm>=1.0.9,<2",                                # Apache-2.0
+]
+export = ["coremltools>=8.0,<10"]                  # BSD-3-Clause
+annotate = ["label-studio>=1.13,<2"]               # Apache-2.0
+dev = [
+  "pytest>=8,<10",                                 # MIT
+  "ruff>=0.6,<1",                                  # MIT
+  "mypy>=1.11,<2",                                 # MIT
+  "types-PyYAML>=6,<7",                            # Apache-2.0
+]
+
+[project.scripts]
+food-rec = "food_recognition.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 132
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = false
+disallow_untyped_defs = true
+ignore_missing_imports = true

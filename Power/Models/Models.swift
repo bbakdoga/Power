@@ -14,6 +14,7 @@ enum AppSchema {
         RoutineExercise.self,
         BodyMeasurement.self,
         NutritionEntry.self,
+        ScannedProduct.self,
     ]
 }
 
