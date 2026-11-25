@@ -8,15 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		013C6A3A6D7487191321617B /* WorkoutStarter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7DE72E645D197285A186E9 /* WorkoutStarter.swift */; };
+		0618DC0828313DFBC8D5B7BD /* ProductLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09498C321ABE46ADCEAF1AE2 /* ProductLookup.swift */; };
 		2C209B7D36B4A562C83032B4 /* ExercisePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE8DF83929F30AFEA3C1C7E /* ExercisePickerView.swift */; };
 		3DB3ACB35CDE03107CF77DF7 /* RestTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B77115270B1E47A951FA50 /* RestTimer.swift */; };
 		40CFFCD12AEE7BB82CF1767D /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957C7749A68FE03A2D89C8F6 /* Enums.swift */; };
+		524A73BEB2A0D95E706127D0 /* NutritionLabelReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA7051E1CBA37E14E1F66C0 /* NutritionLabelReader.swift */; };
 		57B597B3DB88370329D7DDEE /* PowerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F305EEE468943F935308DDB /* PowerApp.swift */; };
 		6F3AA6A6EBCB1F0B9B4ED6AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D289B5052C9EA385B4F1802 /* Assets.xcassets */; };
+		71205C084AE3F500D5AB0DB1 /* ScannedProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AF88012F4B005AC57A688B /* ScannedProduct.swift */; };
 		775D3D526170F3B992D4DC28 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D288B7FCAB35764C4B41EE /* RootTabView.swift */; };
+		7BC5BE513ECFFE4DDB5A296B /* ProductEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FEA094DCE54BC71EBB891B /* ProductEntryView.swift */; };
 		7C84CD5B3C570FAA67960F38 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF9980EBBE9ABCC86A1BC61 /* Models.swift */; };
 		863C18179F238CB387DBE6FB /* SeedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C566C462EA47B4542C7D82 /* SeedData.swift */; };
+		86B6AE21B49D855E7BD8428F /* BarcodeFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B412C8F57289404F6E2110 /* BarcodeFoodView.swift */; };
 		8A5538913C5A374816D997CC /* PlateCalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23458629AC91E0E2C0B3C73 /* PlateCalculatorView.swift */; };
+		92F362DF728288F76B23E28B /* ProductBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32E637F930623B140E017D2 /* ProductBarcode.swift */; };
 		A6591BFEC8E1FB82625ACEB8 /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = A102DDE45404638CDBCEE1E6 /* Units.swift */; };
 		AA8D9491A537B916E9774D3E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD4EEE543726C2496DE1FCD /* SettingsView.swift */; };
 		B22D359C30A77B88001E9E97 /* ExerciseGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22D359B30A77B88001E9E97 /* ExerciseGuide.swift */; };
@@ -39,15 +45,9 @@
 		B2ACEBD430B0A278000D3112 /* WorkoutImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBD330B0A278000D3112 /* WorkoutImporter.swift */; };
 		B2ACEBD630B0A297000D3112 /* ImportWorkoutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBD530B0A297000D3112 /* ImportWorkoutsView.swift */; };
 		B2ACEBD830B0B537000D3112 /* NutritionModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBD730B0B537000D3112 /* NutritionModels.swift */; };
-		71205C084AE3F500D5AB0DB1 /* ScannedProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AF88012F4B005AC57A688B /* ScannedProduct.swift */; };
 		B2ACEBDA30B0B584000D3112 /* NutritionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBD930B0B584000D3112 /* NutritionView.swift */; };
 		B2ACEBDC30B0B865000D3112 /* NutritionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBDB30B0B865000D3112 /* NutritionAPI.swift */; };
-		524A73BEB2A0D95E706127D0 /* NutritionLabelReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA7051E1CBA37E14E1F66C0 /* NutritionLabelReader.swift */; };
-		0618DC0828313DFBC8D5B7BD /* ProductLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09498C321ABE46ADCEAF1AE2 /* ProductLookup.swift */; };
-		92F362DF728288F76B23E28B /* ProductBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32E637F930623B140E017D2 /* ProductBarcode.swift */; };
 		B2ACEBDE30B0B885000D3112 /* FoodSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBDD30B0B885000D3112 /* FoodSearchView.swift */; };
-		7BC5BE513ECFFE4DDB5A296B /* ProductEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FEA094DCE54BC71EBB891B /* ProductEntryView.swift */; };
-		86B6AE21B49D855E7BD8428F /* BarcodeFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B412C8F57289404F6E2110 /* BarcodeFoodView.swift */; };
 		B2ACEBE030B0C41B000D3112 /* Food101Classifier.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBDF30B0C41B000D3112 /* Food101Classifier.mlpackage */; };
 		B2ACEBE230B0C45A000D3112 /* FoodImageClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBE130B0C45A000D3112 /* FoodImageClassifier.swift */; };
 		B2BC8B6130AF8C6500C69B70 /* WorkoutSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BC8B6030AF8C6500C69B70 /* WorkoutSummaryView.swift */; };
@@ -55,6 +55,7 @@
 		B2BC8B6530AF8D3100C69B70 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BC8B6430AF8D3100C69B70 /* OnboardingView.swift */; };
 		B2BC8B6830AF8DE100C69B70 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B2BC8B6630AF8DE100C69B70 /* InfoPlist.xcstrings */; };
 		B2BC8B6930AF8DE100C69B70 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B2BC8B6730AF8DE100C69B70 /* Localizable.xcstrings */; };
+		B2EEE11930B77637007B0B45 /* PackageReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EEE11830B77637007B0B45 /* PackageReader.swift */; };
 		C27DF1FEA73849D78DA4C703 /* ActiveWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C4DC02A2D946F110D3F89D1 /* ActiveWorkoutView.swift */; };
 		DD3B671E312797809998A7F2 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36060B17EDD7110914AED282 /* HistoryView.swift */; };
 		DFE38E3E1C9712ED59922AA0 /* ExercisesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E60E6DF68E9B973CBC8055A /* ExercisesView.swift */; };
@@ -87,7 +88,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		09498C321ABE46ADCEAF1AE2 /* ProductLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductLookup.swift; sourceTree = "<group>"; };
+		1BA7051E1CBA37E14E1F66C0 /* NutritionLabelReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionLabelReader.swift; sourceTree = "<group>"; };
 		1C4DC02A2D946F110D3F89D1 /* ActiveWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveWorkoutView.swift; sourceTree = "<group>"; };
+		31FEA094DCE54BC71EBB891B /* ProductEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEntryView.swift; sourceTree = "<group>"; };
 		36060B17EDD7110914AED282 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		3A7DE72E645D197285A186E9 /* WorkoutStarter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStarter.swift; sourceTree = "<group>"; };
 		3E60E6DF68E9B973CBC8055A /* ExercisesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesView.swift; sourceTree = "<group>"; };
@@ -101,6 +105,7 @@
 		9F305EEE468943F935308DDB /* PowerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerApp.swift; sourceTree = "<group>"; };
 		A102DDE45404638CDBCEE1E6 /* Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
 		A23458629AC91E0E2C0B3C73 /* PlateCalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateCalculatorView.swift; sourceTree = "<group>"; };
+		A3AF88012F4B005AC57A688B /* ScannedProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedProduct.swift; sourceTree = "<group>"; };
 		A7B77115270B1E47A951FA50 /* RestTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestTimer.swift; sourceTree = "<group>"; };
 		B22D359B30A77B88001E9E97 /* ExerciseGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseGuide.swift; sourceTree = "<group>"; };
 		B22D359D30A77BB0001E9E97 /* ExerciseInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseInfoView.swift; sourceTree = "<group>"; };
@@ -124,22 +129,19 @@
 		B2ACEBD330B0A278000D3112 /* WorkoutImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutImporter.swift; sourceTree = "<group>"; };
 		B2ACEBD530B0A297000D3112 /* ImportWorkoutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportWorkoutsView.swift; sourceTree = "<group>"; };
 		B2ACEBD730B0B537000D3112 /* NutritionModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionModels.swift; sourceTree = "<group>"; };
-		A3AF88012F4B005AC57A688B /* ScannedProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedProduct.swift; sourceTree = "<group>"; };
 		B2ACEBD930B0B584000D3112 /* NutritionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionView.swift; sourceTree = "<group>"; };
 		B2ACEBDB30B0B865000D3112 /* NutritionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionAPI.swift; sourceTree = "<group>"; };
-		1BA7051E1CBA37E14E1F66C0 /* NutritionLabelReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionLabelReader.swift; sourceTree = "<group>"; };
-		09498C321ABE46ADCEAF1AE2 /* ProductLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductLookup.swift; sourceTree = "<group>"; };
-		B32E637F930623B140E017D2 /* ProductBarcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductBarcode.swift; sourceTree = "<group>"; };
 		B2ACEBDD30B0B885000D3112 /* FoodSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchView.swift; sourceTree = "<group>"; };
-		31FEA094DCE54BC71EBB891B /* ProductEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEntryView.swift; sourceTree = "<group>"; };
-		B4B412C8F57289404F6E2110 /* BarcodeFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeFoodView.swift; sourceTree = "<group>"; };
 		B2ACEBDF30B0C41B000D3112 /* Food101Classifier.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = Food101Classifier.mlpackage; sourceTree = "<group>"; };
-		B2ACEBE130B0C45A000D3112 /* FoodImageClassifier.swift */ = {isa = PBXFileReference; path = FoodImageClassifier.swift; sourceTree = "<group>"; };
+		B2ACEBE130B0C45A000D3112 /* FoodImageClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodImageClassifier.swift; sourceTree = "<group>"; };
 		B2BC8B6030AF8C6500C69B70 /* WorkoutSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSummaryView.swift; sourceTree = "<group>"; };
 		B2BC8B6230AF8D1F00C69B70 /* StarterRoutines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarterRoutines.swift; sourceTree = "<group>"; };
 		B2BC8B6430AF8D3100C69B70 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		B2BC8B6630AF8DE100C69B70 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		B2BC8B6730AF8DE100C69B70 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		B2EEE11830B77637007B0B45 /* PackageReader.swift */ = {isa = PBXFileReference; path = PackageReader.swift; sourceTree = "<group>"; };
+		B32E637F930623B140E017D2 /* ProductBarcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductBarcode.swift; sourceTree = "<group>"; };
+		B4B412C8F57289404F6E2110 /* BarcodeFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeFoodView.swift; sourceTree = "<group>"; };
 		CBF9980EBBE9ABCC86A1BC61 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		CCE8DF83929F30AFEA3C1C7E /* ExercisePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisePickerView.swift; sourceTree = "<group>"; };
 		FDD4EEE543726C2496DE1FCD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				09498C321ABE46ADCEAF1AE2 /* ProductLookup.swift */,
 				B32E637F930623B140E017D2 /* ProductBarcode.swift */,
 				B2ACEBE130B0C45A000D3112 /* FoodImageClassifier.swift */,
+				B2EEE11830B77637007B0B45 /* PackageReader.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				B22D359C30A77B88001E9E97 /* ExerciseGuide.swift in Sources */,
 				8A5538913C5A374816D997CC /* PlateCalculatorView.swift in Sources */,
 				B22D35A030A77CDB001E9E97 /* ExerciseGraphicView.swift in Sources */,
+				B2EEE11930B77637007B0B45 /* PackageReader.swift in Sources */,
 				B22D359E30A77BB0001E9E97 /* ExerciseInfoView.swift in Sources */,
 				B2ACEBD030B09C65000D3112 /* WorkoutSettingsSnapshot.swift in Sources */,
 				57B597B3DB88370329D7DDEE /* PowerApp.swift in Sources */,

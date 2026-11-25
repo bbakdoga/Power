@@ -60,6 +60,38 @@ enum ProductLookup {
         guard reachedAnyDatabase else { throw LookupError.unavailable }
         return partial
     }
+    /// Finds products by name (e.g. text read from the package front): Open Food Facts
+    /// first, USDA branded foods when it has nothing. Only the search text is sent.
+    /// Products with nutrition values come first. Throws when no database could be reached.
+    static func search(name query: String) async throws -> [ProductInfo] {
+        let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard trimmed.count >= 2 else { return [] }
+        var reachedAnyDatabase = false
+        var results: [ProductInfo] = []
+
+        do {
+            results = try await OpenFoodFacts.search(trimmed)
+            reachedAnyDatabase = true
+        } catch is CancellationError {
+            throw CancellationError()
+        } catch {
+            // Try USDA.
+        }
+
+        if results.isEmpty {
+            do {
+                results = try await NutritionAPI.search(query: trimmed).prefix(10).map { $0.productInfo(barcode: "") }
+                reachedAnyDatabase = true
+            } catch is CancellationError {
+                throw CancellationError()
+            } catch {
+                // The USDA proxy is optional.
+            }
+        }
+
+        guard reachedAnyDatabase else { throw LookupError.unavailable }
+        return results.filter { !$0.name.isEmpty }.sorted { $0.hasNutrition && !$1.hasNutrition }
+    }
 }
 
 /// Open Food Facts product API (https://openfoodfacts.github.io/openfoodfacts-server/api/).
@@ -98,6 +130,67 @@ enum OpenFoodFacts {
         if let status = number(root["status"]), status == 0 { return nil }
         guard let product = root["product"] as? [String: Any] else { return nil }
         return parse(product, code: code)
+    }
+
+    /// Finds products by name with Open Food Facts' search service
+    /// (https://search.openfoodfacts.org), then loads each top match through the product
+    /// API, because search results usually leave out the nutrition values. The search
+    /// needs every word to match, so words are dropped from the end until something does.
+    static func search(_ terms: String, limit: Int = 8) async throws -> [ProductInfo] {
+        var words = terms.split(whereSeparator: \.isWhitespace).map(String.init)
+        var hits: [ProductInfo] = []
+        while !words.isEmpty {
+            hits = try await searchHits(words.joined(separator: " "), limit: limit)
+            if !hits.isEmpty || words.count == 1 { break }
+            words.removeLast()
+        }
+
+        // Full details in parallel, keeping the search order; fall back to the hit itself.
+        let detailed = await withTaskGroup(of: (Int, ProductInfo?).self) { group in
+            for (index, hit) in hits.enumerated() {
+                group.addTask { (index, try? await product(code: hit.barcode)) }
+            }
+            var byIndex: [Int: ProductInfo] = [:]
+            for await (index, info) in group {
+                if let info { byIndex[index] = info }
+            }
+            return byIndex
+        }
+        return hits.enumerated().map { index, hit in
+            guard var info = detailed[index] else { return hit }
+            if info.name.isEmpty { info.name = hit.name }
+            if info.brand.isEmpty { info.brand = hit.brand }
+            return info
+        }
+    }
+
+    /// One search request: barcode, name and brand for each hit (no nutrition).
+    private static func searchHits(_ query: String, limit: Int) async throws -> [ProductInfo] {
+        guard var components = URLComponents(string: "https://search.openfoodfacts.org/search") else { return [] }
+        components.queryItems = [
+            URLQueryItem(name: "q", value: query),
+            URLQueryItem(name: "page_size", value: String(limit)),
+            URLQueryItem(name: "fields", value: "code,product_name,product_name_en,product_name_de,product_name_tr,generic_name,brands"),
+        ]
+        guard let url = components.url else { return [] }
+
+        let (data, response) = try await ProductLookup.session.data(from: url)
+        guard let http = response as? HTTPURLResponse, 200..<300 ~= http.statusCode else {
+            throw NutritionAPIError.server("Open Food Facts search")
+        }
+        guard let root = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let hits = root["hits"] as? [[String: Any]] else {
+            throw NutritionAPIError.invalidResponse
+        }
+        return hits.compactMap { hit in
+            guard let code = hit["code"] as? String, !code.isEmpty, code.allSatisfy(\.isNumber) else { return nil }
+            // Brands come as tags like "xx:milka" in search results.
+            let brands = (hit["brands"] as? [String] ?? (hit["brands"] as? String).map { [$0] } ?? [])
+                .map { tag in tag.split(separator: ":", maxSplits: 1).last.map(String.init) ?? tag }
+            var info = ProductInfo(barcode: code, name: localizedName(hit), source: .openFoodFacts)
+            info.brand = brands.first.map { $0.prefix(1).uppercased() + $0.dropFirst() } ?? ""
+            return info
+        }
     }
 
     static func parse(_ product: [String: Any], code: String) -> ProductInfo {

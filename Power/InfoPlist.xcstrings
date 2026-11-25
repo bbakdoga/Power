@@ -39,7 +39,6 @@
     },
     "NSCameraUsageDescription" : {
       "comment" : "Camera permission prompt: barcode and nutrition-table scanning, food photos, and pictures of exercises.",
-      "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
           "stringUnit" : {
