@@ -4935,6 +4935,616 @@
           }
         }
       }
+    },
+    "1 serving (%@ %@)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 Portion (%1$@ %2$@)"
+          }
+        }
+      }
+    },
+    "2 servings" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 Portionen"
+          }
+        }
+      }
+    },
+    "Allow camera access in Settings to scan barcodes, or type the barcode number." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erlaube den Kamerazugriff in den Einstellungen, um Barcodes zu scannen, oder gib die Barcode-Nummer ein."
+          }
+        }
+      }
+    },
+    "Amount" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menge"
+          }
+        }
+      }
+    },
+    "Amount (g)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menge (g)"
+          }
+        }
+      }
+    },
+    "Amount (ml)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menge (ml)"
+          }
+        }
+      }
+    },
+    "Barcode number" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Barcode-Nummer"
+          }
+        }
+      }
+    },
+    "Brand (optional)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marke (optional)"
+          }
+        }
+      }
+    },
+    "Branded Foods database of the U.S. Department of Agriculture." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markenprodukt-Datenbank des US-Landwirtschaftsministeriums."
+          }
+        }
+      }
+    },
+    "Calories (kcal)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kalorien (kcal)"
+          }
+        }
+      }
+    },
+    "Camera access needed" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kamerazugriff erforderlich"
+          }
+        }
+      }
+    },
+    "Choose photo of nutrition table" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Foto der Nährwerttabelle wählen"
+          }
+        }
+      }
+    },
+    "Convert per-serving values to 100 g" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portionswerte auf 100 g umrechnen"
+          }
+        }
+      }
+    },
+    "Data: Open Food Facts" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten: Open Food Facts"
+          }
+        }
+      }
+    },
+    "Data: USDA FoodData Central" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten: USDA FoodData Central"
+          }
+        }
+      }
+    },
+    "Drink (values per 100 ml)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Getränk (Werte pro 100 ml)"
+          }
+        }
+      }
+    },
+    "Edit nutrition values" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nährwerte bearbeiten"
+          }
+        }
+      }
+    },
+    "Enter barcode" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Barcode eingeben"
+          }
+        }
+      }
+    },
+    "Enter values manually" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Werte manuell eingeben"
+          }
+        }
+      }
+    },
+    "Invalid barcode" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ungültiger Barcode"
+          }
+        }
+      }
+    },
+    "Look up" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suchen"
+          }
+        }
+      }
+    },
+    "Looking up product…" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produkt wird gesucht …"
+          }
+        }
+      }
+    },
+    "No nutrition values were found in the photo. Try again with the table filling the frame, or type the values." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Im Foto wurden keine Nährwerte gefunden. Versuche es erneut, sodass die Tabelle das Bild ausfüllt, oder gib die Werte ein."
+          }
+        }
+      }
+    },
+    "Nutrition Table" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nährwerttabelle"
+          }
+        }
+      }
+    },
+    "Nutrition Values" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nährwerte"
+          }
+        }
+      }
+    },
+    "Nutrition for this amount" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nährwerte für diese Menge"
+          }
+        }
+      }
+    },
+    "Offline: showing the copy saved on this iPhone." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offline: Es wird die auf diesem iPhone gespeicherte Kopie angezeigt."
+          }
+        }
+      }
+    },
+    "Open Settings" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen öffnen"
+          }
+        }
+      }
+    },
+    "Per 100 g" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro 100 g"
+          }
+        }
+      }
+    },
+    "Per 100 ml" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro 100 ml"
+          }
+        }
+      }
+    },
+    "Photograph nutrition table" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nährwerttabelle fotografieren"
+          }
+        }
+      }
+    },
+    "Point the camera at the barcode or GS1 QR code" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Richte die Kamera auf den Barcode oder GS1-QR-Code"
+          }
+        }
+      }
+    },
+    "Power reads the table on your iPhone and saves the product here, so the next scan works offline." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Power liest die Tabelle auf deinem iPhone und speichert das Produkt hier, damit der nächste Scan auch offline funktioniert."
+          }
+        }
+      }
+    },
+    "Product" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produkt"
+          }
+        }
+      }
+    },
+    "Product Not Found" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produkt nicht gefunden"
+          }
+        }
+      }
+    },
+    "Product data by Open Food Facts contributors, available under the Open Database License (ODbL)." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produktdaten von den Mitwirkenden von Open Food Facts, verfügbar unter der Open Database License (ODbL)."
+          }
+        }
+      }
+    },
+    "Product lookup is unavailable. Check your internet connection and try again." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Produktsuche ist nicht verfügbar. Prüfe deine Internetverbindung und versuche es erneut."
+          }
+        }
+      }
+    },
+    "Product name" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produktname"
+          }
+        }
+      }
+    },
+    "Read from your photo of the nutrition table on this iPhone. Check the values against the package." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auf diesem iPhone aus deinem Foto der Nährwerttabelle gelesen. Vergleiche die Werte mit der Verpackung."
+          }
+        }
+      }
+    },
+    "Reading nutrition table…" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nährwerttabelle wird gelesen …"
+          }
+        }
+      }
+    },
+    "Scan Barcode" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Barcode scannen"
+          }
+        }
+      }
+    },
+    "Scan another product" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weiteres Produkt scannen"
+          }
+        }
+      }
+    },
+    "Scan barcode" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Barcode scannen"
+          }
+        }
+      }
+    },
+    "Scanning not available" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scannen nicht verfügbar"
+          }
+        }
+      }
+    },
+    "Serving size (g)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portionsgröße (g)"
+          }
+        }
+      }
+    },
+    "Serving size (ml)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portionsgröße (ml)"
+          }
+        }
+      }
+    },
+    "Some values may be misread. Compare them with the package before saving." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einige Werte wurden vielleicht falsch gelesen. Vergleiche sie vor dem Speichern mit der Verpackung."
+          }
+        }
+      }
+    },
+    "Take another photo" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neues Foto aufnehmen"
+          }
+        }
+      }
+    },
+    "Text is recognized on your iPhone. The photo is not uploaded." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Text wird auf deinem iPhone erkannt. Das Foto wird nicht hochgeladen."
+          }
+        }
+      }
+    },
+    "The label only shows values per serving. Enter the serving size below, then convert the values to 100 g." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Etikett zeigt nur Werte pro Portion. Gib unten die Portionsgröße ein und rechne die Werte dann auf 100 g um."
+          }
+        }
+      }
+    },
+    "This barcode number is not valid. Check the digits and try again." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Barcode-Nummer ist ungültig. Prüfe die Ziffern und versuche es erneut."
+          }
+        }
+      }
+    },
+    "This device can't scan barcodes with the camera. You can type the barcode number instead." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Gerät kann keine Barcodes mit der Kamera scannen. Du kannst stattdessen die Barcode-Nummer eingeben."
+          }
+        }
+      }
+    },
+    "This product has no nutrition values online yet." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für dieses Produkt gibt es online noch keine Nährwerte."
+          }
+        }
+      }
+    },
+    "This product is not in Open Food Facts or USDA FoodData Central yet." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Produkt ist noch nicht in Open Food Facts oder USDA FoodData Central."
+          }
+        }
+      }
+    },
+    "Try again" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erneut versuchen"
+          }
+        }
+      }
+    },
+    "Type barcode" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Barcode eingeben"
+          }
+        }
+      }
+    },
+    "Type the digits printed under the barcode." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gib die Ziffern unter dem Barcode ein."
+          }
+        }
+      }
+    },
+    "Unnamed product" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unbenanntes Produkt"
+          }
+        }
+      }
+    },
+    "Values entered by you." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Von dir eingegebene Werte."
+          }
+        }
+      }
+    },
+    "Values read from the photo. Check them against the package and add the product name." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Werte aus dem Foto gelesen. Vergleiche sie mit der Verpackung und gib den Produktnamen ein."
+          }
+        }
+      }
+    },
+    "View or improve on Open Food Facts" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auf Open Food Facts ansehen oder verbessern"
+          }
+        }
+      }
     }
   },
   "version" : "1.3"

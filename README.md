@@ -11,6 +11,7 @@ A free iPhone workout tracker. Every feature is free: unlimited routines, charts
 - **Routines:** unlimited routines with target sets and reps, reorderable.
 - **Exercises:** about 55 built-in exercises plus your own. Each exercise shows an estimated 1-rep-max chart, personal records and its full history.
 - **Settings:** kg or lb, and a plate calculator.
+- **Barcode scanning:** scan a food's EAN/UPC barcode or GS1 QR code in the Nutrition tab. Power looks the product up in Open Food Facts (with USDA FoodData Central as a fallback for US products), saves it on the phone so it works offline next time, and logs the amount you enter. If a product isn't found, photograph its nutrition table and Power reads the values on the phone.
 
 ## Run it on your iPhone
 

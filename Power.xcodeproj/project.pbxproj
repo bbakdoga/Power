@@ -39,9 +39,15 @@
 		B2ACEBD430B0A278000D3112 /* WorkoutImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBD330B0A278000D3112 /* WorkoutImporter.swift */; };
 		B2ACEBD630B0A297000D3112 /* ImportWorkoutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBD530B0A297000D3112 /* ImportWorkoutsView.swift */; };
 		B2ACEBD830B0B537000D3112 /* NutritionModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBD730B0B537000D3112 /* NutritionModels.swift */; };
+		71205C084AE3F500D5AB0DB1 /* ScannedProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AF88012F4B005AC57A688B /* ScannedProduct.swift */; };
 		B2ACEBDA30B0B584000D3112 /* NutritionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBD930B0B584000D3112 /* NutritionView.swift */; };
 		B2ACEBDC30B0B865000D3112 /* NutritionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBDB30B0B865000D3112 /* NutritionAPI.swift */; };
+		524A73BEB2A0D95E706127D0 /* NutritionLabelReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA7051E1CBA37E14E1F66C0 /* NutritionLabelReader.swift */; };
+		0618DC0828313DFBC8D5B7BD /* ProductLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09498C321ABE46ADCEAF1AE2 /* ProductLookup.swift */; };
+		92F362DF728288F76B23E28B /* ProductBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32E637F930623B140E017D2 /* ProductBarcode.swift */; };
 		B2ACEBDE30B0B885000D3112 /* FoodSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBDD30B0B885000D3112 /* FoodSearchView.swift */; };
+		7BC5BE513ECFFE4DDB5A296B /* ProductEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FEA094DCE54BC71EBB891B /* ProductEntryView.swift */; };
+		86B6AE21B49D855E7BD8428F /* BarcodeFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B412C8F57289404F6E2110 /* BarcodeFoodView.swift */; };
 		B2ACEBE030B0C41B000D3112 /* Food101Classifier.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBDF30B0C41B000D3112 /* Food101Classifier.mlpackage */; };
 		B2ACEBE230B0C45A000D3112 /* FoodImageClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBE130B0C45A000D3112 /* FoodImageClassifier.swift */; };
 		B2BC8B6130AF8C6500C69B70 /* WorkoutSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BC8B6030AF8C6500C69B70 /* WorkoutSummaryView.swift */; };
@@ -118,9 +124,15 @@
 		B2ACEBD330B0A278000D3112 /* WorkoutImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutImporter.swift; sourceTree = "<group>"; };
 		B2ACEBD530B0A297000D3112 /* ImportWorkoutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportWorkoutsView.swift; sourceTree = "<group>"; };
 		B2ACEBD730B0B537000D3112 /* NutritionModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionModels.swift; sourceTree = "<group>"; };
+		A3AF88012F4B005AC57A688B /* ScannedProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedProduct.swift; sourceTree = "<group>"; };
 		B2ACEBD930B0B584000D3112 /* NutritionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionView.swift; sourceTree = "<group>"; };
 		B2ACEBDB30B0B865000D3112 /* NutritionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionAPI.swift; sourceTree = "<group>"; };
+		1BA7051E1CBA37E14E1F66C0 /* NutritionLabelReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionLabelReader.swift; sourceTree = "<group>"; };
+		09498C321ABE46ADCEAF1AE2 /* ProductLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductLookup.swift; sourceTree = "<group>"; };
+		B32E637F930623B140E017D2 /* ProductBarcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductBarcode.swift; sourceTree = "<group>"; };
 		B2ACEBDD30B0B885000D3112 /* FoodSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchView.swift; sourceTree = "<group>"; };
+		31FEA094DCE54BC71EBB891B /* ProductEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEntryView.swift; sourceTree = "<group>"; };
+		B4B412C8F57289404F6E2110 /* BarcodeFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeFoodView.swift; sourceTree = "<group>"; };
 		B2ACEBDF30B0C41B000D3112 /* Food101Classifier.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = Food101Classifier.mlpackage; sourceTree = "<group>"; };
 		B2ACEBE130B0C45A000D3112 /* FoodImageClassifier.swift */ = {isa = PBXFileReference; path = FoodImageClassifier.swift; sourceTree = "<group>"; };
 		B2BC8B6030AF8C6500C69B70 /* WorkoutSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSummaryView.swift; sourceTree = "<group>"; };
@@ -190,6 +202,7 @@
 				957C7749A68FE03A2D89C8F6 /* Enums.swift */,
 				CBF9980EBBE9ABCC86A1BC61 /* Models.swift */,
 				B2ACEBD730B0B537000D3112 /* NutritionModels.swift */,
+				A3AF88012F4B005AC57A688B /* ScannedProduct.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -213,6 +226,9 @@
 				B2ACEBD130B0A1D7000D3112 /* WorkoutCSVParser.swift */,
 				B2ACEBD330B0A278000D3112 /* WorkoutImporter.swift */,
 				B2ACEBDB30B0B865000D3112 /* NutritionAPI.swift */,
+				1BA7051E1CBA37E14E1F66C0 /* NutritionLabelReader.swift */,
+				09498C321ABE46ADCEAF1AE2 /* ProductLookup.swift */,
+				B32E637F930623B140E017D2 /* ProductBarcode.swift */,
 				B2ACEBE130B0C45A000D3112 /* FoodImageClassifier.swift */,
 			);
 			path = Support;
@@ -250,6 +266,8 @@
 				B2ACEBD530B0A297000D3112 /* ImportWorkoutsView.swift */,
 				B2ACEBD930B0B584000D3112 /* NutritionView.swift */,
 				B2ACEBDD30B0B885000D3112 /* FoodSearchView.swift */,
+				31FEA094DCE54BC71EBB891B /* ProductEntryView.swift */,
+				B4B412C8F57289404F6E2110 /* BarcodeFoodView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -390,6 +408,9 @@
 				C27DF1FEA73849D78DA4C703 /* ActiveWorkoutView.swift in Sources */,
 				B22D35D030A78D4C001E9E97 /* ProfileView.swift in Sources */,
 				B2ACEBDC30B0B865000D3112 /* NutritionAPI.swift in Sources */,
+				524A73BEB2A0D95E706127D0 /* NutritionLabelReader.swift in Sources */,
+				0618DC0828313DFBC8D5B7BD /* ProductLookup.swift in Sources */,
+				92F362DF728288F76B23E28B /* ProductBarcode.swift in Sources */,
 				B22D35CE30A78D2F001E9E97 /* WorkoutStats.swift in Sources */,
 				B2BC8B6530AF8D3100C69B70 /* OnboardingView.swift in Sources */,
 				B2ACEBCE30B093BD000D3112 /* AppTheme.swift in Sources */,
@@ -404,6 +425,8 @@
 				B22D35CA30A78884001E9E97 /* HealthSync.swift in Sources */,
 				B2ACEBE230B0C45A000D3112 /* FoodImageClassifier.swift in Sources */,
 				B2ACEBDE30B0B885000D3112 /* FoodSearchView.swift in Sources */,
+				7BC5BE513ECFFE4DDB5A296B /* ProductEntryView.swift in Sources */,
+				86B6AE21B49D855E7BD8428F /* BarcodeFoodView.swift in Sources */,
 				DD3B671E312797809998A7F2 /* HistoryView.swift in Sources */,
 				7C84CD5B3C570FAA67960F38 /* Models.swift in Sources */,
 				B22D35A430A78031001E9E97 /* PersonalRecords.swift in Sources */,
@@ -420,6 +443,7 @@
 				F583958722BE681A50DBCA44 /* RoutinesView.swift in Sources */,
 				B22D35C230A78157001E9E97 /* RestTimerAttributes.swift in Sources */,
 				B2ACEBD830B0B537000D3112 /* NutritionModels.swift in Sources */,
+				71205C084AE3F500D5AB0DB1 /* ScannedProduct.swift in Sources */,
 				863C18179F238CB387DBE6FB /* SeedData.swift in Sources */,
 				B2ACEBD630B0A297000D3112 /* ImportWorkoutsView.swift in Sources */,
 				B22D35CC30A788B2001E9E97 /* WeeklySummaryView.swift in Sources */,
@@ -511,7 +535,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Power;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = NO;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Power uses the camera to estimate foods and nutrition from a photo.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Power uses the camera to scan food barcodes and nutrition tables, and to estimate foods from a photo.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Power reads your bodyweight from Health so it appears in your body measurements.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Power saves your finished workouts and the bodyweight you log to Health.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
@@ -547,7 +571,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Power;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = NO;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Power uses the camera to estimate foods and nutrition from a photo.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Power uses the camera to scan food barcodes and nutrition tables, and to estimate foods from a photo.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Power reads your bodyweight from Health so it appears in your body measurements.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Power saves your finished workouts and the bodyweight you log to Health.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
