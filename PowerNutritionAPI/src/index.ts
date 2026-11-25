@@ -19,6 +19,8 @@ interface USDAFood {
   description: string;
   dataType?: string;
   brandOwner?: string;
+  brandName?: string;
+  gtinUpc?: string;
   servingSize?: number;
   servingSizeUnit?: string;
   foodNutrients?: USDANutrient[];
@@ -56,6 +58,10 @@ export default {
 
     if (url.pathname === "/v1/foods/search") {
       return searchFoods(request, env, context);
+    }
+
+    if (url.pathname === "/v1/foods/barcode") {
+      return foodByBarcode(request, env, context);
     }
 
     return json({ error: "Not found" }, 404);
@@ -129,11 +135,71 @@ async function searchFoods(request: Request, env: Env, context: ExecutionContext
   return response;
 }
 
+// Finds a USDA Branded Foods product by its GTIN/UPC. The app tries Open Food Facts first
+// and calls this as a fallback, mainly for US products.
+async function foodByBarcode(request: Request, env: Env, context: ExecutionContext): Promise<Response> {
+  const incomingURL = new URL(request.url);
+  const gtin = (incomingURL.searchParams.get("gtin") ?? "").trim();
+  if (!/^\d{8,14}$/.test(gtin)) {
+    return json({ error: "gtin must contain 8 to 14 digits" }, 400);
+  }
+
+  const wanted = stripLeadingZeros(gtin);
+  const cacheURL = new URL(request.url);
+  cacheURL.search = new URLSearchParams({ gtin: wanted, v: "1" }).toString();
+  const cacheKey = new Request(cacheURL.toString(), { method: "GET" });
+  const cache = caches.default;
+  const cached = await cache.match(cacheKey);
+  if (cached) {
+    return withCacheStatus(cached, "HIT");
+  }
+
+  const usdaURL = new URL(`${USDA_BASE_URL}/foods/search`);
+  usdaURL.searchParams.set("api_key", env.USDA_API_KEY);
+  const upstream = await fetch(usdaURL, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "User-Agent": "Power-Nutrition/1.0",
+    },
+    body: JSON.stringify({ query: wanted, pageSize: 25, dataType: ["Branded"] }),
+  });
+
+  if (!upstream.ok) {
+    console.error("USDA barcode lookup failed", upstream.status, (await upstream.text()).slice(0, 500));
+    if (upstream.status === 429) {
+      return json({ error: "Food search is receiving too many requests. Please wait a moment and try again." }, 429);
+    }
+    return json({ error: `Nutrition provider unavailable (USDA ${upstream.status}).` }, 502);
+  }
+
+  const payload = await upstream.json<USDAFoodSearchResponse>();
+  const match = (payload.foods ?? []).find((food) => stripLeadingZeros(food.gtinUpc ?? "") === wanted);
+
+  const response = match
+    ? json({ food: normalizeFood(match) }, 200, {
+      "Cache-Control": `public, max-age=${CACHE_SECONDS}`,
+      "X-Power-Cache": "MISS",
+    })
+    : json({ error: "Product not found" }, 404, {
+      "Cache-Control": `public, max-age=${CACHE_SECONDS}`,
+      "X-Power-Cache": "MISS",
+    });
+
+  context.waitUntil(cache.put(cacheKey, response.clone()));
+  return response;
+}
+
+function stripLeadingZeros(value: string): string {
+  return value.replace(/\D/g, "").replace(/^0+/, "");
+}
+
 function normalizeFood(food: USDAFood): NutritionFood {
   return {
     id: String(food.fdcId),
     name: titleCase(food.description),
-    brand: food.brandOwner,
+    brand: food.brandName ?? food.brandOwner,
     servingSize: food.servingSize,
     servingUnit: food.servingSizeUnit,
     caloriesPer100Grams: nutrient(food.foodNutrients, [1008, 2047, 2048], ["energy"], "kcal"),

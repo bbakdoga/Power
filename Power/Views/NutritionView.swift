@@ -8,6 +8,7 @@ struct NutritionView: View {
     @AppStorage("dailyCalorieGoal") private var calorieGoal = 2_000
     @State private var showingManualEntry = false
     @State private var showingFoodSearch = false
+    @State private var showingBarcodeScanner = false
     @State private var showingCamera = false
     @State private var selectedPhoto: PhotosPickerItem?
     @State private var analyzedImageData: Data?
@@ -35,6 +36,12 @@ struct NutritionView: View {
                 .themedRows()
 
                 Section("Add food") {
+                    Button {
+                        showingBarcodeScanner = true
+                    } label: {
+                        Label("Scan barcode", systemImage: "barcode.viewfinder")
+                    }
+
                     Button {
                         showingFoodSearch = true
                     } label: {
@@ -92,6 +99,9 @@ struct NutritionView: View {
             }
             .sheet(isPresented: $showingFoodSearch) {
                 FoodSearchView()
+            }
+            .fullScreenCover(isPresented: $showingBarcodeScanner) {
+                BarcodeFoodView()
             }
             .fullScreenCover(isPresented: $showingCamera) {
                 CameraPicker(
@@ -244,9 +254,17 @@ private struct MacroValue: View {
 private struct NutritionEntryRow: View {
     let entry: NutritionEntry
 
+    private var iconName: String {
+        switch entry.source {
+        case .photo: "camera.fill"
+        case .barcode: "barcode"
+        case .manual: "fork.knife"
+        }
+    }
+
     var body: some View {
         HStack(spacing: 12) {
-            Image(systemName: entry.source == .photo ? "camera.fill" : "fork.knife")
+            Image(systemName: iconName)
                 .foregroundStyle(.tint)
                 .frame(width: 30)
             VStack(alignment: .leading, spacing: 3) {
@@ -499,7 +517,7 @@ private struct PhotoFoodSuggestionRow: View {
     }
 }
 
-private struct CameraPicker: UIViewControllerRepresentable {
+struct CameraPicker: UIViewControllerRepresentable {
     let onImage: (UIImage) -> Void
     let onCancel: () -> Void
 

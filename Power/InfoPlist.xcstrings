@@ -44,7 +44,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Power uses the camera to estimate foods and nutrition from a photo."
+            "value" : "Power uses the camera to scan food barcodes and nutrition tables, and to estimate foods from a photo."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Power verwendet die Kamera, um Barcodes und Nährwerttabellen von Lebensmitteln zu scannen und Mahlzeiten anhand eines Fotos zu schätzen."
           }
         }
       }
