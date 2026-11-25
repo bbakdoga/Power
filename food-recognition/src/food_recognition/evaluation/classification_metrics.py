@@ -64,3 +64,24 @@ def rejection_curve(y_true: np.ndarray, scores: np.ndarray, thresholds: list[flo
         rows.append({"threshold": t, "coverage": float(accepted.mean()) if len(y_true) else 0.0,
                      "accuracy_on_accepted": float(correct[accepted].mean()) if accepted.any() else float("nan")})
     return rows
+
+
+def open_set_metrics(known_confidence: np.ndarray, unknown_confidence: np.ndarray) -> dict[str, float]:
+    """How well the top softmax score separates foods we know from unknown food.
+
+    AUROC is the chance a random known crop scores higher than a random unknown
+    one (0.5 = no separation). FPR@95TPR is the share of unknown crops still
+    accepted at the threshold that keeps 95% of known crops (lower is better).
+    """
+    known = np.asarray(known_confidence, dtype=np.float64)
+    unknown = np.asarray(unknown_confidence, dtype=np.float64)
+    if len(known) == 0 or len(unknown) == 0:
+        return {}
+    values = np.concatenate([known, unknown])
+    _, inverse, counts = np.unique(values, return_inverse=True, return_counts=True)
+    average_rank = np.cumsum(counts) - (counts - 1) / 2.0          # 1-based ranks, ties averaged
+    rank_sum = average_rank[inverse][: len(known)].sum()
+    auroc = (rank_sum - len(known) * (len(known) + 1) / 2.0) / (len(known) * len(unknown))
+    threshold = float(np.quantile(known, 0.05))
+    return {"auroc": float(auroc), "fpr_at_95_tpr": float((unknown >= threshold).mean()),
+            "threshold_at_95_tpr": threshold, "known": int(len(known)), "unknown": int(len(unknown))}

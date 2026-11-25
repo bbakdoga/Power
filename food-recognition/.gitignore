@@ -4,6 +4,9 @@ data/raw/**
 data/annotations/**
 !data/annotations/.gitkeep
 data/external/
+data/pretrain/
+logs/
+import_*.log
 data/splits/**
 !data/splits/.gitkeep
 data/manifests/images.jsonl

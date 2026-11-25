@@ -52,7 +52,14 @@ food-rec freeze --version v0.1.0
 food-rec check-licenses
 food-rec train-detector --dataset-version v0.1.0
 food-rec train-classifier --dataset-version v0.1.0
+
+# 5. Test-set scores (training only reports validation numbers)
+food-rec evaluate models/runs/detection-scratch/v0.1.0-* models/runs/classification-scratch/v0.1.0-*
 ```
+
+`evaluate` writes `eval_test.json` next to each run: top-1/top-3/macro-F1 and
+open-set numbers (unknown-food AUROC, FPR at 95% TPR) for the classifier,
+mAP for the detector, with the checkpoint's sha256.
 
 Training on the Pegasus cluster: see [`cluster/README.md`](cluster/README.md).
 

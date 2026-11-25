@@ -6,6 +6,8 @@ seed: 1337
 assets:
 - timm_code
 - owned_photos
+- myfoodrepo_2022_v2
+- open_images_v7
 model:
   architecture: mobilenetv3_large_100
   input_size: 224

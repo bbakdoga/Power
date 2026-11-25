@@ -7,6 +7,11 @@ if [[ -f cluster/cluster.env ]]; then
   source cluster/cluster.env
 fi
 eval "${CLUSTER_ENV_SETUP:-true}"
+# Without cluster.env, use the project's own virtualenv.
+if ! command -v food-rec >/dev/null && [[ -f .venv/bin/activate ]]; then
+  # shellcheck disable=SC1091
+  source .venv/bin/activate
+fi
 export PYTHONHASHSEED=1337
 export CUBLAS_WORKSPACE_CONFIG=:4096:8   # deterministic cuBLAS
 mkdir -p logs

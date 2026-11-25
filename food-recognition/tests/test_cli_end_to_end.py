@@ -49,7 +49,22 @@ def annotate_everything(project):
     return path
 
 
-def test_full_workflow(project, tmp_path, capsys):
+def tiny_configs(project):
+    """One-epoch CPU versions of the real configs, so the test exercises the real training loops."""
+    import yaml
+
+    paths = {}
+    for kind in ("detection", "classification"):
+        cfg = yaml.safe_load((project / f"configs/{kind}.yaml").read_text())
+        cfg["train"].update({"epochs": 1, "batch_size": 4, "warmup_epochs": 0, "eval_every": 1, "mixed_precision": False})
+        cfg["model"]["input_size"] = [64, 64] if kind == "detection" else 64
+        paths[kind] = project / f"tiny_{kind}.yaml"
+        paths[kind].write_text(yaml.safe_dump(cfg))
+    return paths
+
+
+def test_full_workflow(project, tmp_path, capsys, monkeypatch):
+    monkeypatch.setenv("SLURM_CPUS_PER_TASK", "0")
     inbox = tmp_path / "inbox"
     for i in range(20):
         make_image(inbox / "meals" / f"{i}.png", seed=i)
@@ -86,8 +101,6 @@ def test_full_workflow(project, tmp_path, capsys):
     assert main(["labelstudio-config"]) == 0
 
     capsys.readouterr()
-    assert main(["train-detector", "--dataset-version", "v0.0.1"]) == 1
-    assert "Preflight checks passed" in capsys.readouterr().out
     assert main(["train-classifier", "--dataset-version", "v9.9.9"]) == 1
     assert "not frozen" in capsys.readouterr().out
 
@@ -96,6 +109,40 @@ def test_full_workflow(project, tmp_path, capsys):
     annotations.write_text(annotations.read_text().replace('"iscrowd": 0', '"iscrowd": 1', 1))
     assert main(["train-detector", "--dataset-version", "v0.0.1"]) == 1
     assert "changed since it was frozen" in capsys.readouterr().out
+
+    # Real training loops, one CPU epoch each (skipped where torch is not installed, e.g. CI).
+    annotations.write_text(annotations.read_text().replace('"iscrowd": 1', '"iscrowd": 0', 1))
+    pytest.importorskip("torch")
+    pytest.importorskip("timm")
+    tiny = tiny_configs(project)
+    assert main(["train-detector", "--dataset-version", "v0.0.1", "--config", str(tiny["detection"])]) == 0
+    assert main(["train-classifier", "--dataset-version", "v0.0.1", "--config", str(tiny["classification"])]) == 0
+    runs = sorted((project / "models/runs").glob("*/*/summary.json"))
+    assert len(runs) == 2
+    assert {json.loads(r.read_text())["kind"] for r in runs} == {"detection", "classification"}
+
+    # Test-set scoring of both finished runs, written next to each run.
+    capsys.readouterr()
+    assert main(["evaluate", *[str(r.parent) for r in runs]]) == 0
+    out = capsys.readouterr().out
+    assert "mAP50-95" in out and "top-1" in out
+    for r in runs:
+        result = json.loads((r.parent / "eval_test.json").read_text())
+        assert result["split"] == "test" and result["dataset_version"] == "v0.0.1" and result["images"] == 4
+        assert len(result["checkpoint_sha256"]) == 64
+    assert main(["compare"]) == 0
+    assert "n=1" in capsys.readouterr().out
+
+    # A second seed gets its own run folder, and compare averages over both.
+    assert main(["train-classifier", "--dataset-version", "v0.0.1", "--config", str(tiny["classification"]),
+                 "--seed", "7"]) == 0
+    seeded = next((project / "models/runs").glob("*/v0.0.1-s7-*"))
+    assert main(["evaluate", str(seeded)]) == 0
+    capsys.readouterr()
+    assert main(["compare"]) == 0
+    assert "n=2" in capsys.readouterr().out
+    with pytest.raises(SystemExit):                       # scoring on training photos is refused
+        main(["evaluate", str(runs[0].parent), "--split", "train"])
 
 
 def test_validate_fails_on_rights_problem(project, tmp_path):
@@ -115,3 +162,28 @@ def test_licence_gate_blocks_needs_review_weights(project):
     cfg = project / "configs/detection.yaml"
     cfg.write_text(cfg.read_text().replace("pretrained: null", "pretrained: yolox_coco_weights"))
     assert main(["check-licenses"]) == 1
+
+
+def test_exclude_images_drops_photos_with_broken_source_boxes(project, tmp_path):
+    inbox = tmp_path / "inbox"
+    for i in range(4):
+        make_image(inbox / f"{i}.png", seed=i)
+    assert main(["import", "--folder", str(inbox), "--source-id", "kitchen"]) == 0
+    assert main(["normalize", "--input", str(annotate_everything(project))]) == 0
+    annotations = project / "data/annotations/instances.json"
+    data = json.loads(annotations.read_text())
+    data["annotations"][0]["bbox"] = [100, 20, 300, 90]       # sticks out of the 320 px wide photo
+    bad = next(i["file_name"] for i in data["images"] if i["id"] == data["annotations"][0]["image_id"])
+    annotations.write_text(json.dumps(data))
+    assert main(["validate"]) == 1
+
+    assert main(["exclude-images", "--code", "bbox_out_of_bounds", "--dry-run"]) == 0
+    assert not (project / "data/manifests/excluded.jsonl").exists()
+    assert main(["exclude-images", "--code", "bbox_out_of_bounds"]) == 0
+    assert main(["validate"]) == 0
+    kept = json.loads(annotations.read_text())
+    assert len(kept["images"]) == 3 and bad not in {i["file_name"] for i in kept["images"]}
+    records, _ = load_manifest(project / "data/manifests/images.jsonl")
+    assert bad not in {r.file for r in records}
+    logged = [json.loads(line) for line in (project / "data/manifests/excluded.jsonl").read_text().splitlines()]
+    assert logged[0]["file"] == bad and logged[0]["reasons"][0].startswith("bbox_out_of_bounds")

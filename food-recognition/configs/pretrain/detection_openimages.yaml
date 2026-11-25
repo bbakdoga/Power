@@ -1,0 +1,33 @@
+# Pretrain YOLOX-Tiny on general Open Images photos (600 boxable classes).
+# Produces models/pretrain/detector_backbone_openimages.pt, which the
+# `detection_openimages` experiment loads via `pretrained: openimages_pretrain_own`.
+seed: 1337
+assets: [yolox_code, open_images_v7, openimages_pretrain_own]
+
+data:
+  selection_dir: data/pretrain/openimages          # from `food-rec select-openimages-pretrain`
+  images_dir: data/pretrain/openimages/images      # from scripts/download_openimages.py
+
+model:
+  architecture: yolox_tiny
+  input_size: [416, 416]
+  pretrained: null
+
+train:
+  epochs: 40              # ~200k photos x 40 epochs; roughly a day on one A100/RTXA6000 (estimate)
+  batch_size: 64
+  lr: 0.01
+  weight_decay: 0.0005
+  warmup_epochs: 3
+  no_aug_epochs: 5
+  eval_every: 5
+  mixed_precision: true
+  augment:
+    mosaic: 0.5
+    hsv: true
+    flip_lr: 0.5
+    scale: [0.5, 1.5]
+    low_light: 0.1
+
+postprocess:
+  nms_iou_threshold: 0.65

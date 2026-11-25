@@ -1,0 +1,506 @@
+# MyFoodRepo v2.0 category -> our class. Proposed by `food-rec propose-mapping`.
+# Targets: a taxonomy class, unknown_food, or drop (not boxed).
+#
+# Reviewed line by line on 2026-11-21 against the Kaggle 2022 v2.0 download
+# (498 categories). Box counts are from that download.
+
+reviewed: true
+mapping:
+  "alfa-sprouts":                                                              unknown_food  # 52 boxes; no rule matched
+  "almonds":                                                                   nuts  # 316 boxes; rule \bnut|almond|walnut|cashew|hazelnut|pistachio|peanut\b|peanuts
+  "anchovies":                                                                 unknown_food  # 36 boxes; no rule matched
+  "aperitif-with-alcohol-aperol-spritz":                                       drop  # 26 boxes; rule drop: ^(wine|beer|alcohol|spirit|cocktail|champagne|prosecco|sekt|aperitif)|beer$
+  "apple":                                                                     apple  # 990 boxes; rule ^apples?$|^apple-(raw|green|red)
+  "apple-crumble":                                                             unknown_food  # 33 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "apple-pie":                                                                 unknown_food  # 140 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "applesauce-unsweetened-canned":                                             unknown_food  # 85 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "apricot-dried":                                                             unknown_food  # 24 boxes; no rule matched
+  "apricots":                                                                  unknown_food  # 153 boxes; no rule matched
+  "artichoke":                                                                 unknown_food  # 57 boxes; no rule matched
+  "avocado":                                                                   avocado  # 500 boxes; rule avocado|guacamole
+  "bacon":                                                                     bacon  # 51 boxes; rule bacon
+  "bacon-cooking":                                                             bacon  # 73 boxes; rule bacon
+  "bacon-frying":                                                              bacon  # 169 boxes; rule bacon
+  "bacon-raw":                                                                 bacon  # 41 boxes; rule bacon
+  "bagel-without-filling":                                                     bagel  # 18 boxes; rule bagel
+  "baked-potato":                                                              potato  # 140 boxes; rule potato
+  "balsamic-salad-dressing":                                                   drop  # 203 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "balsamic-vinegar":                                                          drop  # 28 boxes; rule drop: ^(oil|salt|sugar|sweetener)$|vinegar|^sugar-glazing|-oil$|^pepper-black
+  "banana":                                                                    banana  # 743 boxes; rule ^bananas?$
+  "banana-cake":                                                               unknown_food  # 33 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "basil":                                                                     drop  # 51 boxes; rule drop: ^(capers|basil|parsley|chives|coriander|bouquet-garni|garlic)$
+  "bean-seeds":                                                                unknown_food  # 28 boxes; no rule matched
+  "beans-kidney":                                                              unknown_food  # 94 boxes; no rule matched
+  "beans-white":                                                               unknown_food  # 35 boxes; no rule matched
+  "beef":                                                                      unknown_food  # 129 boxes; no rule matched
+  "beef-cut-into-stripes-only-meat":                                           unknown_food  # 65 boxes; no rule matched
+  "beef-filet":                                                                steak  # 77 boxes; rule steak|entrecote|beef-(sirloin|filet|fillet)
+  "beef-minced-only-meat":                                                     unknown_food  # 89 boxes; no rule matched
+  "beef-roast":                                                                unknown_food  # 42 boxes; no rule matched
+  "beef-sirloin-steak":                                                        steak  # 58 boxes; rule steak|entrecote|beef-(sirloin|filet|fillet)
+  "beer":                                                                      drop  # 276 boxes; rule drop: ^(wine|beer|alcohol|spirit|cocktail|champagne|prosecco|sekt|aperitif)|beer$
+  "beetroot-raw":                                                              unknown_food  # 66 boxes; no rule matched
+  "beetroot-steamed-without-addition-of-salt":                                 unknown_food  # 194 boxes; no rule matched
+  "bell-pepper-red-raw":                                                       bell_pepper  # 591 boxes; rule bell-pepper|pepper-(red|green|yellow)|sweet-pepper|capsicum
+  "bell-pepper-red-stewed-without-addition-of-fat-without-addition-of-salt":   bell_pepper  # 51 boxes; rule bell-pepper|pepper-(red|green|yellow)|sweet-pepper|capsicum
+  "berries":                                                                   unknown_food  # 99 boxes; no rule matched
+  "birchermuesli-prepared-no-sugar-added":                                     oatmeal  # 162 boxes; rule \boat|porridge|bircher|granola
+  "biscuit-with-butter":                                                       unknown_food  # 29 boxes; no rule matched
+  "biscuits":                                                                  unknown_food  # 204 boxes; no rule matched
+  "black-forest-tart":                                                         unknown_food  # 22 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "black-olives":                                                              unknown_food  # 262 boxes; no rule matched
+  "blackberry":                                                                unknown_food  # 19 boxes; no rule matched
+  "blue-mould-cheese":                                                         cheese  # 86 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "blueberries":                                                               blueberries  # 312 boxes; rule blueberr
+  "bolognaise-sauce":                                                          drop  # 141 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "bouillon":                                                                  drop  # 50 boxes; rule drop: ^(cream|sour-cream|thickened-cream-35|dips|cocoa-powder|maple-syrup-concentrate|ice-cubes|bouillon(-vegetable)?)$
+  "bouillon-vegetable":                                                        drop  # 30 boxes; rule drop: ^(cream|sour-cream|thickened-cream-35|dips|cocoa-powder|maple-syrup-concentrate|ice-cubes|bouillon(-vegetable)?)$
+  "bouquet-garni":                                                             drop  # 34 boxes; rule drop: ^(capers|basil|parsley|chives|coriander|bouquet-garni|garlic)$
+  "braided-white-loaf":                                                        unknown_food  # 354 boxes; no rule matched
+  "brazil-nut":                                                                nuts  # 24 boxes; rule \bnut|almond|walnut|cashew|hazelnut|pistachio|peanut\b|peanuts
+  "bread":                                                                     bread  # 180 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "bread-5-grain":                                                             bread  # 78 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "bread-black":                                                               bread  # 89 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "bread-french-white-flour":                                                  bread  # 212 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "bread-fruit":                                                               bread  # 80 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "bread-grain":                                                               bread  # 212 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "bread-half-white":                                                          bread  # 96 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "bread-meat-substitute-lettuce-sauce":                                       unknown_food  # 30 boxes; rule unknown: croissant|crisp-bread|breadcrumbs|^dough|-dough$|kebab|spring-roll|fish-fingers|bread-meat-substitute
+  "bread-nut":                                                                 bread  # 120 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "bread-olive":                                                               bread  # 34 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "bread-pita":                                                                bread  # 81 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "bread-rye":                                                                 bread  # 74 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "bread-sourdough":                                                           bread  # 204 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "bread-spelt":                                                               bread  # 42 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "bread-ticino":                                                              bread  # 50 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "bread-toast":                                                               bread  # 138 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "bread-white":                                                               bread  # 2031 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "bread-whole-wheat":                                                         bread  # 548 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "bread-wholemeal":                                                           bread  # 1540 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "bread-wholemeal-toast":                                                     bread  # 109 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "breadcrumbs-unspiced":                                                      unknown_food  # 70 boxes; rule unknown: croissant|crisp-bread|breadcrumbs|^dough|-dough$|kebab|spring-roll|fish-fingers|bread-meat-substitute
+  "brie":                                                                      cheese  # 34 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "brioche":                                                                   unknown_food  # 80 boxes; no rule matched
+  "broccoli":                                                                  broccoli  # 441 boxes; rule broccoli
+  "brownie":                                                                   unknown_food  # 89 boxes; no rule matched
+  "brussel-sprouts":                                                           unknown_food  # 48 boxes; no rule matched
+  "buckwheat-grain-peeled":                                                    unknown_food  # 33 boxes; no rule matched
+  "buckwheat-pancake":                                                         pancakes  # 17 boxes; rule pancake|crepe
+  "bulgur":                                                                    unknown_food  # 45 boxes; no rule matched
+  "butter":                                                                    drop  # 1712 boxes; rule drop: ^(butter|margarine)
+  "butter-herb":                                                               drop  # 34 boxes; rule drop: ^(butter|margarine)
+  "butter-spread-puree-almond":                                                drop  # 65 boxes; rule drop: ^(butter|margarine)
+  "cake-chocolate":                                                            unknown_food  # 208 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "cake-marble":                                                               unknown_food  # 19 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "cake-oblong":                                                               unknown_food  # 28 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "cake-salted":                                                               unknown_food  # 19 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "cantonese-fried-rice":                                                      fried_rice  # 35 boxes; rule fried-rice|rice-fried
+  "capers":                                                                    drop  # 65 boxes; rule drop: ^(capers|basil|parsley|chives|coriander|bouquet-garni|garlic)$
+  "cappuccino":                                                                drop  # 234 boxes; rule drop: ^(coffee|espresso|cappuccino|latte|ristretto)|coffee
+  "caprese-salad-tomato-mozzarella":                                           unknown_food  # 131 boxes; rule unknown: soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry
+  "carrot-cake":                                                               unknown_food  # 29 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "carrot-raw":                                                                carrot  # 1531 boxes; rule ^carrots?$|carrot-(raw|steamed|cooked|boiled)
+  "carrot-steamed-without-addition-of-salt":                                   carrot  # 85 boxes; rule ^carrots?$|carrot-(raw|steamed|cooked|boiled)
+  "cashew-nut":                                                                nuts  # 154 boxes; rule \bnut|almond|walnut|cashew|hazelnut|pistachio|peanut\b|peanuts
+  "cauliflower":                                                               unknown_food  # 197 boxes; no rule matched
+  "celeriac":                                                                  unknown_food  # 83 boxes; no rule matched
+  "celery":                                                                    unknown_food  # 36 boxes; no rule matched
+  "cenovis-yeast-spread":                                                      drop  # 35 boxes; rule drop: ^(jam|honey)|nutella|spread|peanut-butter
+  "cervelat":                                                                  unknown_food  # 60 boxes; no rule matched
+  "champagne":                                                                 drop  # 21 boxes; rule drop: ^(wine|beer|alcohol|spirit|cocktail|champagne|prosecco|sekt|aperitif)|beer$
+  "cheddar":                                                                   cheese  # 36 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "cheese":                                                                    cheese  # 677 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "cheese-for-raclette":                                                       cheese  # 148 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "cheesecake":                                                                unknown_food  # 33 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "cherries":                                                                  unknown_food  # 47 boxes; no rule matched
+  "chestnuts":                                                                 unknown_food  # 45 boxes; no rule matched
+  "chia-grains":                                                               unknown_food  # 28 boxes; no rule matched
+  "chicken":                                                                   grilled_chicken  # 388 boxes; rule chicken
+  "chicken-breast":                                                            grilled_chicken  # 155 boxes; rule chicken
+  "chicken-curry-cream-coconut-milk-curry-spices-paste":                       unknown_food  # 126 boxes; rule unknown: soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry
+  "chicken-cut-into-stripes-only-meat":                                        grilled_chicken  # 112 boxes; rule chicken
+  "chicken-leg":                                                               grilled_chicken  # 87 boxes; rule chicken
+  "chicken-nuggets":                                                           fried_chicken  # 43 boxes; rule chicken.*(fried|breaded|nugget)|(fried|breaded).*chicken|nugget
+  "chicken-wing":                                                              grilled_chicken  # 34 boxes; rule chicken
+  "chickpeas":                                                                 unknown_food  # 201 boxes; no rule matched
+  "chili-con-carne-prepared":                                                  unknown_food  # 57 boxes; no rule matched
+  "chinese-cabbage":                                                           unknown_food  # 71 boxes; no rule matched
+  "chips-french-fries":                                                        french_fries  # 367 boxes; rule fries|french-fr|chips-french
+  "chives":                                                                    drop  # 33 boxes; rule drop: ^(capers|basil|parsley|chives|coriander|bouquet-garni|garlic)$
+  "chocolate":                                                                 unknown_food  # 143 boxes; no rule matched
+  "chocolate-cookies":                                                         unknown_food  # 56 boxes; no rule matched
+  "chocolate-egg-small":                                                       unknown_food  # 28 boxes; no rule matched
+  "chocolate-filled":                                                          unknown_food  # 17 boxes; no rule matched
+  "chocolate-milk-chocolate-drink":                                            drop  # 22 boxes; rule drop: juice|^(smoothie|soda|cola|coca-cola|lemonade|syrup)|-drink\b|^[a-z]+-milk$
+  "chocolate-mousse":                                                          unknown_food  # 69 boxes; no rule matched
+  "chorizo":                                                                   sausage  # 23 boxes; rule sausage|salami|chorizo|bratwurst|wiener|frankfurter
+  "coca-cola":                                                                 drop  # 34 boxes; rule drop: juice|^(smoothie|soda|cola|coca-cola|lemonade|syrup)|-drink\b|^[a-z]+-milk$
+  "coca-cola-zero":                                                            drop  # 35 boxes; rule drop: juice|^(smoothie|soda|cola|coca-cola|lemonade|syrup)|-drink\b|^[a-z]+-milk$
+  "cocktail":                                                                  drop  # 33 boxes; rule drop: ^(wine|beer|alcohol|spirit|cocktail|champagne|prosecco|sekt|aperitif)|beer$
+  "cocoa-powder":                                                              drop  # 27 boxes; rule drop: ^(cream|sour-cream|thickened-cream-35|dips|cocoa-powder|maple-syrup-concentrate|ice-cubes|bouillon(-vegetable)?)$
+  "coconut":                                                                   unknown_food  # 45 boxes; no rule matched
+  "coconut-milk":                                                              drop  # 35 boxes; rule drop: juice|^(smoothie|soda|cola|coca-cola|lemonade|syrup)|-drink\b|^[a-z]+-milk$
+  "cod":                                                                       white_fish  # 31 boxes; rule \bcod\b|hake|pollock|tilapia|haddock|fish-fillet|white-fish|pangasius|sole\b|perch
+  "coffee-decaffeinated":                                                      drop  # 33 boxes; rule drop: ^(coffee|espresso|cappuccino|latte|ristretto)|coffee
+  "coffee-with-caffeine":                                                      drop  # 2018 boxes; rule drop: ^(coffee|espresso|cappuccino|latte|ristretto)|coffee
+  "coleslaw-chopped-without-sauce":                                            unknown_food  # 37 boxes; rule unknown: corn-crisps|^rice-waffel|sun-dried|vegetable-mix|potato-salad|coleslaw|faux-mage|^milk-chocolate
+  "cooked-sausage":                                                            sausage  # 25 boxes; rule sausage|salami|chorizo|bratwurst|wiener|frankfurter
+  "cookies":                                                                   unknown_food  # 98 boxes; no rule matched
+  "cordon-bleu-from-pork-schnitzel-fried":                                     unknown_food  # 46 boxes; no rule matched
+  "coriander":                                                                 drop  # 28 boxes; rule drop: ^(capers|basil|parsley|chives|coriander|bouquet-garni|garlic)$
+  "corn":                                                                      corn  # 184 boxes; rule ^corn$|sweet-?corn|corn-on|^corn-(?!flake)|maize
+  "corn-crisps":                                                               unknown_food  # 84 boxes; rule unknown: corn-crisps|^rice-waffel|sun-dried|vegetable-mix|potato-salad|coleslaw|faux-mage|^milk-chocolate
+  "corn-flakes":                                                               unknown_food  # 22 boxes; no rule matched
+  "cottage-cheese":                                                            cheese  # 152 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "country-fries":                                                             french_fries  # 80 boxes; rule fries|french-fr|chips-french
+  "couscous":                                                                  unknown_food  # 122 boxes; no rule matched
+  "crackers":                                                                  unknown_food  # 38 boxes; no rule matched
+  "cream":                                                                     drop  # 106 boxes; rule drop: ^(cream|sour-cream|thickened-cream-35|dips|cocoa-powder|maple-syrup-concentrate|ice-cubes|bouillon(-vegetable)?)$
+  "cream-cheese":                                                              cheese  # 89 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "cream-spinach":                                                             unknown_food  # 40 boxes; no rule matched
+  "crepe-plain":                                                               pancakes  # 183 boxes; rule pancake|crepe
+  "crisp-bread-wasa":                                                          unknown_food  # 46 boxes; rule unknown: croissant|crisp-bread|breadcrumbs|^dough|-dough$|kebab|spring-roll|fish-fingers|bread-meat-substitute
+  "crisps":                                                                    unknown_food  # 127 boxes; no rule matched
+  "croissant":                                                                 unknown_food  # 237 boxes; rule unknown: croissant|crisp-bread|breadcrumbs|^dough|-dough$|kebab|spring-roll|fish-fingers|bread-meat-substitute
+  "croissant-wholegrain":                                                      unknown_food  # 35 boxes; rule unknown: croissant|crisp-bread|breadcrumbs|^dough|-dough$|kebab|spring-roll|fish-fingers|bread-meat-substitute
+  "croissant-with-chocolate-filling":                                          unknown_food  # 99 boxes; rule unknown: croissant|crisp-bread|breadcrumbs|^dough|-dough$|kebab|spring-roll|fish-fingers|bread-meat-substitute
+  "croque-monsieur":                                                           sandwich  # 32 boxes; rule sandwich|toast-with|croque
+  "croutons":                                                                  unknown_food  # 44 boxes; no rule matched
+  "crunch-muesli":                                                             unknown_food  # 117 boxes; rule unknown: ^muesli$|crunch-muesli
+  "cucumber":                                                                  cucumber  # 783 boxes; rule cucumber
+  "cucumber-pickled":                                                          cucumber  # 252 boxes; rule cucumber
+  "curd":                                                                      unknown_food  # 40 boxes; no rule matched
+  "curds-natural-with-at-most-10-fidm":                                        unknown_food  # 49 boxes; no rule matched
+  "curry-vegetarian":                                                          unknown_food  # 150 boxes; no rule matched
+  "dairy-ice-cream":                                                           unknown_food  # 234 boxes; no rule matched
+  "damson-plum":                                                               unknown_food  # 25 boxes; no rule matched
+  "dark-chocolate":                                                            unknown_food  # 397 boxes; no rule matched
+  "dates":                                                                     unknown_food  # 86 boxes; no rule matched
+  "dips":                                                                      drop  # 34 boxes; rule drop: ^(cream|sour-cream|thickened-cream-35|dips|cocoa-powder|maple-syrup-concentrate|ice-cubes|bouillon(-vegetable)?)$
+  "dough-puff-pastry-shortcrust-bread-pizza-dough":                            unknown_food  # 39 boxes; rule unknown: croissant|crisp-bread|breadcrumbs|^dough|-dough$|kebab|spring-roll|fish-fingers|bread-meat-substitute
+  "dried-meat":                                                                unknown_food  # 203 boxes; no rule matched
+  "dried-raisins":                                                             unknown_food  # 80 boxes; no rule matched
+  "dumplings":                                                                 unknown_food  # 21 boxes; no rule matched
+  "ebly":                                                                      unknown_food  # 36 boxes; no rule matched
+  "egg":                                                                       unknown_food  # 1090 boxes; no rule matched
+  "egg-scrambled-prepared":                                                    scrambled_eggs  # 162 boxes; rule scrambled|omelet|omelette
+  "eggplant":                                                                  unknown_food  # 224 boxes; no rule matched
+  "eggplant-caviar":                                                           unknown_food  # 28 boxes; no rule matched
+  "emmental-cheese":                                                           cheese  # 46 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "espresso-with-caffeine":                                                    drop  # 709 boxes; rule drop: ^(coffee|espresso|cappuccino|latte|ristretto)|coffee
+  "fajita-bread-only":                                                         tortilla_wrap  # 101 boxes; rule wrap|burrito|tortilla|fajita
+  "falafel-balls":                                                             unknown_food  # 78 boxes; no rule matched
+  "faux-mage-cashew-vegan-chers":                                              unknown_food  # 26 boxes; rule unknown: corn-crisps|^rice-waffel|sun-dried|vegetable-mix|potato-salad|coleslaw|faux-mage|^milk-chocolate
+  "fennel":                                                                    unknown_food  # 199 boxes; no rule matched
+  "feta":                                                                      cheese  # 222 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "fig-dried":                                                                 unknown_food  # 31 boxes; no rule matched
+  "figs":                                                                      unknown_food  # 53 boxes; no rule matched
+  "fish":                                                                      unknown_food  # 158 boxes; no rule matched
+  "fish-crunchies-battered":                                                   unknown_food  # 28 boxes; no rule matched
+  "fish-fingers-breaded":                                                      unknown_food  # 43 boxes; rule unknown: croissant|crisp-bread|breadcrumbs|^dough|-dough$|kebab|spring-roll|fish-fingers|bread-meat-substitute
+  "flakes-oat":                                                                oatmeal  # 157 boxes; rule \boat|porridge|bircher|granola
+  "focaccia":                                                                  unknown_food  # 62 boxes; no rule matched
+  "fondue":                                                                    unknown_food  # 41 boxes; no rule matched
+  "french-beans":                                                              green_beans  # 255 boxes; rule green-bean|beans-green|haricot|french-beans
+  "french-pizza-from-alsace-baked":                                            pizza  # 28 boxes; rule \bpizza
+  "french-salad-dressing":                                                     drop  # 199 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "fresh-cheese":                                                              cheese  # 117 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "fruit-compotes":                                                            unknown_food  # 27 boxes; no rule matched
+  "fruit-coulis":                                                              unknown_food  # 60 boxes; no rule matched
+  "fruit-salad":                                                               unknown_food  # 137 boxes; no rule matched
+  "fruit-tart":                                                                unknown_food  # 67 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "frying-sausage":                                                            sausage  # 58 boxes; rule sausage|salami|chorizo|bratwurst|wiener|frankfurter
+  "garlic":                                                                    drop  # 45 boxes; rule drop: ^(capers|basil|parsley|chives|coriander|bouquet-garni|garlic)$
+  "glucose-drink-50g":                                                         drop  # 291 boxes; rule drop: juice|^(smoothie|soda|cola|coca-cola|lemonade|syrup)|-drink\b|^[a-z]+-milk$
+  "gluten-free-bread":                                                         bread  # 93 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "goat-average-raw":                                                          unknown_food  # 36 boxes; no rule matched
+  "goat-cheese-soft":                                                          cheese  # 98 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "grapefruit-pomelo":                                                         unknown_food  # 36 boxes; no rule matched
+  "grapes":                                                                    grapes  # 209 boxes; rule ^grape\b|^grapes
+  "greek-salad":                                                               unknown_food  # 72 boxes; no rule matched
+  "greek-yaourt-yahourt-yogourt-ou-yoghourt":                                  yogurt  # 86 boxes; rule yogurt|yoghurt|yaourt|yogourt|yoghourt|yahourt|skyr|quark
+  "green-asparagus":                                                           unknown_food  # 181 boxes; no rule matched
+  "green-bean-steamed-without-addition-of-salt":                               green_beans  # 82 boxes; rule green-bean|beans-green|haricot|french-beans
+  "green-olives":                                                              unknown_food  # 182 boxes; no rule matched
+  "grissini":                                                                  unknown_food  # 23 boxes; no rule matched
+  "grits-polenta-maize-flour":                                                 unknown_food  # 99 boxes; rule unknown: soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry
+  "gruyere":                                                                   cheese  # 278 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "guacamole":                                                                 avocado  # 152 boxes; rule avocado|guacamole
+  "gummi-bears-fruit-jellies-jelly-babies-with-fruit-essence":                 unknown_food  # 18 boxes; no rule matched
+  "halloumi":                                                                  cheese  # 39 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "ham":                                                                       unknown_food  # 89 boxes; no rule matched
+  "ham-cooked":                                                                unknown_food  # 214 boxes; no rule matched
+  "ham-croissant":                                                             unknown_food  # 62 boxes; rule unknown: croissant|crisp-bread|breadcrumbs|^dough|-dough$|kebab|spring-roll|fish-fingers|bread-meat-substitute
+  "ham-raw":                                                                   unknown_food  # 247 boxes; no rule matched
+  "ham-turkey":                                                                unknown_food  # 27 boxes; no rule matched
+  "hamburger":                                                                 burger  # 51 boxes; rule burger(?!-bun)
+  "hamburger-bread-meat-ketchup":                                              burger  # 163 boxes; rule burger(?!-bun)
+  "hamburger-bun":                                                             bread  # 37 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "hard-cheese":                                                               cheese  # 575 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "hazelnut":                                                                  nuts  # 70 boxes; rule \bnut|almond|walnut|cashew|hazelnut|pistachio|peanut\b|peanuts
+  "hazelnut-chocolate-spread-nutella-ovomaltine-caotina":                      drop  # 128 boxes; rule drop: ^(jam|honey)|nutella|spread|peanut-butter
+  "herbal-tea":                                                                drop  # 274 boxes; rule drop: ^tea\b|^tea-|-tea$
+  "high-protein-pasta-made-of-lentils-peas":                                   pasta  # 36 boxes; rule pasta|spaghetti|penne|fusilli|tagliatelle|macaroni|noodle|ravioli|tortellini
+  "honey":                                                                     drop  # 408 boxes; rule drop: ^(jam|honey)|nutella|spread|peanut-butter
+  "hummus":                                                                    unknown_food  # 272 boxes; no rule matched
+  "ice-cubes":                                                                 drop  # 24 boxes; rule drop: ^(cream|sour-cream|thickened-cream-35|dips|cocoa-powder|maple-syrup-concentrate|ice-cubes|bouillon(-vegetable)?)$
+  "ice-tea":                                                                   drop  # 69 boxes; rule drop: ^tea\b|^tea-|-tea$
+  "italian-salad-dressing":                                                    drop  # 19 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "jam":                                                                       drop  # 874 boxes; rule drop: ^(jam|honey)|nutella|spread|peanut-butter
+  "juice-apple":                                                               drop  # 69 boxes; rule drop: juice|^(smoothie|soda|cola|coca-cola|lemonade|syrup)|-drink\b|^[a-z]+-milk$
+  "juice-multifruit":                                                          drop  # 36 boxes; rule drop: juice|^(smoothie|soda|cola|coca-cola|lemonade|syrup)|-drink\b|^[a-z]+-milk$
+  "juice-orange":                                                              drop  # 271 boxes; rule drop: juice|^(smoothie|soda|cola|coca-cola|lemonade|syrup)|-drink\b|^[a-z]+-milk$
+  "kaki":                                                                      unknown_food  # 35 boxes; no rule matched
+  "kebab-in-pita-bread":                                                       unknown_food  # 24 boxes; rule unknown: croissant|crisp-bread|breadcrumbs|^dough|-dough$|kebab|spring-roll|fish-fingers|bread-meat-substitute
+  "kefir-drink":                                                               drop  # 65 boxes; rule drop: juice|^(smoothie|soda|cola|coca-cola|lemonade|syrup)|-drink\b|^[a-z]+-milk$
+  "ketchup":                                                                   drop  # 150 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "kiwi":                                                                      unknown_food  # 234 boxes; no rule matched
+  "kolhrabi":                                                                  unknown_food  # 115 boxes; no rule matched
+  "lamb":                                                                      unknown_food  # 34 boxes; no rule matched
+  "lamb-chop":                                                                 unknown_food  # 32 boxes; no rule matched
+  "lasagne-meat-prepared":                                                     unknown_food  # 85 boxes; rule unknown: soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry
+  "lasagne-vegetable-prepared":                                                unknown_food  # 26 boxes; rule unknown: soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry
+  "latte-macchiato-with-caffeine":                                             drop  # 35 boxes; rule drop: ^(coffee|espresso|cappuccino|latte|ristretto)|coffee
+  "leaf-spinach":                                                              unknown_food  # 286 boxes; no rule matched
+  "leek":                                                                      unknown_food  # 130 boxes; no rule matched
+  "lemon":                                                                     unknown_food  # 133 boxes; no rule matched
+  "lemon-cake":                                                                unknown_food  # 43 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "lemon-pie":                                                                 unknown_food  # 30 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "lentils":                                                                   unknown_food  # 136 boxes; no rule matched
+  "lentils-green-du-puy-du-berry":                                             unknown_food  # 49 boxes; no rule matched
+  "light-beer":                                                                drop  # 16 boxes; rule drop: ^(wine|beer|alcohol|spirit|cocktail|champagne|prosecco|sekt|aperitif)|beer$
+  "linseeds":                                                                  unknown_food  # 27 boxes; no rule matched
+  "lye-pretzel-soft":                                                          unknown_food  # 63 boxes; no rule matched
+  "m-m-s":                                                                     unknown_food  # 19 boxes; no rule matched
+  "macaroon":                                                                  unknown_food  # 21 boxes; no rule matched
+  "mandarine":                                                                 orange  # 225 boxes; rule ^orange|mandarin|clementine
+  "mango":                                                                     unknown_food  # 106 boxes; no rule matched
+  "mango-dried":                                                               unknown_food  # 20 boxes; no rule matched
+  "maple-syrup-concentrate":                                                   drop  # 27 boxes; rule drop: ^(cream|sour-cream|thickened-cream-35|dips|cocoa-powder|maple-syrup-concentrate|ice-cubes|bouillon(-vegetable)?)$
+  "margarine":                                                                 drop  # 24 boxes; rule drop: ^(butter|margarine)
+  "mashed-potatoes-prepared-with-full-fat-milk-with-butter":                   potato  # 155 boxes; rule potato
+  "mayonnaise":                                                                drop  # 325 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "meat":                                                                      unknown_food  # 37 boxes; no rule matched
+  "meat-balls":                                                                unknown_food  # 29 boxes; no rule matched
+  "meat-terrine-pate":                                                         unknown_food  # 61 boxes; no rule matched
+  "meatloaf":                                                                  unknown_food  # 43 boxes; no rule matched
+  "meringue":                                                                  unknown_food  # 30 boxes; no rule matched
+  "milk":                                                                      drop  # 207 boxes; rule drop: ^milk$|^milk-(whole|semi|skim|drink)
+  "milk-chocolate":                                                            unknown_food  # 116 boxes; rule unknown: corn-crisps|^rice-waffel|sun-dried|vegetable-mix|potato-salad|coleslaw|faux-mage|^milk-chocolate
+  "milk-chocolate-with-hazelnuts":                                             unknown_food  # 26 boxes; rule unknown: corn-crisps|^rice-waffel|sun-dried|vegetable-mix|potato-salad|coleslaw|faux-mage|^milk-chocolate
+  "minced-meat":                                                               unknown_food  # 29 boxes; no rule matched
+  "mix-of-dried-fruits-and-nuts":                                              nuts  # 23 boxes; rule \bnut|almond|walnut|cashew|hazelnut|pistachio|peanut\b|peanuts
+  "mixed-nuts":                                                                nuts  # 289 boxes; rule \bnut|almond|walnut|cashew|hazelnut|pistachio|peanut\b|peanuts
+  "mixed-salad-chopped-without-sauce":                                         green_salad  # 517 boxes; rule leaf-salad|salad-leaf|green-salad|lettuce|lamb-s-lettuce|rocket|arugula|mixed-salad|^salad
+  "mixed-seeds":                                                               unknown_food  # 65 boxes; no rule matched
+  "mixed-vegetables":                                                          unknown_food  # 921 boxes; no rule matched
+  "mousse":                                                                    unknown_food  # 34 boxes; no rule matched
+  "mozzarella":                                                                cheese  # 240 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "muesli":                                                                    unknown_food  # 149 boxes; rule unknown: ^muesli$|crunch-muesli
+  "muffin":                                                                    unknown_food  # 43 boxes; no rule matched
+  "mungbean-sprouts":                                                          unknown_food  # 32 boxes; no rule matched
+  "mushroom":                                                                  unknown_food  # 174 boxes; no rule matched
+  "mushroom-average-stewed-without-addition-of-fat-without-addition-of-salt":  unknown_food  # 25 boxes; no rule matched
+  "mushrooms":                                                                 unknown_food  # 176 boxes; no rule matched
+  "mustard":                                                                   drop  # 95 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "mustard-dijon":                                                             drop  # 39 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "naan-indien-bread":                                                         bread  # 28 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "nectarine":                                                                 unknown_food  # 126 boxes; no rule matched
+  "nuts":                                                                      nuts  # 30 boxes; rule \bnut|almond|walnut|cashew|hazelnut|pistachio|peanut\b|peanuts
+  "oat-milk":                                                                  drop  # 17 boxes; rule drop: juice|^(smoothie|soda|cola|coca-cola|lemonade|syrup)|-drink\b|^[a-z]+-milk$
+  "oil":                                                                       drop  # 13 boxes; rule drop: ^(oil|salt|sugar|sweetener)$|vinegar|^sugar-glazing|-oil$|^pepper-black
+  "oil-vinegar-salad-dressing":                                                drop  # 64 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "omelette-plain":                                                            scrambled_eggs  # 95 boxes; rule scrambled|omelet|omelette
+  "onion":                                                                     unknown_food  # 309 boxes; no rule matched
+  "orange":                                                                    orange  # 252 boxes; rule ^orange|mandarin|clementine
+  "pancakes":                                                                  pancakes  # 105 boxes; rule pancake|crepe
+  "panna-cotta":                                                               unknown_food  # 34 boxes; no rule matched
+  "paprika-chips":                                                             unknown_food  # 30 boxes; no rule matched
+  "parmesan":                                                                  cheese  # 398 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "parsley":                                                                   drop  # 49 boxes; rule drop: ^(capers|basil|parsley|chives|coriander|bouquet-garni|garlic)$
+  "pasta":                                                                     pasta  # 267 boxes; rule pasta|spaghetti|penne|fusilli|tagliatelle|macaroni|noodle|ravioli|tortellini
+  "pasta-hornli":                                                              pasta  # 92 boxes; rule pasta|spaghetti|penne|fusilli|tagliatelle|macaroni|noodle|ravioli|tortellini
+  "pasta-in-butterfly-form-farfalle":                                          pasta  # 50 boxes; rule pasta|spaghetti|penne|fusilli|tagliatelle|macaroni|noodle|ravioli|tortellini
+  "pasta-in-conch-form":                                                       pasta  # 46 boxes; rule pasta|spaghetti|penne|fusilli|tagliatelle|macaroni|noodle|ravioli|tortellini
+  "pasta-linguini-parpadelle-tagliatelle":                                     pasta  # 127 boxes; rule pasta|spaghetti|penne|fusilli|tagliatelle|macaroni|noodle|ravioli|tortellini
+  "pasta-noodles":                                                             pasta  # 105 boxes; rule pasta|spaghetti|penne|fusilli|tagliatelle|macaroni|noodle|ravioli|tortellini
+  "pasta-penne":                                                               pasta  # 228 boxes; rule pasta|spaghetti|penne|fusilli|tagliatelle|macaroni|noodle|ravioli|tortellini
+  "pasta-ravioli-stuffing":                                                    pasta  # 38 boxes; rule pasta|spaghetti|penne|fusilli|tagliatelle|macaroni|noodle|ravioli|tortellini
+  "pasta-spaghetti":                                                           pasta  # 410 boxes; rule pasta|spaghetti|penne|fusilli|tagliatelle|macaroni|noodle|ravioli|tortellini
+  "pasta-tortelloni-stuffing":                                                 pasta  # 33 boxes; rule pasta|spaghetti|penne|fusilli|tagliatelle|macaroni|noodle|ravioli|tortellini
+  "pasta-twist":                                                               pasta  # 177 boxes; rule pasta|spaghetti|penne|fusilli|tagliatelle|macaroni|noodle|ravioli|tortellini
+  "pasta-wholemeal":                                                           pasta  # 133 boxes; rule pasta|spaghetti|penne|fusilli|tagliatelle|macaroni|noodle|ravioli|tortellini
+  "pastry-flaky":                                                              unknown_food  # 22 boxes; no rule matched
+  "peach":                                                                     unknown_food  # 102 boxes; no rule matched
+  "peanut":                                                                    nuts  # 102 boxes; rule \bnut|almond|walnut|cashew|hazelnut|pistachio|peanut\b|peanuts
+  "peanut-butter":                                                             drop  # 112 boxes; rule drop: ^(jam|honey)|nutella|spread|peanut-butter
+  "pear":                                                                      unknown_food  # 255 boxes; no rule matched
+  "pearl-onions":                                                              unknown_food  # 50 boxes; no rule matched
+  "peas":                                                                      unknown_food  # 109 boxes; no rule matched
+  "pecan-nut":                                                                 nuts  # 30 boxes; rule \bnut|almond|walnut|cashew|hazelnut|pistachio|peanut\b|peanuts
+  "perch-fillets-lake":                                                        white_fish  # 27 boxes; rule \bcod\b|hake|pollock|tilapia|haddock|fish-fillet|white-fish|pangasius|sole\b|perch
+  "philadelphia":                                                              cheese  # 25 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "pie-apricot-baked-with-cake-dough":                                         unknown_food  # 31 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "pie-plum-baked-with-cake-dough":                                            unknown_food  # 42 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "pie-rhubarb-baked-with-cake-dough":                                         unknown_food  # 26 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "pine-nuts":                                                                 nuts  # 49 boxes; rule \bnut|almond|walnut|cashew|hazelnut|pistachio|peanut\b|peanuts
+  "pineapple":                                                                 unknown_food  # 90 boxes; no rule matched
+  "pistachio":                                                                 nuts  # 90 boxes; rule \bnut|almond|walnut|cashew|hazelnut|pistachio|peanut\b|peanuts
+  "pizza-margherita-baked":                                                    pizza  # 335 boxes; rule \bpizza
+  "pizza-with-ham-baked":                                                      pizza  # 69 boxes; rule \bpizza
+  "pizza-with-ham-with-mushrooms-baked":                                       pizza  # 41 boxes; rule \bpizza
+  "pizza-with-vegetables-baked":                                               pizza  # 127 boxes; rule \bpizza
+  "plums":                                                                     unknown_food  # 95 boxes; no rule matched
+  "pomegranate":                                                               unknown_food  # 117 boxes; no rule matched
+  "popcorn-salted":                                                            unknown_food  # 26 boxes; no rule matched
+  "pork":                                                                      unknown_food  # 104 boxes; no rule matched
+  "pork-chop":                                                                 unknown_food  # 32 boxes; no rule matched
+  "pork-escalope":                                                             unknown_food  # 42 boxes; no rule matched
+  "pork-roast":                                                                unknown_food  # 32 boxes; no rule matched
+  "porridge-prepared-with-partially-skimmed-milk":                             oatmeal  # 50 boxes; rule \boat|porridge|bircher|granola
+  "potato-gnocchi":                                                            unknown_food  # 84 boxes; rule unknown: soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry
+  "potato-salad-with-mayonnaise-yogurt-dressing":                              unknown_food  # 36 boxes; rule unknown: corn-crisps|^rice-waffel|sun-dried|vegetable-mix|potato-salad|coleslaw|faux-mage|^milk-chocolate
+  "potatoes-au-gratin-dauphinois-prepared":                                    unknown_food  # 78 boxes; rule unknown: soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry
+  "potatoes-steamed":                                                          potato  # 685 boxes; rule potato
+  "praline":                                                                   unknown_food  # 118 boxes; no rule matched
+  "processed-cheese":                                                          cheese  # 34 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "processed-meat-charcuterie":                                                unknown_food  # 40 boxes; no rule matched
+  "prosecco":                                                                  drop  # 24 boxes; rule drop: ^(wine|beer|alcohol|spirit|cocktail|champagne|prosecco|sekt|aperitif)|beer$
+  "pumpkin":                                                                   unknown_food  # 93 boxes; no rule matched
+  "pumpkin-seeds":                                                             unknown_food  # 65 boxes; no rule matched
+  "quiche-with-cheese-baked-with-puff-pastry":                                 unknown_food  # 66 boxes; rule unknown: soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry
+  "quiche-with-spinach-baked-with-cake-dough":                                 unknown_food  # 44 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "quinoa":                                                                    unknown_food  # 201 boxes; no rule matched
+  "raspberries":                                                               unknown_food  # 204 boxes; no rule matched
+  "ratatouille":                                                               unknown_food  # 154 boxes; no rule matched
+  "red-cabbage":                                                               unknown_food  # 135 boxes; no rule matched
+  "red-radish":                                                                unknown_food  # 261 boxes; no rule matched
+  "rice":                                                                      white_rice  # 1056 boxes; rule ^rice(?!-noodle)|-rice\b
+  "rice-basmati":                                                              white_rice  # 116 boxes; rule ^rice(?!-noodle)|-rice\b
+  "rice-jasmin":                                                               white_rice  # 26 boxes; rule ^rice(?!-noodle)|-rice\b
+  "rice-noodles-vermicelli":                                                   pasta  # 79 boxes; rule pasta|spaghetti|penne|fusilli|tagliatelle|macaroni|noodle|ravioli|tortellini
+  "rice-waffels":                                                              unknown_food  # 34 boxes; rule unknown: corn-crisps|^rice-waffel|sun-dried|vegetable-mix|potato-salad|coleslaw|faux-mage|^milk-chocolate
+  "rice-whole-grain":                                                          white_rice  # 84 boxes; rule ^rice(?!-noodle)|-rice\b
+  "rice-wild":                                                                 white_rice  # 51 boxes; rule ^rice(?!-noodle)|-rice\b
+  "risotto-with-mushrooms-cooked":                                             unknown_food  # 34 boxes; rule unknown: soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry
+  "risotto-without-cheese-cooked":                                             unknown_food  # 178 boxes; rule unknown: soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry
+  "ristretto-with-caffeine":                                                   drop  # 158 boxes; rule drop: ^(coffee|espresso|cappuccino|latte|ristretto)|coffee
+  "roll-of-half-white-or-white-flour-with-large-void":                         bread  # 110 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "roll-with-pieces-of-chocolate":                                             bread  # 75 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "romanesco":                                                                 unknown_food  # 45 boxes; no rule matched
+  "rosti":                                                                     unknown_food  # 84 boxes; no rule matched
+  "rusk-wholemeal":                                                            unknown_food  # 51 boxes; no rule matched
+  "salad-dressing":                                                            drop  # 151 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "salad-lambs-ear":                                                           green_salad  # 174 boxes; rule leaf-salad|salad-leaf|green-salad|lettuce|lamb-s-lettuce|rocket|arugula|mixed-salad|^salad
+  "salad-leaf-salad-green":                                                    green_salad  # 2096 boxes; rule leaf-salad|salad-leaf|green-salad|lettuce|lamb-s-lettuce|rocket|arugula|mixed-salad|^salad
+  "salad-rocket":                                                              green_salad  # 219 boxes; rule leaf-salad|salad-leaf|green-salad|lettuce|lamb-s-lettuce|rocket|arugula|mixed-salad|^salad
+  "salami":                                                                    sausage  # 300 boxes; rule sausage|salami|chorizo|bratwurst|wiener|frankfurter
+  "salmon":                                                                    salmon  # 277 boxes; rule salmon
+  "salmon-smoked":                                                             salmon  # 251 boxes; rule salmon
+  "salt-cake-vegetables-filled":                                               unknown_food  # 95 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "sandwich-ham-cheese-and-butter":                                            sandwich  # 32 boxes; rule sandwich|toast-with|croque
+  "sauce-carbonara":                                                           drop  # 37 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "sauce-cocktail":                                                            drop  # 42 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "sauce-cream":                                                               drop  # 213 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "sauce-curry":                                                               drop  # 53 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "sauce-mushroom":                                                            drop  # 58 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "sauce-pesto":                                                               drop  # 131 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "sauce-roast":                                                               drop  # 123 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "sauce-savoury":                                                             drop  # 153 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "sauce-soya":                                                                drop  # 65 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "sauce-sweet-salted-asian":                                                  drop  # 33 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "sauce-sweet-sour":                                                          drop  # 40 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "sauerkraut":                                                                unknown_food  # 48 boxes; no rule matched
+  "sausage":                                                                   sausage  # 123 boxes; rule sausage|salami|chorizo|bratwurst|wiener|frankfurter
+  "savoury-puff-pastry":                                                       unknown_food  # 61 boxes; no rule matched
+  "savoury-puff-pastry-stick":                                                 unknown_food  # 28 boxes; no rule matched
+  "savoy-cabbage-steamed-without-addition-of-salt":                            unknown_food  # 33 boxes; no rule matched
+  "seeds":                                                                     unknown_food  # 43 boxes; no rule matched
+  "sekt":                                                                      drop  # 23 boxes; rule drop: ^(wine|beer|alcohol|spirit|cocktail|champagne|prosecco|sekt|aperitif)|beer$
+  "semi-hard-cheese":                                                          cheese  # 179 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "sesame-seeds":                                                              unknown_food  # 85 boxes; no rule matched
+  "shoots":                                                                    unknown_food  # 42 boxes; no rule matched
+  "shrimp-boiled":                                                             shrimp  # 41 boxes; rule shrimp|prawn
+  "shrimp-prawn-large":                                                        shrimp  # 76 boxes; rule shrimp|prawn
+  "shrimp-prawn-small":                                                        shrimp  # 68 boxes; rule shrimp|prawn
+  "smoked-cooked-sausage-of-pork-and-beef-meat-sausag":                        sausage  # 23 boxes; rule sausage|salami|chorizo|bratwurst|wiener|frankfurter
+  "smoothie":                                                                  drop  # 44 boxes; rule drop: juice|^(smoothie|soda|cola|coca-cola|lemonade|syrup)|-drink\b|^[a-z]+-milk$
+  "soft-cheese":                                                               cheese  # 282 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "sorbet":                                                                    unknown_food  # 38 boxes; no rule matched
+  "soup-cream-of-vegetables":                                                  unknown_food  # 24 boxes; rule unknown: soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry
+  "soup-miso":                                                                 unknown_food  # 24 boxes; rule unknown: soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry
+  "soup-of-lentils-dahl-dhal":                                                 unknown_food  # 85 boxes; rule unknown: soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry
+  "soup-potato":                                                               unknown_food  # 22 boxes; rule unknown: soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry
+  "soup-pumpkin":                                                              unknown_food  # 131 boxes; rule unknown: soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry
+  "soup-tomato":                                                               unknown_food  # 27 boxes; rule unknown: soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry
+  "soup-vegetable":                                                            unknown_food  # 149 boxes; rule unknown: soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry
+  "sour-cream":                                                                drop  # 100 boxes; rule drop: ^(cream|sour-cream|thickened-cream-35|dips|cocoa-powder|maple-syrup-concentrate|ice-cubes|bouillon(-vegetable)?)$
+  "soya-drink-soy-milk":                                                       drop  # 23 boxes; rule drop: juice|^(smoothie|soda|cola|coca-cola|lemonade|syrup)|-drink\b|^[a-z]+-milk$
+  "soya-yaourt-yahourt-yogourt-ou-yoghourt":                                   yogurt  # 22 boxes; rule yogurt|yoghurt|yaourt|yogourt|yoghourt|yahourt|skyr|quark
+  "spaetzle":                                                                  unknown_food  # 109 boxes; no rule matched
+  "spinach-raw":                                                               unknown_food  # 48 boxes; no rule matched
+  "spinach-steamed-without-addition-of-salt":                                  unknown_food  # 47 boxes; no rule matched
+  "spring-onion-scallion":                                                     unknown_food  # 68 boxes; no rule matched
+  "spring-roll-fried":                                                         unknown_food  # 46 boxes; rule unknown: croissant|crisp-bread|breadcrumbs|^dough|-dough$|kebab|spring-roll|fish-fingers|bread-meat-substitute
+  "strawberries":                                                              strawberries  # 442 boxes; rule strawberr
+  "sugar-glazing":                                                             drop  # 24 boxes; rule drop: ^(oil|salt|sugar|sweetener)$|vinegar|^sugar-glazing|-oil$|^pepper-black
+  "sugar-melon":                                                               unknown_food  # 178 boxes; no rule matched
+  "sun-dried-tomatoe":                                                         unknown_food  # 72 boxes; rule unknown: corn-crisps|^rice-waffel|sun-dried|vegetable-mix|potato-salad|coleslaw|faux-mage|^milk-chocolate
+  "sunflower-seeds":                                                           unknown_food  # 57 boxes; no rule matched
+  "sushi":                                                                     sushi  # 116 boxes; rule sushi|maki|nigiri
+  "sweet-corn-canned":                                                         corn  # 126 boxes; rule ^corn$|sweet-?corn|corn-on|^corn-(?!flake)|maize
+  "sweet-potato":                                                              sweet_potato  # 228 boxes; rule sweet-potato
+  "sweets-candies":                                                            unknown_food  # 33 boxes; no rule matched
+  "swiss-chard":                                                               unknown_food  # 71 boxes; no rule matched
+  "syrup-diluted-ready-to-drink":                                              drop  # 99 boxes; rule drop: juice|^(smoothie|soda|cola|coca-cola|lemonade|syrup)|-drink\b|^[a-z]+-milk$
+  "taboule-prepared-with-couscous":                                            unknown_food  # 85 boxes; no rule matched
+  "tart":                                                                      unknown_food  # 131 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "tartar-meat":                                                               unknown_food  # 32 boxes; no rule matched
+  "tartar-sauce":                                                              drop  # 38 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "tea":                                                                       drop  # 609 boxes; rule drop: ^tea\b|^tea-|-tea$
+  "tea-black":                                                                 drop  # 229 boxes; rule drop: ^tea\b|^tea-|-tea$
+  "tea-fruit":                                                                 drop  # 16 boxes; rule drop: ^tea\b|^tea-|-tea$
+  "tea-ginger":                                                                drop  # 19 boxes; rule drop: ^tea\b|^tea-|-tea$
+  "tea-green":                                                                 drop  # 291 boxes; rule drop: ^tea\b|^tea-|-tea$
+  "tea-peppermint":                                                            drop  # 70 boxes; rule drop: ^tea\b|^tea-|-tea$
+  "tea-rooibos":                                                               drop  # 16 boxes; rule drop: ^tea\b|^tea-|-tea$
+  "tea-spice":                                                                 drop  # 16 boxes; rule drop: ^tea\b|^tea-|-tea$
+  "tea-verveine":                                                              drop  # 53 boxes; rule drop: ^tea\b|^tea-|-tea$
+  "tete-de-moine":                                                             cheese  # 33 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "thickened-cream-35":                                                        drop  # 87 boxes; rule drop: ^(cream|sour-cream|thickened-cream-35|dips|cocoa-powder|maple-syrup-concentrate|ice-cubes|bouillon(-vegetable)?)$
+  "tiramisu":                                                                  unknown_food  # 75 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "tofu":                                                                      tofu  # 247 boxes; rule tofu
+  "tomato-raw":                                                                tomato  # 1968 boxes; rule tomato
+  "tomato-sauce":                                                              drop  # 479 boxes; rule drop: ^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$
+  "tomato-stewed-without-addition-of-fat-without-addition-of-salt":            tomato  # 26 boxes; rule tomato
+  "tomme":                                                                     cheese  # 79 boxes; rule cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia
+  "tuna":                                                                      unknown_food  # 126 boxes; no rule matched
+  "tuna-in-oil-drained":                                                       unknown_food  # 36 boxes; no rule matched
+  "turnover-with-meat-small-meat-pie-empanadas":                               unknown_food  # 24 boxes; rule unknown: (?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu
+  "tzatziki":                                                                  unknown_food  # 42 boxes; no rule matched
+  "vanille-cream-cooked-custard-creme-dessert":                                unknown_food  # 32 boxes; no rule matched
+  "veal-sausage":                                                              sausage  # 70 boxes; rule sausage|salami|chorizo|bratwurst|wiener|frankfurter
+  "vegetable-au-gratin-baked":                                                 unknown_food  # 60 boxes; rule unknown: soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry
+  "vegetable-mix-peas-and-carrots":                                            unknown_food  # 80 boxes; rule unknown: corn-crisps|^rice-waffel|sun-dried|vegetable-mix|potato-salad|coleslaw|faux-mage|^milk-chocolate
+  "vegetables":                                                                unknown_food  # 87 boxes; no rule matched
+  "veggie-burger":                                                             burger  # 55 boxes; rule burger(?!-bun)
+  "waffle":                                                                    unknown_food  # 35 boxes; no rule matched
+  "walnut":                                                                    nuts  # 160 boxes; rule \bnut|almond|walnut|cashew|hazelnut|pistachio|peanut\b|peanuts
+  "water":                                                                     drop  # 5360 boxes; rule drop: ^water($|-)
+  "water-mineral":                                                             drop  # 420 boxes; rule drop: ^water($|-)
+  "water-with-lemon-juice":                                                    drop  # 163 boxes; rule drop: ^water($|-)
+  "watermelon-fresh":                                                          unknown_food  # 102 boxes; no rule matched
+  "white-asparagus":                                                           unknown_food  # 77 boxes; no rule matched
+  "white-bread-with-butter-eggs-and-milk":                                     bread  # 47 boxes; rule bread|toast|baguette|roll\b|bun\b
+  "white-cabbage":                                                             unknown_food  # 75 boxes; no rule matched
+  "white-chocolate":                                                           unknown_food  # 23 boxes; no rule matched
+  "white-coffee-with-caffeine":                                                drop  # 550 boxes; rule drop: ^(coffee|espresso|cappuccino|latte|ristretto)|coffee
+  "white-radish":                                                              unknown_food  # 24 boxes; no rule matched
+  "wienerli-swiss-sausage":                                                    sausage  # 60 boxes; rule sausage|salami|chorizo|bratwurst|wiener|frankfurter
+  "wine-red":                                                                  drop  # 876 boxes; rule drop: ^(wine|beer|alcohol|spirit|cocktail|champagne|prosecco|sekt|aperitif)|beer$
+  "wine-rose":                                                                 drop  # 106 boxes; rule drop: ^(wine|beer|alcohol|spirit|cocktail|champagne|prosecco|sekt|aperitif)|beer$
+  "wine-white":                                                                drop  # 508 boxes; rule drop: ^(wine|beer|alcohol|spirit|cocktail|champagne|prosecco|sekt|aperitif)|beer$
+  "witloof-chicory":                                                           unknown_food  # 143 boxes; no rule matched
+  "yaourt-yahourt-yogourt-ou-yoghourt-natural":                                yogurt  # 272 boxes; rule yogurt|yoghurt|yaourt|yogourt|yoghourt|yahourt|skyr|quark
+  "zucchini":                                                                  unknown_food  # 402 boxes; no rule matched
+  "zucchini-stewed-without-addition-of-fat-without-addition-of-salt":          unknown_food  # 46 boxes; no rule matched

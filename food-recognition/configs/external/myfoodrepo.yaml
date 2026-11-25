@@ -7,9 +7,12 @@
 # name -> class table for a person to check. The importer only uses that
 # checked table, never these patterns directly.
 #
-# Categories that match nothing become unknown_food (still food for the
-# detector). Categories in `drop` are not boxed at all, following
-# docs/annotation_guidelines.md (drinks, sauces, spreads, seasoning).
+# Order of checks: `unknown` first (dishes that contain a class word but are
+# not that food, e.g. "apple-pie", "risotto-without-cheese"), then `drop`,
+# then `patterns`. Categories that match nothing become unknown_food (still
+# food for the detector). Categories in `drop` are not boxed at all,
+# following docs/annotation_guidelines.md (drinks, sauces, spreads,
+# seasoning, garnish herbs).
 
 # Each release is a separate licence-register asset. The importer refuses a
 # release whose asset is not `approved` in licenses/assets.yaml. Credit always
@@ -30,34 +33,46 @@ releases:
       MyFoodRepo / Food Recognition Benchmark 2022 v2.0 (Mohanty et al., 2022,
       Front. Nutr. 9:875143), AIcrowd, CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
 
+unknown:
+  # Mixed dishes, baked goods and desserts that name one of our foods but
+  # look different and have different nutrition. Reviewed against the full
+  # 2022 v2.0 category list on 2026-11-21.
+  - '(?<!pan)cake|\btart\b|\bpie\b|crumble|applesauce|tiramisu'
+  - 'soup|risotto|lasagn|gnocchi|gratin|quiche|caprese|polenta|chicken-curry'
+  - 'croissant|crisp-bread|breadcrumbs|^dough|-dough$|kebab|spring-roll|fish-fingers|bread-meat-substitute'
+  - 'corn-crisps|^rice-waffel|sun-dried|vegetable-mix|potato-salad|coleslaw|faux-mage|^milk-chocolate'
+  - '^muesli$|crunch-muesli'
+
 drop:
   # Anchored to the start or end of the name so that dishes containing a
   # sauce (e.g. "hamburger-bread-meat-ketchup") are not dropped.
-  - '^water'
-  - '^(coffee|espresso|cappuccino|latte)'
+  - '^water($|-)'
+  - '^(coffee|espresso|cappuccino|latte|ristretto)|coffee'
   - '^tea\b|^tea-|-tea$'
-  - '^(wine|beer|alcohol|spirit|cocktail)'
-  - 'juice|^(smoothie|soda|cola|lemonade|syrup)'
+  - '^(wine|beer|alcohol|spirit|cocktail|champagne|prosecco|sekt|aperitif)|beer$'
+  - 'juice|^(smoothie|soda|cola|coca-cola|lemonade|syrup)|-drink\b|^[a-z]+-milk$'
   - '^milk$|^milk-(whole|semi|skim|drink)'
   - '^(butter|margarine)'
-  - '^(jam|honey|nutella)|spread$'
-  - '^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|-sauce$|-dressing$'
-  - '^(oil|vinegar|salt|sugar|sweetener)|-oil$|^pepper-black'
+  - '^(jam|honey)|nutella|spread|peanut-butter'
+  - '^(sauce|ketchup|mayonnaise|mustard|dressing|vinaigrette|gravy|pesto)|(?<!without)-sauce$|-dressing$'
+  - '^(oil|salt|sugar|sweetener)$|vinegar|^sugar-glazing|-oil$|^pepper-black'
+  - '^(cream|sour-cream|thickened-cream-35|dips|cocoa-powder|maple-syrup-concentrate|ice-cubes|bouillon(-vegetable)?)$'
+  - '^(capers|basil|parsley|chives|coriander|bouquet-garni|garlic)$'
 
 patterns:
   # Prepared dishes first
   pizza:          '\bpizza'
-  burger:         'hamburger|burger'
+  burger:         'burger(?!-bun)'
   sushi:          'sushi|maki|nigiri'
   sandwich:       'sandwich|toast-with|croque'
-  tortilla_wrap:  'wrap|burrito|tortilla'
+  tortilla_wrap:  'wrap|burrito|tortilla|fajita'
   fried_rice:     'fried-rice|rice-fried'
   # Protein
   fried_chicken:  'chicken.*(fried|breaded|nugget)|(fried|breaded).*chicken|nugget'
   grilled_chicken: 'chicken'
   steak:          'steak|entrecote|beef-(sirloin|filet|fillet)'
   salmon:         'salmon'
-  white_fish:     '\bcod\b|hake|pollock|tilapia|haddock|fish-fillet|white-fish|pangasius|sole\b'
+  white_fish:     '\bcod\b|hake|pollock|tilapia|haddock|fish-fillet|white-fish|pangasius|sole\b|perch'
   shrimp:         'shrimp|prawn'
   fried_egg:      'egg.*fried|fried-egg|sunny'
   boiled_egg:     'egg.*boiled|boiled-egg|hard-boiled'
@@ -66,33 +81,33 @@ patterns:
   bacon:          'bacon'
   sausage:        'sausage|salami|chorizo|bratwurst|wiener|frankfurter'
   # Starches
-  white_rice:     '^rice|-rice\b'
-  pasta:          'pasta|spaghetti|penne|fusilli|tagliatelle|macaroni|noodle|lasagn|ravioli|tortellini'
+  white_rice:     '^rice(?!-noodle)|-rice\b'
+  pasta:          'pasta|spaghetti|penne|fusilli|tagliatelle|macaroni|noodle|ravioli|tortellini'
   bagel:          'bagel'
   pancakes:       'pancake|crepe'
   french_fries:   'fries|french-fr|chips-french'
   sweet_potato:   'sweet-potato'
   potato:         'potato'
-  oatmeal:        '\boat|porridge|muesli|granola'
-  bread:          'bread|toast|baguette|roll\b|bun\b|croissant'
+  oatmeal:        '\boat|porridge|bircher|granola'
+  bread:          'bread|toast|baguette|roll\b|bun\b'
   # Vegetables
   broccoli:       'broccoli'
   green_salad:    'leaf-salad|salad-leaf|green-salad|lettuce|lamb-s-lettuce|rocket|arugula|mixed-salad|^salad'
-  carrot:         'carrot'
+  carrot:         '^carrots?$|carrot-(raw|steamed|cooked|boiled)'
   tomato:         'tomato'
   cucumber:       'cucumber'
   avocado:        'avocado|guacamole'
-  green_beans:    'green-bean|beans-green|haricot'
+  green_beans:    'green-bean|beans-green|haricot|french-beans'
   corn:           '^corn$|sweet-?corn|corn-on|^corn-(?!flake)|maize'
   bell_pepper:    'bell-pepper|pepper-(red|green|yellow)|sweet-pepper|capsicum'
   # Fruit
-  apple:          '^apple'
-  banana:         'banana'
+  apple:          '^apples?$|^apple-(raw|green|red)'
+  banana:         '^bananas?$'
   orange:         '^orange|mandarin|clementine'
   strawberries:   'strawberr'
   blueberries:    'blueberr'
   grapes:         '^grape\b|^grapes'
   # Dairy and snacks
-  yogurt:         'yogurt|yoghurt|skyr|quark'
-  cheese:         'cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage'
+  yogurt:         'yogurt|yoghurt|yaourt|yogourt|yoghourt|yahourt|skyr|quark'
+  cheese:         'cheese|mozzarella|parmesan|feta|gouda|emmental|gruyere|brie|camembert|cottage|cheddar|halloumi|tete-de-moine|^tomme|philadelphia'
   nuts:           '\bnut|almond|walnut|cashew|hazelnut|pistachio|peanut\b|peanuts'

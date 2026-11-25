@@ -87,8 +87,29 @@ Rules that keep the comparison fair:
 - Expect from-scratch to be clearly worse with only a few thousand photos; the
   size of that gap is the interesting result.
 
-The from-scratch run uses no third-party data, so it is also the cleanest
-possible licence story.
+The from-scratch run uses no pretrained weights at all, so its result does
+not depend on any third-party checkpoint.
+
+## Open Images pretraining (how `openimages_pretrain_own` is made)
+
+1. `food-rec select-openimages-pretrain` picks a fixed random subset (default
+   200,000) of Open Images V7 boxable train photos that Google lists as
+   CC BY 2.0 and that are not rotated, and writes `ids.txt`, `selection.json`
+   and `attributions.tsv` (author and URL of every photo) to
+   `data/pretrain/openimages/`.
+2. `scripts/download_openimages.py ... --max-side 640` downloads them from
+   the public bucket, shrinking each to save disk.
+3. `food-rec pretrain-detector` trains YOLOX-Tiny on all 600 box classes;
+   `food-rec pretrain-classifier` trains MobileNetV3 as a multi-label photo
+   classifier on the same photos. Each copies its best checkpoint to
+   `models/pretrain/`, where `pretrained: openimages_pretrain_own` finds it.
+4. Fine-tuning on our food data then reuses every layer whose shape matches;
+   only the final class layers start fresh.
+
+The detector is our own implementation of YOLOX-Tiny from the paper (Ge et
+al., 2021), in `detection/yolox.py`, with SimOTA label assignment in
+`detection/loss.py`. It outputs decoded boxes and scores; NMS runs outside the
+network (Vision/Swift on device), which keeps the Core ML export simple.
 
 ## Taxonomy v0.1.0 (45 foods + unknown)
 

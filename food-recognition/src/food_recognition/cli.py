@@ -145,6 +145,44 @@ def cmd_validate(ctx: Context, args: argparse.Namespace) -> int:
     return 0 if result.ok else 1
 
 
+def cmd_exclude_images(ctx: Context, args: argparse.Namespace) -> int:
+    """Remove images whose validation errors cannot be fixed by hand (e.g. source boxes outside the photo).
+
+    The whole image goes, not just the bad box: a kept image with a missing box
+    would teach the detector that the food there is background. Every removal is
+    logged with its reason in data/manifests/excluded.jsonl so it can be reported.
+    """
+    codes = set(args.code)
+    _, _, records, result = _validate(ctx, not args.no_files)
+    reasons: dict[str, list[str]] = {}
+    for issue in result.issues:
+        if issue.severity == "error" and issue.code in codes and issue.image:
+            reasons.setdefault(issue.image, []).append(f"{issue.code}: {issue.message}")
+    other = [i for i in errors(result.issues) if i.code not in codes]
+    if not reasons:
+        print(f"no images with {', '.join(sorted(codes))}; nothing to do")
+    else:
+        dataset, _ = load_coco(ctx.paths["annotations"])
+        drop_ids = {img.id for img in dataset.images if img.file_name in reasons}
+        boxes_before = len(dataset.annotations)
+        dataset.images = [img for img in dataset.images if img.id not in drop_ids]
+        dataset.annotations = [a for a in dataset.annotations if a.image_id not in drop_ids]
+        log = ctx.paths["manifest"].with_name("excluded.jsonl")
+        if args.dry_run:
+            print("dry run: nothing written")
+        else:
+            with open(log, "a", encoding="utf-8") as handle:
+                for file_name in sorted(reasons):
+                    handle.write(json.dumps({"file": file_name, "reasons": reasons[file_name]}) + "\n")
+            save_coco(dataset, ctx.paths["annotations"])
+            write_manifest(ctx.paths["manifest"], [r for r in records if r.file not in reasons])
+        print(f"excluded {len(drop_ids)} images ({boxes_before - len(dataset.annotations)} boxes); "
+              f"{len(dataset.images)} images and {len(dataset.annotations)} boxes remain; reasons -> {log}")
+    if other:
+        print(f"{len(other)} other errors remain; run `food-rec validate`")
+    return 1 if other else 0
+
+
 def cmd_split(ctx: Context, args: argparse.Namespace) -> int:
     from .dataset.split import check_leakage, split_by_group
 
@@ -392,6 +430,8 @@ def _train(kind: str, ctx: Context, args: argparse.Namespace) -> int:
     from .licensing import LicenseError
 
     cfg = load_yaml(resolve(args.config or f"configs/{kind}.yaml", ctx.root))
+    if args.seed is not None:
+        cfg["seed"] = args.seed            # repeat an experiment with another seed
     seed_everything(int(cfg.get("seed", ctx.seed)))
     if kind == "detection":
         from .detection.train import train
@@ -399,6 +439,69 @@ def _train(kind: str, ctx: Context, args: argparse.Namespace) -> int:
         from .classification.train import train  # type: ignore[assignment]
     try:
         train(cfg, args.dataset_version, ctx.root)
+    except (LicenseError, FileNotFoundError, RuntimeError) as exc:
+        print(exc)
+        return 1
+    return 0
+
+
+def cmd_evaluate(ctx: Context, args: argparse.Namespace) -> int:
+    from .evaluation.run_eval import evaluate_run, headline
+    from .licensing import LicenseError
+
+    lines, failed = [], 0
+    for run in args.runs:
+        try:
+            result = evaluate_run(resolve(run, ctx.root), ctx.root, split=args.split, checkpoint=args.checkpoint)
+        except (LicenseError, FileNotFoundError, RuntimeError, ValueError) as exc:
+            print(f"{run}: {exc}")
+            failed += 1
+            continue
+        lines.append(headline(result))
+        print(f"wrote {Path(result['run']) / f'eval_{args.split}.json'}")
+    print("\n".join(["", *lines]))
+    return 1 if failed else 0
+
+
+def cmd_compare(ctx: Context, args: argparse.Namespace) -> int:
+    from .evaluation.run_eval import compare
+
+    files = sorted((ctx.root / "models/runs").glob(f"*/*/eval_{args.split}.json"))
+    results = [json.loads(f.read_text(encoding="utf-8")) for f in files]
+    if args.dataset_version:
+        results = [r for r in results if r["dataset_version"] == args.dataset_version]
+    if not results:
+        print(f"no eval_{args.split}.json files yet; run `food-rec evaluate <run folders>` first")
+        return 1
+    print("\n".join(compare(results)))
+    return 0
+
+
+def cmd_select_openimages_pretrain(ctx: Context, args: argparse.Namespace) -> int:
+    from .licensing import require_approved
+    from .training.openimages_pretrain import select_pretrain
+
+    require_approved({"assets": ["open_images_v7", "openimages_pretrain_own"]},
+                     load_assets(resolve("licenses/assets.yaml", ctx.root)))
+    out = resolve(args.out, ctx.root)
+    stats = select_pretrain(boxes_csv=Path(args.boxes_csv), metadata_csv=Path(args.metadata_csv),
+                            classes_csv=Path(args.classes_csv), out_dir=out, max_images=args.max_images, seed=ctx.seed)
+    print(f"selected {stats['images']} images ({stats['val']} for validation) over {stats['classes']} classes; "
+          f"skipped {stats['license']} for licence, {stats['rotation']} rotated")
+    print(f"next: python scripts/download_openimages.py {out / 'ids.txt'} {out / 'images'} --max-side 640")
+    return 0
+
+
+def _pretrain(kind: str, ctx: Context, args: argparse.Namespace) -> int:
+    from .licensing import LicenseError
+    from .training.pretrain_runs import pretrain_classifier, pretrain_detector
+
+    cfg = load_yaml(resolve(args.config or f"configs/pretrain/{kind}_openimages.yaml", ctx.root))
+    try:
+        if kind == "detection":
+            pretrain_detector(cfg, ctx.root, resume=Path(args.resume) if args.resume else None)
+        else:
+            pretrain_classifier(cfg, ctx.root)
     except (LicenseError, FileNotFoundError, RuntimeError) as exc:
         print(exc)
         return 1
@@ -437,6 +540,12 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("split", help="leakage-safe train/val/test split by source group")
     p.add_argument("--force", action="store_true", help="split even when validation has errors (not for training)")
     p.set_defaults(func=cmd_split)
+
+    p = sub.add_parser("exclude-images", help="drop images with unfixable validation errors, logging why")
+    p.add_argument("--code", action="append", required=True, help="error code to exclude, e.g. bbox_out_of_bounds")
+    p.add_argument("--no-files", action="store_true", help="skip opening image files")
+    p.add_argument("--dry-run", action="store_true")
+    p.set_defaults(func=cmd_exclude_images)
 
     sub.add_parser("report", help="write reports/dataset_report.md").set_defaults(func=cmd_report)
 
@@ -490,12 +599,40 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--output", default="reports/attributions.tsv")
     p.set_defaults(func=cmd_attributions)
 
+    p = sub.add_parser("select-openimages-pretrain", help="choose general CC BY 2.0 Open Images photos for pretraining")
+    p.add_argument("--classes-csv", required=True, help="oidv7-class-descriptions-boxable.csv")
+    p.add_argument("--boxes-csv", required=True, help="oidv6-train-annotations-bbox.csv")
+    p.add_argument("--metadata-csv", required=True, help="train-images-boxable-with-rotation.csv")
+    p.add_argument("--max-images", type=int, default=200_000)
+    p.add_argument("--out", default="data/pretrain/openimages")
+    p.set_defaults(func=cmd_select_openimages_pretrain)
+
+    for kind in ("detection", "classification"):
+        name = "detector" if kind == "detection" else "classifier"
+        p = sub.add_parser(f"pretrain-{name}", help=f"pretrain the {name} on Open Images (produces openimages_pretrain_own)")
+        p.add_argument("--config")
+        if kind == "detection":
+            p.add_argument("--resume", help="run folder to continue after a job hit its time limit")
+        p.set_defaults(func=lambda c, a, k=kind: _pretrain(k, c, a))
+
     for kind in ("detection", "classification"):
         p = sub.add_parser(f"train-{'detector' if kind == 'detection' else 'classifier'}",
-                           help=f"train the {kind} model (preflight checks only until phase 4)")
+                           help=f"train the {kind} model on a frozen dataset version")
         p.add_argument("--dataset-version", required=True)
         p.add_argument("--config")
+        p.add_argument("--seed", type=int, help="override the config's seed (run folders are named by seed)")
         p.set_defaults(func=lambda c, a, k=kind: _train(k, c, a))
+
+    p = sub.add_parser("evaluate", help="score finished runs on the held-out test split (writes eval_<split>.json)")
+    p.add_argument("runs", nargs="+", help="run folders, e.g. models/runs/detection-scratch/v0.1.0-*")
+    p.add_argument("--split", default="test", choices=["test", "val"])
+    p.add_argument("--checkpoint", default="best.pt")
+    p.set_defaults(func=cmd_evaluate)
+
+    p = sub.add_parser("compare", help="mean ± std over seeds of every evaluated run, one line per experiment")
+    p.add_argument("--split", default="test", choices=["test", "val"])
+    p.add_argument("--dataset-version")
+    p.set_defaults(func=cmd_compare)
     return parser
 
 
