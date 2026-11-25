@@ -105,7 +105,7 @@ enum OpenFoodFacts {
     private static let fields = [
         "code", "product_name", "product_name_en", "product_name_de", "product_name_tr",
         "generic_name", "brands", "nutriments", "serving_quantity", "serving_quantity_unit",
-        "product_quantity_unit", "quantity",
+        "product_quantity_unit", "product_quantity", "quantity",
     ]
 
     static func product(code: String) async throws -> ProductInfo? {
@@ -208,6 +208,8 @@ enum OpenFoodFacts {
             || quantityText.range(of: #"\d\s*(ml|cl|l)\b"#, options: .regularExpression) != nil
 
         let serving = number(product["serving_quantity"]).flatMap { $0 > 0 && $0 <= 2_000 ? $0 : nil }
+        let package = unitSize(fromQuantity: product["quantity"] as? String ?? "")
+            ?? number(product["product_quantity"]).flatMap { $0 > 0 && $0 <= 5_000 ? $0 : nil }
 
         return ProductInfo(
             barcode: code,
@@ -220,6 +222,7 @@ enum OpenFoodFacts {
             carbohydratePer100Grams: clamp(number(nutriments["carbohydrates_100g"]), max: 100),
             fatPer100Grams: clamp(number(nutriments["fat_100g"]), max: 100),
             servingGrams: serving,
+            packageGrams: package,
             isLiquid: isLiquid,
             source: .openFoodFacts,
             nutritionStated: calories != nil
@@ -239,6 +242,25 @@ enum OpenFoodFacts {
             }
         }
         return ""
+    }
+
+    /// Size of one unit from a quantity like "4 x 125 g", "6 × 0,33 l" or "200 g", in grams
+    /// or milliliters. Single sizes are left to `product_quantity`, which is cleaner.
+    static func unitSize(fromQuantity text: String) -> Double? {
+        let pattern = #"(\d+)\s*[x×*]\s*(\d+(?:[.,]\d+)?)\s*(kg|g|ml|cl|l)\b"#
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive),
+              let match = regex.firstMatch(in: text, range: NSRange(text.startIndex..., in: text)),
+              let sizeRange = Range(match.range(at: 2), in: text),
+              let unitRange = Range(match.range(at: 3), in: text),
+              let size = Double(text[sizeRange].replacingOccurrences(of: ",", with: "."))
+        else { return nil }
+        let factor: Double = switch text[unitRange].lowercased() {
+        case "kg", "l": 1000
+        case "cl": 10
+        default: 1
+        }
+        let grams = size * factor
+        return grams > 0 && grams <= 5_000 ? grams : nil
     }
 
     /// Open Food Facts stores numbers as JSON numbers or as strings.

@@ -24,7 +24,7 @@ struct ProductEntryView: View {
         self.onLogged = onLogged
         self.onEdit = onEdit
         self.onScanAnother = onScanAnother
-        _amount = State(initialValue: product.servingGrams ?? 100)
+        _amount = State(initialValue: product.defaultAmount)
     }
 
     private var unit: String { product.isLiquid ? "ml" : "g" }
@@ -54,18 +54,27 @@ struct ProductEntryView: View {
                         .multilineTextAlignment(.trailing)
                 }
 
-                HStack(spacing: 8) {
-                    quickAmountButton(Text(verbatim: "100 \(unit)"), grams: 100)
-                    if let serving = product.servingGrams {
-                        quickAmountButton(
-                            Text("1 serving (\(format(serving)) \(unit))"),
-                            grams: serving
-                        )
-                        quickAmountButton(Text("2 servings"), grams: serving * 2)
+                // Scrolls sideways when serving and package buttons don't all fit.
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        quickAmountButton(Text(verbatim: "100 \(unit)"), grams: 100)
+                        if let serving = product.servingGrams {
+                            quickAmountButton(
+                                Text("1 serving (\(format(serving)) \(unit))"),
+                                grams: serving
+                            )
+                            quickAmountButton(Text("2 servings"), grams: serving * 2)
+                        }
+                        if let package = product.packageGrams, package != product.servingGrams, package != 100 {
+                            quickAmountButton(
+                                Text("1 package (\(format(package)) \(unit))"),
+                                grams: package
+                            )
+                        }
                     }
+                    .buttonStyle(.bordered)
+                    .controlSize(.small)
                 }
-                .buttonStyle(.bordered)
-                .controlSize(.small)
             }
 
             Section("Nutrition for this amount") {

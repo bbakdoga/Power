@@ -602,6 +602,7 @@ struct BarcodeFoodView: View {
                                name: guess.name.isEmpty ? typed : guess.name,
                                brand: guess.brand, source: .user)
         info.isLiquid = guess.isLiquid
+        info.packageGrams = guess.quantity
         return info
     }
 

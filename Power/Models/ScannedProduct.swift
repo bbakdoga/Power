@@ -30,6 +30,9 @@ final class ScannedProduct {
     var fatPer100Grams: Double = 0
     /// Grams (or millilitres for drinks) in one serving; 0 when unknown.
     var servingGrams: Double = 0
+    /// Grams (or millilitres) in one package, e.g. 200 for a pudding cup or 125 for one
+    /// cup of a "4 x 125 g" pack; 0 when unknown.
+    var packageGrams: Double = 0
     var isLiquid: Bool = false
     var sourceRaw: String = ProductDataSource.openFoodFacts.rawValue
     var fetchedAt: Date = Date()
@@ -52,6 +55,7 @@ final class ScannedProduct {
         carbohydratePer100Grams = product.carbohydratePer100Grams
         fatPer100Grams = product.fatPer100Grams
         servingGrams = product.servingGrams ?? 0
+        packageGrams = product.packageGrams ?? 0
         isLiquid = product.isLiquid
         sourceRaw = product.source.rawValue
         fetchedAt = Date()
@@ -67,6 +71,7 @@ final class ScannedProduct {
             carbohydratePer100Grams: carbohydratePer100Grams,
             fatPer100Grams: fatPer100Grams,
             servingGrams: servingGrams > 0 ? servingGrams : nil,
+            packageGrams: packageGrams > 0 ? packageGrams : nil,
             isLiquid: isLiquid,
             source: source,
             // Only products with values (or values the user entered) are stored.
@@ -85,6 +90,8 @@ struct ProductInfo: Hashable {
     var carbohydratePer100Grams: Double = 0
     var fatPer100Grams: Double = 0
     var servingGrams: Double?
+    /// Grams (or millilitres) in one package or one unit of a multipack.
+    var packageGrams: Double?
     var isLiquid: Bool = false
     var source: ProductDataSource
     /// The source states nutrition values, even if they're all zero (Coke Zero, water).
@@ -93,6 +100,14 @@ struct ProductInfo: Hashable {
     /// False when the product is known but has no usable nutrition values yet.
     var hasNutrition: Bool {
         caloriesPer100Grams > 0 || nutritionStated
+    }
+
+    /// Amount to suggest when logging: one serving, else one package when it's a portion
+    /// someone eats at once (a pudding cup, a can), else 100 g.
+    var defaultAmount: Double {
+        if let servingGrams { return servingGrams }
+        if let packageGrams, packageGrams <= 750 { return packageGrams }
+        return 100
     }
 
     var displayName: String {
@@ -140,6 +155,9 @@ enum ProductCache {
     static func needsRefresh(_ product: ScannedProduct) -> Bool {
         if product.source.isUserProvided { return false }
         if product.caloriesPer100Grams <= 0 { return true }
+        // Saved before package sizes were stored: look again so the amount can default to
+        // one package.
+        if product.servingGrams <= 0 && product.packageGrams <= 0 { return true }
         return Date().timeIntervalSince(product.fetchedAt) > refreshInterval
     }
 }

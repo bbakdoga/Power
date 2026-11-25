@@ -769,6 +769,22 @@
         }
       }
     },
+    "1 package (%@ %@)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "1 Packung (%1$@ %2$@)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "1 package (%1$@ %2$@)"
+          }
+        }
+      }
+    },
     "1 routine · great for beginners, 2–3 days a week" : {
       "localizations" : {
         "de" : {
