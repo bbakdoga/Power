@@ -194,9 +194,7 @@
         }
       }
     },
-    "%@ kcal" : {
-
-    },
+    "%@ kcal" : {},
     "%@ kcal · P %@ · C %@ · F %@" : {
       "localizations" : {
         "en" : {
@@ -312,6 +310,86 @@
         }
       }
     },
+    "%lld days a week" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld day a week"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld days a week"
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Tag pro Woche"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Tage pro Woche"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld exercises" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld exercise"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld exercises"
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Übung"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Übungen"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld kcal / 100 %@" : {
       "localizations" : {
         "de" : {
@@ -328,9 +406,7 @@
         }
       }
     },
-    "%lld kcal remaining" : {
-
-    },
+    "%lld kcal remaining" : {},
     "%lld matched to Power exercises" : {
       "localizations" : {
         "de" : {
@@ -504,6 +580,46 @@
                 "stringUnit" : {
                   "state" : "machine_translated",
                   "value" : "%lld reps"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld routines" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld routine"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld routines"
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Routine"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Routinen"
                 }
               }
             }
@@ -917,12 +1033,62 @@
         }
       }
     },
+    "5/3/1 Boring But Big" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5/3/1 Boring But Big"
+          }
+        }
+      }
+    },
     "6 months to 2 years" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "6 Monate bis 2 Jahre"
+          }
+        }
+      }
+    },
+    "6× Mr. Olympia" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "6× Mr. Olympia"
+          }
+        }
+      }
+    },
+    "7× Mr. Olympia" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "7× Mr. Olympia"
+          }
+        }
+      }
+    },
+    "8× Mr. Olympia" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "8× Mr. Olympia"
+          }
+        }
+      }
+    },
+    "25 powerlifting world records" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "25 Weltrekorde im Powerlifting"
           }
         }
       }
@@ -967,9 +1133,7 @@
         }
       }
     },
-    "A training plan tailored to your goals and schedule." : {
-
-    },
+    "A training plan tailored to your goals and schedule." : {},
     "About" : {
       "localizations" : {
         "de" : {
@@ -986,6 +1150,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Über dich"
+          }
+        }
+      }
+    },
+    "Abs & Core" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bauch & Rumpf"
           }
         }
       }
@@ -1072,9 +1246,7 @@
         }
       }
     },
-    "Add a meal manually or estimate it from a photo." : {
-
-    },
+    "Add a meal manually or estimate it from a photo." : {},
     "Add at least two entries to see a chart." : {
       "localizations" : {
         "de" : {
@@ -1105,12 +1277,8 @@
         }
       }
     },
-    "Add food" : {
-
-    },
-    "Add Food" : {
-
-    },
+    "Add food" : {},
+    "Add Food" : {},
     "Add measurement" : {
       "localizations" : {
         "de" : {
@@ -1221,9 +1389,7 @@
         }
       }
     },
-    "Adjust estimated portion" : {
-
-    },
+    "Adjust estimated portion" : {},
     "Adjust Rest Timer" : {
       "localizations" : {
         "de" : {
@@ -1354,9 +1520,7 @@
         }
       }
     },
-    "Analyzing food…" : {
-
-    },
+    "Analyzing food…" : {},
     "Anything else?" : {
       "localizations" : {
         "de" : {
@@ -1473,6 +1637,36 @@
         }
       }
     },
+    "Athlete A" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Athlet A"
+          }
+        }
+      }
+    },
+    "Athlete B" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Athlet B"
+          }
+        }
+      }
+    },
+    "Athlete C" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Athlet C"
+          }
+        }
+      }
+    },
     "Auto Rest Timer" : {
       "localizations" : {
         "de" : {
@@ -1529,6 +1723,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rücken & Bizeps"
+          }
+        }
+      }
+    },
+    "Back, Biceps & Shoulders" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rücken, Bizeps & Schultern"
           }
         }
       }
@@ -1603,15 +1807,33 @@
         }
       }
     },
-    "Based on a typical serving" : {
-
-    },
+    "Based on a typical serving" : {},
     "Behind: %@" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zu wenig: %@"
+          }
+        }
+      }
+    },
+    "Bench & Upper Back" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bankdrücken & oberer Rücken"
+          }
+        }
+      }
+    },
+    "Bench Day" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bankdrücken-Tag"
           }
         }
       }
@@ -1727,6 +1949,16 @@
         }
       }
     },
+    "Blood & Guts" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blood & Guts"
+          }
+        }
+      }
+    },
     "Body" : {
       "localizations" : {
         "de" : {
@@ -1797,6 +2029,16 @@
         }
       }
     },
+    "Bodybuilders" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bodybuilder"
+          }
+        }
+      }
+    },
     "Bodyweight" : {
       "localizations" : {
         "de" : {
@@ -1817,9 +2059,7 @@
         }
       }
     },
-    "Brand" : {
-
-    },
+    "Brand" : {},
     "Brand (optional)" : {
       "localizations" : {
         "de" : {
@@ -1910,9 +2150,7 @@
         }
       }
     },
-    "Calories" : {
-
-    },
+    "Calories" : {},
     "Calories (kcal)" : {
       "localizations" : {
         "de" : {
@@ -1943,15 +2181,9 @@
         }
       }
     },
-    "Carbohydrates" : {
-
-    },
-    "Carbohydrates (g)" : {
-
-    },
-    "Carbs" : {
-
-    },
+    "Carbohydrates" : {},
+    "Carbohydrates (g)" : {},
+    "Carbs" : {},
     "Cardio" : {
       "localizations" : {
         "de" : {
@@ -1968,6 +2200,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Cardio-Zeit"
+          }
+        }
+      }
+    },
+    "Category" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorie"
           }
         }
       }
@@ -2032,6 +2274,36 @@
         }
       }
     },
+    "Chest & Arms" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brust & Arme"
+          }
+        }
+      }
+    },
+    "Chest & Back" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brust & Rücken"
+          }
+        }
+      }
+    },
+    "Chest & Biceps" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brust & Bizeps"
+          }
+        }
+      }
+    },
     "Chest & Triceps" : {
       "localizations" : {
         "de" : {
@@ -2042,9 +2314,17 @@
         }
       }
     },
-    "Chicken, rice, yogurt…" : {
-
+    "Chest and back together, then shoulders and arms, then legs, each twice a week. High volume with classic free-weight lifts." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brust und Rücken zusammen, dann Schultern und Arme, dann Beine, jeweils zweimal pro Woche. Viel Volumen mit klassischen Übungen mit freien Gewichten."
+          }
+        }
+      }
     },
+    "Chicken, rice, yogurt…" : {},
     "Choose a Different File" : {
       "localizations" : {
         "de" : {
@@ -2065,9 +2345,7 @@
         }
       }
     },
-    "Choose food photo" : {
-
-    },
+    "Choose food photo" : {},
     "Choose Photo" : {
       "localizations" : {
         "de" : {
@@ -2108,9 +2386,17 @@
         }
       }
     },
-    "Close" : {
-
+    "Classic Coan" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Classic Coan"
+          }
+        }
+      }
     },
+    "Close" : {},
     "Close and reopen Power to switch everything, including the Lock Screen timer." : {
       "localizations" : {
         "de" : {
@@ -2177,6 +2463,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Supersatz erstellen"
+          }
+        }
+      }
+    },
+    "Creator of 5/3/1" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erfinder von 5/3/1"
           }
         }
       }
@@ -2258,6 +2554,26 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Tage pro Woche"
+          }
+        }
+      }
+    },
+    "Deadlift & Press" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kreuzheben & Drücken"
+          }
+        }
+      }
+    },
+    "Deadlift Day" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kreuzheben-Tag"
           }
         }
       }
@@ -2512,12 +2828,8 @@
         }
       }
     },
-    "Enter food and nutrition manually" : {
-
-    },
-    "Enter food manually" : {
-
-    },
+    "Enter food and nutrition manually" : {},
+    "Enter food manually" : {},
     "Enter reps for at least one set, or tap the circle to check it off." : {
       "localizations" : {
         "de" : {
@@ -2578,12 +2890,8 @@
         }
       }
     },
-    "Estimated nutrition" : {
-
-    },
-    "Estimated portion" : {
-
-    },
+    "Estimated nutrition" : {},
+    "Estimated portion" : {},
     "Evening Workout" : {
       "localizations" : {
         "de" : {
@@ -2685,12 +2993,8 @@
         }
       }
     },
-    "Fat" : {
-
-    },
-    "Fat (g)" : {
-
-    },
+    "Fat" : {},
+    "Fat (g)" : {},
     "Favorite exercises" : {
       "localizations" : {
         "de" : {
@@ -2782,6 +3086,56 @@
         }
       }
     },
+    "First Women's Physique Olympia champion" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erste Women’s-Physique-Olympia-Siegerin"
+          }
+        }
+      }
+    },
+    "Fitness creators" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fitness-Creator"
+          }
+        }
+      }
+    },
+    "Fitness YouTuber and gym favorite" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fitness-YouTuberin und Studio-Liebling"
+          }
+        }
+      }
+    },
+    "Five gym days with a strong focus on glutes and legs, balanced with back, shoulders and core." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fünf Studiotage mit starkem Fokus auf Po und Beine, ausgeglichen mit Rücken, Schultern und Rumpf."
+          }
+        }
+      }
+    },
+    "Five intense days built on heavy compound lifts, with two leg days for quads, hamstrings and glutes." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fünf intensive Tage mit schweren Grundübungen und zwei Beintagen für Oberschenkel, Beinbeuger und Po."
+          }
+        }
+      }
+    },
     "Focus metrics" : {
       "localizations" : {
         "de" : {
@@ -2812,24 +3166,46 @@
         }
       }
     },
-    "Food" : {
-
-    },
-    "Food name" : {
-
-    },
-    "Food Search" : {
-
-    },
-    "Food suggestions" : {
-
-    },
+    "Food" : {},
+    "Food name" : {},
+    "Food Search" : {},
+    "Food suggestions" : {},
     "Format" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Format"
+          }
+        }
+      }
+    },
+    "Founder of Westside Barbell" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gründer von Westside Barbell"
+          }
+        }
+      }
+    },
+    "Four days, one main lift each. Three heavy sets building to a top set, then 5×10 for size. Add a little weight every month." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vier Tage mit je einer Hauptübung. Drei schwere Sätze bis zu einem Top-Satz, dann 5×10 für Masse. Steigere das Gewicht jeden Monat ein wenig."
+          }
+        }
+      }
+    },
+    "Four days: a strength and a muscle-building version of upper and lower body. Stop 1–2 reps before failure and add reps or weight each week." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vier Tage: je eine Kraft- und eine Muskelaufbau-Version für Ober- und Unterkörper. Hör 1–2 Wiederholungen vor dem Muskelversagen auf und steigere jede Woche Wiederholungen oder Gewicht."
           }
         }
       }
@@ -2864,6 +3240,16 @@
         }
       }
     },
+    "Full Body Burn" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ganzkörper-Burn"
+          }
+        }
+      }
+    },
     "Full gym" : {
       "localizations" : {
         "de" : {
@@ -2884,9 +3270,7 @@
         }
       }
     },
-    "g" : {
-
-    },
+    "g" : {},
     "Generate Drawing" : {
       "localizations" : {
         "de" : {
@@ -2923,6 +3307,36 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Gesäß"
+          }
+        }
+      }
+    },
+    "Glutes & Core" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po & Rumpf"
+          }
+        }
+      }
+    },
+    "Glutes & Hamstrings" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po & Beinbeuger"
+          }
+        }
+      }
+    },
+    "Glutes & Strength" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po & Kraft"
           }
         }
       }
@@ -3019,11 +3433,17 @@
         }
       }
     },
-    "grams" : {
-
-    },
-    "Grams" : {
-
+    "grams" : {},
+    "Grams" : {},
+    "Hamstrings & Glutes" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beinbeuger & Po"
+          }
+        }
+      }
     },
     "Heaviest" : {
       "localizations" : {
@@ -3055,12 +3475,52 @@
         }
       }
     },
+    "Heavy & Basic" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heavy & Basic"
+          }
+        }
+      }
+    },
+    "Heavy & Hard" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heavy & Hard"
+          }
+        }
+      }
+    },
     "Heavy compound lifts with lower reps. Add weight when you hit all your reps." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Schwere Grundübungen mit wenigen Wiederholungen. Erhöhe das Gewicht, sobald du alle Wiederholungen schaffst."
+          }
+        }
+      }
+    },
+    "High-Frequency Strength" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kraft mit hoher Frequenz"
+          }
+        }
+      }
+    },
+    "High-intensity training: four short workouts a week. After a warm-up set, do one all-out set per exercise." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hochintensives Training: vier kurze Workouts pro Woche. Nach einem Aufwärmsatz folgt pro Übung ein Satz bis zum Äußersten."
           }
         }
       }
@@ -3081,6 +3541,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Verlauf"
+          }
+        }
+      }
+    },
+    "Home Shred" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home Shred"
           }
         }
       }
@@ -3335,6 +3805,22 @@
         }
       }
     },
+    "Inspired by publicly shared training of %@. Not an official program; %@ isn't affiliated with Power. You can edit every routine later." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Inspired by publicly shared training of %1$@. Not an official program; %2$@ isn't affiliated with Power. You can edit every routine later."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild des öffentlich geteilten Trainings von %1$@. Kein offizielles Programm; %2$@ steht in keiner Verbindung zu Power. Du kannst jede Routine später bearbeiten."
+          }
+        }
+      }
+    },
     "Invalid barcode" : {
       "localizations" : {
         "de" : {
@@ -3355,12 +3841,8 @@
         }
       }
     },
-    "kcal" : {
-
-    },
-    "kcal / 100 g" : {
-
-    },
+    "kcal" : {},
+    "kcal / 100 g" : {},
     "Keep training" : {
       "localizations" : {
         "de" : {
@@ -3668,6 +4150,26 @@
         }
       }
     },
+    "Lower Muscle" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unterkörper Muskelaufbau"
+          }
+        }
+      }
+    },
+    "Lower Strength" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unterkörper Kraft"
+          }
+        }
+      }
+    },
     "Machine" : {
       "localizations" : {
         "de" : {
@@ -3688,9 +4190,7 @@
         }
       }
     },
-    "Macros" : {
-
-    },
+    "Macros" : {},
     "Made with Power's training rules" : {
       "localizations" : {
         "de" : {
@@ -3717,6 +4217,26 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Passende Produkte"
+          }
+        }
+      }
+    },
+    "Max Effort Lower" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Max Effort Unterkörper"
+          }
+        }
+      }
+    },
+    "Max Effort Upper" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Max Effort Oberkörper"
           }
         }
       }
@@ -4021,9 +4541,7 @@
         }
       }
     },
-    "No confident match" : {
-
-    },
+    "No confident match" : {},
     "No entries yet." : {
       "localizations" : {
         "de" : {
@@ -4044,9 +4562,17 @@
         }
       }
     },
-    "No food logged" : {
-
+    "No equipment needed. Short, fast bodyweight circuits at home: keep rests short and move quickly from one exercise to the next." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Geräte nötig. Kurze, schnelle Zirkel mit dem eigenen Körpergewicht zu Hause: Halte die Pausen kurz und wechsle zügig zur nächsten Übung."
+          }
+        }
+      }
     },
+    "No food logged" : {},
     "No instructions for this exercise yet." : {
       "localizations" : {
         "de" : {
@@ -4157,9 +4683,7 @@
         }
       }
     },
-    "None of these — search by name" : {
-
-    },
+    "None of these — search by name" : {},
     "Normal" : {
       "localizations" : {
         "de" : {
@@ -4170,9 +4694,7 @@
         }
       }
     },
-    "Not correct?" : {
-
-    },
+    "Not correct?" : {},
     "Not done yet" : {
       "localizations" : {
         "de" : {
@@ -4243,9 +4765,7 @@
         }
       }
     },
-    "Nutrition" : {
-
-    },
+    "Nutrition" : {},
     "Nutrition for this amount" : {
       "localizations" : {
         "de" : {
@@ -4276,9 +4796,7 @@
         }
       }
     },
-    "Nutrition values come from USDA FoodData Central and are adjusted to the portion entered above." : {
-
-    },
+    "Nutrition values come from USDA FoodData Central and are adjusted to the portion entered above." : {},
     "Ocean" : {
       "localizations" : {
         "de" : {
@@ -4329,6 +4847,16 @@
         }
       }
     },
+    "One day each for squat, bench and deadlift, plus an upper-body day. Heavy low-rep sets, then targeted assistance work." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je ein Tag für Kniebeugen, Bankdrücken und Kreuzheben plus ein Oberkörpertag. Schwere Sätze mit wenigen Wiederholungen, dann gezielte Zusatzübungen."
+          }
+        }
+      }
+    },
     "One or two muscle groups per workout, e.g. chest and triceps" : {
       "localizations" : {
         "de" : {
@@ -4339,12 +4867,8 @@
         }
       }
     },
-    "Online food search is not configured yet." : {
-
-    },
-    "Online food search is temporarily unavailable." : {
-
-    },
+    "Online food search is not configured yet." : {},
+    "Online food search is temporarily unavailable." : {},
     "Open Settings" : {
       "localizations" : {
         "de" : {
@@ -4371,6 +4895,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Sonstige"
+          }
+        }
+      }
+    },
+    "Over 70 powerlifting world records" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Über 70 Weltrekorde im Powerlifting"
           }
         }
       }
@@ -4485,12 +5019,8 @@
         }
       }
     },
-    "Photo analysis unavailable" : {
-
-    },
-    "Photo results are estimates. Oils, sauces, ingredients and portion sizes may not be visible." : {
-
-    },
+    "Photo analysis unavailable" : {},
+    "Photo results are estimates. Oils, sauces, ingredients and portion sizes may not be visible." : {},
     "Photograph nutrition table" : {
       "localizations" : {
         "de" : {
@@ -4507,6 +5037,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Verpackung vorne fotografieren"
+          }
+        }
+      }
+    },
+    "Physical therapist behind ATHLEAN-X" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Physiotherapeut hinter ATHLEAN-X"
           }
         }
       }
@@ -4581,9 +5121,7 @@
         }
       }
     },
-    "Portion (g)" : {
-
-    },
+    "Portion (g)" : {},
     "Possible typos" : {
       "localizations" : {
         "de" : {
@@ -4604,12 +5142,8 @@
         }
       }
     },
-    "Power could not confidently identify the food in this photo." : {
-
-    },
-    "Power could not recognize this photo. You can still enter the food manually." : {
-
-    },
+    "Power could not confidently identify the food in this photo." : {},
+    "Power could not recognize this photo. You can still enter the food manually." : {},
     "Power reads the brand and name on the front and searches for the product." : {
       "localizations" : {
         "de" : {
@@ -4630,12 +5164,32 @@
         }
       }
     },
+    "Powerlifters" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Powerlifter"
+          }
+        }
+      }
+    },
     "Preferences" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Einstellungen"
+          }
+        }
+      }
+    },
+    "Press Day" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schulterdrücken-Tag"
           }
         }
       }
@@ -4740,12 +5294,28 @@
         }
       }
     },
-    "Protein" : {
-
+    "Programs inspired by famous bodybuilders, powerlifters and fitness creators." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programme nach dem Vorbild berühmter Bodybuilder, Powerlifter und Fitness-Creator."
+          }
+        }
+      }
     },
-    "Protein (g)" : {
-
+    "Programs inspired by how famous athletes and coaches train." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programme nach dem Vorbild berühmter Athleten und Coaches."
+          }
+        }
+      }
     },
+    "Protein" : {},
+    "Protein (g)" : {},
     "Pull" : {
       "localizations" : {
         "de" : {
@@ -4822,6 +5392,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Drücken, Ziehen und Beine an getrennten Tagen"
+          }
+        }
+      }
+    },
+    "Quads & Calves" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oberschenkel & Waden"
+          }
+        }
+      }
+    },
+    "Quads & Glutes" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oberschenkel & Po"
           }
         }
       }
@@ -5088,9 +5678,7 @@
         }
       }
     },
-    "Review Estimate" : {
-
-    },
+    "Review Estimate" : {},
     "Routine" : {
       "localizations" : {
         "de" : {
@@ -5291,6 +5879,26 @@
         }
       }
     },
+    "Science-based training on YouTube" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wissenschaftlich fundiertes Training auf YouTube"
+          }
+        }
+      }
+    },
+    "Science-Based Upper/Lower" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wissenschaftlicher Ober-/Unterkörper-Plan"
+          }
+        }
+      }
+    },
     "Search" : {
       "localizations" : {
         "de" : {
@@ -5301,21 +5909,11 @@
         }
       }
     },
-    "Search food database" : {
-
-    },
-    "Search foods" : {
-
-    },
-    "Search the USDA food database by food, meal or brand name." : {
-
-    },
-    "Search unavailable" : {
-
-    },
-    "Searching…" : {
-
-    },
+    "Search food database" : {},
+    "Search foods" : {},
+    "Search the USDA food database by food, meal or brand name." : {},
+    "Search unavailable" : {},
+    "Searching…" : {},
     "Seconds" : {
       "localizations" : {
         "de" : {
@@ -5336,9 +5934,7 @@
         }
       }
     },
-    "Select the foods Power recognized, then adjust each estimated portion." : {
-
-    },
+    "Select the foods Power recognized, then adjust each estimated portion." : {},
     "Serving size (g)" : {
       "localizations" : {
         "de" : {
@@ -5439,6 +6035,26 @@
         }
       }
     },
+    "Shoulders & Triceps" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schultern & Trizeps"
+          }
+        }
+      }
+    },
+    "Shoulders, Chest & Triceps" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schultern, Brust & Trizeps"
+          }
+        }
+      }
+    },
     "Show details" : {
       "localizations" : {
         "de" : {
@@ -5517,6 +6133,16 @@
         }
       }
     },
+    "Six days of heavy basics: big squats, deadlifts and presses, then plenty of volume on top." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sechs Tage schwere Grundübungen: große Kniebeugen, Kreuzheben und Drückübungen, dazu jede Menge Volumen."
+          }
+        }
+      }
+    },
     "Skip" : {
       "localizations" : {
         "de" : {
@@ -5563,6 +6189,66 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Einige Werte wurden vielleicht falsch gelesen. Vergleiche sie vor dem Speichern mit der Verpackung."
+          }
+        }
+      }
+    },
+    "Speed Lower" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speed Unterkörper"
+          }
+        }
+      }
+    },
+    "Speed Upper" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speed Oberkörper"
+          }
+        }
+      }
+    },
+    "Squat & Bench" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kniebeugen & Bankdrücken"
+          }
+        }
+      }
+    },
+    "Squat & Hinge" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kniebeugen & Hüftbeugen"
+          }
+        }
+      }
+    },
+    "Squat Day" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kniebeugen-Tag"
+          }
+        }
+      }
+    },
+    "Squat, bench and deadlift several times a week. Heavy days and volume days take turns, with upper back and core work." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kniebeugen, Bankdrücken und Kreuzheben mehrmals pro Woche. Schwere Tage und Volumentage wechseln sich ab, dazu Training für oberen Rücken und Rumpf."
           }
         }
       }
@@ -5759,9 +6445,7 @@
         }
       }
     },
-    "Take food photo" : {
-
-    },
+    "Take food photo" : {},
     "Take Photo" : {
       "localizations" : {
         "de" : {
@@ -5808,6 +6492,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Der Text wird auf deinem iPhone erkannt. Das Foto wird nicht hochgeladen."
+          }
+        }
+      }
+    },
+    "The Arnold Split" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Arnold-Split"
           }
         }
       }
@@ -5863,12 +6557,8 @@
         }
       }
     },
-    "The nutrition service returned an invalid response." : {
-
-    },
-    "The selected photo could not be loaded." : {
-
-    },
+    "The nutrition service returned an invalid response." : {},
+    "The selected photo could not be loaded." : {},
     "Theme" : {
       "localizations" : {
         "de" : {
@@ -5989,6 +6679,16 @@
         }
       }
     },
+    "Three full-body days that build strength and athleticism. Face pulls and core work keep shoulders and posture healthy." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drei Ganzkörpertage für Kraft und Athletik. Face Pulls und Rumpftraining halten Schultern und Haltung gesund."
+          }
+        }
+      }
+    },
     "Three full-body workouts." : {
       "localizations" : {
         "de" : {
@@ -6059,9 +6759,7 @@
         }
       }
     },
-    "Today" : {
-
-    },
+    "Today" : {},
     "Tools" : {
       "localizations" : {
         "de" : {
@@ -6158,6 +6856,36 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Erfasst"
+          }
+        }
+      }
+    },
+    "Train like a pro" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trainiere wie ein Profi"
+          }
+        }
+      }
+    },
+    "Train like a pro instead" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lieber wie ein Profi trainieren"
+          }
+        }
+      }
+    },
+    "Train Like an Athlete" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trainiere wie ein Athlet"
           }
         }
       }
@@ -6295,6 +7023,16 @@
         }
       }
     },
+    "Two max-effort days to work up to heavy singles, and two speed days with lighter, explosive sets. Lots of back and triceps work." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zwei Max-Effort-Tage, an denen du dich zu schweren Einzelwiederholungen hocharbeitest, und zwei Speed-Tage mit leichteren, explosiven Sätzen. Viel Training für Rücken und Trizeps."
+          }
+        }
+      }
+    },
     "Type barcode" : {
       "localizations" : {
         "de" : {
@@ -6401,6 +7139,16 @@
         }
       }
     },
+    "Upper Assistance" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oberkörper-Zusatztraining"
+          }
+        }
+      }
+    },
     "Upper Body" : {
       "localizations" : {
         "de" : {
@@ -6417,6 +7165,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Einen Tag Oberkörper, den nächsten Unterkörper"
+          }
+        }
+      }
+    },
+    "Upper Muscle" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oberkörper Muskelaufbau"
+          }
+        }
+      }
+    },
+    "Upper Strength" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oberkörper Kraft"
           }
         }
       }
@@ -6507,6 +7275,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Auf Open Food Facts ansehen oder verbessern"
+          }
+        }
+      }
+    },
+    "Viral home workout challenges" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Virale Home-Workout-Challenges"
           }
         }
       }
@@ -6723,6 +7501,16 @@
         }
       }
     },
+    "Westside Conjugate" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Westside-Conjugate"
+          }
+        }
+      }
+    },
     "What's your goal?" : {
       "localizations" : {
         "de" : {
@@ -6803,9 +7591,7 @@
         }
       }
     },
-    "Workout history" : {
-
-    },
+    "Workout history" : {},
     "Workout name" : {
       "localizations" : {
         "de" : {

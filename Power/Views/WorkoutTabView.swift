@@ -12,6 +12,7 @@ struct WorkoutTabView: View {
     @State private var summary: FinishedWorkout?
     @State private var addingStarters = false
     @State private var buildingPlan = false
+    @State private var choosingProProgram = false
 
     private struct FinishedWorkout: Identifiable {
         let workout: Workout
@@ -45,6 +46,10 @@ struct WorkoutTabView: View {
         }
         .sheet(isPresented: $buildingPlan) {
             PlanSetupView(onFinish: { buildingPlan = false })
+                .presentationDragIndicator(.visible)
+        }
+        .sheet(isPresented: $choosingProProgram) {
+            ProProgramsView(onFinish: { choosingProProgram = false })
                 .presentationDragIndicator(.visible)
         }
         .sheet(item: $summary) { item in
@@ -97,6 +102,31 @@ struct WorkoutTabView: View {
                             Text(PlanCoach.isAvailable ? "Build a plan with Apple Intelligence" : "Build a plan for me")
                                 .font(.headline)
                             Text("A training plan tailored to your goals and schedule.")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer(minLength: 0)
+                        Image(systemName: "chevron.right")
+                            .font(.footnote.bold())
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(.vertical, 10)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.tint)
+                Button {
+                    choosingProProgram = true
+                } label: {
+                    HStack(spacing: 16) {
+                        Image(systemName: "trophy.fill")
+                            .font(.title2.bold())
+                            .frame(width: 52, height: 52)
+                            .background(.tint.opacity(0.15), in: RoundedRectangle(cornerRadius: 14))
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text("Train like a pro")
+                                .font(.headline)
+                            Text("Programs inspired by famous bodybuilders, powerlifters and fitness creators.")
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                         }

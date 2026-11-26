@@ -41,7 +41,9 @@
 		B22D35D030A78D4C001E9E97 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22D35CF30A78D4C001E9E97 /* ProfileView.swift */; };
 		B243D17830B833F90044304F /* TrainingPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B243D17730B833F90044304F /* TrainingPlan.swift */; };
 		B2ABFC0E30B8356B009CB60E /* PlanCoach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ABFC0D30B8356B009CB60E /* PlanCoach.swift */; };
+		4957732426051A2EDD97C454 /* ProPrograms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F75F7A14957732426051A2E /* ProPrograms.swift */; };
 		B2ABFC1030B83609009CB60E /* PlanSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ABFC0F30B83609009CB60E /* PlanSetupView.swift */; };
+		994A085F3513F0C55AAE28CD /* ProProgramsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE68441F994A085F3513F0C5 /* ProProgramsView.swift */; };
 		B2ACEBCE30B093BD000D3112 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBCD30B093BD000D3112 /* AppTheme.swift */; };
 		B2ACEBD030B09C65000D3112 /* WorkoutSettingsSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBCF30B09C65000D3112 /* WorkoutSettingsSnapshot.swift */; };
 		B2ACEBD230B0A1D7000D3112 /* WorkoutCSVParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACEBD130B0A1D7000D3112 /* WorkoutCSVParser.swift */; };
@@ -128,7 +130,9 @@
 		B22D35CF30A78D4C001E9E97 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		B243D17730B833F90044304F /* TrainingPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingPlan.swift; sourceTree = "<group>"; };
 		B2ABFC0D30B8356B009CB60E /* PlanCoach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanCoach.swift; sourceTree = "<group>"; };
+		4F75F7A14957732426051A2E /* ProPrograms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProPrograms.swift; sourceTree = "<group>"; };
 		B2ABFC0F30B83609009CB60E /* PlanSetupView.swift */ = {isa = PBXFileReference; path = PlanSetupView.swift; sourceTree = "<group>"; };
+		EE68441F994A085F3513F0C5 /* ProProgramsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProProgramsView.swift; sourceTree = "<group>"; };
 		B2ACEBCD30B093BD000D3112 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		B2ACEBCF30B09C65000D3112 /* WorkoutSettingsSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSettingsSnapshot.swift; sourceTree = "<group>"; };
 		B2ACEBD130B0A1D7000D3112 /* WorkoutCSVParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCSVParser.swift; sourceTree = "<group>"; };
@@ -241,6 +245,7 @@
 				B2EEE11830B77637007B0B45 /* PackageReader.swift */,
 				B243D17730B833F90044304F /* TrainingPlan.swift */,
 				B2ABFC0D30B8356B009CB60E /* PlanCoach.swift */,
+				4F75F7A14957732426051A2E /* ProPrograms.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -280,6 +285,7 @@
 				31FEA094DCE54BC71EBB891B /* ProductEntryView.swift */,
 				B4B412C8F57289404F6E2110 /* BarcodeFoodView.swift */,
 				B2ABFC0F30B83609009CB60E /* PlanSetupView.swift */,
+				EE68441F994A085F3513F0C5 /* ProProgramsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -442,11 +448,13 @@
 				86B6AE21B49D855E7BD8428F /* BarcodeFoodView.swift in Sources */,
 				DD3B671E312797809998A7F2 /* HistoryView.swift in Sources */,
 				B2ABFC0E30B8356B009CB60E /* PlanCoach.swift in Sources */,
+				4957732426051A2EDD97C454 /* ProPrograms.swift in Sources */,
 				7C84CD5B3C570FAA67960F38 /* Models.swift in Sources */,
 				B22D35A430A78031001E9E97 /* PersonalRecords.swift in Sources */,
 				B22D359C30A77B88001E9E97 /* ExerciseGuide.swift in Sources */,
 				8A5538913C5A374816D997CC /* PlateCalculatorView.swift in Sources */,
 				B2ABFC1030B83609009CB60E /* PlanSetupView.swift in Sources */,
+				994A085F3513F0C55AAE28CD /* ProProgramsView.swift in Sources */,
 				B22D35A030A77CDB001E9E97 /* ExerciseGraphicView.swift in Sources */,
 				B2EEE11930B77637007B0B45 /* PackageReader.swift in Sources */,
 				B22D359E30A77BB0001E9E97 /* ExerciseInfoView.swift in Sources */,

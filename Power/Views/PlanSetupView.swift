@@ -18,6 +18,7 @@ struct PlanSetupView: View {
     @State private var step = Step.goal
     @State private var plan: TrainingPlan?
     @FocusState private var notesFocused: Bool
+    @State private var choosingProProgram = false
 
     private enum Step: Int, CaseIterable {
         case goal, schedule, gym, notes, building, preview
@@ -63,11 +64,25 @@ struct PlanSetupView: View {
                     profile.experience = level
                 }
             }
+            Button {
+                choosingProProgram = true
+            } label: {
+                Label("Train like a pro instead", systemImage: "trophy.fill")
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.top, 4)
             if let alternative {
                 Button(alternative.title, action: alternative.action)
                     .frame(maxWidth: .infinity)
-                    .padding(.top, 4)
             }
+        }
+        .sheet(isPresented: $choosingProProgram) {
+            // Adding a pro program finishes the setup too.
+            ProProgramsView(onFinish: {
+                choosingProProgram = false
+                onFinish()
+            })
+            .presentationDragIndicator(.visible)
         }
     }
 
