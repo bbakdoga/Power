@@ -131,8 +131,8 @@ struct ProProgramsView: View {
 
 // MARK: - Cards
 
-/// A pro's card: their photo (or signature lift) on top, then name, credential and
-/// what the program is about.
+/// A program's card: its signature lift on top, then the program name, tagline and
+/// a description that mentions who inspired it.
 private struct ProCard: View {
     let program: ProProgram
     let isSelected: Bool
@@ -142,22 +142,20 @@ private struct ProCard: View {
         VStack(alignment: .leading, spacing: 0) {
             photo
             VStack(alignment: .leading, spacing: 4) {
-                Text(verbatim: program.person)
+                Text(program.programName)
                     .font(.title3.bold())
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
-                Text(program.credential)
+                Text(program.tagline)
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(theme.accent)
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
-                Text(program.programName)
-                    .font(.headline)
-                    .padding(.top, 6)
                 Text(program.summary)
                     .font(.footnote)
                     .foregroundStyle(.secondary)
-                    .lineLimit(4, reservesSpace: true)
+                    .lineLimit(5, reservesSpace: true)
+                    .padding(.top, 4)
                 HStack(spacing: 6) {
                     tag(String(localized: "\(program.daysPerWeek) days a week"), systemImage: "calendar")
                     tag(String(localized: "\(program.exerciseCount) exercises"), systemImage: "dumbbell.fill")
@@ -177,23 +175,19 @@ private struct ProCard: View {
         .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
     }
 
-    /// A licensed photo if one is in the asset catalog, otherwise the illustration of
-    /// the lift the person is known for, with their initials.
+    /// The illustration of the program's signature lift, with the category's symbol.
+    /// No photos of the people who inspired the programs.
     private var photo: some View {
         ZStack(alignment: .bottomLeading) {
             Color.white
-            if let image = UIImage(named: program.photoName) {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFill()
-            } else if let image = UIImage(named: illustrationName) {
+            if let image = UIImage(named: illustrationName) {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
                     .padding(.vertical, 8)
                     .frame(maxWidth: .infinity)
             }
-            Text(verbatim: program.initials)
+            Image(systemName: program.category.systemImage)
                 .font(.headline.bold())
                 .foregroundStyle(.white)
                 .frame(width: 44, height: 44)

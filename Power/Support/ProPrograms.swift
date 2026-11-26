@@ -2,7 +2,8 @@ import Foundation
 
 /// Ready-made programs inspired by how well-known athletes and coaches are publicly
 /// known to train. They're interpretations built from Power's exercise library, not
-/// official programs, and the people shown aren't affiliated with Power.
+/// official programs. Programs are named by training style: people are only mentioned
+/// as a fact in the description, with no photos, and they aren't affiliated with Power.
 struct ProProgram: Identifiable, Hashable {
     enum Category: String, CaseIterable, Identifiable {
         case bodybuilders, powerlifters, creators
@@ -14,29 +15,30 @@ struct ProProgram: Identifiable, Hashable {
             case .creators: return String(localized: "Fitness creators")
             }
         }
+        var systemImage: String {
+            switch self {
+            case .bodybuilders: return "figure.strengthtraining.traditional"
+            case .powerlifters: return "scalemass.fill"
+            case .creators: return "play.rectangle.fill"
+            }
+        }
     }
 
     let id: String
-    /// The person's name, never translated.
+    /// The person who inspired it, never translated. Shown in the description and the
+    /// "not affiliated" note only, never as a headline.
     let person: String
     let category: Category
     let bodyType: BodyType
-    /// What they're known for, e.g. "7× Mr. Olympia".
-    let credential: String
     let programName: String
+    /// What the program is about in a few words, e.g. "Classic high-volume bodybuilding".
+    let tagline: String
+    /// Says who it's inspired by, as a plain fact.
     let summary: String
     /// Library exercise whose illustration stands in for a photo.
     let signatureExercise: String
     let daysPerWeek: Int
     let days: [TrainingPlan.Day]
-
-    /// Optional licensed photo in the asset catalog, e.g. "pro-arnold". Without one, the
-    /// card shows the signature exercise's illustration.
-    var photoName: String { "pro-\(id)" }
-
-    var initials: String {
-        person.split(separator: " ").compactMap(\.first).prefix(2).map(String.init).joined()
-    }
 
     var plan: TrainingPlan {
         TrainingPlan(name: programName, summary: summary, days: days)
@@ -63,9 +65,9 @@ extension ProProgram {
         // MARK: Bodybuilders
         ProProgram(
             id: "arnold", person: "Arnold Schwarzenegger", category: .bodybuilders, bodyType: .man,
-            credential: String(localized: "7× Mr. Olympia"),
-            programName: String(localized: "The Arnold Split"),
-            summary: String(localized: "Chest and back together, then shoulders and arms, then legs, each twice a week. High volume with classic free-weight lifts."),
+            programName: String(localized: "Golden Era Split"),
+            tagline: String(localized: "Classic high-volume bodybuilding"),
+            summary: String(localized: "Inspired by the split Arnold Schwarzenegger, 7× Mr. Olympia, made famous: chest and back together, then shoulders and arms, then legs, each twice a week. High volume with classic free-weight lifts."),
             signatureExercise: "Incline Bench Press", daysPerWeek: 6,
             days: [
                 day(String(localized: "Chest & Back"), [
@@ -85,9 +87,9 @@ extension ProProgram {
             ]),
         ProProgram(
             id: "ronnie", person: "Ronnie Coleman", category: .bodybuilders, bodyType: .man,
-            credential: String(localized: "8× Mr. Olympia"),
             programName: String(localized: "Heavy & Basic"),
-            summary: String(localized: "Six days of heavy basics: big squats, deadlifts and presses, then plenty of volume on top."),
+            tagline: String(localized: "Heavy basics, six days a week"),
+            summary: String(localized: "Inspired by how 8× Mr. Olympia Ronnie Coleman trained: big squats, deadlifts and presses, then plenty of volume on top."),
             signatureExercise: "Squat", daysPerWeek: 6,
             days: [
                 day(String(localized: "Back, Biceps & Shoulders"), [
@@ -106,9 +108,9 @@ extension ProProgram {
             ]),
         ProProgram(
             id: "dorian", person: "Dorian Yates", category: .bodybuilders, bodyType: .man,
-            credential: String(localized: "6× Mr. Olympia"),
-            programName: String(localized: "Blood & Guts"),
-            summary: String(localized: "High-intensity training: four short workouts a week. After a warm-up set, do one all-out set per exercise."),
+            programName: String(localized: "One-Set HIT"),
+            tagline: String(localized: "High-intensity bodybuilding"),
+            summary: String(localized: "Inspired by 6× Mr. Olympia Dorian Yates: four short workouts a week. After a warm-up set, do one all-out set per exercise."),
             signatureExercise: "Barbell Row", daysPerWeek: 4,
             days: [
                 day(String(localized: "Shoulders & Triceps"), [
@@ -130,9 +132,9 @@ extension ProProgram {
             ]),
         ProProgram(
             id: "dlb", person: "Dana Linn Bailey", category: .bodybuilders, bodyType: .woman,
-            credential: String(localized: "First Women's Physique Olympia champion"),
             programName: String(localized: "Heavy & Hard"),
-            summary: String(localized: "Five intense days built on heavy compound lifts, with two leg days for quads, hamstrings and glutes."),
+            tagline: String(localized: "Strength-focused physique training"),
+            summary: String(localized: "Inspired by Dana Linn Bailey, the first Women's Physique Olympia champion: five intense days built on heavy compound lifts, with two leg days for quads, hamstrings and glutes."),
             signatureExercise: "Hip Thrust", daysPerWeek: 5,
             days: [
                 day(String(localized: "Quads & Calves"), [
@@ -160,9 +162,9 @@ extension ProProgram {
         // MARK: Powerlifters
         ProProgram(
             id: "coan", person: "Ed Coan", category: .powerlifters, bodyType: .man,
-            credential: String(localized: "Over 70 powerlifting world records"),
-            programName: String(localized: "Classic Coan"),
-            summary: String(localized: "One day each for squat, bench and deadlift, plus an upper-body day. Heavy low-rep sets, then targeted assistance work."),
+            programName: String(localized: "Classic Powerlifting Split"),
+            tagline: String(localized: "One day per big lift"),
+            summary: String(localized: "Inspired by Ed Coan, holder of over 70 powerlifting world records: one day each for squat, bench and deadlift, plus an upper-body day. Heavy low-rep sets, then targeted assistance work."),
             signatureExercise: "Deadlift", daysPerWeek: 4,
             days: [
                 day(String(localized: "Squat Day"), [
@@ -183,9 +185,9 @@ extension ProProgram {
             ]),
         ProProgram(
             id: "wendler", person: "Jim Wendler", category: .powerlifters, bodyType: .man,
-            credential: String(localized: "Creator of 5/3/1"),
-            programName: String(localized: "5/3/1 Boring But Big"),
-            summary: String(localized: "Four days, one main lift each. Three heavy sets building to a top set, then 5×10 for size. Add a little weight every month."),
+            programName: String(localized: "Monthly Wave Strength"),
+            tagline: String(localized: "Slow, steady strength gains"),
+            summary: String(localized: "Inspired by coach Jim Wendler's approach: four days, one main lift each. Three heavy sets building to a top set, then 5×10 for size. Add a little weight every month."),
             signatureExercise: "Overhead Press", daysPerWeek: 4,
             days: [
                 day(String(localized: "Press Day"), [
@@ -203,9 +205,9 @@ extension ProProgram {
             ]),
         ProProgram(
             id: "westside", person: "Louie Simmons", category: .powerlifters, bodyType: .man,
-            credential: String(localized: "Founder of Westside Barbell"),
-            programName: String(localized: "Westside Conjugate"),
-            summary: String(localized: "Two max-effort days to work up to heavy singles, and two speed days with lighter, explosive sets. Lots of back and triceps work."),
+            programName: String(localized: "Conjugate Powerlifting"),
+            tagline: String(localized: "Max-effort and speed days"),
+            summary: String(localized: "Inspired by the conjugate method of Louie Simmons: two max-effort days to work up to heavy singles, and two speed days with lighter, explosive sets. Lots of back and triceps work."),
             signatureExercise: "Close-Grip Bench Press", daysPerWeek: 4,
             days: [
                 day(String(localized: "Max Effort Lower"), [
@@ -223,9 +225,9 @@ extension ProProgram {
             ]),
         ProProgram(
             id: "stefi", person: "Stefi Cohen", category: .powerlifters, bodyType: .woman,
-            credential: String(localized: "25 powerlifting world records"),
             programName: String(localized: "High-Frequency Strength"),
-            summary: String(localized: "Squat, bench and deadlift several times a week. Heavy days and volume days take turns, with upper back and core work."),
+            tagline: String(localized: "The big three, several times a week"),
+            summary: String(localized: "Inspired by Stefi Cohen, holder of 25 powerlifting world records: squat, bench and deadlift several times a week. Heavy days and volume days take turns, with upper back and core work."),
             signatureExercise: "Deadlift", daysPerWeek: 4,
             days: [
                 day(String(localized: "Squat & Bench"), [
@@ -246,9 +248,9 @@ extension ProProgram {
         // MARK: Fitness creators
         ProProgram(
             id: "nippard", person: "Jeff Nippard", category: .creators, bodyType: .man,
-            credential: String(localized: "Science-based training on YouTube"),
             programName: String(localized: "Science-Based Upper/Lower"),
-            summary: String(localized: "Four days: a strength and a muscle-building version of upper and lower body. Stop 1–2 reps before failure and add reps or weight each week."),
+            tagline: String(localized: "Evidence-based muscle building"),
+            summary: String(localized: "Inspired by science-focused coach and YouTuber Jeff Nippard: a strength and a muscle-building version of upper and lower body. Stop 1–2 reps before failure and add reps or weight each week."),
             signatureExercise: "Romanian Deadlift", daysPerWeek: 4,
             days: [
                 day(String(localized: "Upper Strength"), [
@@ -272,9 +274,9 @@ extension ProProgram {
             ]),
         ProProgram(
             id: "athleanx", person: "Jeff Cavaliere", category: .creators, bodyType: .man,
-            credential: String(localized: "Physical therapist behind ATHLEAN-X"),
             programName: String(localized: "Train Like an Athlete"),
-            summary: String(localized: "Three full-body days that build strength and athleticism. Face pulls and core work keep shoulders and posture healthy."),
+            tagline: String(localized: "Strength, athleticism and healthy shoulders"),
+            summary: String(localized: "Inspired by physical therapist and YouTuber Jeff Cavaliere: three full-body days that build strength and athleticism. Face pulls and core work keep shoulders and posture healthy."),
             signatureExercise: "Face Pull", daysPerWeek: 3,
             days: [
                 day(String(localized: "Athlete A"), [
@@ -291,9 +293,9 @@ extension ProProgram {
             ]),
         ProProgram(
             id: "whitney", person: "Whitney Simmons", category: .creators, bodyType: .woman,
-            credential: String(localized: "Fitness YouTuber and gym favorite"),
             programName: String(localized: "Glutes & Strength"),
-            summary: String(localized: "Five gym days with a strong focus on glutes and legs, balanced with back, shoulders and core."),
+            tagline: String(localized: "Glute- and leg-focused gym split"),
+            summary: String(localized: "Inspired by fitness YouTuber Whitney Simmons: five gym days with a strong focus on glutes and legs, balanced with back, shoulders and core."),
             signatureExercise: "Hip Thrust", daysPerWeek: 5,
             days: [
                 day(String(localized: "Glutes & Hamstrings"), [
@@ -319,9 +321,9 @@ extension ProProgram {
             ]),
         ProProgram(
             id: "chloe", person: "Chloe Ting", category: .creators, bodyType: .woman,
-            credential: String(localized: "Viral home workout challenges"),
-            programName: String(localized: "Home Shred"),
-            summary: String(localized: "No equipment needed. Short, fast bodyweight circuits at home: keep rests short and move quickly from one exercise to the next."),
+            programName: String(localized: "Home Bodyweight Burn"),
+            tagline: String(localized: "No equipment needed"),
+            summary: String(localized: "Inspired by the home workouts of fitness YouTuber Chloe Ting: short, fast bodyweight circuits. Keep rests short and move quickly from one exercise to the next."),
             signatureExercise: "Glute Bridge", daysPerWeek: 5,
             days: [
                 day(String(localized: "Abs & Core"), [

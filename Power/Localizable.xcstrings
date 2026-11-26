@@ -312,24 +312,6 @@
     },
     "%lld days a week" : {
       "localizations" : {
-        "en" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld day a week"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld days a week"
-                }
-              }
-            }
-          }
-        },
         "de" : {
           "variations" : {
             "plural" : {
@@ -347,29 +329,29 @@
               }
             }
           }
-        }
-      }
-    },
-    "%lld exercises" : {
-      "localizations" : {
+        },
         "en" : {
           "variations" : {
             "plural" : {
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld exercise"
+                  "value" : "%lld day a week"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%lld exercises"
+                  "value" : "%lld days a week"
                 }
               }
             }
           }
-        },
+        }
+      }
+    },
+    "%lld exercises" : {
+      "localizations" : {
         "de" : {
           "variations" : {
             "plural" : {
@@ -383,6 +365,24 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "%lld Übungen"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld exercise"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld exercises"
                 }
               }
             }
@@ -589,24 +589,6 @@
     },
     "%lld routines" : {
       "localizations" : {
-        "en" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld routine"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld routines"
-                }
-              }
-            }
-          }
-        },
         "de" : {
           "variations" : {
             "plural" : {
@@ -620,6 +602,24 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "%lld Routinen"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld routine"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld routines"
                 }
               }
             }
@@ -1034,6 +1034,7 @@
       }
     },
     "5/3/1 Boring But Big" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1054,6 +1055,7 @@
       }
     },
     "6× Mr. Olympia" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1064,6 +1066,7 @@
       }
     },
     "7× Mr. Olympia" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1074,6 +1077,7 @@
       }
     },
     "8× Mr. Olympia" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1084,6 +1088,7 @@
       }
     },
     "25 powerlifting world records" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1950,6 +1955,7 @@
       }
     },
     "Blood & Guts" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2315,6 +2321,7 @@
       }
     },
     "Chest and back together, then shoulders and arms, then legs, each twice a week. High volume with classic free-weight lifts." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2387,11 +2394,32 @@
       }
     },
     "Classic Coan" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Classic Coan"
+          }
+        }
+      }
+    },
+    "Classic high-volume bodybuilding" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klassisches Bodybuilding mit viel Volumen"
+          }
+        }
+      }
+    },
+    "Classic Powerlifting Split" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klassischer Powerlifting-Split"
           }
         }
       }
@@ -2403,6 +2431,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Schließe Power und öffne die App erneut, damit alles umgestellt wird, auch der Timer auf dem Sperrbildschirm."
+          }
+        }
+      }
+    },
+    "Conjugate Powerlifting" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conjugate-Powerlifting"
           }
         }
       }
@@ -2468,6 +2506,7 @@
       }
     },
     "Creator of 5/3/1" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2912,6 +2951,16 @@
         }
       }
     },
+    "Evidence-based muscle building" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evidenzbasierter Muskelaufbau"
+          }
+        }
+      }
+    },
     "Exercise" : {
       "localizations" : {
         "de" : {
@@ -3087,6 +3136,7 @@
       }
     },
     "First Women's Physique Olympia champion" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3107,6 +3157,7 @@
       }
     },
     "Fitness YouTuber and gym favorite" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3117,6 +3168,7 @@
       }
     },
     "Five gym days with a strong focus on glutes and legs, balanced with back, shoulders and core." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3127,6 +3179,7 @@
       }
     },
     "Five intense days built on heavy compound lifts, with two leg days for quads, hamstrings and glutes." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3181,6 +3234,7 @@
       }
     },
     "Founder of Westside Barbell" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3191,6 +3245,7 @@
       }
     },
     "Four days, one main lift each. Three heavy sets building to a top set, then 5×10 for size. Add a little weight every month." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3201,6 +3256,7 @@
       }
     },
     "Four days: a strength and a muscle-building version of upper and lower body. Stop 1–2 reps before failure and add reps or weight each week." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3297,6 +3353,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Stärker werden"
+          }
+        }
+      }
+    },
+    "Glute- and leg-focused gym split" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Studio-Split mit Fokus auf Po und Beine"
           }
         }
       }
@@ -3433,6 +3499,16 @@
         }
       }
     },
+    "Golden Era Split" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golden-Era-Split"
+          }
+        }
+      }
+    },
     "grams" : {},
     "Grams" : {},
     "Hamstrings & Glutes" : {
@@ -3495,6 +3571,16 @@
         }
       }
     },
+    "Heavy basics, six days a week" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schwere Grundübungen, sechs Tage pro Woche"
+          }
+        }
+      }
+    },
     "Heavy compound lifts with lower reps. Add weight when you hit all your reps." : {
       "localizations" : {
         "de" : {
@@ -3515,7 +3601,18 @@
         }
       }
     },
+    "High-intensity bodybuilding" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hochintensives Bodybuilding"
+          }
+        }
+      }
+    },
     "High-intensity training: four short workouts a week. After a warm-up set, do one all-out set per exercise." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3545,7 +3642,18 @@
         }
       }
     },
+    "Home Bodyweight Burn" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home-Bodyweight-Burn"
+          }
+        }
+      }
+    },
     "Home Shred" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3805,18 +3913,138 @@
         }
       }
     },
+    "Inspired by 6× Mr. Olympia Dorian Yates: four short workouts a week. After a warm-up set, do one all-out set per exercise." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild von Dorian Yates, 6× Mr. Olympia: vier kurze Workouts pro Woche. Nach einem Aufwärmsatz folgt pro Übung ein Satz bis zum Äußersten."
+          }
+        }
+      }
+    },
+    "Inspired by coach Jim Wendler's approach: four days, one main lift each. Three heavy sets building to a top set, then 5×10 for size. Add a little weight every month." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Ansatz von Coach Jim Wendler: vier Tage mit je einer Hauptübung. Drei schwere Sätze bis zu einem Top-Satz, dann 5×10 für Masse. Steigere das Gewicht jeden Monat ein wenig."
+          }
+        }
+      }
+    },
+    "Inspired by Dana Linn Bailey, the first Women's Physique Olympia champion: five intense days built on heavy compound lifts, with two leg days for quads, hamstrings and glutes." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild von Dana Linn Bailey, der ersten Women’s-Physique-Olympia-Siegerin: fünf intensive Tage mit schweren Grundübungen und zwei Beintagen für Oberschenkel, Beinbeuger und Po."
+          }
+        }
+      }
+    },
+    "Inspired by Ed Coan, holder of over 70 powerlifting world records: one day each for squat, bench and deadlift, plus an upper-body day. Heavy low-rep sets, then targeted assistance work." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild von Ed Coan, Inhaber von über 70 Weltrekorden im Powerlifting: je ein Tag für Kniebeugen, Bankdrücken und Kreuzheben plus ein Oberkörpertag. Schwere Sätze mit wenigen Wiederholungen, dann gezielte Zusatzübungen."
+          }
+        }
+      }
+    },
+    "Inspired by fitness YouTuber Whitney Simmons: five gym days with a strong focus on glutes and legs, balanced with back, shoulders and core." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild der Fitness-YouTuberin Whitney Simmons: fünf Studiotage mit starkem Fokus auf Po und Beine, ausgeglichen mit Rücken, Schultern und Rumpf."
+          }
+        }
+      }
+    },
+    "Inspired by how 8× Mr. Olympia Ronnie Coleman trained: big squats, deadlifts and presses, then plenty of volume on top." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild des Trainings von Ronnie Coleman, 8× Mr. Olympia: große Kniebeugen, Kreuzheben und Drückübungen, dazu jede Menge Volumen."
+          }
+        }
+      }
+    },
+    "Inspired by physical therapist and YouTuber Jeff Cavaliere: three full-body days that build strength and athleticism. Face pulls and core work keep shoulders and posture healthy." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild des Physiotherapeuten und YouTubers Jeff Cavaliere: drei Ganzkörpertage für Kraft und Athletik. Face Pulls und Rumpftraining halten Schultern und Haltung gesund."
+          }
+        }
+      }
+    },
     "Inspired by publicly shared training of %@. Not an official program; %@ isn't affiliated with Power. You can edit every routine later." : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild des öffentlich geteilten Trainings von %1$@. Kein offizielles Programm; %2$@ steht in keiner Verbindung zu Power. Du kannst jede Routine später bearbeiten."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Inspired by publicly shared training of %1$@. Not an official program; %2$@ isn't affiliated with Power. You can edit every routine later."
           }
-        },
+        }
+      }
+    },
+    "Inspired by science-focused coach and YouTuber Jeff Nippard: a strength and a muscle-building version of upper and lower body. Stop 1–2 reps before failure and add reps or weight each week." : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nach dem Vorbild des öffentlich geteilten Trainings von %1$@. Kein offizielles Programm; %2$@ steht in keiner Verbindung zu Power. Du kannst jede Routine später bearbeiten."
+            "value" : "Nach dem Vorbild des wissenschaftsorientierten Coaches und YouTubers Jeff Nippard: je eine Kraft- und eine Muskelaufbau-Version für Ober- und Unterkörper. Hör 1–2 Wiederholungen vor dem Muskelversagen auf und steigere jede Woche Wiederholungen oder Gewicht."
+          }
+        }
+      }
+    },
+    "Inspired by Stefi Cohen, holder of 25 powerlifting world records: squat, bench and deadlift several times a week. Heavy days and volume days take turns, with upper back and core work." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild von Stefi Cohen, Inhaberin von 25 Weltrekorden im Powerlifting: Kniebeugen, Bankdrücken und Kreuzheben mehrmals pro Woche. Schwere Tage und Volumentage wechseln sich ab, dazu Training für oberen Rücken und Rumpf."
+          }
+        }
+      }
+    },
+    "Inspired by the conjugate method of Louie Simmons: two max-effort days to work up to heavy singles, and two speed days with lighter, explosive sets. Lots of back and triceps work." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach der Conjugate-Methode von Louie Simmons: zwei Max-Effort-Tage, an denen du dich zu schweren Einzelwiederholungen hocharbeitest, und zwei Speed-Tage mit leichteren, explosiven Sätzen. Viel Training für Rücken und Trizeps."
+          }
+        }
+      }
+    },
+    "Inspired by the home workouts of fitness YouTuber Chloe Ting: short, fast bodyweight circuits. Keep rests short and move quickly from one exercise to the next." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild der Home-Workouts der Fitness-YouTuberin Chloe Ting: kurze, schnelle Zirkel mit dem eigenen Körpergewicht. Halte die Pausen kurz und wechsle zügig zur nächsten Übung."
+          }
+        }
+      }
+    },
+    "Inspired by the split Arnold Schwarzenegger, 7× Mr. Olympia, made famous: chest and back together, then shoulders and arms, then legs, each twice a week. High volume with classic free-weight lifts." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild des Splits, den Arnold Schwarzenegger, 7× Mr. Olympia, berühmt gemacht hat: Brust und Rücken zusammen, dann Schultern und Arme, dann Beine, jeweils zweimal pro Woche. Viel Volumen mit klassischen Übungen mit freien Gewichten."
           }
         }
       }
@@ -4251,6 +4479,16 @@
         }
       }
     },
+    "Max-effort and speed days" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Max-Effort- und Speed-Tage"
+          }
+        }
+      }
+    },
     "Measurement" : {
       "localizations" : {
         "de" : {
@@ -4287,6 +4525,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Monat"
+          }
+        }
+      }
+    },
+    "Monthly Wave Strength" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kraft in Monatswellen"
           }
         }
       }
@@ -4562,7 +4810,18 @@
         }
       }
     },
+    "No equipment needed" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Geräte nötig"
+          }
+        }
+      }
+    },
     "No equipment needed. Short, fast bodyweight circuits at home: keep rests short and move quickly from one exercise to the next." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4848,11 +5107,22 @@
       }
     },
     "One day each for squat, bench and deadlift, plus an upper-body day. Heavy low-rep sets, then targeted assistance work." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Je ein Tag für Kniebeugen, Bankdrücken und Kreuzheben plus ein Oberkörpertag. Schwere Sätze mit wenigen Wiederholungen, dann gezielte Zusatzübungen."
+          }
+        }
+      }
+    },
+    "One day per big lift" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein Tag pro Hauptübung"
           }
         }
       }
@@ -4863,6 +5133,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ein oder zwei Muskelgruppen pro Workout, z. B. Brust und Trizeps"
+          }
+        }
+      }
+    },
+    "One-Set HIT" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein-Satz-HIT"
           }
         }
       }
@@ -4900,6 +5180,7 @@
       }
     },
     "Over 70 powerlifting world records" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5042,6 +5323,7 @@
       }
     },
     "Physical therapist behind ATHLEAN-X" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5880,6 +6162,7 @@
       }
     },
     "Science-based training on YouTube" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6134,6 +6417,7 @@
       }
     },
     "Six days of heavy basics: big squats, deadlifts and presses, then plenty of volume on top." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6159,6 +6443,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Pause überspringen"
+          }
+        }
+      }
+    },
+    "Slow, steady strength gains" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Langsam, aber stetig stärker"
           }
         }
       }
@@ -6244,6 +6538,7 @@
       }
     },
     "Squat, bench and deadlift several times a week. Heavy days and volume days take turns, with upper back and core work." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6385,6 +6680,26 @@
         }
       }
     },
+    "Strength-focused physique training" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kraftbetontes Physique-Training"
+          }
+        }
+      }
+    },
+    "Strength, athleticism and healthy shoulders" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kraft, Athletik und gesunde Schultern"
+          }
+        }
+      }
+    },
     "Summary" : {
       "localizations" : {
         "de" : {
@@ -6497,11 +6812,22 @@
       }
     },
     "The Arnold Split" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Der Arnold-Split"
+          }
+        }
+      }
+    },
+    "The big three, several times a week" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die drei Hauptübungen, mehrmals pro Woche"
           }
         }
       }
@@ -6680,6 +7006,7 @@
       }
     },
     "Three full-body days that build strength and athleticism. Face pulls and core work keep shoulders and posture healthy." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7024,6 +7351,7 @@
       }
     },
     "Two max-effort days to work up to heavy singles, and two speed days with lighter, explosive sets. Lots of back and triceps work." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7280,6 +7608,7 @@
       }
     },
     "Viral home workout challenges" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7502,6 +7831,7 @@
       }
     },
     "Westside Conjugate" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
