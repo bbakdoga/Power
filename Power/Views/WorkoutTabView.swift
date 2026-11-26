@@ -11,6 +11,7 @@ struct WorkoutTabView: View {
     @State private var path: [Routine] = []
     @State private var summary: FinishedWorkout?
     @State private var addingStarters = false
+    @State private var buildingPlan = false
 
     private struct FinishedWorkout: Identifiable {
         let workout: Workout
@@ -41,6 +42,10 @@ struct WorkoutTabView: View {
         .sheet(isPresented: $addingStarters) {
             StarterRoutinesPicker(buttonTitle: String(localized: "Add Routines")) { addingStarters = false }
                 .presentationDetents([.large])
+        }
+        .sheet(isPresented: $buildingPlan) {
+            PlanSetupView(onFinish: { buildingPlan = false })
+                .presentationDragIndicator(.visible)
         }
         .sheet(item: $summary) { item in
             WorkoutSummaryView(workout: item.workout, canSaveRoutine: item.canSaveRoutine)
@@ -77,8 +82,14 @@ struct WorkoutTabView: View {
                     Button {
                         addingStarters = true
                     } label: {
-                        Label("Add starter routines", systemImage: "sparkles")
+                        Label("Add starter routines", systemImage: "square.stack")
                     }
+                }
+                Button {
+                    buildingPlan = true
+                } label: {
+                    Label(PlanCoach.isAvailable ? "Build a plan with Apple Intelligence" : "Build a plan for me",
+                          systemImage: "sparkles")
                 }
                 ForEach(routines) { routine in
                     HStack(spacing: 12) {
