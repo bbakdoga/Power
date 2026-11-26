@@ -9,6 +9,8 @@ struct NutritionView: View {
     @State private var showingManualEntry = false
     @State private var showingFoodSearch = false
     @State private var showingBarcodeScanner = false
+    /// A food photo that turned out to show a labeled product; opens the product search.
+    @State private var packagePhoto: PackagePhoto?
     @State private var showingCamera = false
     @State private var selectedPhoto: PhotosPickerItem?
     @State private var analyzedImageData: Data?
@@ -100,6 +102,9 @@ struct NutritionView: View {
             .sheet(isPresented: $showingFoodSearch) {
                 FoodSearchView()
             }
+            .fullScreenCover(item: $packagePhoto) { photo in
+                BarcodeFoodView(packageImage: photo.image)
+            }
             .fullScreenCover(isPresented: $showingBarcodeScanner) {
                 BarcodeFoodView()
             }
@@ -148,6 +153,15 @@ struct NutritionView: View {
         isAnalyzing = true
 
         Task {
+            // Bottles, cans and packages have large printed text; dishes don't. Those are
+            // looked up as products instead of guessed as one of the 101 dish types.
+            if let image = UIImage(data: data),
+               let lines = try? await PackageReader.textLines(in: image),
+               PackageReader.looksLikePackage(lines) {
+                isAnalyzing = false
+                packagePhoto = PackagePhoto(image: image)
+                return
+            }
             do {
                 let labels = try await FoodImageClassifier.labels(in: data)
                 var resolvedSuggestions = FoodCatalog.suggestions(for: labels)
@@ -557,4 +571,10 @@ struct CameraPicker: UIViewControllerRepresentable {
             onCancel()
         }
     }
+}
+
+/// A photo handed from the food photo flow to the product search.
+private struct PackagePhoto: Identifiable {
+    let id = UUID()
+    let image: UIImage
 }

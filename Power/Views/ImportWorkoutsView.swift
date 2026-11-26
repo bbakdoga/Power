@@ -13,7 +13,10 @@ struct ImportWorkoutsView: View {
     @AppStorage(WeightUnit.storageKey) private var appUnit: WeightUnit = .kg
     @State private var picking = false
     @State private var plan: WorkoutImporter.Plan?
-    @State private var weightUnit: WeightUnit = .kg
+    /// Unit each exercise was logged in (source exercise name → unit).
+    @State private var units: [String: WeightUnit] = [:]
+    /// Re-import workouts that were imported before (to fix their units).
+    @State private var replacing = false
     @State private var errorMessage: String?
     @State private var importedCount: Int?
     @State private var importing = false
@@ -49,7 +52,6 @@ struct ImportWorkoutsView: View {
             }
         }
         .onAppear {
-            weightUnit = appUnit
             if let fileURL, plan == nil { load(fileURL) }
         }
     }
@@ -83,13 +85,13 @@ struct ImportWorkoutsView: View {
         Section {
             LabeledContent("File", value: fileName)
             LabeledContent("Format", value: plan.source.format)
-            LabeledContent("Workouts to import", value: "\(plan.newWorkouts.count)")
-            LabeledContent("Sets", value: "\(plan.setCount)")
-            if let range = plan.dateRange {
+            LabeledContent("Workouts to import", value: "\(plan.workouts(replacing: replacing).count)")
+            LabeledContent("Sets", value: "\(plan.setCount(replacing: replacing))")
+            if let range = plan.dateRange(replacing: replacing) {
                 LabeledContent("Dates",
                                value: "\(range.lowerBound.formatted(date: .abbreviated, time: .omitted)) – \(range.upperBound.formatted(date: .abbreviated, time: .omitted))")
             }
-            if plan.duplicateCount > 0 {
+            if plan.duplicateCount > 0 && !replacing {
                 LabeledContent("Already in Power (skipped)", value: "\(plan.duplicateCount)")
             }
         } header: {
@@ -97,19 +99,16 @@ struct ImportWorkoutsView: View {
         }
         .themedRows()
 
-        if plan.source.weightUnitIsAmbiguous {
+        if plan.duplicateCount > 0 {
             Section {
-                Picker("Weights in this file are in", selection: $weightUnit) {
-                    ForEach(WeightUnit.allCases) { Text($0.rawValue).tag($0) }
-                }
-                .pickerStyle(.segmented)
-            } header: {
-                Text("Weight unit")
+                Toggle(String(localized: "Replace the \(plan.duplicateCount) workouts imported before"), isOn: $replacing)
             } footer: {
-                Text("The file doesn't say. Pick the unit you used in the other app.")
+                Text("Use this to fix units or typos in an earlier import. Those workouts are deleted and imported again with the settings below.")
             }
             .themedRows()
         }
+
+        unitSection(plan)
 
         if !plan.suspicious.isEmpty {
             Section {
@@ -162,20 +161,69 @@ struct ImportWorkoutsView: View {
                     if importing {
                         ProgressView()
                     } else {
-                        Text(plan.newWorkouts.isEmpty ? String(localized: "Nothing new to import")
-                             : String(localized: "Import \(plan.newWorkouts.count) workouts"))
+                        let count = plan.workouts(replacing: replacing).count
+                        Text(count == 0 ? String(localized: "Nothing new to import")
+                             : String(localized: "Import \(count) workouts"))
                             .bold()
                     }
                     Spacer()
                 }
             }
-            .disabled(plan.newWorkouts.isEmpty || importing)
+            .disabled(plan.workouts(replacing: replacing).isEmpty || importing)
             Button("Choose a Different File") {
                 self.plan = nil
                 picking = true
             }
         }
         .themedRows()
+    }
+
+    /// Per-exercise kg/lb choice, pre-filled with the importer's guess.
+    private func unitSection(_ plan: WorkoutImporter.Plan) -> some View {
+        let poundCount = plan.units.filter { units[$0.name] == .lb }.count
+        return Section {
+            DisclosureGroup(String(localized: "\(poundCount) of \(plan.units.count) exercises in lb")) {
+                HStack {
+                    Button("All kg") { setAll(.kg, plan) }
+                    Spacer()
+                    Button("All lb") { setAll(.lb, plan) }
+                }
+                .buttonStyle(.borderless)
+                .font(.subheadline)
+                ForEach(plan.units) { item in
+                    HStack {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(item.name)
+                                .font(.subheadline)
+                                .lineLimit(2)
+                            Text("Typical: \(number(item.typicalWeight)) · \(String(localized: "\(item.setCount) sets"))")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        Picker(item.name, selection: unitBinding(item.name)) {
+                            ForEach(WeightUnit.allCases) { Text($0.rawValue).tag($0) }
+                        }
+                        .pickerStyle(.segmented)
+                        .labelsHidden()
+                        .fixedSize()
+                    }
+                }
+            }
+        } header: {
+            Text("Weight units")
+        } footer: {
+            Text("The file doesn't say which unit each exercise used, so Power guessed. Check the ones you logged in pounds. Each exercise keeps its unit for future workouts.")
+        }
+        .themedRows()
+    }
+
+    private func unitBinding(_ name: String) -> Binding<WeightUnit> {
+        Binding { units[name] ?? appUnit } set: { units[name] = $0 }
+    }
+
+    private func setAll(_ unit: WeightUnit, _ plan: WorkoutImporter.Plan) {
+        for item in plan.units { units[item.name] = unit }
     }
 
     private func doneSection(_ count: Int) -> some View {
@@ -218,6 +266,8 @@ struct ImportWorkoutsView: View {
             fileName = url.lastPathComponent
             let newPlan = WorkoutImporter.plan(for: result, in: context)
             fixes = Set(newPlan.suspicious.map(\.id))
+            units = Dictionary(uniqueKeysWithValues: newPlan.units.map { ($0.name, $0.suggested) })
+            replacing = false
             plan = newPlan
         } catch {
             errorMessage = error.localizedDescription
@@ -233,7 +283,8 @@ struct ImportWorkoutsView: View {
         // Let the progress spinner draw before the (synchronous) import starts.
         Task { @MainActor in
             try? await Task.sleep(for: .milliseconds(50))
-            importedCount = WorkoutImporter.run(plan, weightUnit: weightUnit, fixing: fixes, in: context)
+            importedCount = WorkoutImporter.run(plan, units: units, appUnit: appUnit, replacing: replacing,
+                                                fixing: fixes, in: context)
             importing = false
         }
     }

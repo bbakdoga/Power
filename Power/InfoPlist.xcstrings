@@ -38,19 +38,18 @@
       }
     },
     "NSCameraUsageDescription" : {
-      "comment" : "Privacy - Camera Usage Description",
-      "extractionState" : "extracted_with_value",
+      "comment" : "Camera permission prompt: barcode and nutrition-table scanning, food photos, and pictures of exercises.",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Power uses the camera to scan food barcodes and nutrition tables, and to estimate foods from a photo."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Power verwendet die Kamera, um Barcodes und Nährwerttabellen von Lebensmitteln zu scannen und Mahlzeiten anhand eines Fotos zu schätzen."
+            "value" : "Power verwendet die Kamera, um Barcodes und Nährwerttabellen von Lebensmitteln zu scannen, Mahlzeiten anhand eines Fotos zu schätzen und Fotos deiner Übungen aufzunehmen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Power uses the camera to scan food barcodes and nutrition tables, to estimate foods from a photo, and to take pictures of your exercises."
           }
         }
       }

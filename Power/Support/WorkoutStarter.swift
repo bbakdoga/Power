@@ -14,6 +14,7 @@ enum WorkoutStarter {
     static func start(routine: Routine, in context: ModelContext) -> Workout {
         let workout = Workout(name: routine.name)
         context.insert(workout)
+        workout.routine = routine
         for (index, item) in routine.sortedExercises.enumerated() {
             guard let exercise = item.exercise else { continue }
             let entry = addExercise(exercise, to: workout, order: index, in: context,
@@ -43,12 +44,18 @@ enum WorkoutStarter {
         return entry
     }
 
-    /// Makes a routine with the same exercises as a finished workout.
+    /// A workout can become a routine only if at least one exercise has a completed set.
+    static func canSaveAsRoutine(_ workout: Workout) -> Bool {
+        workout.sortedExercises.contains { $0.exercise != nil && !$0.completedSets.isEmpty }
+    }
+
+    /// Makes a routine with the exercises that were actually done in a finished workout.
     @discardableResult
     static func saveAsRoutine(_ workout: Workout, in context: ModelContext) -> Routine {
         let routine = Routine(name: workout.name)
         context.insert(routine)
-        for (index, entry) in workout.sortedExercises.enumerated() {
+        let done = workout.sortedExercises.filter { !$0.completedSets.isEmpty }
+        for (index, entry) in done.enumerated() {
             guard let exercise = entry.exercise else { continue }
             let working = entry.completedSets.filter { $0.setType != .warmup }
             let item = RoutineExercise(order: index,

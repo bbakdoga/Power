@@ -9,6 +9,9 @@ import VisionKit
 /// read on the phone.
 @MainActor
 struct BarcodeFoodView: View {
+    /// A photo of a package to identify right away (from "Take food photo").
+    var packageImage: UIImage? = nil
+
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
 
@@ -19,6 +22,10 @@ struct BarcodeFoodView: View {
         case notFound(ProductBarcode, partial: ProductInfo?, errorMessage: String?)
         case readingLabel
         case editing(ProductInfo, note: ProductNutritionForm.Note, saveAs: ProductDataSource)
+        case readingPackage
+        /// Products found by the text on the package front. `barcode` is the scanned code
+        /// when the search started from "Product Not Found".
+        case packageMatches(PackageGuess, [ProductInfo], barcode: ProductBarcode?, errorMessage: String?)
     }
 
     private enum CameraState {
@@ -33,6 +40,13 @@ struct BarcodeFoodView: View {
     @State private var labelTarget: ProductInfo?
     @State private var showingLabelCamera = false
     @State private var labelPhoto: PhotosPickerItem?
+    /// Barcode the package photo belongs to (nil when started from the scanner).
+    @State private var packageBarcode: ProductBarcode?
+    @State private var showingPackageCamera = false
+    @State private var packagePhoto: PhotosPickerItem?
+    @State private var searchText = ""
+    /// A match without nutrition values; asks how to add them.
+    @State private var needsValues: ProductInfo?
 
     var body: some View {
         NavigationStack {
@@ -44,7 +58,12 @@ struct BarcodeFoodView: View {
                     }
                 }
         }
-        .task { await prepareCamera() }
+        .task {
+            if let packageImage {
+                readPackage(packageImage)
+            }
+            await prepareCamera()
+        }
         .alert("Enter barcode", isPresented: $showingBarcodeEntry) {
             TextField("Barcode number", text: $typedBarcode)
                 .keyboardType(.numberPad)
@@ -67,6 +86,41 @@ struct BarcodeFoodView: View {
                 onCancel: { showingLabelCamera = false }
             )
             .ignoresSafeArea()
+        }
+        .fullScreenCover(isPresented: $showingPackageCamera) {
+            CameraPicker(
+                onImage: { image in
+                    showingPackageCamera = false
+                    readPackage(image)
+                },
+                onCancel: { showingPackageCamera = false }
+            )
+            .ignoresSafeArea()
+        }
+        .onChange(of: packagePhoto) { _, item in
+            guard let item else { return }
+            Task {
+                if let data = try? await item.loadTransferable(type: Data.self), let image = UIImage(data: data) {
+                    readPackage(image)
+                }
+                packagePhoto = nil
+            }
+        }
+        .confirmationDialog("Add nutrition values", isPresented: Binding(
+            get: { needsValues != nil },
+            set: { if !$0 { needsValues = nil } }
+        ), titleVisibility: .visible, presenting: needsValues) { product in
+            Button("Photograph nutrition table") {
+                labelTarget = product
+                showingLabelCamera = true
+            }
+            .disabled(!UIImagePickerController.isSourceTypeAvailable(.camera))
+            Button("Enter values manually") {
+                phase = .editing(product, note: .manual, saveAs: .user)
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: { product in
+            Text("\(product.displayName) has no nutrition values online yet.")
         }
         .onChange(of: labelPhoto) { _, item in
             guard let item else { return }
@@ -133,7 +187,10 @@ struct BarcodeFoodView: View {
                 onSave: { edited in
                     var saved = edited
                     saved.source = saveAs
-                    ProductCache.save(saved, in: context)
+                    // Products identified only by their package have no barcode to cache under.
+                    if !saved.barcode.isEmpty {
+                        ProductCache.save(saved, in: context)
+                    }
                     phase = .product(saved, isOfflineCopy: false)
                 },
                 onRetakePhoto: note == .manual ? nil : {
@@ -142,6 +199,24 @@ struct BarcodeFoodView: View {
                 }
             )
             .navigationTitle("Nutrition Values")
+
+        case .readingPackage:
+            VStack(spacing: 12) {
+                ProgressView()
+                Text("Reading package…")
+                    .font(.headline)
+                Text("Text is recognized on your iPhone. The photo is not uploaded.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+            }
+            .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .navigationTitle("Package")
+
+        case .packageMatches(let guess, let matches, let barcode, let errorMessage):
+            packageMatches(guess: guess, matches: matches, barcode: barcode, errorMessage: errorMessage)
+                .navigationTitle("Find Product")
         }
     }
 
@@ -185,6 +260,15 @@ struct BarcodeFoodView: View {
                         .padding(.vertical, 8)
                         .background(.ultraThinMaterial, in: Capsule())
                 }
+                Menu {
+                    packagePhotoButtons(barcode: nil)
+                } label: {
+                    Label("No barcode? Photograph package", systemImage: "text.viewfinder")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
+                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
+                .controlSize(.large)
                 Button {
                     typedBarcode = ""
                     showingBarcodeEntry = true
@@ -238,7 +322,8 @@ struct BarcodeFoodView: View {
             phase = .product(cached.info, isOfflineCopy: false)
             return
         }
-        let cachedInfo = cached.flatMap { $0.caloriesPer100Grams > 0 ? $0.info : nil }
+        // Stored products always have values (possibly 0 kcal, e.g. a zero-sugar drink).
+        let cachedInfo = cached?.info
 
         Task {
             let result: Phase
@@ -303,6 +388,14 @@ struct BarcodeFoodView: View {
             }
 
             Section {
+                packagePhotoButtons(barcode: barcode)
+            } header: {
+                Text("Find it by its package")
+            } footer: {
+                Text("Power reads the brand and name on the front and searches for the product.")
+            }
+
+            Section {
                 Button {
                     labelTarget = base
                     showingLabelCamera = true
@@ -337,6 +430,180 @@ struct BarcodeFoodView: View {
                 Button("Scan another product") { phase = .scanning }
             }
         }
+    }
+
+    // MARK: - Package front
+
+    @ViewBuilder
+    private func packagePhotoButtons(barcode: ProductBarcode?) -> some View {
+        Button {
+            packageBarcode = barcode
+            showingPackageCamera = true
+        } label: {
+            Label("Photograph package front", systemImage: "camera")
+        }
+        .disabled(!UIImagePickerController.isSourceTypeAvailable(.camera))
+        PhotosPicker(selection: Binding(
+            get: { packagePhoto },
+            set: { item in
+                packageBarcode = barcode
+                packagePhoto = item
+            }
+        ), matching: .images) {
+            Label("Choose photo of package", systemImage: "photo.on.rectangle")
+        }
+    }
+
+    private func readPackage(_ image: UIImage) {
+        let barcode = packageBarcode
+        phase = .readingPackage
+        Task {
+            let guess = (try? await PackageReader.read(image)) ?? PackageGuess()
+            searchText = guess.searchQuery
+            await search(guess: guess, barcode: barcode)
+        }
+    }
+
+    private func search(guess: PackageGuess, barcode: ProductBarcode?) async {
+        guard !guess.isEmpty else {
+            phase = .packageMatches(guess, [], barcode: barcode, errorMessage: nil)
+            return
+        }
+        do {
+            let matches = try await ProductLookup.search(name: guess.searchQuery)
+            phase = .packageMatches(guess, matches, barcode: barcode, errorMessage: nil)
+        } catch {
+            phase = .packageMatches(guess, [], barcode: barcode, errorMessage: error.localizedDescription)
+        }
+    }
+
+    private func packageMatches(guess: PackageGuess, matches: [ProductInfo], barcode: ProductBarcode?,
+                                errorMessage: String?) -> some View {
+        List {
+            Section {
+                if guess.isEmpty {
+                    Label("No product name could be read. Try a sharper photo of the front, or type the name below.",
+                          systemImage: "text.magnifyingglass")
+                        .foregroundStyle(.secondary)
+                } else {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(guess.title.isEmpty ? guess.searchQuery : guess.title)
+                            .font(.headline)
+                        if let quantity = guess.quantity {
+                            Text(verbatim: "\(quantity.formatted(.number.precision(.fractionLength(0...1)))) \(guess.isLiquid ? "ml" : "g")")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                        Text(guess.usedLanguageModel
+                             ? "Identified with Apple Intelligence on your iPhone."
+                             : "Read from the largest text on the package.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(.vertical, 2)
+                }
+                HStack {
+                    TextField("Product name", text: $searchText)
+                        .submitLabel(.search)
+                        .onSubmit { searchAgain(guess: guess, barcode: barcode) }
+                    Button("Search") { searchAgain(guess: guess, barcode: barcode) }
+                        .disabled(searchText.trimmingCharacters(in: .whitespaces).count < 2)
+                }
+            } header: {
+                Text("Read from package")
+            }
+
+            Section {
+                if let errorMessage {
+                    Label(errorMessage, systemImage: "wifi.exclamationmark")
+                        .foregroundStyle(.secondary)
+                } else if matches.isEmpty && !guess.isEmpty {
+                    Text("No matching products found. Try editing the name above.")
+                        .foregroundStyle(.secondary)
+                }
+                ForEach(matches, id: \.self) { match in
+                    Button {
+                        choose(match, barcode: barcode)
+                    } label: {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(match.displayName)
+                                .foregroundStyle(.primary)
+                            HStack(spacing: 6) {
+                                if !match.brand.isEmpty { Text(match.brand) }
+                                if match.hasNutrition {
+                                    Text("\(Int(match.caloriesPer100Grams.rounded())) kcal / 100 \(match.isLiquid ? "ml" : "g")")
+                                } else {
+                                    Text("No nutrition values yet")
+                                }
+                            }
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+            } header: {
+                if !matches.isEmpty { Text("Matching products") }
+            } footer: {
+                if matches.contains(where: { $0.source == .openFoodFacts }) {
+                    Text("Data: Open Food Facts, available under the Open Database License (ODbL).")
+                }
+            }
+
+            Section {
+                Button {
+                    labelTarget = product(from: guess, barcode: barcode)
+                    showingLabelCamera = true
+                } label: {
+                    Label("Photograph nutrition table", systemImage: "camera.viewfinder")
+                }
+                .disabled(!UIImagePickerController.isSourceTypeAvailable(.camera))
+                Button {
+                    phase = .editing(product(from: guess, barcode: barcode), note: .manual, saveAs: .user)
+                } label: {
+                    Label("Enter values manually", systemImage: "square.and.pencil")
+                }
+            } header: {
+                Text("Not in the list?")
+            }
+
+            Section {
+                Button("Scan a barcode instead") { phase = .scanning }
+            }
+        }
+    }
+
+    private func searchAgain(guess: PackageGuess, barcode: ProductBarcode?) {
+        var edited = guess
+        edited.searchQuery = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard edited.searchQuery.count >= 2 else { return }
+        phase = .readingPackage
+        Task { await search(guess: edited, barcode: barcode) }
+    }
+
+    /// Uses a found product. A scanned barcode takes over, so the next scan of this
+    /// package finds it on the phone.
+    private func choose(_ match: ProductInfo, barcode: ProductBarcode?) {
+        var product = match
+        if let barcode { product.barcode = barcode.code }
+        guard product.hasNutrition else {
+            needsValues = product
+            return
+        }
+        if !product.barcode.isEmpty {
+            ProductCache.save(product, in: context)
+        }
+        phase = .product(product, isOfflineCopy: false)
+    }
+
+    /// A new product from what was read on the package, for entering values.
+    private func product(from guess: PackageGuess, barcode: ProductBarcode?) -> ProductInfo {
+        let typed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        var info = ProductInfo(barcode: barcode?.code ?? "",
+                               name: guess.name.isEmpty ? typed : guess.name,
+                               brand: guess.brand, source: .user)
+        info.isLiquid = guess.isLiquid
+        info.packageGrams = guess.quantity
+        return info
     }
 
     // MARK: - Nutrition table photo

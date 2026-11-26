@@ -5,7 +5,8 @@ enum Onboarding {
     static let completedKey = "hasCompletedOnboarding"
 }
 
-/// Three-step welcome shown on first launch: intro, about you, starter routines.
+/// Welcome shown on first launch: intro, about you, then a personal plan built from the
+/// person's goals (or a ready-made starter program).
 struct OnboardingView: View {
     @Environment(\.modelContext) private var context
     @AppStorage(Onboarding.completedKey) private var completed = false
@@ -15,16 +16,24 @@ struct OnboardingView: View {
     @State private var step = 0
 
     var body: some View {
-        TabView(selection: $step) {
-            welcome.tag(0)
-            aboutYou.tag(1)
-            StarterRoutinesPicker(buttonTitle: String(localized: "Start Training")) {
-                completed = true
+        Group {
+            switch step {
+            case 0:
+                welcome
+            case 1:
+                aboutYou
+            case 2:
+                PlanSetupView(
+                    onFinish: { completed = true },
+                    alternative: (String(localized: "Pick a ready-made program instead"), { step = 3 })
+                )
+            default:
+                StarterRoutinesPicker(buttonTitle: String(localized: "Start Training")) {
+                    completed = true
+                }
             }
-            .tag(2)
         }
-        .tabViewStyle(.page(indexDisplayMode: .always))
-        .indexViewStyle(.page(backgroundDisplayMode: .always))
+        .transition(.opacity)
         .animation(.easeInOut, value: step)
         .interactiveDismissDisabled()
     }

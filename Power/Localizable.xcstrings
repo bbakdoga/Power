@@ -37,6 +37,78 @@
         }
       }
     },
+    "%@ · %lld days" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$@ · %#@days@"
+          },
+          "substitutions" : {
+            "days" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg Tag"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg Tage"
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg Tage"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$@ · %#@days@"
+          },
+          "substitutions" : {
+            "days" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg day"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg days"
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg days"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%@ %@" : {
       "localizations" : {
         "de" : {
@@ -85,6 +157,23 @@
         }
       }
     },
+    "%@ doing %@, with %@ highlighted" : {
+      "comment" : "VoiceOver label for an exercise illustration: body type, exercise name, highlighted muscles",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$@ bei %2$@, hervorgehobene Muskeln: %3$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ doing %2$@, with %3$@ highlighted"
+          }
+        }
+      }
+    },
     "%@ g · P %@ · C %@ · F %@" : {
       "localizations" : {
         "en" : {
@@ -95,15 +184,33 @@
         }
       }
     },
-    "%@ kcal" : {
-
+    "%@ has no nutrition values online yet." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Für %@ sind online noch keine Nährwerte verfügbar."
+          }
+        }
+      }
     },
+    "%@ kcal" : {},
     "%@ kcal · P %@ · C %@ · F %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@ kcal · P %2$@ · C %3$@ · F %4$@"
+          }
+        }
+      }
+    },
+    "%@ muscles highlighted" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Hervorgehobene Muskeln: %@"
           }
         }
       }
@@ -203,9 +310,103 @@
         }
       }
     },
-    "%lld kcal remaining" : {
-
+    "%lld days a week" : {
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Tag pro Woche"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Tage pro Woche"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld day a week"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld days a week"
+                }
+              }
+            }
+          }
+        }
+      }
     },
+    "%lld exercises" : {
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Übung"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Übungen"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld exercise"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld exercises"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld kcal / 100 %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$lld kcal / 100 %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld kcal / 100 %2$@"
+          }
+        }
+      }
+    },
+    "%lld kcal remaining" : {},
     "%lld matched to Power exercises" : {
       "localizations" : {
         "de" : {
@@ -254,6 +455,16 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "%lld min" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%lld Min."
           }
         }
       }
@@ -320,6 +531,82 @@
         }
       }
     },
+    "%lld of %lld exercises in lb" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$lld von %2$lld Übungen in lb"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld exercises in lb"
+          }
+        }
+      }
+    },
+    "%lld of %lld workouts this week" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld of %#@workouts@ this week"
+          },
+          "substitutions" : {
+            "workouts" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg workout"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg workouts"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld von %#@workouts@ diese Woche"
+          },
+          "substitutions" : {
+            "workouts" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg Workout"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg Workouts"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld reps" : {
       "localizations" : {
         "de" : {
@@ -353,6 +640,187 @@
                 "stringUnit" : {
                   "state" : "machine_translated",
                   "value" : "%lld reps"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld routines" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Routine"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Routinen"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld routine"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld routines"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld routines · %lld days a week" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@routines@ · %#@days@"
+          },
+          "substitutions" : {
+            "routines" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg routine"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg routines"
+                    }
+                  }
+                }
+              }
+            },
+            "days" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg day a week"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg days a week"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@routines@ · %#@days@"
+          },
+          "substitutions" : {
+            "routines" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg Routine"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg Routinen"
+                    }
+                  }
+                }
+              }
+            },
+            "days" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg Tag pro Woche"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg Tage pro Woche"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld routines, done in order" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld routine"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld routines, done in order"
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Routine"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Routinen, der Reihe nach"
                 }
               }
             }
@@ -700,12 +1168,38 @@
         }
       }
     },
+    "1 package (%@ %@)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "1 Packung (%1$@ %2$@)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "1 package (%1$@ %2$@)"
+          }
+        }
+      }
+    },
     "1 routine · great for beginners, 2–3 days a week" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "1 Routine · ideal für den Einstieg, 2–3 Tage pro Woche"
+          }
+        }
+      }
+    },
+    "1 serving (%@ %@)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 Portion (%1$@ %2$@)"
           }
         }
       }
@@ -720,6 +1214,16 @@
         }
       }
     },
+    "2 servings" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 Portionen"
+          }
+        }
+      }
+    },
     "3 routines · train 3–6 days a week" : {
       "localizations" : {
         "de" : {
@@ -730,6 +1234,112 @@
         }
       }
     },
+    "5/3/1 Boring But Big" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5/3/1 Boring But Big"
+          }
+        }
+      }
+    },
+    "6 months to 2 years" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "6 Monate bis 2 Jahre"
+          }
+        }
+      }
+    },
+    "6× Mr. Olympia" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "6× Mr. Olympia"
+          }
+        }
+      }
+    },
+    "7× Mr. Olympia" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "7× Mr. Olympia"
+          }
+        }
+      }
+    },
+    "8× Mr. Olympia" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "8× Mr. Olympia"
+          }
+        }
+      }
+    },
+    "25 powerlifting world records" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "25 Weltrekorde im Powerlifting"
+          }
+        }
+      }
+    },
+    "75+ min" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "75+ Min."
+          }
+        }
+      }
+    },
+    "A balanced mix of strength exercises for the whole body." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Eine ausgewogene Mischung aus Kraftübungen für den ganzen Körper."
+          }
+        }
+      }
+    },
+    "A few muscles a day" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenige Muskeln pro Tag"
+          }
+        }
+      }
+    },
+    "A pair of dumbbells, maybe a bench" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ein Paar Kurzhanteln, vielleicht eine Hantelbank"
+          }
+        }
+      }
+    },
+    "A training plan tailored to your goals and schedule." : {},
     "About" : {
       "localizations" : {
         "de" : {
@@ -746,6 +1356,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Über dich"
+          }
+        }
+      }
+    },
+    "Abs & Core" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bauch & Rumpf"
           }
         }
       }
@@ -780,9 +1400,59 @@
         }
       }
     },
-    "Add a meal manually or estimate it from a photo." : {
-
+    "Add %lld routines" : {
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Routine hinzufügen"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Routinen hinzufügen"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld Routinen hinzufügen"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Add %lld routine"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Add %lld routines"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Add %lld routines"
+                }
+              }
+            }
+          }
+        }
+      }
     },
+    "Add a meal manually or estimate it from a photo." : {},
     "Add at least two entries to see a chart." : {
       "localizations" : {
         "de" : {
@@ -813,12 +1483,8 @@
         }
       }
     },
-    "Add food" : {
-
-    },
-    "Add Food" : {
-
-    },
+    "Add food" : {},
+    "Add Food" : {},
     "Add measurement" : {
       "localizations" : {
         "de" : {
@@ -855,6 +1521,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Notiz hinzufügen"
+          }
+        }
+      }
+    },
+    "Add nutrition values" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nährwerte hinzufügen"
           }
         }
       }
@@ -919,9 +1595,7 @@
         }
       }
     },
-    "Adjust estimated portion" : {
-
-    },
+    "Adjust estimated portion" : {},
     "Adjust Rest Timer" : {
       "localizations" : {
         "de" : {
@@ -972,6 +1646,36 @@
         }
       }
     },
+    "All kg" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Alle in kg"
+          }
+        }
+      }
+    },
+    "All lb" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Alle in lb"
+          }
+        }
+      }
+    },
+    "Allow camera access in Settings to scan barcodes, or type the barcode number." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erlaube den Kamerazugriff in den Einstellungen, um Barcodes zu scannen, oder gib die Barcode-Nummer ein."
+          }
+        }
+      }
+    },
     "Already in Power (skipped)" : {
       "localizations" : {
         "de" : {
@@ -992,8 +1696,46 @@
         }
       }
     },
-    "Analyzing food…" : {
-
+    "Amount" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menge"
+          }
+        }
+      }
+    },
+    "Amount (g)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menge (g)"
+          }
+        }
+      }
+    },
+    "Amount (ml)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menge (ml)"
+          }
+        }
+      }
+    },
+    "Analyzing food…" : {},
+    "Anything else?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Sonst noch etwas?"
+          }
+        }
+      }
     },
     "App Default (%@)" : {
       "localizations" : {
@@ -1035,12 +1777,98 @@
         }
       }
     },
+    "Apple Intelligence is choosing exercises for you. This happens on your iPhone." : {
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "device" : {
+              "ipad" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Apple Intelligence wählt Übungen für dich aus. Das passiert auf deinem iPad."
+                }
+              },
+              "iphone" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Apple Intelligence wählt Übungen für dich aus. Das passiert auf deinem iPhone."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Apple Intelligence wählt Übungen für dich aus. Das passiert auf deinem Gerät."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Apple Intelligence reads this to personalize your plan, e.g. \"I love deadlifts\" or \"no lunges\". It stays on your iPhone." : {
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "device" : {
+              "ipad" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Apple Intelligence liest das, um deinen Plan zu personalisieren, z. B. „Ich liebe Kreuzheben“ oder „keine Ausfallschritte“. Es bleibt auf deinem iPad."
+                }
+              },
+              "iphone" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Apple Intelligence liest das, um deinen Plan zu personalisieren, z. B. „Ich liebe Kreuzheben“ oder „keine Ausfallschritte“. Es bleibt auf deinem iPhone."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Apple Intelligence liest das, um deinen Plan zu personalisieren, z. B. „Ich liebe Kreuzheben“ oder „keine Ausfallschritte“. Es bleibt auf deinem Gerät."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "Arms" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Arme"
+          }
+        }
+      }
+    },
+    "Athlete A" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Athlet A"
+          }
+        }
+      }
+    },
+    "Athlete B" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Athlet B"
+          }
+        }
+      }
+    },
+    "Athlete C" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Athlet C"
           }
         }
       }
@@ -1095,6 +1923,26 @@
         }
       }
     },
+    "Back & Biceps" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rücken & Bizeps"
+          }
+        }
+      }
+    },
+    "Back, Biceps & Shoulders" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rücken, Bizeps & Schultern"
+          }
+        }
+      }
+    },
     "Backed up to your iCloud" : {
       "localizations" : {
         "de" : {
@@ -1145,15 +1993,53 @@
         }
       }
     },
-    "Based on a typical serving" : {
-
+    "Barbells, dumbbells and a bench, few machines" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Langhanteln, Kurzhanteln und eine Hantelbank, wenige Geräte"
+          }
+        }
+      }
     },
+    "Barcode number" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Barcode-Nummer"
+          }
+        }
+      }
+    },
+    "Based on a typical serving" : {},
     "Behind: %@" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zu wenig: %@"
+          }
+        }
+      }
+    },
+    "Bench & Upper Back" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bankdrücken & oberer Rücken"
+          }
+        }
+      }
+    },
+    "Bench Day" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bankdrücken-Tag"
           }
         }
       }
@@ -1269,6 +2155,17 @@
         }
       }
     },
+    "Blood & Guts" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blood & Guts"
+          }
+        }
+      }
+    },
     "Body" : {
       "localizations" : {
         "de" : {
@@ -1339,6 +2236,16 @@
         }
       }
     },
+    "Bodybuilders" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bodybuilder"
+          }
+        }
+      }
+    },
     "Bodyweight" : {
       "localizations" : {
         "de" : {
@@ -1349,8 +2256,36 @@
         }
       }
     },
-    "Brand" : {
-
+    "Bodyweight only, maybe a pull-up bar" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nur Körpergewicht, vielleicht eine Klimmzugstange"
+          }
+        }
+      }
+    },
+    "Brand" : {},
+    "Brand (optional)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marke (optional)"
+          }
+        }
+      }
+    },
+    "Branded Foods database of the U.S. Department of Agriculture." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markenprodukt-Datenbank des US-Landwirtschaftsministeriums."
+          }
+        }
+      }
     },
     "Bring your history" : {
       "localizations" : {
@@ -1358,6 +2293,56 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Bring deinen Verlauf mit"
+          }
+        }
+      }
+    },
+    "Build a plan for me" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Plan für mich erstellen"
+          }
+        }
+      }
+    },
+    "Build a plan with Apple Intelligence" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Plan mit Apple Intelligence erstellen"
+          }
+        }
+      }
+    },
+    "Build muscle" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Muskeln aufbauen"
+          }
+        }
+      }
+    },
+    "Build My Plan" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Plan erstellen"
+          }
+        }
+      }
+    },
+    "Building your plan…" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dein Plan wird erstellt …"
           }
         }
       }
@@ -1372,8 +2357,26 @@
         }
       }
     },
-    "Calories" : {
-
+    "Calories" : {},
+    "Calories (kcal)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kalorien (kcal)"
+          }
+        }
+      }
+    },
+    "Camera access needed" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kamerazugriff erforderlich"
+          }
+        }
+      }
     },
     "Cancel" : {
       "localizations" : {
@@ -1385,15 +2388,9 @@
         }
       }
     },
-    "Carbohydrates" : {
-
-    },
-    "Carbohydrates (g)" : {
-
-    },
-    "Carbs" : {
-
-    },
+    "Carbohydrates" : {},
+    "Carbohydrates (g)" : {},
+    "Carbs" : {},
     "Cardio" : {
       "localizations" : {
         "de" : {
@@ -1410,6 +2407,26 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Cardio-Zeit"
+          }
+        }
+      }
+    },
+    "Category" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorie"
+          }
+        }
+      }
+    },
+    "Change answers" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Antworten ändern"
           }
         }
       }
@@ -1464,9 +2481,58 @@
         }
       }
     },
-    "Chicken, rice, yogurt…" : {
-
+    "Chest & Arms" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brust & Arme"
+          }
+        }
+      }
     },
+    "Chest & Back" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brust & Rücken"
+          }
+        }
+      }
+    },
+    "Chest & Biceps" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brust & Bizeps"
+          }
+        }
+      }
+    },
+    "Chest & Triceps" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brust & Trizeps"
+          }
+        }
+      }
+    },
+    "Chest and back together, then shoulders and arms, then legs, each twice a week. High volume with classic free-weight lifts." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brust und Rücken zusammen, dann Schultern und Arme, dann Beine, jeweils zweimal pro Woche. Viel Volumen mit klassischen Übungen mit freien Gewichten."
+          }
+        }
+      }
+    },
+    "Chicken, rice, yogurt…" : {},
     "Choose a Different File" : {
       "localizations" : {
         "de" : {
@@ -1487,9 +2553,7 @@
         }
       }
     },
-    "Choose food photo" : {
-
-    },
+    "Choose food photo" : {},
     "Choose Photo" : {
       "localizations" : {
         "de" : {
@@ -1500,9 +2564,68 @@
         }
       }
     },
-    "Close" : {
-
+    "Choose photo of nutrition table" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Foto der Nährwerttabelle wählen"
+          }
+        }
+      }
     },
+    "Choose photo of package" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Foto der Verpackung wählen"
+          }
+        }
+      }
+    },
+    "Choosing exercises for your goal, schedule and gym." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Übungen werden passend zu deinem Ziel, Zeitplan und Studio ausgewählt."
+          }
+        }
+      }
+    },
+    "Classic Coan" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Classic Coan"
+          }
+        }
+      }
+    },
+    "Classic high-volume bodybuilding" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klassisches Bodybuilding mit viel Volumen"
+          }
+        }
+      }
+    },
+    "Classic Powerlifting Split" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klassischer Powerlifting-Split"
+          }
+        }
+      }
+    },
+    "Close" : {},
     "Close and reopen Power to switch everything, including the Lock Screen timer." : {
       "localizations" : {
         "de" : {
@@ -1513,12 +2636,32 @@
         }
       }
     },
+    "Conjugate Powerlifting" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conjugate-Powerlifting"
+          }
+        }
+      }
+    },
     "Continue" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Weiter"
+          }
+        }
+      }
+    },
+    "Convert per-serving values to 100 g" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portionswerte auf 100 g umrechnen"
           }
         }
       }
@@ -1563,6 +2706,17 @@
         }
       }
     },
+    "Creator of 5/3/1" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erfinder von 5/3/1"
+          }
+        }
+      }
+    },
     "D" : {
       "comment" : "Set label for a drop set (one letter)",
       "localizations" : {
@@ -1584,6 +2738,36 @@
         }
       }
     },
+    "Data: Open Food Facts" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten: Open Food Facts"
+          }
+        }
+      }
+    },
+    "Data: Open Food Facts, available under the Open Database License (ODbL)." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Daten: Open Food Facts, verfügbar unter der Open Database License (ODbL)."
+          }
+        }
+      }
+    },
+    "Data: USDA FoodData Central" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten: USDA FoodData Central"
+          }
+        }
+      }
+    },
     "Date" : {
       "localizations" : {
         "de" : {
@@ -1600,6 +2784,36 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zeitraum"
+          }
+        }
+      }
+    },
+    "Days per week" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Tage pro Woche"
+          }
+        }
+      }
+    },
+    "Deadlift & Press" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kreuzheben & Drücken"
+          }
+        }
+      }
+    },
+    "Deadlift Day" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kreuzheben-Tag"
           }
         }
       }
@@ -1640,6 +2854,26 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Übung löschen"
+          }
+        }
+      }
+    },
+    "Delete Program" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programm löschen"
+          }
+        }
+      }
+    },
+    "Delete Program and Routines" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programm und Routinen löschen"
           }
         }
       }
@@ -1724,6 +2958,16 @@
         }
       }
     },
+    "Drink (values per 100 ml)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Getränk (Werte pro 100 ml)"
+          }
+        }
+      }
+    },
     "Drop set" : {
       "localizations" : {
         "de" : {
@@ -1740,6 +2984,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Kurzhantel"
+          }
+        }
+      }
+    },
+    "Dumbbells at home" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Kurzhanteln zu Hause"
           }
         }
       }
@@ -1794,6 +3048,16 @@
         }
       }
     },
+    "Edit nutrition values" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nährwerte bearbeiten"
+          }
+        }
+      }
+    },
     "Edit Profile" : {
       "localizations" : {
         "de" : {
@@ -1814,18 +3078,34 @@
         }
       }
     },
-    "Enter food and nutrition manually" : {
-
+    "Enter barcode" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Barcode eingeben"
+          }
+        }
+      }
     },
-    "Enter food manually" : {
-
-    },
+    "Enter food and nutrition manually" : {},
+    "Enter food manually" : {},
     "Enter reps for at least one set, or tap the circle to check it off." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Gib für mindestens einen Satz Wiederholungen ein oder tippe auf den Kreis, um ihn abzuhaken."
+          }
+        }
+      }
+    },
+    "Enter values manually" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Werte manuell eingeben"
           }
         }
       }
@@ -1870,12 +3150,8 @@
         }
       }
     },
-    "Estimated nutrition" : {
-
-    },
-    "Estimated portion" : {
-
-    },
+    "Estimated nutrition" : {},
+    "Estimated portion" : {},
     "Evening Workout" : {
       "localizations" : {
         "de" : {
@@ -1892,6 +3168,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Alle Funktionen sind kostenlos."
+          }
+        }
+      }
+    },
+    "Evidence-based muscle building" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evidenzbasierter Muskelaufbau"
           }
         }
       }
@@ -1936,6 +3222,26 @@
         }
       }
     },
+    "Experience" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Erfahrung"
+          }
+        }
+      }
+    },
+    "Experienced" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Erfahren"
+          }
+        }
+      }
+    },
     "F" : {
       "comment" : "Set label for a set to failure (one letter)",
       "localizations" : {
@@ -1957,12 +3263,8 @@
         }
       }
     },
-    "Fat" : {
-
-    },
-    "Fat (g)" : {
-
-    },
+    "Fat" : {},
+    "Fat (g)" : {},
     "Favorite exercises" : {
       "localizations" : {
         "de" : {
@@ -1979,6 +3281,26 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Datei"
+          }
+        }
+      }
+    },
+    "Find it by its package" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Über die Verpackung finden"
+          }
+        }
+      }
+    },
+    "Find Product" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Produkt finden"
           }
         }
       }
@@ -2034,6 +3356,60 @@
         }
       }
     },
+    "First Women's Physique Olympia champion" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erste Women’s-Physique-Olympia-Siegerin"
+          }
+        }
+      }
+    },
+    "Fitness creators" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fitness-Creator"
+          }
+        }
+      }
+    },
+    "Fitness YouTuber and gym favorite" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fitness-YouTuberin und Studio-Liebling"
+          }
+        }
+      }
+    },
+    "Five gym days with a strong focus on glutes and legs, balanced with back, shoulders and core." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fünf Studiotage mit starkem Fokus auf Po und Beine, ausgeglichen mit Rücken, Schultern und Rumpf."
+          }
+        }
+      }
+    },
+    "Five intense days built on heavy compound lifts, with two leg days for quads, hamstrings and glutes." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fünf intensive Tage mit schweren Grundübungen und zwei Beintagen für Oberschenkel, Beinbeuger und Po."
+          }
+        }
+      }
+    },
     "Focus metrics" : {
       "localizations" : {
         "de" : {
@@ -2054,24 +3430,59 @@
         }
       }
     },
-    "Food" : {
-
+    "Focus on (optional)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Schwerpunkt (optional)"
+          }
+        }
+      }
     },
-    "Food name" : {
-
-    },
-    "Food Search" : {
-
-    },
-    "Food suggestions" : {
-
-    },
+    "Food" : {},
+    "Food name" : {},
+    "Food Search" : {},
+    "Food suggestions" : {},
     "Format" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Format"
+          }
+        }
+      }
+    },
+    "Founder of Westside Barbell" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gründer von Westside Barbell"
+          }
+        }
+      }
+    },
+    "Four days, one main lift each. Three heavy sets building to a top set, then 5×10 for size. Add a little weight every month." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vier Tage mit je einer Hauptübung. Drei schwere Sätze bis zu einem Top-Satz, dann 5×10 für Masse. Steigere das Gewicht jeden Monat ein wenig."
+          }
+        }
+      }
+    },
+    "Four days: a strength and a muscle-building version of upper and lower body. Stop 1–2 reps before failure and add reps or weight each week." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vier Tage: je eine Kraft- und eine Muskelaufbau-Version für Ober- und Unterkörper. Hör 1–2 Wiederholungen vor dem Muskelversagen auf und steigere jede Woche Wiederholungen oder Gewicht."
           }
         }
       }
@@ -2086,6 +3497,16 @@
         }
       }
     },
+    "Full body" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ganzkörper"
+          }
+        }
+      }
+    },
     "Full Body" : {
       "localizations" : {
         "de" : {
@@ -2096,8 +3517,46 @@
         }
       }
     },
-    "g" : {
-
+    "Full Body Burn" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ganzkörper-Burn"
+          }
+        }
+      }
+    },
+    "Full gym" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Großes Studio"
+          }
+        }
+      }
+    },
+    "Full-body work with higher reps and short rests to keep your heart rate up." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ganzkörpertraining mit mehr Wiederholungen und kurzen Pausen, damit dein Puls oben bleibt."
+          }
+        }
+      }
+    },
+    "g" : {},
+    "Generate Drawing" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zeichnung erstellen"
+          }
+        }
+      }
     },
     "Get Started" : {
       "localizations" : {
@@ -2109,12 +3568,72 @@
         }
       }
     },
+    "Get stronger" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Stärker werden"
+          }
+        }
+      }
+    },
+    "Glute- and leg-focused gym split" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Studio-Split mit Fokus auf Po und Beine"
+          }
+        }
+      }
+    },
     "Glutes" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Gesäß"
+          }
+        }
+      }
+    },
+    "Glutes & Core" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po & Rumpf"
+          }
+        }
+      }
+    },
+    "Glutes & Hamstrings" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po & Beinbeuger"
+          }
+        }
+      }
+    },
+    "Glutes & Strength" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po & Kraft"
+          }
+        }
+      }
+    },
+    "Go easy on (optional)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Schonen (optional)"
           }
         }
       }
@@ -2201,11 +3720,27 @@
         }
       }
     },
-    "grams" : {
-
+    "Golden Era Split" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Golden-Era-Split"
+          }
+        }
+      }
     },
-    "Grams" : {
-
+    "grams" : {},
+    "Grams" : {},
+    "Hamstrings & Glutes" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beinbeuger & Po"
+          }
+        }
+      }
     },
     "Heaviest" : {
       "localizations" : {
@@ -2237,6 +3772,87 @@
         }
       }
     },
+    "Heavy & Basic" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heavy & Basic"
+          }
+        }
+      }
+    },
+    "Heavy & Hard" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heavy & Hard"
+          }
+        }
+      }
+    },
+    "Heavy basics, six days a week" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schwere Grundübungen, sechs Tage pro Woche"
+          }
+        }
+      }
+    },
+    "Heavy compound lifts with lower reps. Add weight when you hit all your reps." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Schwere Grundübungen mit wenigen Wiederholungen. Erhöhe das Gewicht, sobald du alle Wiederholungen schaffst."
+          }
+        }
+      }
+    },
+    "Hide Routines" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Routinen ausblenden"
+          }
+        }
+      }
+    },
+    "High-Frequency Strength" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kraft mit hoher Frequenz"
+          }
+        }
+      }
+    },
+    "High-intensity bodybuilding" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hochintensives Bodybuilding"
+          }
+        }
+      }
+    },
+    "High-intensity training: four short workouts a week. After a warm-up set, do one all-out set per exercise." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hochintensives Training: vier kurze Workouts pro Woche. Nach einem Aufwärmsatz folgt pro Übung ein Satz bis zum Äußersten."
+          }
+        }
+      }
+    },
     "Hips" : {
       "localizations" : {
         "de" : {
@@ -2253,6 +3869,47 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Verlauf"
+          }
+        }
+      }
+    },
+    "Home Bodyweight Burn" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home-Bodyweight-Burn"
+          }
+        }
+      }
+    },
+    "Home Shred" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home Shred"
+          }
+        }
+      }
+    },
+    "How do you like to train?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie trainierst du am liebsten?"
+          }
+        }
+      }
+    },
+    "How often can you train?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Wie oft kannst du trainieren?"
           }
         }
       }
@@ -2298,6 +3955,34 @@
                 "stringUnit" : {
                   "state" : "machine_translated",
                   "value" : "iCloud konnte nicht erreicht werden. Deine Workouts sind auf diesem Gerät sicher und werden gesichert, sobald iCloud verfügbar ist."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Identified with Apple Intelligence on your iPhone." : {
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "device" : {
+              "ipad" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Mit Apple Intelligence auf deinem iPad erkannt."
+                }
+              },
+              "iphone" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Mit Apple Intelligence auf deinem iPhone erkannt."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Mit Apple Intelligence auf deinem Gerät erkannt."
                 }
               }
             }
@@ -2459,6 +4144,162 @@
         }
       }
     },
+    "Inspired by 6× Mr. Olympia Dorian Yates: four short workouts a week. After a warm-up set, do one all-out set per exercise." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild von Dorian Yates, 6× Mr. Olympia: vier kurze Workouts pro Woche. Nach einem Aufwärmsatz folgt pro Übung ein Satz bis zum Äußersten."
+          }
+        }
+      }
+    },
+    "Inspired by coach Jim Wendler's approach: four days, one main lift each. Three heavy sets building to a top set, then 5×10 for size. Add a little weight every month." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Ansatz von Coach Jim Wendler: vier Tage mit je einer Hauptübung. Drei schwere Sätze bis zu einem Top-Satz, dann 5×10 für Masse. Steigere das Gewicht jeden Monat ein wenig."
+          }
+        }
+      }
+    },
+    "Inspired by Dana Linn Bailey, the first Women's Physique Olympia champion: five intense days built on heavy compound lifts, with two leg days for quads, hamstrings and glutes." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild von Dana Linn Bailey, der ersten Women’s-Physique-Olympia-Siegerin: fünf intensive Tage mit schweren Grundübungen und zwei Beintagen für Oberschenkel, Beinbeuger und Po."
+          }
+        }
+      }
+    },
+    "Inspired by Ed Coan, holder of over 70 powerlifting world records: one day each for squat, bench and deadlift, plus an upper-body day. Heavy low-rep sets, then targeted assistance work." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild von Ed Coan, Inhaber von über 70 Weltrekorden im Powerlifting: je ein Tag für Kniebeugen, Bankdrücken und Kreuzheben plus ein Oberkörpertag. Schwere Sätze mit wenigen Wiederholungen, dann gezielte Zusatzübungen."
+          }
+        }
+      }
+    },
+    "Inspired by fitness YouTuber Whitney Simmons: five gym days with a strong focus on glutes and legs, balanced with back, shoulders and core." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild der Fitness-YouTuberin Whitney Simmons: fünf Studiotage mit starkem Fokus auf Po und Beine, ausgeglichen mit Rücken, Schultern und Rumpf."
+          }
+        }
+      }
+    },
+    "Inspired by how 8× Mr. Olympia Ronnie Coleman trained: big squats, deadlifts and presses, then plenty of volume on top." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild des Trainings von Ronnie Coleman, 8× Mr. Olympia: große Kniebeugen, Kreuzheben und Drückübungen, dazu jede Menge Volumen."
+          }
+        }
+      }
+    },
+    "Inspired by physical therapist and YouTuber Jeff Cavaliere: three full-body days that build strength and athleticism. Face pulls and core work keep shoulders and posture healthy." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild des Physiotherapeuten und YouTubers Jeff Cavaliere: drei Ganzkörpertage für Kraft und Athletik. Face Pulls und Rumpftraining halten Schultern und Haltung gesund."
+          }
+        }
+      }
+    },
+    "Inspired by publicly shared training of %@. Not an official program; %@ isn't affiliated with Power. You can edit every routine later." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild des öffentlich geteilten Trainings von %1$@. Kein offizielles Programm; %2$@ steht in keiner Verbindung zu Power. Du kannst jede Routine später bearbeiten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Inspired by publicly shared training of %1$@. Not an official program; %2$@ isn't affiliated with Power. You can edit every routine later."
+          }
+        }
+      }
+    },
+    "Inspired by science-focused coach and YouTuber Jeff Nippard: a strength and a muscle-building version of upper and lower body. Stop 1–2 reps before failure and add reps or weight each week." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild des wissenschaftsorientierten Coaches und YouTubers Jeff Nippard: je eine Kraft- und eine Muskelaufbau-Version für Ober- und Unterkörper. Hör 1–2 Wiederholungen vor dem Muskelversagen auf und steigere jede Woche Wiederholungen oder Gewicht."
+          }
+        }
+      }
+    },
+    "Inspired by Stefi Cohen, holder of 25 powerlifting world records: squat, bench and deadlift several times a week. Heavy days and volume days take turns, with upper back and core work." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild von Stefi Cohen, Inhaberin von 25 Weltrekorden im Powerlifting: Kniebeugen, Bankdrücken und Kreuzheben mehrmals pro Woche. Schwere Tage und Volumentage wechseln sich ab, dazu Training für oberen Rücken und Rumpf."
+          }
+        }
+      }
+    },
+    "Inspired by the conjugate method of Louie Simmons: two max-effort days to work up to heavy singles, and two speed days with lighter, explosive sets. Lots of back and triceps work." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach der Conjugate-Methode von Louie Simmons: zwei Max-Effort-Tage, an denen du dich zu schweren Einzelwiederholungen hocharbeitest, und zwei Speed-Tage mit leichteren, explosiven Sätzen. Viel Training für Rücken und Trizeps."
+          }
+        }
+      }
+    },
+    "Inspired by the home workouts of fitness YouTuber Chloe Ting: short, fast bodyweight circuits. Keep rests short and move quickly from one exercise to the next." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild der Home-Workouts der Fitness-YouTuberin Chloe Ting: kurze, schnelle Zirkel mit dem eigenen Körpergewicht. Halte die Pausen kurz und wechsle zügig zur nächsten Übung."
+          }
+        }
+      }
+    },
+    "Inspired by the split Arnold Schwarzenegger, 7× Mr. Olympia, made famous: chest and back together, then shoulders and arms, then legs, each twice a week. High volume with classic free-weight lifts." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dem Vorbild des Splits, den Arnold Schwarzenegger, 7× Mr. Olympia, berühmt gemacht hat: Brust und Rücken zusammen, dann Schultern und Arme, dann Beine, jeweils zweimal pro Woche. Viel Volumen mit klassischen Übungen mit freien Gewichten."
+          }
+        }
+      }
+    },
+    "Invalid barcode" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ungültiger Barcode"
+          }
+        }
+      }
+    },
+    "Its routines are deleted too. Finished workouts stay in History." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seine Routinen werden ebenfalls gelöscht. Abgeschlossene Workouts bleiben im Verlauf."
+          }
+        }
+      }
+    },
     "Just the bar." : {
       "localizations" : {
         "de" : {
@@ -2469,12 +4310,8 @@
         }
       }
     },
-    "kcal" : {
-
-    },
-    "kcal / 100 g" : {
-
-    },
+    "kcal" : {},
+    "kcal / 100 g" : {},
     "Keep training" : {
       "localizations" : {
         "de" : {
@@ -2501,6 +4338,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Kettlebell"
+          }
+        }
+      }
+    },
+    "Knees" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Knie"
           }
         }
       }
@@ -2571,12 +4418,42 @@
         }
       }
     },
+    "Legs & Shoulders" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beine & Schultern"
+          }
+        }
+      }
+    },
     "Less" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Weniger"
+          }
+        }
+      }
+    },
+    "Less than 6 months" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Weniger als 6 Monate"
+          }
+        }
+      }
+    },
+    "Let Power choose" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Power entscheiden lassen"
           }
         }
       }
@@ -2692,6 +4569,76 @@
         }
       }
     },
+    "Look up" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suchen"
+          }
+        }
+      }
+    },
+    "Looking up product…" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produkt wird gesucht …"
+          }
+        }
+      }
+    },
+    "Lose fat" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Fett verlieren"
+          }
+        }
+      }
+    },
+    "Lower back" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Unterer Rücken"
+          }
+        }
+      }
+    },
+    "Lower Body" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Unterkörper"
+          }
+        }
+      }
+    },
+    "Lower Muscle" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unterkörper Muskelaufbau"
+          }
+        }
+      }
+    },
+    "Lower Strength" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unterkörper Kraft"
+          }
+        }
+      }
+    },
     "Machine" : {
       "localizations" : {
         "de" : {
@@ -2702,8 +4649,66 @@
         }
       }
     },
-    "Macros" : {
-
+    "Machines, cables, barbells and dumbbells" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Geräte, Kabelzüge, Lang- und Kurzhanteln"
+          }
+        }
+      }
+    },
+    "Macros" : {},
+    "Made with Power's training rules" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mit Powers Trainingsregeln erstellt"
+          }
+        }
+      }
+    },
+    "Main program" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hauptprogramm"
+          }
+        }
+      }
+    },
+    "Make main" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hauptprogramm"
+          }
+        }
+      }
+    },
+    "Make main program" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zum Hauptprogramm machen"
+          }
+        }
+      }
+    },
+    "Make this my main program" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Als Hauptprogramm festlegen"
+          }
+        }
+      }
     },
     "Man" : {
       "localizations" : {
@@ -2715,12 +4720,52 @@
         }
       }
     },
+    "Matching products" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Passende Produkte"
+          }
+        }
+      }
+    },
+    "Max Effort Lower" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Max Effort Unterkörper"
+          }
+        }
+      }
+    },
+    "Max Effort Upper" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Max Effort Oberkörper"
+          }
+        }
+      }
+    },
     "Max Volume" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Max. Volumen"
+          }
+        }
+      }
+    },
+    "Max-effort and speed days" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Max-Effort- und Speed-Tage"
           }
         }
       }
@@ -2745,6 +4790,16 @@
         }
       }
     },
+    "Moderate weights for 8–12 reps. Add a rep or a little weight each week." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Moderate Gewichte für 8–12 Wiederholungen. Steigere dich jede Woche um eine Wiederholung oder etwas Gewicht."
+          }
+        }
+      }
+    },
     "Month" : {
       "localizations" : {
         "de" : {
@@ -2755,12 +4810,32 @@
         }
       }
     },
+    "Monthly Wave Strength" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kraft in Monatswellen"
+          }
+        }
+      }
+    },
     "More" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Mehr"
+          }
+        }
+      }
+    },
+    "More than 2 years" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mehr als 2 Jahre"
           }
         }
       }
@@ -2915,6 +4990,16 @@
         }
       }
     },
+    "New to the gym" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Neu im Studio"
+          }
+        }
+      }
+    },
     "Next month" : {
       "localizations" : {
         "de" : {
@@ -2965,6 +5050,16 @@
         }
       }
     },
+    "No barcode? Photograph package" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Kein Barcode? Verpackung fotografieren"
+          }
+        }
+      }
+    },
     "No change" : {
       "localizations" : {
         "de" : {
@@ -2975,9 +5070,7 @@
         }
       }
     },
-    "No confident match" : {
-
-    },
+    "No confident match" : {},
     "No entries yet." : {
       "localizations" : {
         "de" : {
@@ -2988,9 +5081,38 @@
         }
       }
     },
-    "No food logged" : {
-
+    "No equipment" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ohne Geräte"
+          }
+        }
+      }
     },
+    "No equipment needed" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Geräte nötig"
+          }
+        }
+      }
+    },
+    "No equipment needed. Short, fast bodyweight circuits at home: keep rests short and move quickly from one exercise to the next." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Geräte nötig. Kurze, schnelle Zirkel mit dem eigenen Körpergewicht zu Hause: Halte die Pausen kurz und wechsle zügig zur nächsten Übung."
+          }
+        }
+      }
+    },
+    "No food logged" : {},
     "No instructions for this exercise yet." : {
       "localizations" : {
         "de" : {
@@ -3011,12 +5133,52 @@
         }
       }
     },
+    "No matching products found. Try editing the name above." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Keine passenden Produkte gefunden. Versuche, den Namen oben anzupassen."
+          }
+        }
+      }
+    },
+    "No nutrition values were found in the photo. Try again with the table filling the frame, or type the values." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Im Foto wurden keine Nährwerte gefunden. Versuche es erneut, sodass die Tabelle das Bild ausfüllt, oder gib die Werte ein."
+          }
+        }
+      }
+    },
+    "No nutrition values yet" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Noch keine Nährwerte"
+          }
+        }
+      }
+    },
     "No plates fit." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Keine Hantelscheiben passen."
+          }
+        }
+      }
+    },
+    "No product name could be read. Try a sharper photo of the front, or type the name below." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Es konnte kein Produktname gelesen werden. Versuche es mit einem schärferen Foto der Vorderseite oder gib den Namen unten ein."
           }
         }
       }
@@ -3061,9 +5223,7 @@
         }
       }
     },
-    "None of these — search by name" : {
-
-    },
+    "None of these — search by name" : {},
     "Normal" : {
       "localizations" : {
         "de" : {
@@ -3074,15 +5234,23 @@
         }
       }
     },
-    "Not correct?" : {
-
-    },
+    "Not correct?" : {},
     "Not done yet" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Noch nicht gemacht"
+          }
+        }
+      }
+    },
+    "Not in the list?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nicht in der Liste?"
           }
         }
       }
@@ -3107,6 +5275,16 @@
         }
       }
     },
+    "Notes (optional)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Notizen (optional)"
+          }
+        }
+      }
+    },
     "Nothing new to import" : {
       "localizations" : {
         "de" : {
@@ -3127,12 +5305,38 @@
         }
       }
     },
-    "Nutrition" : {
-
+    "Nutrition" : {},
+    "Nutrition for this amount" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nährwerte für diese Menge"
+          }
+        }
+      }
     },
-    "Nutrition values come from USDA FoodData Central and are adjusted to the portion entered above." : {
-
+    "Nutrition Table" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nährwerttabelle"
+          }
+        }
+      }
     },
+    "Nutrition Values" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nährwerte"
+          }
+        }
+      }
+    },
+    "Nutrition values come from USDA FoodData Central and are adjusted to the portion entered above." : {},
     "Ocean" : {
       "localizations" : {
         "de" : {
@@ -3149,6 +5353,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Aus"
+          }
+        }
+      }
+    },
+    "Offline: showing the copy saved on this iPhone." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offline: Es wird die auf diesem iPhone gespeicherte Kopie angezeigt."
           }
         }
       }
@@ -3173,11 +5387,68 @@
         }
       }
     },
-    "Online food search is not configured yet." : {
-
+    "One day each for squat, bench and deadlift, plus an upper-body day. Heavy low-rep sets, then targeted assistance work." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je ein Tag für Kniebeugen, Bankdrücken und Kreuzheben plus ein Oberkörpertag. Schwere Sätze mit wenigen Wiederholungen, dann gezielte Zusatzübungen."
+          }
+        }
+      }
     },
-    "Online food search is temporarily unavailable." : {
-
+    "One day per big lift" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein Tag pro Hauptübung"
+          }
+        }
+      }
+    },
+    "One or two muscle groups per workout, e.g. chest and triceps" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein oder zwei Muskelgruppen pro Workout, z. B. Brust und Trizeps"
+          }
+        }
+      }
+    },
+    "One-Set HIT" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein-Satz-HIT"
+          }
+        }
+      }
+    },
+    "Online food search is not configured yet." : {},
+    "Online food search is temporarily unavailable." : {},
+    "Open Settings" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen öffnen"
+          }
+        }
+      }
+    },
+    "Optional notes for your plan, e.g. \"I love deadlifts\". You can edit every exercise later." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Optionale Notizen für deinen Plan, z. B. „Ich liebe Kreuzheben“. Du kannst jede Übung später bearbeiten."
+          }
+        }
+      }
     },
     "Other" : {
       "localizations" : {
@@ -3185,6 +5456,27 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Sonstige"
+          }
+        }
+      }
+    },
+    "Other programs" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weitere Programme"
+          }
+        }
+      }
+    },
+    "Over 70 powerlifting world records" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Über 70 Weltrekorde im Powerlifting"
           }
         }
       }
@@ -3199,12 +5491,42 @@
         }
       }
     },
+    "Package" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Verpackung"
+          }
+        }
+      }
+    },
     "Past workouts keep their sets, but they will no longer show this exercise's name." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Vergangene Workouts behalten ihre Sätze, zeigen den Namen dieser Übung aber nicht mehr an."
+          }
+        }
+      }
+    },
+    "Per 100 g" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro 100 g"
+          }
+        }
+      }
+    },
+    "Per 100 ml" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro 100 ml"
           }
         }
       }
@@ -3259,11 +5581,48 @@
         }
       }
     },
-    "Photo analysis unavailable" : {
-
+    "Personalized with Apple Intelligence" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mit Apple Intelligence personalisiert"
+          }
+        }
+      }
     },
-    "Photo results are estimates. Oils, sauces, ingredients and portion sizes may not be visible." : {
-
+    "Photo analysis unavailable" : {},
+    "Photo results are estimates. Oils, sauces, ingredients and portion sizes may not be visible." : {},
+    "Photograph nutrition table" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nährwerttabelle fotografieren"
+          }
+        }
+      }
+    },
+    "Photograph package front" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Verpackung vorne fotografieren"
+          }
+        }
+      }
+    },
+    "Physical therapist behind ATHLEAN-X" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Physiotherapeut hinter ATHLEAN-X"
+          }
+        }
+      }
     },
     "Pick a program to get going. You can edit or delete the routines any time." : {
       "localizations" : {
@@ -3271,6 +5630,26 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Wähle ein Programm, um loszulegen. Du kannst die Routinen jederzeit bearbeiten oder löschen."
+          }
+        }
+      }
+    },
+    "Pick a ready-made program instead" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Lieber ein fertiges Programm wählen"
+          }
+        }
+      }
+    },
+    "Picture of %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Bild von %@"
           }
         }
       }
@@ -3305,9 +5684,17 @@
         }
       }
     },
-    "Portion (g)" : {
-
+    "Point the camera at the barcode or GS1 QR code" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Richte die Kamera auf den Barcode oder GS1-QR-Code"
+          }
+        }
+      }
     },
+    "Portion (g)" : {},
     "Possible typos" : {
       "localizations" : {
         "de" : {
@@ -3328,11 +5715,37 @@
         }
       }
     },
-    "Power could not confidently identify the food in this photo." : {
-
+    "Power could not confidently identify the food in this photo." : {},
+    "Power could not recognize this photo. You can still enter the food manually." : {},
+    "Power reads the brand and name on the front and searches for the product." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Power liest Marke und Namen auf der Vorderseite und sucht nach dem Produkt."
+          }
+        }
+      }
     },
-    "Power could not recognize this photo. You can still enter the food manually." : {
-
+    "Power reads the table on your iPhone and saves the product here, so the next scan works offline." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Power liest die Tabelle auf deinem iPhone und speichert das Produkt hier, damit der nächste Scan auch offline funktioniert."
+          }
+        }
+      }
+    },
+    "Powerlifters" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Powerlifter"
+          }
+        }
+      }
     },
     "Preferences" : {
       "localizations" : {
@@ -3340,6 +5753,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Einstellungen"
+          }
+        }
+      }
+    },
+    "Press Day" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schulterdrücken-Tag"
           }
         }
       }
@@ -3384,6 +5807,56 @@
         }
       }
     },
+    "Product" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produkt"
+          }
+        }
+      }
+    },
+    "Product data by Open Food Facts contributors, available under the Open Database License (ODbL)." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produktdaten von den Mitwirkenden von Open Food Facts, verfügbar unter der Open Database License (ODbL)."
+          }
+        }
+      }
+    },
+    "Product lookup is unavailable. Check your internet connection and try again." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Produktsuche ist nicht verfügbar. Prüfe deine Internetverbindung und versuche es erneut."
+          }
+        }
+      }
+    },
+    "Product name" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produktname"
+          }
+        }
+      }
+    },
+    "Product Not Found" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produkt nicht gefunden"
+          }
+        }
+      }
+    },
     "Profile" : {
       "localizations" : {
         "de" : {
@@ -3394,11 +5867,67 @@
         }
       }
     },
-    "Protein" : {
-
+    "Program options" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programmoptionen"
+          }
+        }
+      }
     },
-    "Protein (g)" : {
-
+    "Programs inspired by famous bodybuilders, powerlifters and fitness creators." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programme nach dem Vorbild berühmter Bodybuilder, Powerlifter und Fitness-Creator."
+          }
+        }
+      }
+    },
+    "Programs inspired by how famous athletes and coaches train." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programme nach dem Vorbild berühmter Athleten und Coaches."
+          }
+        }
+      }
+    },
+    "Protein" : {},
+    "Protein (g)" : {},
+    "Pull" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Pull"
+          }
+        }
+      }
+    },
+    "Push" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Push"
+          }
+        }
+      }
+    },
+    "Push / pull / legs" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Push / Pull / Beine"
+          }
+        }
+      }
     },
     "Push / Pull / Legs" : {
       "localizations" : {
@@ -3406,6 +5935,116 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Push / Pull / Legs"
+          }
+        }
+      }
+    },
+    "Push, pull and legs, twice each." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Push, Pull und Beine, je zweimal."
+          }
+        }
+      }
+    },
+    "Push, pull and legs." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Push, Pull und Beine."
+          }
+        }
+      }
+    },
+    "Push, pull, legs, then upper and lower body." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Push, Pull, Beine, dann Ober- und Unterkörper."
+          }
+        }
+      }
+    },
+    "Pushing, pulling and legs on separate days" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drücken, Ziehen und Beine an getrennten Tagen"
+          }
+        }
+      }
+    },
+    "Quads & Calves" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oberschenkel & Waden"
+          }
+        }
+      }
+    },
+    "Quads & Glutes" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oberschenkel & Po"
+          }
+        }
+      }
+    },
+    "Read from package" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Von der Verpackung gelesen"
+          }
+        }
+      }
+    },
+    "Read from the largest text on the package." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aus dem größten Text auf der Verpackung gelesen."
+          }
+        }
+      }
+    },
+    "Read from your photo of the nutrition table on this iPhone. Check the values against the package." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auf diesem iPhone aus deinem Foto der Nährwerttabelle gelesen. Vergleiche die Werte mit der Verpackung."
+          }
+        }
+      }
+    },
+    "Reading nutrition table…" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nährwerttabelle wird gelesen …"
+          }
+        }
+      }
+    },
+    "Reading package…" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Verpackung wird gelesen …"
           }
         }
       }
@@ -3440,6 +6079,16 @@
         }
       }
     },
+    "Remove Picture" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Bild entfernen"
+          }
+        }
+      }
+    },
     "Rep records" : {
       "localizations" : {
         "de" : {
@@ -3466,6 +6115,58 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Übung ersetzen"
+          }
+        }
+      }
+    },
+    "Replace the %lld workouts imported before" : {
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Das zuvor importierte Workout ersetzen"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld zuvor importierte Workouts ersetzen"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld zuvor importierte Workouts ersetzen"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Replace the workout imported before"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Replace the %lld workouts imported before"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Replace the %lld workouts imported before"
+                }
+              }
+            }
           }
         }
       }
@@ -3560,9 +6261,7 @@
         }
       }
     },
-    "Review Estimate" : {
-
-    },
+    "Review Estimate" : {},
     "Routine" : {
       "localizations" : {
         "de" : {
@@ -3713,21 +6412,92 @@
         }
       }
     },
-    "Search food database" : {
-
+    "Scan a barcode instead" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Stattdessen Barcode scannen"
+          }
+        }
+      }
     },
-    "Search foods" : {
-
+    "Scan another product" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weiteres Produkt scannen"
+          }
+        }
+      }
     },
-    "Search the USDA food database by food, meal or brand name." : {
-
+    "Scan barcode" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Barcode scannen"
+          }
+        }
+      }
     },
-    "Search unavailable" : {
-
+    "Scan Barcode" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Barcode scannen"
+          }
+        }
+      }
     },
-    "Searching…" : {
-
+    "Scanning not available" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scannen nicht verfügbar"
+          }
+        }
+      }
     },
+    "Science-based training on YouTube" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wissenschaftlich fundiertes Training auf YouTube"
+          }
+        }
+      }
+    },
+    "Science-Based Upper/Lower" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wissenschaftlicher Ober-/Unterkörper-Plan"
+          }
+        }
+      }
+    },
+    "Search" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Suchen"
+          }
+        }
+      }
+    },
+    "Search food database" : {},
+    "Search foods" : {},
+    "Search the USDA food database by food, meal or brand name." : {},
+    "Search unavailable" : {},
+    "Searching…" : {},
     "Seconds" : {
       "localizations" : {
         "de" : {
@@ -3748,8 +6518,26 @@
         }
       }
     },
-    "Select the foods Power recognized, then adjust each estimated portion." : {
-
+    "Select the foods Power recognized, then adjust each estimated portion." : {},
+    "Serving size (g)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portionsgröße (g)"
+          }
+        }
+      }
+    },
+    "Serving size (ml)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portionsgröße (ml)"
+          }
+        }
+      }
     },
     "Sessions" : {
       "localizations" : {
@@ -3821,6 +6609,46 @@
         }
       }
     },
+    "Shoulders & Arms" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schultern & Arme"
+          }
+        }
+      }
+    },
+    "Shoulders & Triceps" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schultern & Trizeps"
+          }
+        }
+      }
+    },
+    "Shoulders, Chest & Triceps" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schultern, Brust & Trizeps"
+          }
+        }
+      }
+    },
+    "Show All Routines" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Routinen anzeigen"
+          }
+        }
+      }
+    },
     "Show details" : {
       "localizations" : {
         "de" : {
@@ -3837,6 +6665,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Wird als Ring in deinem Profil angezeigt."
+          }
+        }
+      }
+    },
+    "Shown in your exercise list and on the exercise page." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Wird in deiner Übungsliste und auf der Übungsseite angezeigt."
           }
         }
       }
@@ -3889,6 +6727,17 @@
         }
       }
     },
+    "Six days of heavy basics: big squats, deadlifts and presses, then plenty of volume on top." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sechs Tage schwere Grundübungen: große Kniebeugen, Kreuzheben und Drückübungen, dazu jede Menge Volumen."
+          }
+        }
+      }
+    },
     "Skip" : {
       "localizations" : {
         "de" : {
@@ -3909,12 +6758,103 @@
         }
       }
     },
+    "Slow, steady strength gains" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Langsam, aber stetig stärker"
+          }
+        }
+      }
+    },
+    "Small gym" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Kleines Studio"
+          }
+        }
+      }
+    },
     "Some sets aren't checked off. Sets without reps are always removed." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Einige Sätze sind nicht abgehakt. Sätze ohne Wiederholungen werden immer entfernt."
+          }
+        }
+      }
+    },
+    "Some values may be misread. Compare them with the package before saving." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einige Werte wurden vielleicht falsch gelesen. Vergleiche sie vor dem Speichern mit der Verpackung."
+          }
+        }
+      }
+    },
+    "Speed Lower" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speed Unterkörper"
+          }
+        }
+      }
+    },
+    "Speed Upper" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speed Oberkörper"
+          }
+        }
+      }
+    },
+    "Squat & Bench" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kniebeugen & Bankdrücken"
+          }
+        }
+      }
+    },
+    "Squat & Hinge" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kniebeugen & Hüftbeugen"
+          }
+        }
+      }
+    },
+    "Squat Day" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kniebeugen-Tag"
+          }
+        }
+      }
+    },
+    "Squat, bench and deadlift several times a week. Heavy days and volume days take turns, with upper back and core work." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kniebeugen, Bankdrücken und Kreuzheben mehrmals pro Woche. Schwere Tage und Volumentage wechseln sich ab, dazu Training für oberen Rücken und Rumpf."
           }
         }
       }
@@ -4025,6 +6965,52 @@
         }
       }
     },
+    "Stay fit and healthy" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Fit und gesund bleiben"
+          }
+        }
+      }
+    },
+    "Step %lld of %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Schritt %1$lld von %2$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Step %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "Strength-focused physique training" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kraftbetontes Physique-Training"
+          }
+        }
+      }
+    },
+    "Strength, athleticism and healthy shoulders" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kraft, Athletik und gesunde Schultern"
+          }
+        }
+      }
+    },
     "Summary" : {
       "localizations" : {
         "de" : {
@@ -4075,8 +7061,26 @@
         }
       }
     },
-    "Take food photo" : {
-
+    "Take another photo" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neues Foto aufnehmen"
+          }
+        }
+      }
+    },
+    "Take food photo" : {},
+    "Take Photo" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Foto aufnehmen"
+          }
+        }
+      }
     },
     "Tap + to plan a workout you do often, or save a finished workout as a routine." : {
       "localizations" : {
@@ -4108,6 +7112,37 @@
         }
       }
     },
+    "Text is recognized on your iPhone. The photo is not uploaded." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Text wird auf deinem iPhone erkannt. Das Foto wird nicht hochgeladen."
+          }
+        }
+      }
+    },
+    "The Arnold Split" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Arnold-Split"
+          }
+        }
+      }
+    },
+    "The big three, several times a week" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die drei Hauptübungen, mehrmals pro Woche"
+          }
+        }
+      }
+    },
     "The file couldn't be read." : {
       "localizations" : {
         "de" : {
@@ -4118,7 +7153,18 @@
         }
       }
     },
+    "The file doesn't say which unit each exercise used, so Power guessed. Check the ones you logged in pounds. Each exercise keeps its unit for future workouts." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Die Datei enthält keine Angabe dazu, welche Einheit bei den einzelnen Übungen verwendet wurde, daher hat Power geschätzt. Prüfe die Übungen, die du in Pfund erfasst hast. Jede Übung behält ihre Einheit für künftige Workouts."
+          }
+        }
+      }
+    },
     "The file doesn't say. Pick the unit you used in the other app." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4138,12 +7184,18 @@
         }
       }
     },
-    "The nutrition service returned an invalid response." : {
-
+    "The label only shows values per serving. Enter the serving size below, then convert the values to 100 g." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Etikett zeigt nur Werte pro Portion. Gib unten die Portionsgröße ein und rechne die Werte dann auf 100 g um."
+          }
+        }
+      }
     },
-    "The selected photo could not be loaded." : {
-
-    },
+    "The nutrition service returned an invalid response." : {},
+    "The selected photo could not be loaded." : {},
     "Theme" : {
       "localizations" : {
         "de" : {
@@ -4184,6 +7236,26 @@
         }
       }
     },
+    "This barcode number is not valid. Check the digits and try again." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Barcode-Nummer ist ungültig. Prüfe die Ziffern und versuche es erneut."
+          }
+        }
+      }
+    },
+    "This device can't scan barcodes with the camera. You can type the barcode number instead." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Gerät kann keine Barcodes mit der Kamera scannen. Du kannst stattdessen die Barcode-Nummer eingeben."
+          }
+        }
+      }
+    },
     "This exercise isn't in any routine yet." : {
       "localizations" : {
         "de" : {
@@ -4204,6 +7276,26 @@
         }
       }
     },
+    "This product has no nutrition values online yet." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für dieses Produkt gibt es online noch keine Nährwerte."
+          }
+        }
+      }
+    },
+    "This product is not in Open Food Facts or USDA FoodData Central yet." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Produkt ist noch nicht in Open Food Facts oder USDA FoodData Central."
+          }
+        }
+      }
+    },
     "this week" : {
       "localizations" : {
         "de" : {
@@ -4220,6 +7312,27 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Diese Woche"
+          }
+        }
+      }
+    },
+    "Three full-body days that build strength and athleticism. Face pulls and core work keep shoulders and posture healthy." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drei Ganzkörpertage für Kraft und Athletik. Face Pulls und Rumpftraining halten Schultern und Haltung gesund."
+          }
+        }
+      }
+    },
+    "Three full-body workouts." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Drei Ganzkörper-Workouts."
           }
         }
       }
@@ -4254,6 +7367,16 @@
         }
       }
     },
+    "Time per workout" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zeit pro Workout"
+          }
+        }
+      }
+    },
     "Time trained" : {
       "localizations" : {
         "de" : {
@@ -4274,9 +7397,7 @@
         }
       }
     },
-    "Today" : {
-
-    },
+    "Today" : {},
     "Tools" : {
       "localizations" : {
         "de" : {
@@ -4377,12 +7498,62 @@
         }
       }
     },
+    "Train like a pro" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trainiere wie ein Profi"
+          }
+        }
+      }
+    },
+    "Train like a pro instead" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lieber wie ein Profi trainieren"
+          }
+        }
+      }
+    },
+    "Train Like an Athlete" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trainiere wie ein Athlet"
+          }
+        }
+      }
+    },
+    "Train the routines in order and start over when you've done them all. You can edit every routine later." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Trainiere die Routinen der Reihe nach und fang von vorn an, wenn du alle durch hast. Du kannst jede Routine später bearbeiten."
+          }
+        }
+      }
+    },
     "Training days" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Trainingstage"
+          }
+        }
+      }
+    },
+    "Training for a while" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Trainiere schon eine Weile"
           }
         }
       }
@@ -4470,6 +7641,73 @@
         }
       }
     },
+    "Try again" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erneut versuchen"
+          }
+        }
+      }
+    },
+    "Two full-body workouts." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zwei Ganzkörper-Workouts."
+          }
+        }
+      }
+    },
+    "Two max-effort days to work up to heavy singles, and two speed days with lighter, explosive sets. Lots of back and triceps work." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zwei Max-Effort-Tage, an denen du dich zu schweren Einzelwiederholungen hocharbeitest, und zwei Speed-Tage mit leichteren, explosiven Sätzen. Viel Training für Rücken und Trizeps."
+          }
+        }
+      }
+    },
+    "Type barcode" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Barcode eingeben"
+          }
+        }
+      }
+    },
+    "Type the digits printed under the barcode." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gib die Ziffern unter dem Barcode ein."
+          }
+        }
+      }
+    },
+    "Typical: %@ · %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Typisch: %1$@ · %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Typical: %1$@ · %2$@"
+          }
+        }
+      }
+    },
     "Unavailable" : {
       "localizations" : {
         "de" : {
@@ -4490,12 +7728,58 @@
         }
       }
     },
+    "Unnamed product" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unbenanntes Produkt"
+          }
+        }
+      }
+    },
+    "Up next" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Als Nächstes"
+          }
+        }
+      }
+    },
+    "Up next · routine %lld of %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Up next · routine %1$lld of %2$lld"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Als Nächstes · Routine %1$lld von %2$lld"
+          }
+        }
+      }
+    },
     "Update Rest Timer" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Pausentimer ändern"
+          }
+        }
+      }
+    },
+    "Upper / lower" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ober-/Unterkörper"
           }
         }
       }
@@ -4510,12 +7794,82 @@
         }
       }
     },
+    "Upper and lower body, twice each." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ober- und Unterkörper, je zweimal."
+          }
+        }
+      }
+    },
+    "Upper Assistance" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oberkörper-Zusatztraining"
+          }
+        }
+      }
+    },
+    "Upper Body" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Oberkörper"
+          }
+        }
+      }
+    },
+    "Upper body one day, lower body the next" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einen Tag Oberkörper, den nächsten Unterkörper"
+          }
+        }
+      }
+    },
+    "Upper Muscle" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oberkörper Muskelaufbau"
+          }
+        }
+      }
+    },
+    "Upper Strength" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oberkörper Kraft"
+          }
+        }
+      }
+    },
     "Use" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Übernehmen"
+          }
+        }
+      }
+    },
+    "Use this to fix units or typos in an earlier import. Those workouts are deleted and imported again with the settings below." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nutze dies, um Einheiten oder Tippfehler eines früheren Imports zu korrigieren. Diese Workouts werden gelöscht und mit den Einstellungen unten erneut importiert."
           }
         }
       }
@@ -4550,12 +7904,53 @@
         }
       }
     },
+    "Values entered by you." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Von dir eingegebene Werte."
+          }
+        }
+      }
+    },
+    "Values read from the photo. Check them against the package and add the product name." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Werte aus dem Foto gelesen. Vergleiche sie mit der Verpackung und gib den Produktnamen ein."
+          }
+        }
+      }
+    },
     "Version" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Version"
+          }
+        }
+      }
+    },
+    "View or improve on Open Food Facts" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auf Open Food Facts ansehen oder verbessern"
+          }
+        }
+      }
+    },
+    "Viral home workout challenges" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Virale Home-Workout-Challenges"
           }
         }
       }
@@ -4731,6 +8126,16 @@
         }
       }
     },
+    "Weight units" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Gewichtseinheiten"
+          }
+        }
+      }
+    },
     "Weight, %@" : {
       "localizations" : {
         "de" : {
@@ -4742,6 +8147,7 @@
       }
     },
     "Weights in this file are in" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4757,6 +8163,47 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Willkommen bei Power"
+          }
+        }
+      }
+    },
+    "Westside Conjugate" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Westside-Conjugate"
+          }
+        }
+      }
+    },
+    "What's your goal?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Was ist dein Ziel?"
+          }
+        }
+      }
+    },
+    "Where do you train?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Wo trainierst du?"
+          }
+        }
+      }
+    },
+    "Without a picture, the drawing of the exercise's body part is used." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ohne Bild wird die Zeichnung des Körperteils der Übung verwendet."
           }
         }
       }
@@ -4811,9 +8258,7 @@
         }
       }
     },
-    "Workout history" : {
-
-    },
+    "Workout history" : {},
     "Workout name" : {
       "localizations" : {
         "de" : {
@@ -4926,6 +8371,44 @@
         }
       }
     },
+    "Your plan is made with Apple Intelligence, on your iPhone and free." : {
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "device" : {
+              "ipad" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Dein Plan wird mit Apple Intelligence erstellt, auf deinem iPad und kostenlos."
+                }
+              },
+              "iphone" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Dein Plan wird mit Apple Intelligence erstellt, auf deinem iPhone und kostenlos."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "Dein Plan wird mit Apple Intelligence erstellt, auf deinem Gerät und kostenlos."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Your plan is made with Power's training rules." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dein Plan wird mit den Trainingsregeln von Power erstellt."
+          }
+        }
+      }
+    },
     "Your Profile" : {
       "localizations" : {
         "de" : {
@@ -4936,612 +8419,12 @@
         }
       }
     },
-    "1 serving (%@ %@)" : {
+    "Your whole body in every workout" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "1 Portion (%1$@ %2$@)"
-          }
-        }
-      }
-    },
-    "2 servings" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "2 Portionen"
-          }
-        }
-      }
-    },
-    "Allow camera access in Settings to scan barcodes, or type the barcode number." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Erlaube den Kamerazugriff in den Einstellungen, um Barcodes zu scannen, oder gib die Barcode-Nummer ein."
-          }
-        }
-      }
-    },
-    "Amount" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Menge"
-          }
-        }
-      }
-    },
-    "Amount (g)" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Menge (g)"
-          }
-        }
-      }
-    },
-    "Amount (ml)" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Menge (ml)"
-          }
-        }
-      }
-    },
-    "Barcode number" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Barcode-Nummer"
-          }
-        }
-      }
-    },
-    "Brand (optional)" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Marke (optional)"
-          }
-        }
-      }
-    },
-    "Branded Foods database of the U.S. Department of Agriculture." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Markenprodukt-Datenbank des US-Landwirtschaftsministeriums."
-          }
-        }
-      }
-    },
-    "Calories (kcal)" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kalorien (kcal)"
-          }
-        }
-      }
-    },
-    "Camera access needed" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kamerazugriff erforderlich"
-          }
-        }
-      }
-    },
-    "Choose photo of nutrition table" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Foto der Nährwerttabelle wählen"
-          }
-        }
-      }
-    },
-    "Convert per-serving values to 100 g" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Portionswerte auf 100 g umrechnen"
-          }
-        }
-      }
-    },
-    "Data: Open Food Facts" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daten: Open Food Facts"
-          }
-        }
-      }
-    },
-    "Data: USDA FoodData Central" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daten: USDA FoodData Central"
-          }
-        }
-      }
-    },
-    "Drink (values per 100 ml)" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Getränk (Werte pro 100 ml)"
-          }
-        }
-      }
-    },
-    "Edit nutrition values" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nährwerte bearbeiten"
-          }
-        }
-      }
-    },
-    "Enter barcode" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Barcode eingeben"
-          }
-        }
-      }
-    },
-    "Enter values manually" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Werte manuell eingeben"
-          }
-        }
-      }
-    },
-    "Invalid barcode" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ungültiger Barcode"
-          }
-        }
-      }
-    },
-    "Look up" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Suchen"
-          }
-        }
-      }
-    },
-    "Looking up product…" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Produkt wird gesucht …"
-          }
-        }
-      }
-    },
-    "No nutrition values were found in the photo. Try again with the table filling the frame, or type the values." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Im Foto wurden keine Nährwerte gefunden. Versuche es erneut, sodass die Tabelle das Bild ausfüllt, oder gib die Werte ein."
-          }
-        }
-      }
-    },
-    "Nutrition Table" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nährwerttabelle"
-          }
-        }
-      }
-    },
-    "Nutrition Values" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nährwerte"
-          }
-        }
-      }
-    },
-    "Nutrition for this amount" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nährwerte für diese Menge"
-          }
-        }
-      }
-    },
-    "Offline: showing the copy saved on this iPhone." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Offline: Es wird die auf diesem iPhone gespeicherte Kopie angezeigt."
-          }
-        }
-      }
-    },
-    "Open Settings" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Einstellungen öffnen"
-          }
-        }
-      }
-    },
-    "Per 100 g" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pro 100 g"
-          }
-        }
-      }
-    },
-    "Per 100 ml" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pro 100 ml"
-          }
-        }
-      }
-    },
-    "Photograph nutrition table" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nährwerttabelle fotografieren"
-          }
-        }
-      }
-    },
-    "Point the camera at the barcode or GS1 QR code" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Richte die Kamera auf den Barcode oder GS1-QR-Code"
-          }
-        }
-      }
-    },
-    "Power reads the table on your iPhone and saves the product here, so the next scan works offline." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Power liest die Tabelle auf deinem iPhone und speichert das Produkt hier, damit der nächste Scan auch offline funktioniert."
-          }
-        }
-      }
-    },
-    "Product" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Produkt"
-          }
-        }
-      }
-    },
-    "Product Not Found" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Produkt nicht gefunden"
-          }
-        }
-      }
-    },
-    "Product data by Open Food Facts contributors, available under the Open Database License (ODbL)." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Produktdaten von den Mitwirkenden von Open Food Facts, verfügbar unter der Open Database License (ODbL)."
-          }
-        }
-      }
-    },
-    "Product lookup is unavailable. Check your internet connection and try again." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Die Produktsuche ist nicht verfügbar. Prüfe deine Internetverbindung und versuche es erneut."
-          }
-        }
-      }
-    },
-    "Product name" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Produktname"
-          }
-        }
-      }
-    },
-    "Read from your photo of the nutrition table on this iPhone. Check the values against the package." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Auf diesem iPhone aus deinem Foto der Nährwerttabelle gelesen. Vergleiche die Werte mit der Verpackung."
-          }
-        }
-      }
-    },
-    "Reading nutrition table…" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nährwerttabelle wird gelesen …"
-          }
-        }
-      }
-    },
-    "Scan Barcode" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Barcode scannen"
-          }
-        }
-      }
-    },
-    "Scan another product" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Weiteres Produkt scannen"
-          }
-        }
-      }
-    },
-    "Scan barcode" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Barcode scannen"
-          }
-        }
-      }
-    },
-    "Scanning not available" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Scannen nicht verfügbar"
-          }
-        }
-      }
-    },
-    "Serving size (g)" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Portionsgröße (g)"
-          }
-        }
-      }
-    },
-    "Serving size (ml)" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Portionsgröße (ml)"
-          }
-        }
-      }
-    },
-    "Some values may be misread. Compare them with the package before saving." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Einige Werte wurden vielleicht falsch gelesen. Vergleiche sie vor dem Speichern mit der Verpackung."
-          }
-        }
-      }
-    },
-    "Take another photo" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Neues Foto aufnehmen"
-          }
-        }
-      }
-    },
-    "Text is recognized on your iPhone. The photo is not uploaded." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Der Text wird auf deinem iPhone erkannt. Das Foto wird nicht hochgeladen."
-          }
-        }
-      }
-    },
-    "The label only shows values per serving. Enter the serving size below, then convert the values to 100 g." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Das Etikett zeigt nur Werte pro Portion. Gib unten die Portionsgröße ein und rechne die Werte dann auf 100 g um."
-          }
-        }
-      }
-    },
-    "This barcode number is not valid. Check the digits and try again." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Diese Barcode-Nummer ist ungültig. Prüfe die Ziffern und versuche es erneut."
-          }
-        }
-      }
-    },
-    "This device can't scan barcodes with the camera. You can type the barcode number instead." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dieses Gerät kann keine Barcodes mit der Kamera scannen. Du kannst stattdessen die Barcode-Nummer eingeben."
-          }
-        }
-      }
-    },
-    "This product has no nutrition values online yet." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Für dieses Produkt gibt es online noch keine Nährwerte."
-          }
-        }
-      }
-    },
-    "This product is not in Open Food Facts or USDA FoodData Central yet." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dieses Produkt ist noch nicht in Open Food Facts oder USDA FoodData Central."
-          }
-        }
-      }
-    },
-    "Try again" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Erneut versuchen"
-          }
-        }
-      }
-    },
-    "Type barcode" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Barcode eingeben"
-          }
-        }
-      }
-    },
-    "Type the digits printed under the barcode." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gib die Ziffern unter dem Barcode ein."
-          }
-        }
-      }
-    },
-    "Unnamed product" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unbenanntes Produkt"
-          }
-        }
-      }
-    },
-    "Values entered by you." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Von dir eingegebene Werte."
-          }
-        }
-      }
-    },
-    "Values read from the photo. Check them against the package and add the product name." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Werte aus dem Foto gelesen. Vergleiche sie mit der Verpackung und gib den Produktnamen ein."
-          }
-        }
-      }
-    },
-    "View or improve on Open Food Facts" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Auf Open Food Facts ansehen oder verbessern"
+            "value" : "In jedem Workout der ganze Körper"
           }
         }
       }

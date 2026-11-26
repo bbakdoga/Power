@@ -51,6 +51,11 @@ struct ActiveWorkoutView: View {
                 }
                 .tint(.red)
                 .accessibilityHint("Discard workout")
+                // Attached to the button so the popover points at Cancel, not the screen.
+                .confirmationDialog("Discard this workout?", isPresented: $confirmingDiscard, titleVisibility: .visible) {
+                    Button("Discard workout", role: .destructive) { discard() }
+                    Button("Cancel", role: .cancel) {}
+                }
             }
             ToolbarItem(placement: .confirmationAction) {
                 Button("Finish") {
@@ -104,10 +109,6 @@ struct ActiveWorkoutView: View {
             Button("Discard workout", role: .destructive) { discard() }
         } message: {
             Text("Enter reps for at least one set, or tap the circle to check it off.")
-        }
-        .confirmationDialog("Discard this workout?", isPresented: $confirmingDiscard, titleVisibility: .visible) {
-            Button("Discard workout", role: .destructive) { discard() }
-            Button("Cancel", role: .cancel) {}
         }
     }
 

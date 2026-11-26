@@ -122,15 +122,17 @@ struct WorkoutDetailView: View {
                 .themedRows()
             }
 
-            Section {
-                Button {
-                    WorkoutStarter.saveAsRoutine(workout, in: context)
-                    savedRoutine = true
-                } label: {
-                    Label("Save as routine", systemImage: "square.and.arrow.down")
+            if WorkoutStarter.canSaveAsRoutine(workout) {
+                Section {
+                    Button {
+                        WorkoutStarter.saveAsRoutine(workout, in: context)
+                        savedRoutine = true
+                    } label: {
+                        Label("Save as routine", systemImage: "square.and.arrow.down")
+                    }
                 }
+                .themedRows()
             }
-            .themedRows()
         }
         .navigationTitle(workout.name)
         .themedScreen()
