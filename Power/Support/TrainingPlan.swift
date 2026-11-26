@@ -94,9 +94,40 @@ struct TrainingProfile: Codable, Hashable {
         }
     }
 
+    /// How the week is divided into workouts.
+    enum SplitStyle: String, Codable, CaseIterable, Identifiable {
+        case auto, fullBody, upperLower, pushPullLegs, bodyPart
+        var id: String { rawValue }
+        var title: String {
+            switch self {
+            case .auto: return String(localized: "Let Power choose")
+            case .fullBody: return String(localized: "Full body")
+            case .upperLower: return String(localized: "Upper / lower")
+            case .pushPullLegs: return String(localized: "Push / pull / legs")
+            case .bodyPart: return String(localized: "A few muscles a day")
+            }
+        }
+        /// Empty for `.auto`: the setup shows what Power would pick for the chosen days instead.
+        var detail: String {
+            switch self {
+            case .auto: return ""
+            case .fullBody: return String(localized: "Your whole body in every workout")
+            case .upperLower: return String(localized: "Upper body one day, lower body the next")
+            case .pushPullLegs: return String(localized: "Pushing, pulling and legs on separate days")
+            case .bodyPart: return String(localized: "One or two muscle groups per workout, e.g. chest and triceps")
+            }
+        }
+    }
+
     var goal: Goal = .muscle
     var experience: Experience = .beginner
     var daysPerWeek = 3
+    /// Stored as an optional so answers saved before this question existed still load.
+    private var splitStyleValue: SplitStyle?
+    var splitStyle: SplitStyle {
+        get { splitStyleValue ?? .auto }
+        set { splitStyleValue = newValue }
+    }
     var minutesPerWorkout = 60
     var gym: Gym = .fullGym
     var focus: Set<MuscleGroup> = []
@@ -271,20 +302,61 @@ enum PlanBuilder {
         let pushName = String(localized: "Push")
         let pullName = String(localized: "Pull")
         let legsName = String(localized: "Legs")
-        switch profile.daysPerWeek {
-        case ...2:
-            return [fullBody("\(fullBodyName) A"), fullBody("\(fullBodyName) B", variant: 1)]
-        case 3:
-            return profile.experience == .beginner
-                ? [fullBody("\(fullBodyName) A"), fullBody("\(fullBodyName) B", variant: 1), fullBody("\(fullBodyName) C", variant: 2)]
+        let days = profile.daysPerWeek
+
+        // The routines are trained in order and repeated, so a split can have more or
+        // fewer routines than training days.
+        func fullBodyRotation(_ count: Int) -> [DayTemplate] {
+            ["A", "B", "C"].prefix(count).enumerated().map { fullBody("\(fullBodyName) \($1)", variant: $0) }
+        }
+        func upperLower(twice: Bool) -> [DayTemplate] {
+            twice
+                ? [upper("\(upperName) A"), lower("\(lowerName) A"), upper("\(upperName) B", variant: 1), lower("\(lowerName) B", variant: 1)]
+                : [upper(upperName), lower(lowerName)]
+        }
+        func pushPullLegs(twice: Bool) -> [DayTemplate] {
+            twice
+                ? [push("\(pushName) A"), pull("\(pullName) A"), legs("\(legsName) A"),
+                   push("\(pushName) B", variant: 1), pull("\(pullName) B", variant: 1), legs("\(legsName) B", variant: 1)]
                 : [push(pushName), pull(pullName), legs(legsName)]
+        }
+
+        switch profile.splitStyle {
+        case .auto:
+            switch days {
+            case ...2: return fullBodyRotation(2)
+            case 3: return profile.experience == .beginner ? fullBodyRotation(3) : pushPullLegs(twice: false)
+            case 4: return upperLower(twice: true)
+            case 5: return pushPullLegs(twice: false) + [upper(upperName, variant: 1), lower(lowerName, variant: 1)]
+            default: return pushPullLegs(twice: true)
+            }
+        case .fullBody:
+            return fullBodyRotation(min(max(days, 2), 3))
+        case .upperLower:
+            return upperLower(twice: days > 2)
+        case .pushPullLegs:
+            return pushPullLegs(twice: days > 3)
+        case .bodyPart:
+            return bodyPartSplit(days: days)
+        }
+    }
+
+    /// One or two muscle groups per workout. Fewer days pair muscles up so everything
+    /// is still trained each round.
+    private static func bodyPartSplit(days: Int) -> [DayTemplate] {
+        let chest = MuscleGroup.chest.title, back = MuscleGroup.back.title
+        let shoulders = MuscleGroup.shoulders.title, legsName = String(localized: "Legs")
+        let arms = String(localized: "Arms")
+        switch days {
+        case ...3:
+            return [chestDay(String(localized: "Chest & Triceps")), backDay(String(localized: "Back & Biceps")),
+                    legsAndShouldersDay(String(localized: "Legs & Shoulders"))]
         case 4:
-            return [upper("\(upperName) A"), lower("\(lowerName) A"), upper("\(upperName) B", variant: 1), lower("\(lowerName) B", variant: 1)]
-        case 5:
-            return [push(pushName), pull(pullName), legs(legsName), upper(upperName, variant: 1), lower(lowerName, variant: 1)]
+            return [chestDay(String(localized: "Chest & Triceps")), backDay(String(localized: "Back & Biceps")),
+                    legs(legsName), shoulderDay(String(localized: "Shoulders & Arms"), withArms: true)]
         default:
-            return [push("\(pushName) A"), pull("\(pullName) A"), legs("\(legsName) A"),
-                    push("\(pushName) B", variant: 1), pull("\(pullName) B", variant: 1), legs("\(legsName) B", variant: 1)]
+            return [chestDay(chest, withTriceps: false), backDay(back, withBiceps: false), legs(legsName),
+                    shoulderDay(shoulders), armsDay(arms)]
         }
     }
 
@@ -379,6 +451,87 @@ enum PlanBuilder {
             Slot(role: .compound, muscle: .back, candidates: verticalPull),
             Slot(role: .compound, muscle: .shoulders, candidates: verticalPress),
             Slot(role: .core, muscle: .core, candidates: core),
+        ])
+    }
+
+    // Body-part days. The same candidate list can appear twice: each slot skips
+    // exercises already picked that day, so the second one gets the next option.
+
+    private static func chestDay(_ name: String, withTriceps: Bool = true) -> DayTemplate {
+        var slots = [
+            Slot(role: .compound, muscle: .chest, candidates: horizontalPress),
+            Slot(role: .compound, muscle: .chest, candidates: inclinePress),
+            Slot(role: .isolation, muscle: .chest, candidates: chestFly),
+        ]
+        slots += withTriceps
+            ? [Slot(role: .isolation, muscle: .triceps, candidates: triceps),
+               Slot(role: .compound, muscle: .chest, candidates: horizontalPress),
+               Slot(role: .isolation, muscle: .triceps, candidates: tricepsAccessory),
+               Slot(role: .isolation, muscle: .chest, candidates: chestFly)]
+            : [Slot(role: .compound, muscle: .chest, candidates: horizontalPress),
+               Slot(role: .isolation, muscle: .chest, candidates: chestFly),
+               Slot(role: .compound, muscle: .chest, candidates: inclinePress),
+               Slot(role: .core, muscle: .core, candidates: core)]
+        return DayTemplate(name: name, slots: slots)
+    }
+
+    private static func backDay(_ name: String, withBiceps: Bool = true) -> DayTemplate {
+        var slots = [
+            Slot(role: .compound, muscle: .back, candidates: verticalPull),
+            Slot(role: .compound, muscle: .back, candidates: horizontalRow),
+            Slot(role: .compound, muscle: .back, candidates: Array(horizontalRow.dropFirst())),
+        ]
+        slots += withBiceps
+            ? [Slot(role: .isolation, muscle: .biceps, candidates: biceps),
+               Slot(role: .isolation, muscle: .shoulders, candidates: rearDelt),
+               Slot(role: .isolation, muscle: .biceps, candidates: bicepsAccessory),
+               Slot(role: .core, muscle: .core, candidates: core)]
+            : [Slot(role: .compound, muscle: .back, candidates: verticalPull),
+               Slot(role: .isolation, muscle: .shoulders, candidates: rearDelt),
+               Slot(role: .compound, muscle: .back, candidates: hinge),
+               Slot(role: .core, muscle: .core, candidates: core)]
+        return DayTemplate(name: name, slots: slots)
+    }
+
+    private static func shoulderDay(_ name: String, withArms: Bool = false) -> DayTemplate {
+        var slots = [
+            Slot(role: .compound, muscle: .shoulders, candidates: verticalPress),
+            Slot(role: .isolation, muscle: .shoulders, candidates: lateralRaise),
+            Slot(role: .isolation, muscle: .shoulders, candidates: rearDelt),
+        ]
+        slots += withArms
+            ? [Slot(role: .isolation, muscle: .biceps, candidates: biceps),
+               Slot(role: .isolation, muscle: .triceps, candidates: triceps),
+               Slot(role: .isolation, muscle: .biceps, candidates: bicepsAccessory),
+               Slot(role: .isolation, muscle: .triceps, candidates: tricepsAccessory)]
+            : [Slot(role: .compound, muscle: .shoulders, candidates: verticalPress),
+               Slot(role: .isolation, muscle: .shoulders, candidates: lateralRaise),
+               Slot(role: .isolation, muscle: .shoulders, candidates: rearDelt),
+               Slot(role: .core, muscle: .core, candidates: core)]
+        return DayTemplate(name: name, slots: slots)
+    }
+
+    private static func armsDay(_ name: String) -> DayTemplate {
+        DayTemplate(name: name, slots: [
+            Slot(role: .isolation, muscle: .biceps, candidates: biceps),
+            Slot(role: .isolation, muscle: .triceps, candidates: triceps),
+            Slot(role: .isolation, muscle: .biceps, candidates: bicepsAccessory),
+            Slot(role: .isolation, muscle: .triceps, candidates: tricepsAccessory),
+            Slot(role: .isolation, muscle: .biceps, candidates: biceps),
+            Slot(role: .isolation, muscle: .triceps, candidates: triceps),
+            Slot(role: .core, muscle: .core, candidates: core),
+        ])
+    }
+
+    private static func legsAndShouldersDay(_ name: String) -> DayTemplate {
+        DayTemplate(name: name, slots: [
+            Slot(role: .compound, muscle: .legs, candidates: squat),
+            Slot(role: .compound, muscle: .shoulders, candidates: verticalPress),
+            Slot(role: .compound, muscle: .legs, candidates: hinge),
+            Slot(role: .isolation, muscle: .shoulders, candidates: lateralRaise),
+            Slot(role: .isolation, muscle: .legs, candidates: legCurl),
+            Slot(role: .isolation, muscle: .shoulders, candidates: rearDelt),
+            Slot(role: .isolation, muscle: .legs, candidates: calves),
         ])
     }
 

@@ -13,6 +13,7 @@ struct PlanSetupView: View {
     @Environment(\.modelContext) private var context
     @Query(filter: #Predicate<Exercise> { !$0.isCustom }) private var exercises: [Exercise]
     @AppStorage(Profile.weeklyGoalKey) private var weeklyGoal = 3
+    @AppStorage(AppTheme.storageKey) private var theme: AppTheme = .system
     @State private var profile = TrainingProfile.load() ?? TrainingProfile()
     @State private var step = Step.goal
     @State private var plan: TrainingPlan?
@@ -26,7 +27,7 @@ struct PlanSetupView: View {
         VStack(spacing: 0) {
             if step.rawValue < Step.building.rawValue {
                 ProgressView(value: Double(step.rawValue + 1), total: Double(Step.notes.rawValue + 1))
-                    .tint(.orange)
+                    .tint(theme.accent)
                     .padding(.horizontal, 24)
                     .padding(.top, 12)
                     .accessibilityLabel(String(localized: "Step \(step.rawValue + 1) of \(Step.notes.rawValue + 1)"))
@@ -77,9 +78,9 @@ struct PlanSetupView: View {
                 ForEach(2...6, id: \.self) { Text("\($0)").tag($0) }
             }
             .pickerStyle(.segmented)
-            Text(splitDescription)
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+
+            sectionTitle("How do you like to train?")
+            TrainingStylePicker(selection: $profile.splitStyle, automaticDescription: splitDescription)
 
             sectionTitle("Time per workout")
             Picker("Time per workout", selection: $profile.minutesPerWorkout) {
@@ -199,7 +200,12 @@ struct PlanSetupView: View {
             Text(day.name)
                 .font(.headline)
             ForEach(Array(day.items.enumerated()), id: \.offset) { _, item in
-                HStack {
+                HStack(spacing: 10) {
+                    if let exercise = exercises.first(where: { $0.name == item.exerciseName }) {
+                        ExerciseThumbnail(exercise: exercise)
+                            .frame(width: 42, height: 42)
+                            .accessibilityHidden(true)
+                    }
                     Text(item.exerciseName)
                     Spacer()
                     Text(verbatim: item.exerciseName.contains("Plank") ? "\(item.sets) ×" : "\(item.sets) × \(item.reps)")
@@ -296,7 +302,7 @@ struct PlanSetupView: View {
                     Image(systemName: systemImage)
                         .font(.title3)
                         .frame(width: 32)
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(theme.accent)
                 }
                 VStack(alignment: .leading, spacing: 2) {
                     Text(title).font(.headline)
@@ -309,7 +315,7 @@ struct PlanSetupView: View {
                 Spacer()
                 Image(systemName: isOn ? "checkmark.circle.fill" : "circle")
                     .font(.title3)
-                    .foregroundStyle(isOn ? Color.orange : Color.secondary)
+                    .foregroundStyle(isOn ? theme.accent : Color.secondary)
             }
             .padding(14)
             .background(RoundedRectangle(cornerRadius: 14).fill(.quaternary.opacity(isOn ? 1 : 0.5)))
@@ -332,7 +338,7 @@ struct PlanSetupView: View {
                         .font(.subheadline)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 8)
-                        .background(Capsule().fill(isOn ? AnyShapeStyle(Color.orange) : AnyShapeStyle(.quaternary)))
+                        .background(Capsule().fill(isOn ? AnyShapeStyle(theme.accent) : AnyShapeStyle(.quaternary)))
                         .foregroundStyle(isOn ? Color.white : Color.primary)
                 }
                 .buttonStyle(.plain)
@@ -349,7 +355,68 @@ struct PlanSetupView: View {
                 .padding(.vertical, 8)
         }
         .buttonStyle(.borderedProminent)
-        .tint(.orange)
+        .tint(theme.accent)
+    }
+}
+
+private struct TrainingStylePicker: View {
+    @Binding var selection: TrainingProfile.SplitStyle
+    let automaticDescription: String
+    @AppStorage(AppTheme.storageKey) private var theme: AppTheme = .system
+
+    var body: some View {
+        VStack(spacing: 8) {
+            HStack(alignment: .top, spacing: 8) {
+                styleButton(.fullBody)
+                styleButton(.upperLower)
+            }
+            styleButton(.auto)
+                .frame(maxWidth: .infinity)
+            HStack(alignment: .top, spacing: 8) {
+                styleButton(.pushPullLegs)
+                styleButton(.bodyPart)
+            }
+        }
+    }
+
+    private func styleButton(_ style: TrainingProfile.SplitStyle) -> some View {
+        let selected = selection == style
+        return Button {
+            selection = style
+        } label: {
+            VStack(spacing: 6) {
+                Image(systemName: symbol(for: style))
+                    .font(.title2)
+                    .foregroundStyle(theme.accent)
+                Text(style.title)
+                    .font(.subheadline.bold())
+                Text(style == .auto ? automaticDescription : style.detail)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity, minHeight: 110)
+            .padding(10)
+            .background(theme.accent.opacity(selected ? 0.16 : 0.05), in: RoundedRectangle(cornerRadius: 14))
+            .overlay {
+                RoundedRectangle(cornerRadius: 14)
+                    .strokeBorder(theme.accent.opacity(selected ? 1 : 0.2), lineWidth: selected ? 2 : 1)
+            }
+            .contentShape(RoundedRectangle(cornerRadius: 14))
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(selected ? .isSelected : [])
+    }
+
+    private func symbol(for style: TrainingProfile.SplitStyle) -> String {
+        switch style {
+        case .auto: "sparkles"
+        case .fullBody: "figure.strengthtraining.traditional"
+        case .upperLower: "figure.stand"
+        case .pushPullLegs: "arrow.left.arrow.right"
+        case .bodyPart: "figure.arms.open"
+        }
     }
 }
 

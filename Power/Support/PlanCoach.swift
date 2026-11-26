@@ -109,6 +109,9 @@ enum PlanCoach {
         var lines: [String] = []
         lines.append("Goal: \(profile.goal.rawValue). Experience: \(profile.experience.rawValue).")
         lines.append("Trains \(profile.daysPerWeek) days a week, about \(profile.minutesPerWorkout) minutes each, in: \(profile.gym.rawValue).")
+        if profile.splitStyle != .auto {
+            lines.append("Chose this weekly split: \(profile.splitStyle.rawValue).")
+        }
         if !profile.focus.isEmpty {
             lines.append("Wants to focus on: \(profile.focus.map(\.rawValue).sorted().joined(separator: ", ")).")
         }

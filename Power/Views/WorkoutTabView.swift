@@ -88,9 +88,28 @@ struct WorkoutTabView: View {
                 Button {
                     buildingPlan = true
                 } label: {
-                    Label(PlanCoach.isAvailable ? "Build a plan with Apple Intelligence" : "Build a plan for me",
-                          systemImage: "sparkles")
+                    HStack(spacing: 16) {
+                        Image(systemName: "sparkles")
+                            .font(.title2.bold())
+                            .frame(width: 52, height: 52)
+                            .background(.tint.opacity(0.15), in: RoundedRectangle(cornerRadius: 14))
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text(PlanCoach.isAvailable ? "Build a plan with Apple Intelligence" : "Build a plan for me")
+                                .font(.headline)
+                            Text("A training plan tailored to your goals and schedule.")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer(minLength: 0)
+                        Image(systemName: "chevron.right")
+                            .font(.footnote.bold())
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(.vertical, 10)
+                    .contentShape(Rectangle())
                 }
+                .buttonStyle(.plain)
+                .foregroundStyle(.tint)
                 ForEach(routines) { routine in
                     HStack(spacing: 12) {
                         NavigationLink(value: routine) {

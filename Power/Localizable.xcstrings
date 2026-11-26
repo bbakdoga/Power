@@ -947,6 +947,16 @@
         }
       }
     },
+    "A few muscles a day" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenige Muskeln pro Tag"
+          }
+        }
+      }
+    },
     "A pair of dumbbells, maybe a bench" : {
       "localizations" : {
         "de" : {
@@ -956,6 +966,9 @@
           }
         }
       }
+    },
+    "A training plan tailored to your goals and schedule." : {
+
     },
     "About" : {
       "localizations" : {
@@ -1510,6 +1523,16 @@
         }
       }
     },
+    "Back & Biceps" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rücken & Bizeps"
+          }
+        }
+      }
+    },
     "Backed up to your iCloud" : {
       "localizations" : {
         "de" : {
@@ -2005,6 +2028,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Brust"
+          }
+        }
+      }
+    },
+    "Chest & Triceps" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brust & Trizeps"
           }
         }
       }
@@ -2811,6 +2844,16 @@
         }
       }
     },
+    "Full body" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ganzkörper"
+          }
+        }
+      }
+    },
     "Full Body" : {
       "localizations" : {
         "de" : {
@@ -3038,6 +3081,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Verlauf"
+          }
+        }
+      }
+    },
+    "How do you like to train?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie trainierst du am liebsten?"
           }
         }
       }
@@ -3414,6 +3467,16 @@
         }
       }
     },
+    "Legs & Shoulders" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beine & Schultern"
+          }
+        }
+      }
+    },
     "Less" : {
       "localizations" : {
         "de" : {
@@ -3430,6 +3493,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Weniger als 6 Monate"
+          }
+        }
+      }
+    },
+    "Let Power choose" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Power entscheiden lassen"
           }
         }
       }
@@ -4256,6 +4329,16 @@
         }
       }
     },
+    "One or two muscle groups per workout, e.g. chest and triceps" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein oder zwei Muskelgruppen pro Workout, z. B. Brust und Trizeps"
+          }
+        }
+      }
+    },
     "Online food search is not configured yet." : {
 
     },
@@ -4683,6 +4766,16 @@
         }
       }
     },
+    "Push / pull / legs" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Push / Pull / Beine"
+          }
+        }
+      }
+    },
     "Push / Pull / Legs" : {
       "localizations" : {
         "de" : {
@@ -4719,6 +4812,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Push, Pull, Beine, dann Ober- und Unterkörper."
+          }
+        }
+      }
+    },
+    "Pushing, pulling and legs on separate days" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drücken, Ziehen und Beine an getrennten Tagen"
           }
         }
       }
@@ -5322,6 +5425,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Schultern"
+          }
+        }
+      }
+    },
+    "Shoulders & Arms" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schultern & Arme"
           }
         }
       }
@@ -6258,6 +6371,16 @@
         }
       }
     },
+    "Upper / lower" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ober-/Unterkörper"
+          }
+        }
+      }
+    },
     "Upper / Lower" : {
       "localizations" : {
         "de" : {
@@ -6284,6 +6407,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Oberkörper"
+          }
+        }
+      }
+    },
+    "Upper body one day, lower body the next" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einen Tag Oberkörper, den nächsten Unterkörper"
           }
         }
       }
@@ -6829,6 +6962,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Dein Profil"
+          }
+        }
+      }
+    },
+    "Your whole body in every workout" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In jedem Workout der ganze Körper"
           }
         }
       }
