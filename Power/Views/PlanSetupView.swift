@@ -80,7 +80,7 @@ struct PlanSetupView: View {
             .pickerStyle(.segmented)
 
             sectionTitle("How do you like to train?")
-            TrainingStylePicker(selection: $profile.splitStyle, automaticDescription: splitDescription)
+            SplitCarousel(profile: $profile, autoDescription: splitDescription)
 
             sectionTitle("Time per workout")
             Picker("Time per workout", selection: $profile.minutesPerWorkout) {
@@ -359,63 +359,158 @@ struct PlanSetupView: View {
     }
 }
 
-private struct TrainingStylePicker: View {
-    @Binding var selection: TrainingProfile.SplitStyle
-    let automaticDescription: String
+// MARK: - Split carousel
+
+/// Swipeable cards for the weekly split. The centered card is the choice, and each card
+/// previews the routines that split would create for the chosen number of days.
+private struct SplitCarousel: View {
+    @Binding var profile: TrainingProfile
+    /// What "Let Power choose" would pick, e.g. "Push, pull and legs."
+    let autoDescription: String
+    @State private var centered: TrainingProfile.SplitStyle?
     @AppStorage(AppTheme.storageKey) private var theme: AppTheme = .system
 
+    init(profile: Binding<TrainingProfile>, autoDescription: String) {
+        _profile = profile
+        self.autoDescription = autoDescription
+        _centered = State(initialValue: profile.wrappedValue.splitStyle)
+    }
+
     var body: some View {
-        VStack(spacing: 8) {
-            HStack(alignment: .top, spacing: 8) {
-                styleButton(.fullBody)
-                styleButton(.upperLower)
+        VStack(spacing: 14) {
+            ScrollView(.horizontal) {
+                LazyHStack(spacing: 8) {
+                    ForEach(TrainingProfile.SplitStyle.allCases) { style in
+                        card(style)
+                            .containerRelativeFrame(.horizontal)
+                            // Cards beside the center shrink, fade and turn away.
+                            .scrollTransition(axis: .horizontal) { content, phase in
+                                content
+                                    .scaleEffect(phase.isIdentity ? 1 : 0.92)
+                                    .opacity(phase.isIdentity ? 1 : 0.5)
+                                    .rotation3DEffect(.degrees(phase.value * -14), axis: (x: 0, y: 1, z: 0))
+                            }
+                            .id(style)
+                            .onTapGesture { withAnimation(.snappy) { centered = style } }
+                    }
+                }
+                .scrollTargetLayout()
             }
-            styleButton(.auto)
-                .frame(maxWidth: .infinity)
-            HStack(alignment: .top, spacing: 8) {
-                styleButton(.pushPullLegs)
-                styleButton(.bodyPart)
-            }
+            .scrollIndicators(.hidden)
+            .scrollTargetBehavior(.viewAligned)
+            .scrollPosition(id: $centered)
+            // Wide side margins so the neighboring cards peek in and invite a swipe.
+            .safeAreaPadding(.horizontal, 56)
+            .scrollClipDisabled()
+            .frame(height: 250)
+
+            pageDots
         }
+        // Run edge to edge, past the page's side padding, so neighbors peek in.
+        .padding(.horizontal, -24)
+        .onChange(of: centered) { _, style in
+            if let style { profile.splitStyle = style }
+        }
+        .sensoryFeedback(.selection, trigger: profile.splitStyle)
     }
 
-    private func styleButton(_ style: TrainingProfile.SplitStyle) -> some View {
-        let selected = selection == style
-        return Button {
-            selection = style
-        } label: {
-            VStack(spacing: 6) {
-                Image(systemName: symbol(for: style))
-                    .font(.title2)
-                    .foregroundStyle(theme.accent)
+    private func card(_ style: TrainingProfile.SplitStyle) -> some View {
+        var preview = profile
+        preview.splitStyle = style
+        let routines = PlanBuilder.split(preview).map(\.name)
+        let isOn = profile.splitStyle == style
+
+        return VStack(alignment: .leading, spacing: 6) {
+            HStack(alignment: .firstTextBaseline) {
                 Text(style.title)
-                    .font(.subheadline.bold())
-                Text(style == .auto ? automaticDescription : style.detail)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
+                    .font(.title2.bold())
+                Spacer()
+                Image(systemName: isOn ? "checkmark.circle.fill" : "circle")
+                    .font(.title3)
+                    .opacity(isOn ? 1 : 0.6)
             }
-            .multilineTextAlignment(.center)
-            .frame(maxWidth: .infinity, minHeight: 110)
-            .padding(10)
-            .background(theme.accent.opacity(selected ? 0.16 : 0.05), in: RoundedRectangle(cornerRadius: 14))
-            .overlay {
-                RoundedRectangle(cornerRadius: 14)
-                    .strokeBorder(theme.accent.opacity(selected ? 1 : 0.2), lineWidth: selected ? 2 : 1)
+            Text(style == .auto ? autoDescription : style.detail)
+                .font(.subheadline)
+                .foregroundStyle(.white.opacity(0.85))
+                .lineLimit(2, reservesSpace: true)
+            Spacer(minLength: 12)
+            // The routines this split would create, in training order.
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 96), spacing: 6, alignment: .leading)],
+                      alignment: .leading, spacing: 6) {
+                ForEach(Array(routines.enumerated()), id: \.offset) { index, name in
+                    routinePill(number: index + 1, name: name)
+                }
             }
-            .contentShape(RoundedRectangle(cornerRadius: 14))
         }
-        .buttonStyle(.plain)
-        .accessibilityAddTraits(selected ? .isSelected : [])
+        .foregroundStyle(.white)
+        .padding(20)
+        .frame(height: 250)
+        .background { cardBackground(style) }
+        .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+        .shadow(color: (style.colors.first ?? .orange).opacity(isOn ? 0.45 : 0), radius: 18, y: 10)
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(isOn ? [.isButton, .isSelected] : .isButton)
     }
 
-    private func symbol(for style: TrainingProfile.SplitStyle) -> String {
-        switch style {
-        case .auto: "sparkles"
-        case .fullBody: "figure.strengthtraining.traditional"
-        case .upperLower: "figure.stand"
-        case .pushPullLegs: "arrow.left.arrow.right"
-        case .bodyPart: "figure.arms.open"
+    private func routinePill(number: Int, name: String) -> some View {
+        HStack(spacing: 5) {
+            Text(verbatim: "\(number)")
+                .font(.caption2.bold())
+                .frame(width: 16, height: 16)
+                .background(Circle().fill(.white.opacity(0.3)))
+            Text(name)
+                .font(.caption.weight(.semibold))
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
+        }
+        .padding(.vertical, 5)
+        .padding(.leading, 5)
+        .padding(.trailing, 9)
+        .background(Capsule().fill(.white.opacity(0.18)))
+    }
+
+    /// The style's gradient with its symbol large and faded in the corner.
+    private func cardBackground(_ style: TrainingProfile.SplitStyle) -> some View {
+        ZStack(alignment: .bottomTrailing) {
+            LinearGradient(colors: style.colors, startPoint: .topLeading, endPoint: .bottomTrailing)
+            Image(systemName: style.symbol)
+                .font(.system(size: 130, weight: .bold))
+                .foregroundStyle(.white.opacity(0.13))
+                .offset(x: 24, y: 20)
+        }
+    }
+
+    private var pageDots: some View {
+        HStack(spacing: 6) {
+            ForEach(TrainingProfile.SplitStyle.allCases) { style in
+                Capsule()
+                    .fill(profile.splitStyle == style ? AnyShapeStyle(theme.accent) : AnyShapeStyle(.quaternary))
+                    .frame(width: profile.splitStyle == style ? 20 : 7, height: 7)
+            }
+        }
+        .animation(.snappy, value: profile.splitStyle)
+        .accessibilityHidden(true)
+    }
+}
+
+private extension TrainingProfile.SplitStyle {
+    var symbol: String {
+        switch self {
+        case .auto: return "sparkles"
+        case .fullBody: return "figure.strengthtraining.functional"
+        case .upperLower: return "arrow.up.arrow.down"
+        case .pushPullLegs: return "arrow.left.arrow.right"
+        case .bodyPart: return "scope"
+        }
+    }
+
+    var colors: [Color] {
+        switch self {
+        case .auto: return [.orange, .pink]
+        case .fullBody: return [Color(red: 1, green: 0.5, blue: 0.1), .red]
+        case .upperLower: return [.teal, .blue]
+        case .pushPullLegs: return [.purple, .indigo]
+        case .bodyPart: return [.pink, .purple]
         }
     }
 }
@@ -423,4 +518,14 @@ private struct TrainingStylePicker: View {
 #Preview {
     PlanSetupView(onFinish: {})
         .modelContainer(for: [Exercise.self, Routine.self, RoutineExercise.self], inMemory: true)
+}
+
+#Preview("Split carousel") {
+    @Previewable @State var profile = TrainingProfile()
+    VStack(alignment: .leading) {
+        Text("How do you like to train?").font(.headline)
+        SplitCarousel(profile: $profile, autoDescription: "Three full-body workouts.")
+        Spacer()
+    }
+    .padding(24)
 }
