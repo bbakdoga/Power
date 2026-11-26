@@ -174,10 +174,24 @@ struct TrainingPlan: Hashable {
     /// True when Apple Intelligence chose the exercises and wrote the tips.
     var personalizedWithAI = false
 
-    /// Adds the plan's routines. Names already in use get a number ("Upper A 2").
-    /// Returns the routines created.
+    /// Adds the plan as a program with its routines in training order. Names already in
+    /// use get a number ("Upper A 2"). A main program also sets the weekly goal.
     @discardableResult
-    func add(to context: ModelContext) -> [Routine] {
+    func add(to context: ModelContext, daysPerWeek: Int, makeMain: Bool) -> TrainingProgram {
+        let program = TrainingProgram(name: name, summary: summary, daysPerWeek: daysPerWeek)
+        context.insert(program)
+        for (order, routine) in addRoutines(to: context).enumerated() {
+            routine.program = program
+            routine.programOrder = order
+        }
+        if makeMain { program.makeMain(in: context) }
+        try? context.save()
+        return program
+    }
+
+    /// Adds the plan's routines on their own. Returns the routines created.
+    @discardableResult
+    private func addRoutines(to context: ModelContext) -> [Routine] {
         let exercises = (try? context.fetch(FetchDescriptor<Exercise>(predicate: #Predicate { !$0.isCustom }))) ?? []
         let byName = Dictionary(exercises.map { ($0.name, $0) }, uniquingKeysWith: { first, _ in first })
         var taken = Set(((try? context.fetch(FetchDescriptor<Routine>())) ?? []).map(\.name))

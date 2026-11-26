@@ -12,13 +12,14 @@ struct PlanSetupView: View {
 
     @Environment(\.modelContext) private var context
     @Query(filter: #Predicate<Exercise> { !$0.isCustom }) private var exercises: [Exercise]
-    @AppStorage(Profile.weeklyGoalKey) private var weeklyGoal = 3
     @AppStorage(AppTheme.storageKey) private var theme: AppTheme = .system
     @State private var profile = TrainingProfile.load() ?? TrainingProfile()
     @State private var step = Step.goal
     @State private var plan: TrainingPlan?
     @FocusState private var notesFocused: Bool
     @State private var choosingProProgram = false
+    @State private var makeMain = true
+    @Query(filter: #Predicate<TrainingProgram> { $0.isMain }) private var mainPrograms: [TrainingProgram]
 
     private enum Step: Int, CaseIterable {
         case goal, schedule, gym, notes, building, preview
@@ -193,6 +194,7 @@ struct PlanSetupView: View {
                     .padding(.bottom, 16)
                 }
                 VStack(spacing: 10) {
+                    mainProgramToggle
                     primaryButton(String(localized: "Add \(plan.days.count) routines")) { add(plan) }
                     HStack {
                         Button("Change answers") { step = .goal }
@@ -254,9 +256,20 @@ struct PlanSetupView: View {
     }
 
     private func add(_ plan: TrainingPlan) {
-        plan.add(to: context)
-        weeklyGoal = profile.daysPerWeek
+        // A main program also sets the weekly goal.
+        plan.add(to: context, daysPerWeek: profile.daysPerWeek, makeMain: makeMain || mainPrograms.isEmpty)
         onFinish()
+    }
+
+    /// Only asked when there's already a main program; the first one always becomes main.
+    private var mainProgramToggle: some View {
+        Group {
+            if mainPrograms.isEmpty == false {
+                Toggle("Make this my main program", isOn: $makeMain)
+                    .font(.subheadline)
+                    .tint(theme.accent)
+            }
+        }
     }
 
     // MARK: - Building blocks

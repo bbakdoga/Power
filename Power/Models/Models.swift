@@ -12,6 +12,7 @@ enum AppSchema {
         WorkoutSet.self,
         Routine.self,
         RoutineExercise.self,
+        TrainingProgram.self,
         BodyMeasurement.self,
         NutritionEntry.self,
         ScannedProduct.self,
@@ -95,6 +96,9 @@ final class Workout {
     /// The completed data remains available for statistics and personal records.
     var isSavedToHistory: Bool = true
     var notes: String = ""
+    /// The routine this workout was started from, if any. Lets a program know where
+    /// you are in its rotation, even after a routine is renamed.
+    var routine: Routine?
 
     @Relationship(deleteRule: .cascade, inverse: \WorkoutExercise.workout)
     var exercises: [WorkoutExercise]? = []
@@ -232,9 +236,17 @@ final class Routine {
     var name: String = "New Routine"
     var notes: String = ""
     var createdAt: Date = Date.now
+    /// The program this routine belongs to; nil for routines made by hand.
+    var program: TrainingProgram?
+    /// Position in the program's rotation.
+    var programOrder: Int = 0
 
     @Relationship(deleteRule: .cascade, inverse: \RoutineExercise.routine)
     var exercises: [RoutineExercise]? = []
+
+    /// Workouts started from this routine. They stay in History if the routine is deleted.
+    @Relationship(deleteRule: .nullify, inverse: \Workout.routine)
+    var workouts: [Workout]? = []
 
     init(name: String) {
         self.name = name
@@ -247,6 +259,62 @@ final class Routine {
     var summary: String {
         let names = sortedExercises.compactMap { $0.exercise?.name }
         return names.isEmpty ? "No exercises yet" : names.joined(separator: ", ")
+    }
+}
+
+/// Routines that belong together, trained in order and repeated: e.g. a plan from the
+/// plan builder or "Train like a pro". One program can be the main one, shown with
+/// "Up next" at the top of the Workout tab.
+@Model
+final class TrainingProgram {
+    var name: String = "Program"
+    var summary: String = ""
+    var daysPerWeek: Int = 3
+    var createdAt: Date = Date.now
+    /// Shown at the top of the Workout tab. Only one program is main at a time.
+    var isMain: Bool = false
+
+    /// Deleting a program deletes its routines; their workouts stay in History.
+    @Relationship(deleteRule: .cascade, inverse: \Routine.program)
+    var routines: [Routine]? = []
+
+    init(name: String, summary: String = "", daysPerWeek: Int = 3) {
+        self.name = name
+        self.summary = summary
+        self.daysPerWeek = daysPerWeek
+    }
+
+    var sortedRoutines: [Routine] {
+        (routines ?? []).sorted { $0.programOrder < $1.programOrder }
+    }
+
+    /// Finished workouts started from this program's routines, newest first.
+    var finishedWorkouts: [Workout] {
+        (routines ?? [])
+            .flatMap { $0.workouts ?? [] }
+            .filter { $0.endDate != nil }
+            .sorted { ($0.endDate ?? .distantPast) > ($1.endDate ?? .distantPast) }
+    }
+
+    /// The routine after the one trained last, starting over after the last routine.
+    var nextRoutine: Routine? {
+        let ordered = sortedRoutines
+        guard let last = finishedWorkouts.first?.routine,
+              let index = ordered.firstIndex(of: last) else { return ordered.first }
+        return ordered[(index + 1) % ordered.count]
+    }
+
+    /// Workouts from this program finished in the current week.
+    var workoutsThisWeek: Int {
+        guard let week = Calendar.current.dateInterval(of: .weekOfYear, for: .now) else { return 0 }
+        return finishedWorkouts.filter { week.contains($0.endDate ?? .distantPast) }.count
+    }
+
+    /// Makes this the main program and every other program a regular one.
+    func makeMain(in context: ModelContext) {
+        let programs = (try? context.fetch(FetchDescriptor<TrainingProgram>())) ?? []
+        for program in programs { program.isMain = program == self }
+        UserDefaults.standard.set(daysPerWeek, forKey: Profile.weeklyGoalKey)
     }
 }
 

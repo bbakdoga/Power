@@ -547,6 +547,66 @@
         }
       }
     },
+    "%lld of %lld workouts this week" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld of %#@workouts@ this week"
+          },
+          "substitutions" : {
+            "workouts" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg workout"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg workouts"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld von %#@workouts@ diese Woche"
+          },
+          "substitutions" : {
+            "workouts" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg Workout"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg Workouts"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld reps" : {
       "localizations" : {
         "de" : {
@@ -588,6 +648,7 @@
       }
     },
     "%lld routines" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "variations" : {
@@ -620,6 +681,146 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "%lld routines"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld routines · %lld days a week" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@routines@ · %#@days@"
+          },
+          "substitutions" : {
+            "routines" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg routine"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg routines"
+                    }
+                  }
+                }
+              }
+            },
+            "days" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg day a week"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg days a week"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@routines@ · %#@days@"
+          },
+          "substitutions" : {
+            "routines" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg Routine"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg Routinen"
+                    }
+                  }
+                }
+              }
+            },
+            "days" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg Tag pro Woche"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%arg Tage pro Woche"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld routines, done in order" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld routine"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld routines, done in order"
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Routine"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Routinen, der Reihe nach"
                 }
               }
             }
@@ -2657,6 +2858,26 @@
         }
       }
     },
+    "Delete Program" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programm löschen"
+          }
+        }
+      }
+    },
+    "Delete Program and Routines" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programm und Routinen löschen"
+          }
+        }
+      }
+    },
     "Deutsch" : {
       "localizations" : {
         "de" : {
@@ -3591,6 +3812,16 @@
         }
       }
     },
+    "Hide Routines" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Routinen ausblenden"
+          }
+        }
+      }
+    },
     "High-Frequency Strength" : {
       "localizations" : {
         "de" : {
@@ -4059,6 +4290,16 @@
         }
       }
     },
+    "Its routines are deleted too. Finished workouts stay in History." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seine Routinen werden ebenfalls gelöscht. Abgeschlossene Workouts bleiben im Verlauf."
+          }
+        }
+      }
+    },
     "Just the bar." : {
       "localizations" : {
         "de" : {
@@ -4425,6 +4666,46 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Mit Powers Trainingsregeln erstellt"
+          }
+        }
+      }
+    },
+    "Main program" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hauptprogramm"
+          }
+        }
+      }
+    },
+    "Make main" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hauptprogramm"
+          }
+        }
+      }
+    },
+    "Make main program" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zum Hauptprogramm machen"
+          }
+        }
+      }
+    },
+    "Make this my main program" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Als Hauptprogramm festlegen"
           }
         }
       }
@@ -5179,6 +5460,16 @@
         }
       }
     },
+    "Other programs" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weitere Programme"
+          }
+        }
+      }
+    },
     "Over 70 powerlifting world records" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5572,6 +5863,16 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Profil"
+          }
+        }
+      }
+    },
+    "Program options" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programmoptionen"
           }
         }
       }
@@ -6334,6 +6635,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Schultern, Brust & Trizeps"
+          }
+        }
+      }
+    },
+    "Show All Routines" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Routinen anzeigen"
           }
         }
       }
@@ -7423,6 +7734,32 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unbenanntes Produkt"
+          }
+        }
+      }
+    },
+    "Up next" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Als Nächstes"
+          }
+        }
+      }
+    },
+    "Up next · routine %lld of %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Up next · routine %1$lld of %2$lld"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Als Nächstes · Routine %1$lld von %2$lld"
           }
         }
       }

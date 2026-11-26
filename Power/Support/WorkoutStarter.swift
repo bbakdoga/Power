@@ -14,6 +14,7 @@ enum WorkoutStarter {
     static func start(routine: Routine, in context: ModelContext) -> Workout {
         let workout = Workout(name: routine.name)
         context.insert(workout)
+        workout.routine = routine
         for (index, item) in routine.sortedExercises.enumerated() {
             guard let exercise = item.exercise else { continue }
             let entry = addExercise(exercise, to: workout, order: index, in: context,

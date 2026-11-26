@@ -9,7 +9,8 @@ struct ProProgramsView: View {
 
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
-    @AppStorage(Profile.weeklyGoalKey) private var weeklyGoal = 3
+    @Query(filter: #Predicate<TrainingProgram> { $0.isMain }) private var mainPrograms: [TrainingProgram]
+    @State private var makeMain = true
     @AppStorage(AppTheme.storageKey) private var theme: AppTheme = .system
     @State private var category = ProProgram.Category.bodybuilders
     @State private var centeredID: String? = ProProgram.programs(in: .bodybuilders).first?.id
@@ -40,7 +41,7 @@ struct ProProgramsView: View {
                     carousel
 
                     if let selected {
-                        Text("\(selected.days.count) routines")
+                        Text("\(selected.days.count) routines, done in order")
                             .font(.headline)
                             .padding(.top, 4)
                         ForEach(selected.days, id: \.self) { day in
@@ -56,6 +57,7 @@ struct ProProgramsView: View {
             }
             if let selected {
                 VStack(spacing: 10) {
+                    mainProgramToggle
                     Button {
                         add(selected)
                     } label: {
@@ -123,9 +125,20 @@ struct ProProgramsView: View {
     }
 
     private func add(_ program: ProProgram) {
-        program.plan.add(to: context)
-        weeklyGoal = program.daysPerWeek
+        // A main program also sets the weekly goal.
+        program.plan.add(to: context, daysPerWeek: program.daysPerWeek, makeMain: makeMain || mainPrograms.isEmpty)
         onFinish()
+    }
+
+    /// Only asked when there's already a main program; the first one always becomes main.
+    private var mainProgramToggle: some View {
+        Group {
+            if mainPrograms.isEmpty == false {
+                Toggle("Make this my main program", isOn: $makeMain)
+                    .font(.subheadline)
+                    .tint(theme.accent)
+            }
+        }
     }
 }
 
